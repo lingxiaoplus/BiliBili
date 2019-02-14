@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--3F51B5  FF4081-->
+    <color name="colorPrimary">#66bb6a</color>
+    <color name="colorPrimaryDark">#4CAF50</color>
+    <color name="colorAccent">#388E3C</color>
+
+    <color name="colorWhite">#11111111</color>
+    <color name="colorTrans">#80000000</color>
+    <!--涟漪效果颜色-->
+    <color name="grey">#000000</color>
+    <color name="white">#11111111</color>
+    <color name="whiteNor">#FFFFFFFF</color>
+    <color name="trans">#00000000</color>
+    <color name="colorGray">#e5e3e4</color>
+    <!--splash background color start-->
+    <color name="lightblue1">#03A9F4</color>
+    <color name="lightblue2">#29B6F6</color>
+    <color name="lightblue3">#4FC3F7</color>
+    <color name="lightblue4">#81D4FA</color>
+    <color name="lightbluelast">#0277BD</color>
+    <!--splash background color end-->
+
+    <color name="red400">#EF5350</color>
+    <color name="pink400">#EC407A</color>
+    <color name="purple400">#AB47BC</color>
+    <color name="deepPurple400">#7E57C2</color>
+    <color name="indigo400">#5C6BC0</color>
+
+</resources>

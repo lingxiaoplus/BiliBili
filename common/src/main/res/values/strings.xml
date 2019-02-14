@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Common</string>
+    <string name="permession_title">为了更好地使用本应用，需要授予权限</string>
+    <string name="AccessKey">V_ZleIlYzHPjekmAuRvDkkXLdV_MDkk69VZWM12f</string>
+    <string name="SecretKey">U8SndxcceqMZGIKvhfPL3gEPkYRN_NhrP75cJlOH</string>
+</resources>
