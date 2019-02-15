@@ -42,8 +42,8 @@ object ContentValue {
     //干货集中营api
     val GANKURL = "http://gank.io/api/data/%E7%A6%8F%E5%88%A9/"
 
-    //安卓壁纸的baseurl
-    val BASE_URL = "http://gank.io/api/random/"
+    //baseurl
+    val BASE_URL = "http://api.bilibili.cn/"
     /**
      * 竖屏 最热
      */

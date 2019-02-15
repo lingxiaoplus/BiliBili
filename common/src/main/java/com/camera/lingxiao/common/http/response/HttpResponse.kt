@@ -22,8 +22,6 @@ class HttpResponse {
     @SerializedName("code")
     var code: Int = 0
 
-    @SerializedName("error")
-    var error: Boolean = false
     /**
      * 数据对象[成功返回对象,失败返回错误说明]
      */
@@ -35,18 +33,18 @@ class HttpResponse {
      *
      * @return
      */
-    /*val isSuccess: Boolean
-        get() = if (code == 200 || code == 0) {
-            true
-        } else false*/
-
     val isSuccess: Boolean
-        get() = if (!error) {
+        get() = if (code == 200 || code == 0) {
             true
         } else false
 
+    /*val isSuccess: Boolean
+        get() = if (!error) {
+            true
+        } else false*/
+
     override fun toString(): String {
-        return "HttpResponse(msg=$msg, code=$code, error=$error, results=$results)"
+        return "HttpResponse(msg=$msg, code=$code, results=$results)"
     }
 
 }

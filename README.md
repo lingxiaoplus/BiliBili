@@ -1,3 +1,3 @@
 # BiliBili
 
-使用ijkplayer，实现一个仿B站的Android客户端
+使用ijkplayer，实现一个仿B站的Android客户端。使用组件化的思想对项目进行拆分，目前分出两个组件，一个是网络请求组件，一个是视频播放组件。

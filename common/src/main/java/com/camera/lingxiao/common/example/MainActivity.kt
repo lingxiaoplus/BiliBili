@@ -18,7 +18,6 @@ class MainActivity : BaseActivity() , HttpView{
         button_get.setOnClickListener{
             httpPresenter?.getResult()
         }
-
     }
 
     override fun showDialog() {

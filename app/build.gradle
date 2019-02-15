@@ -53,5 +53,5 @@ dependencies {
     // If you want to use Kotlin syntax with Android Lifecycle
     implementation "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:$rootProject.ext.rxlifescyleVersion"
     implementation "pub.devrel:easypermissions:$rootProject.ext.easypermissionsVersion"
-    //implementation project(':common')
+
 }
