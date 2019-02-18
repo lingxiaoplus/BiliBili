@@ -14,10 +14,10 @@
             <!--android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"-->
             <!--android:layout_marginStart="8dp" android:layout_marginBottom="8dp"-->
             <!--app:layout_constraintBottom_toBottomOf="parent">-->
+    <com.bilibili.lingxiao.ijkplayer.widget.SimplePlayerView
+            android:id="@+id/simple_view"
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
 
-    <include
-        layout="@layout/simple_player_view_player"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-         />
+    </com.bilibili.lingxiao.ijkplayer.widget.SimplePlayerView>
 </LinearLayout>

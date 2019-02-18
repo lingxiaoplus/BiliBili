@@ -5,11 +5,11 @@
               android:layout_height="wrap_content"
               android:background="#11000000"
               android:gravity="center_vertical"
-              android:minHeight="48dp"
-              android:padding="4dp">
+
+              android:padding="2dp">
 
     <ImageView
-        android:id="@+id/app_video_play"
+        android:id="@+id/video_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
@@ -73,7 +73,7 @@
             android:orientation="vertical">
             <!--style="@style/Widget.AppCompat.SeekBar"-->
             <SeekBar
-                android:id="@+id/app_video_seekBar"
+                android:id="@+id/video_seekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -90,7 +90,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/app_video_currentTime"
+                android:id="@+id/video_currentTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="06:21"
@@ -105,7 +105,7 @@
                 android:textSize="12dp"/>
 
             <TextView
-                android:id="@+id/app_video_endTime"
+                android:id="@+id/video_endTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10:10"
@@ -140,7 +140,7 @@
 
 
     <ImageView
-        android:id="@+id/app_video_fullscreen"
+        android:id="@+id/video_fullscreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"

@@ -15,15 +15,12 @@ class PlayActivity : AppCompatActivity() {
         setContentView(R.layout.activity_play)
         /** 普通播放 start **/
         var url = getIntent().getStringExtra("url");
-        video_view.setAspectRatio(IRenderView.AR_ASPECT_FIT_PARENT);
-        video_view.setVideoURI(Uri.parse(url));
-        video_view.start();
-
+        simple_view.setVideoURI(Uri.parse(url))
+        simple_view.startPlay()
     }
 
     override fun onStop() {
         super.onStop()
-        video_view.stopBackgroundPlay()
-        video_view.release(true)
+        simple_view.stopPlay()
     }
 }

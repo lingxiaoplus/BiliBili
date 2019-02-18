@@ -323,12 +323,12 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
             // REMOVED: SubtitleController
 
             // REMOVED: mAudioSession
-            mMediaPlayer.setOnPreparedListener(mPreparedListener);
-            mMediaPlayer.setOnVideoSizeChangedListener(mSizeChangedListener);
-            mMediaPlayer.setOnCompletionListener(mCompletionListener);
-            mMediaPlayer.setOnErrorListener(mErrorListener);
-            mMediaPlayer.setOnInfoListener(mInfoListener);
-            mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
+            mMediaPlayer.setOnPreparedListener(mPreparedListener);/**视频准备播放监听*/
+            mMediaPlayer.setOnVideoSizeChangedListener(mSizeChangedListener);/**视频界面大小改变监听*/
+            mMediaPlayer.setOnCompletionListener(mCompletionListener);/**视频播放完成监听*/
+            mMediaPlayer.setOnErrorListener(mErrorListener);/**视频错误监听*/
+            mMediaPlayer.setOnInfoListener(mInfoListener);/**视频其他信息监听*/
+            mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);/**视频缓冲监听*/
             mMediaPlayer.setOnSeekCompleteListener(mSeekCompleteListener);
             mMediaPlayer.setOnTimedTextListener(mOnTimedTextListener);
             mCurrentBufferPercentage = 0;
@@ -392,6 +392,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 
     IMediaPlayer.OnVideoSizeChangedListener mSizeChangedListener =
             new IMediaPlayer.OnVideoSizeChangedListener() {
+                @Override
                 public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sarNum, int sarDen) {
                     mVideoWidth = mp.getVideoWidth();
                     mVideoHeight = mp.getVideoHeight();

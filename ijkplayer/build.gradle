@@ -14,7 +14,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi-v7a' //, 'x86', 'armeabi', 'x86_64', 'arm64-v8a'
+        }
     }
 
     buildTypes {
@@ -36,6 +39,9 @@ dependencies {
     //implementation "tv.danmaku.ijk.media:ijkplayer-armv7a:$rootProject.ext.ijkplayerVersion"
     //# ExoPlayer as IMediaPlayer: optional, experimental
     implementation "tv.danmaku.ijk.media:ijkplayer-exo:$rootProject.ext.ijkplayerVersion"
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+    implementation "pub.devrel:easypermissions:$rootProject.ext.easypermissionsVersion"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
