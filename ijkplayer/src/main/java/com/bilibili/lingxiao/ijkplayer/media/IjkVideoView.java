@@ -302,7 +302,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    private void openVideo() {
+    public void openVideo() {
         if (mUri == null || mSurfaceHolder == null) {
             // not ready for playback just yet, will try again later
             return;
@@ -329,7 +329,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
             mMediaPlayer.setOnErrorListener(mErrorListener);/**视频错误监听*/
             mMediaPlayer.setOnInfoListener(mInfoListener);/**视频其他信息监听*/
             mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);/**视频缓冲监听*/
-            mMediaPlayer.setOnSeekCompleteListener(mSeekCompleteListener);
+            //mMediaPlayer.setOnSeekCompleteListener(mSeekCompleteListener);  //seekbar监听
             mMediaPlayer.setOnTimedTextListener(mOnTimedTextListener);
             mCurrentBufferPercentage = 0;
             String scheme = mUri.getScheme();

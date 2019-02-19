@@ -19,8 +19,18 @@ class PlayActivity : AppCompatActivity() {
         simple_view.startPlay()
     }
 
-    override fun onStop() {
-        super.onStop()
-        simple_view.stopPlay()
+    override fun onPause() {
+        super.onPause()
+        simple_view.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        simple_view.onResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        simple_view.onDestory()
     }
 }

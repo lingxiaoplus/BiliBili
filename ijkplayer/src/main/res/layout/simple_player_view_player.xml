@@ -149,14 +149,36 @@
             android:layout_centerInParent="true"/>
 
     <!-- 顶部栏-->
-    <include layout="@layout/simple_player_topbar"/>
+    <include android:id="@+id/video_top"
+             layout="@layout/simple_player_topbar"/>
     <!-- 底部栏-->
     <include
+            android:id="@+id/video_bottom"
             layout="@layout/simple_player_controlbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"/>
 
+    <!--滑动时显示的进度-->
+    <LinearLayout
+            android:id="@+id/ll_video_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#90000000"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"
+    >
+        <TextView
+                android:id="@+id/video_progress_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textColor="@android:color/white"
+        />
+    </LinearLayout>
     <!--声音亮度控制-->
     <LinearLayout
             android:id="@+id/simple_player_settings_container"

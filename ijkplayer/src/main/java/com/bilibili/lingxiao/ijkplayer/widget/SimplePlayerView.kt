@@ -7,7 +7,6 @@ import android.os.Looper
 import android.os.Message
 import android.util.AttributeSet
 import android.util.Log
-import android.view.View
 import android.widget.RelativeLayout
 import android.widget.SeekBar
 import com.bilibili.lingxiao.ijkplayer.PlayState
@@ -17,9 +16,22 @@ import com.bilibili.lingxiao.ijkplayer.media.PlayerManager
 import kotlinx.android.synthetic.main.simple_player_controlbar.view.*
 import kotlinx.android.synthetic.main.simple_player_view_player.view.*
 import tv.danmaku.ijk.media.player.IMediaPlayer
+import tv.danmaku.ijk.media.player.IjkMediaPlayer
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.media.AudioManager
+import tv.danmaku.ijk.media.player.pragma.DebugLog
+import android.content.ContextWrapper
+import android.app.Activity
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
+import android.support.v4.app.Fragment
+import android.util.DisplayMetrics
+import android.view.*
+import android.widget.LinearLayout
 
-class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr) {
 
+class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr),View.OnTouchListener {
     var isLive = false
     var mCurrentPosition = 0
     var mVideoState = PlayState.STATE_IDLE
@@ -49,6 +61,39 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
      * 是否在拖动进度条中，默认为停止拖动，true为在拖动中，false为停止拖动
      */
     private var isDragging: Boolean = false
+
+    /**
+     * 是否隐藏了状态栏
+     */
+    private var isHiddenBar = false
+
+    /**
+     * 滑动进度条得到的新位置，和当前播放位置是有区别的,newPosition =0也会调用设置的，故初始化值为-1
+     */
+    private var newPosition: Long = -1
+
+    /**
+     * 滑动进度条得到的当前亮度
+     */
+    private var brightness = -1f
+    /**
+     * 滑动进度条得到的当前音量
+     */
+    private var volume = -1
+    private var mMaxVolume: Int? = 0
+    private var mAudioManager: AudioManager? = null
+
+    /**
+     * 是否是竖屏
+     */
+    private var isPortrait = true
+
+    private var mActivity: Activity? = null
+
+    private var mGestureDector:GestureDetector? = null
+    private var screenWidthPixels: Int? = 0
+
+
     companion object {
         val TAG = SimplePlayerView::class.java.simpleName
     }
@@ -71,7 +116,10 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
                     updatePauseOrPlay()
                 }
                 MESSAGE_SEEK_NEW_POSITION->{
-
+                    if (!isLive && newPosition >= 0) {
+                        video_view.seekTo(newPosition.toInt())
+                        newPosition = -1
+                    }
                 }
             }
         }
@@ -83,6 +131,11 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     private fun initView(context: Context) {
         View.inflate(context, R.layout.simple_player_view_player, this)
+        mActivity = getActivityFromContext(context)
+        screenWidthPixels = mActivity?.getResources()?.getDisplayMetrics()?.widthPixels
+        mAudioManager = mActivity?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        mMaxVolume = mAudioManager?.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+
         video_play.setOnClickListener{
             if (isLive){
                 video_view.stopPlayback()
@@ -90,24 +143,74 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
                 if (video_view.isPlaying){
                     pausePlay()
                     video_play.setImageResource(R.drawable.ic_img_pause)
+                    play_icon.setImageResource(R.drawable.ic_img_pause)
                     play_icon.visibility = View.VISIBLE
                 }else{
                     startPlay()
                     video_play.setImageResource(R.drawable.ic_img_play)
+                    play_icon.setImageResource(R.drawable.ic_img_play)
                     play_icon.visibility = View.INVISIBLE
                 }
             }
         }
-        video_seekBar.setOnSeekBarChangeListener(mVideoProgressListener)
+        play_icon.setOnClickListener{
+            if (video_view.isPlaying){
+                pausePlay()
+                video_play.setImageResource(R.drawable.ic_img_pause)
+                play_icon.setImageResource(R.drawable.ic_img_pause)
+                play_icon.visibility = View.VISIBLE
+            }else{
+                startPlay()
+                video_play.setImageResource(R.drawable.ic_img_play)
+                play_icon.setImageResource(R.drawable.ic_img_play)
+                mHandler.postDelayed({
+                    play_icon.visibility = View.INVISIBLE
+                },500)
+            }
+        }
+
+        //video_seekBar.setOnSeekBarChangeListener(mVideoProgressListener)
+        video_seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (!fromUser){
+                    return
+                }
+                val position = progress
+                val time = generateTime(position)
+                video_currentTime.text = time
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                //开始拖动
+                isDragging = true
+                mHandler.removeMessages(MESSAGE_SHOW_PROGRESS)
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                //停止拖动
+                isDragging = false
+                mHandler.removeMessages(MESSAGE_SHOW_PROGRESS)
+                video_view.seekTo(seekBar!!.progress)
+                mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_PROGRESS,1000)
+            }
+        })
         video_view.setOnInfoListener { mp, what, extra->
             statusChanged(what)
             return@setOnInfoListener true
         }
+
+        video_fullscreen.setOnClickListener{
+            toggleFullScreen()
+        }
+        mGestureDector = GestureDetector(getContext(),object : PlayerGestureDetector(){})
+        setClickable(true) //设置可点击
+        setOnTouchListener(this)
+
     }
 
     private fun statusChanged(what: Int) {
         this.mVideoState = what
-        Log.i(TAG,"播放状态: "+mVideoState)
+        Log.i(TAG,"播放状态: " + mVideoState)
         when(mVideoState){
             PlayState.STATE_COMPLETED ->{
                 Log.d(TAG,"播放结束")
@@ -122,8 +225,9 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             PlayState.STATE_PREPARED,
             PlayState.MEDIA_INFO_BUFFERING_END ->{
                 Log.d(TAG,"视频缓冲结束")
+                video_progress.visibility = View.INVISIBLE
                 mHandler.postDelayed({
-                    video_progress.visibility = View.INVISIBLE
+                    hideBarUI()
                     mHandler.sendEmptyMessage(MESSAGE_SHOW_PROGRESS)
                 },500)
             }
@@ -157,6 +261,22 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         )
     }
 
+
+    fun onConfigurationChang(conf: Configuration){
+        /*isPortrait = conf.orientation == Configuration.ORIENTATION_PORTRAIT
+        mHandler.post {
+            tryFullScreen(!portrait)
+            if (portrait) {
+                query.id(R.id.app_video_box).height(initHeight, false)
+            } else {
+                val heightPixels = mActivity!!.getResources().displayMetrics.heightPixels
+                val widthPixels = mActivity!!.getResources().displayMetrics.widthPixels
+                query.id(R.id.app_video_box).height(Math.min(heightPixels, widthPixels), false)
+            }
+            updateFullScreenButton()
+        }
+        orientationEventListener.enable()*/
+    }
     /**
      * 更新播放状态
      */
@@ -174,31 +294,23 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
      * 更新播放进度
      */
     private fun updateProgress(): Int{
-
-
         var position = video_view.currentPosition  //视频进度
         var duration = video_view.duration  //视频总长度
         var bufferPos = video_view.bufferPercentage //视频缓冲进度
-
-        /*if (position == duration || mVideoState == PlayState.STATE_COMPLETED
-            || mVideoState == PlayState.STATE_PAUSED){
-            //视频播放暂停或完成
-            updatePauseOrPlay()
-        }*/
 
         video_currentTime.text = generateTime(position)
         video_endTime.text = generateTime(duration)
 
         video_seekBar.max = duration
         video_seekBar.progress = position
-        video_seekBar.secondaryProgress = bufferPos * 10
-
-        Log.d(TAG,"视频时长：" + duration + "播放进度：" + position)
+        video_seekBar.secondaryProgress = bufferPos * 1000
+        Log.d(TAG,"视频时长：" + duration + "播放进度：" + position + "视频缓冲进度：" + bufferPos * 1000)
         return position
     }
 
     fun setVideoURI(uri: Uri){
-        video_view.setAspectRatio(IRenderView.AR_ASPECT_FIT_PARENT);
+        //video_view.setAspectRatio(IRenderView.AR_ASPECT_FIT_PARENT)
+        video_view.setAspectRatio(IRenderView.AR_16_9_FIT_PARENT)
         video_view.setVideoURI(uri)
     }
 
@@ -235,8 +347,100 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         return mCurrentPosition
     }
 
+    /**
+     * 隐藏顶部和底部的状态栏
+     */
+    private fun hideBarUI(){
+        if (isHiddenBar) return
+        toggleAnim(video_top,0f,-video_top.height.toFloat())
+        toggleAnim(video_bottom,0f, video_bottom.height.toFloat())
+        isHiddenBar = true
+    }
 
-    private var mVideoProgressListener = object: SeekBar.OnSeekBarChangeListener{
+    private fun showBarUI(){
+        if (!isHiddenBar) return
+        toggleAnim(video_top,-video_top.height.toFloat(),0f)
+        toggleAnim(video_bottom, video_bottom.height.toFloat(),0f)
+        isHiddenBar = false
+    }
+
+    private fun toggleAnim(view: View ,fromY:Float,toY:Float) {
+        val animatorx = ObjectAnimator.ofFloat(view, "translationY", fromY, toY)
+        //ObjectAnimator animatory = ObjectAnimator.ofFloat(view,"scaleY",visible?0f:1f,visible?1f:0f);
+        val animatorSet = AnimatorSet()
+        animatorSet.duration = 500
+        animatorSet.play(animatorx)
+        animatorSet.start()
+    }
+
+    /**
+     * 全屏切换
+     */
+    private fun toggleFullScreen(): SimplePlayerView {
+
+        if (getScreenOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            mActivity!!.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        } else {
+            mActivity!!.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+        }
+        //updateFullScreenButton()
+        return this
+    }
+
+    private fun updateFullScreenButton() {
+        layoutParams.width = LayoutParams.MATCH_PARENT
+        layoutParams.height = LayoutParams.MATCH_PARENT
+        setLayoutParams(layoutParams)
+    }
+
+    private fun getScreenOrientation(): Int {
+        val rotation = mActivity!!.getWindowManager().getDefaultDisplay().getRotation()
+        val dm = DisplayMetrics()
+        mActivity!!.getWindowManager().getDefaultDisplay().getMetrics(dm)
+        val width = dm.widthPixels
+        val height = dm.heightPixels
+        val orientation: Int
+        // if the device's natural orientation is portrait:
+        if ((rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) && height > width || (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) && width > height) {
+            when (rotation) {
+                Surface.ROTATION_0 -> orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                Surface.ROTATION_90 -> orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                Surface.ROTATION_180 -> orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
+                Surface.ROTATION_270 -> orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+                else -> orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            }
+        } else {
+            when (rotation) {
+                Surface.ROTATION_0 -> orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                Surface.ROTATION_90 -> orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                Surface.ROTATION_180 -> orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+                Surface.ROTATION_270 -> orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
+                else -> orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            }
+        }// if the device's natural orientation is landscape or if the device
+        // is square:
+        return orientation
+    }
+    fun onPause(){
+        getCurrentPosition()
+        video_view.release(false)
+    }
+
+    fun onResume(){
+        video_view.openVideo()
+        if (isLive){
+            video_view.seekTo(0)
+        }else{
+            video_view.seekTo(mCurrentPosition)
+        }
+
+    }
+
+    fun onDestory(){
+        mHandler.removeCallbacksAndMessages(null)
+        video_view.stopPlayback()
+    }
+    private val mVideoProgressListener = object: SeekBar.OnSeekBarChangeListener{
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 
             Log.i(TAG,"用户拖动改变："+fromUser)
@@ -244,7 +448,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
                 return
             }
             val duration = video_view.duration
-            val position = (duration * progress * 1.0 / 1000).toInt()
+            val position = duration * progress
             val time = generateTime(position)
             video_currentTime.text = time
         }
@@ -260,9 +464,181 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             //停止拖动
             isDragging = false
             mHandler.removeMessages(MESSAGE_SHOW_PROGRESS)
-            video_view.seekTo((video_view.duration * seekBar!!.progress * 0.1 /1000).toInt())
+            video_view.seekTo(video_view.duration * seekBar!!.progress)
             mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_PROGRESS,1000)
             Log.i(TAG,"用户停止拖动")
         }
+    }
+    override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
+        //将触摸事件交给GestureDetector
+        if(mGestureDector!!.onTouchEvent(motionEvent)){
+            return true
+        }
+        //多点触控
+        when(motionEvent!!.action and MotionEvent.ACTION_MASK){
+            MotionEvent.ACTION_UP -> endGesture()
+        }
+        return false
+    }
+
+    /**
+     * 手势结束
+     */
+    private fun endGesture() {
+        volume = -1
+        brightness = -1f
+        if (newPosition >= 0) {
+            mHandler.removeMessages(MESSAGE_SEEK_NEW_POSITION)
+            mHandler.sendEmptyMessage(MESSAGE_SEEK_NEW_POSITION)
+        } else {
+            /**什么都不做(do nothing) */
+        }
+        mHandler.removeMessages(MESSAGE_HIDE_CENTER_BOX)
+        mHandler.sendEmptyMessageDelayed(MESSAGE_HIDE_CENTER_BOX, 500)
+        ll_video_progress.visibility = View.GONE
+    }
+
+    private fun getActivityFromContext(context: Context?): Activity? {
+        var context = context
+        if (null != context) {
+            while (context is ContextWrapper) {
+                if (context is Activity) {
+                    return context
+                }else if (context is Fragment){
+                    return context.activity
+                }
+                context = context.baseContext
+            }
+        }
+        return null
+    }
+
+    private open inner class PlayerGestureDetector: GestureDetector.SimpleOnGestureListener(){
+        private var firstTouch: Boolean = false  //是否是按下的标识，默认为其他动作
+        private var volumeControl: Boolean = false  //控制声音
+        private var toSeek: Boolean = false  //进度条
+        override fun onSingleTapUp(e: MotionEvent?): Boolean {
+            //return super.onSingleTapUp(e)
+            if (isHiddenBar){
+                showBarUI()
+            }else{
+                hideBarUI()
+            }
+            return true
+        }
+
+        override fun onDown(e: MotionEvent?): Boolean {
+            firstTouch = true
+            return super.onDown(e)
+        }
+        override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+            val mOldX = e1!!.getX()
+            val mOldY = e1!!.getY()
+            val deltaX = mOldX - e2!!.getX()
+            val deltaY = mOldY - e2!!.getY()
+
+            if (firstTouch) {
+                toSeek = Math.abs(distanceX) >= Math.abs(distanceY)  //横向滑动
+                volumeControl = mOldX > screenWidthPixels!! * 0.5f  //左边是控制亮度，右边控制音量
+                firstTouch = false
+            }
+
+            if (toSeek) {
+                if (!isLive) {
+                    onProgressSlide(-deltaX / video_view.getWidth())
+                }
+            } else {
+                val percent = deltaY / video_view.getHeight()
+                if (volumeControl) {
+                    onVolumeSlide(percent)
+                } else {
+                    onBrightnessSlide(percent)
+                }
+            }
+            return super.onScroll(e1, e2, distanceX, distanceY)
+        }
+    }
+
+    /**
+     * 滑动改变声音大小
+     *
+     * @param percent
+     */
+    private fun onVolumeSlide(percent: Float) {
+        if (volume == -1) {
+            volume = mAudioManager!!.getStreamVolume(AudioManager.STREAM_MUSIC)
+            if (volume < 0)
+                volume = 0
+        }
+        var index = (percent * mMaxVolume!!).toInt() + volume
+        if (index > mMaxVolume!!) {
+            index = mMaxVolume!!
+        } else if (index < 0) {
+            index = 0
+        }
+        // 变更声音
+        mAudioManager!!.setStreamVolume(AudioManager.STREAM_MUSIC, index, 0)
+        // 变更进度条
+        val i = (index * 1.0 / mMaxVolume!! * 100).toInt()
+        var s = "" + i + "%"
+        if (i == 0) {
+            s = "off"
+        }
+        DebugLog.d("", "onVolumeSlide:$s")
+    }
+
+    /**
+     * 滑动改变进度
+     *
+     * @param percent
+     */
+    private fun onProgressSlide(percent: Float) {
+        val position = video_view.getCurrentPosition().toLong()
+        val duration = video_view.getDuration().toLong()
+        val deltaMax = Math.min((100 * 1000).toLong(), duration - position)
+        var delta = (deltaMax * percent).toLong()
+
+        newPosition = delta + position
+        if (newPosition > duration) {
+            newPosition = duration
+        } else if (newPosition <= 0) {
+            newPosition = 0
+            delta = -position
+        }
+        val showDelta = delta.toInt() / 1000
+        if (showDelta != 0) {
+            val text = if (showDelta > 0) "+$showDelta" else "" + showDelta
+            DebugLog.d("", "onProgressSlide:$text")
+        }
+        showBarUI()
+        video_currentTime.text = generateTime(newPosition.toInt())
+        video_seekBar.progress = newPosition.toInt()
+        ll_video_progress.visibility = View.VISIBLE
+        video_progress_text.text = video_currentTime.text.toString() + "/" + video_endTime.text.toString()
+    }
+
+    /**
+     * 滑动改变亮度
+     *
+     * @param percent
+     */
+    private fun onBrightnessSlide(percent: Float) {
+        if (brightness < 0) {
+            brightness = mActivity!!.getWindow()!!.getAttributes()!!.screenBrightness
+            if (brightness <= 0.00f) {
+                brightness = 0.50f
+            } else if (brightness < 0.01f) {
+                brightness = 0.01f
+            }
+        }
+        DebugLog.d("", "brightness:$brightness,percent:$percent")
+        val lpa = mActivity!!.getWindow()!!.getAttributes()
+        lpa.screenBrightness = brightness + percent
+        if (lpa.screenBrightness > 1.0f) {
+            lpa.screenBrightness = 1.0f
+        } else if (lpa.screenBrightness < 0.01f) {
+            lpa.screenBrightness = 0.01f
+        }
+        mActivity?.getWindow()?.setAttributes(lpa)
     }
 }

@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() ,EasyPermissions.PermissionCallbacks{
     }
 
     var urls = arrayOf("http://videotest-1252348761.cos.ap-chengdu.myqcloud.com/background.mp4",
-            "http://218.207.213.137//PLTV/88888888/224/3221225879/index.m3u8",
+            "rtsp://192.168.0.216:554/h264/ch1/main/av_stream",
         "http://183.251.61.207/PLTV/88888888/224/3221225829/index.m3u8")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
