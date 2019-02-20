@@ -2,9 +2,11 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/app_video_box"
+        android:id="@+id/video_root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/black">
 
 
     <com.bilibili.lingxiao.ijkplayer.media.IjkVideoView
@@ -180,66 +182,65 @@
         />
     </LinearLayout>
     <!--声音亮度控制-->
+
     <LinearLayout
-            android:id="@+id/simple_player_settings_container"
-            android:layout_width="250dp"
+            android:id="@+id/video_volume_controller_root"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#40000000"
+            android:gravity="center"
+            android:background="#90000000"
+            android:orientation="horizontal"
             android:layout_centerInParent="true"
-            android:orientation="vertical"
             android:visibility="gone"
-            tools:visibility="visible"
-    >
+            tools:visibility="visible">
 
-        <LinearLayout
-                android:id="@+id/simple_player_volume_controller_container"
-                android:layout_width="match_parent"
+        <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_img_volice"
+                android:layout_margin="10dp"/>
+
+        <ProgressBar
+                android:id="@+id/video_volume_controller"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:maxHeight="2dp"
+                android:minHeight="2dp"
+                android:background="@color/colorRed200"
+                android:progressDrawable="@drawable/progress_red"
+                android:layout_marginRight="10dp"/>
 
-            <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/qcloud_player_icon_audio_vol_mute"/>
+    </LinearLayout>
 
-            <SeekBar
-                    android:id="@+id/simple_player_volume_controller"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"/>
+    <LinearLayout
+            android:id="@+id/video_brightness_controller_root"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="#90000000"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            tools:visibility="visible">
 
-            <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/qcloud_player_icon_audio_vol"/>
-        </LinearLayout>
+        <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_img_light"
+                android:layout_margin="10dp"/>
 
-        <LinearLayout
-                android:id="@+id/simple_player_brightness_controller_container"
-                android:layout_width="match_parent"
+        <ProgressBar
+                android:id="@+id/video_brightness_controller"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-            <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:padding="5dp"
-                    android:src="@drawable/qcloud_player_icon_brightness"/>
-
-            <SeekBar
-                    android:id="@+id/simple_player_brightness_controller"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"/>
-
-            <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/qcloud_player_icon_brightness"/>
-        </LinearLayout>
+                android:maxHeight="2dp"
+                android:minHeight="2dp"
+                android:background="@color/colorRed200"
+                android:progressDrawable="@drawable/progress_red"
+                android:layout_marginRight="10dp"/>
 
     </LinearLayout>
 

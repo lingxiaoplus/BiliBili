@@ -93,11 +93,12 @@
                 android:id="@+id/video_currentTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="06:21"
+                android:text="00:00"
                 android:textColor="@android:color/white"
                 android:textSize="12dp"/>
 
             <TextView
+                    android:id="@+id/tv_sprit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="/"
@@ -108,7 +109,7 @@
                 android:id="@+id/video_endTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10:10"
+                android:text="00:00"
                 android:textColor="@android:color/white"
                 android:textSize="12dp"/>
         </LinearLayout>

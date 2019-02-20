@@ -1,8 +1,10 @@
 package com.bilibili.lingxiao.ijkplayer
 
+import android.content.res.Configuration
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import com.bilibili.lingxiao.ijkplayer.media.IRenderView
 import kotlinx.android.synthetic.main.activity_play.*
 import kotlinx.android.synthetic.main.simple_player_view_player.*
@@ -15,8 +17,29 @@ class PlayActivity : AppCompatActivity() {
         setContentView(R.layout.activity_play)
         /** 普通播放 start **/
         var url = getIntent().getStringExtra("url");
-        simple_view.setVideoURI(Uri.parse(url))
+        simple_view.setVideoUrl(url)
         simple_view.startPlay()
+
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration?) {
+        super.onConfigurationChanged(newConfig)
+        //横竖屏切换
+        var isPortrait = simple_view.onConfigurationChang(newConfig)
+        if (isPortrait) {
+            supportActionBar?.show()
+        } else {
+            supportActionBar?.hide()
+        }
+    }
+
+    override fun onBackPressed() {
+        simple_view.onBackPressed()
+        if (!simple_view.isPortrait){
+            supportActionBar?.show()
+        }else{
+            super.onBackPressed()
+        }
     }
 
     override fun onPause() {

@@ -12,11 +12,8 @@ import android.widget.SeekBar
 import com.bilibili.lingxiao.ijkplayer.PlayState
 import com.bilibili.lingxiao.ijkplayer.R
 import com.bilibili.lingxiao.ijkplayer.media.IRenderView
-import com.bilibili.lingxiao.ijkplayer.media.PlayerManager
 import kotlinx.android.synthetic.main.simple_player_controlbar.view.*
 import kotlinx.android.synthetic.main.simple_player_view_player.view.*
-import tv.danmaku.ijk.media.player.IMediaPlayer
-import tv.danmaku.ijk.media.player.IjkMediaPlayer
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.media.AudioManager
@@ -27,12 +24,15 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.support.v4.app.Fragment
 import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.*
-import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.simple_player_topbar.view.*
+import kotlin.math.log
+import kotlin.properties.Delegates
 
 
 class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr),View.OnTouchListener {
-    var isLive = false
+
     var mCurrentPosition = 0
     var mVideoState = PlayState.STATE_IDLE
 
@@ -80,19 +80,30 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
      * 滑动进度条得到的当前音量
      */
     private var volume = -1
-    private var mMaxVolume: Int? = 0
+    private var mMaxVolume: Int = 0
     private var mAudioManager: AudioManager? = null
 
     /**
      * 是否是竖屏
      */
-    private var isPortrait = true
+    var isPortrait = true
+
+    /**
+     * 记录播放器竖屏时的高度 延迟初始化
+     */
+    private val initHeight: Int by lazy { this@SimplePlayerView.height }
+
+    private var mVideoUrl: String by Delegates.notNull<String>()
 
     private var mActivity: Activity? = null
 
     private var mGestureDector:GestureDetector? = null
     private var screenWidthPixels: Int? = 0
 
+    private val isLive: Boolean
+        get() = (mVideoUrl.startsWith("rtmp://") ||mVideoUrl.startsWith("rtsp://")
+                || mVideoUrl.startsWith("http://") && mVideoUrl.endsWith(".m3u8")
+                || mVideoUrl.startsWith("http://") && mVideoUrl.endsWith(".flv"))
 
     companion object {
         val TAG = SimplePlayerView::class.java.simpleName
@@ -134,7 +145,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         mActivity = getActivityFromContext(context)
         screenWidthPixels = mActivity?.getResources()?.getDisplayMetrics()?.widthPixels
         mAudioManager = mActivity?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        mMaxVolume = mAudioManager?.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        mMaxVolume = mAudioManager?.getStreamMaxVolume(AudioManager.STREAM_MUSIC)!!
 
         video_play.setOnClickListener{
             if (isLive){
@@ -202,6 +213,13 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         video_fullscreen.setOnClickListener{
             toggleFullScreen()
         }
+        video_finish.setOnClickListener{
+            if (isPortrait){
+                mActivity?.finish()
+            }else{
+                toggleFullScreen()
+            }
+        }
         mGestureDector = GestureDetector(getContext(),object : PlayerGestureDetector(){})
         setClickable(true) //设置可点击
         setOnTouchListener(this)
@@ -261,22 +279,6 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         )
     }
 
-
-    fun onConfigurationChang(conf: Configuration){
-        /*isPortrait = conf.orientation == Configuration.ORIENTATION_PORTRAIT
-        mHandler.post {
-            tryFullScreen(!portrait)
-            if (portrait) {
-                query.id(R.id.app_video_box).height(initHeight, false)
-            } else {
-                val heightPixels = mActivity!!.getResources().displayMetrics.heightPixels
-                val widthPixels = mActivity!!.getResources().displayMetrics.widthPixels
-                query.id(R.id.app_video_box).height(Math.min(heightPixels, widthPixels), false)
-            }
-            updateFullScreenButton()
-        }
-        orientationEventListener.enable()*/
-    }
     /**
      * 更新播放状态
      */
@@ -308,10 +310,16 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         return position
     }
 
-    fun setVideoURI(uri: Uri){
+    fun setVideoUrl(url: String){
+        this.mVideoUrl = url
+        if(isLive){
+            video_seekBar.visibility = View.INVISIBLE
+            tv_sprit.visibility = View.INVISIBLE
+            video_endTime.visibility = View.INVISIBLE
+        }
         //video_view.setAspectRatio(IRenderView.AR_ASPECT_FIT_PARENT)
         video_view.setAspectRatio(IRenderView.AR_16_9_FIT_PARENT)
-        video_view.setVideoURI(uri)
+        video_view.setVideoURI(Uri.parse(url),isLive)
     }
 
     fun startPlay(){
@@ -362,6 +370,10 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         toggleAnim(video_top,-video_top.height.toFloat(),0f)
         toggleAnim(video_bottom, video_bottom.height.toFloat(),0f)
         isHiddenBar = false
+        /*//3秒之后隐藏状态栏
+        mHandler.postDelayed({
+            hideBarUI()
+        },2000)*/
     }
 
     private fun toggleAnim(view: View ,fromY:Float,toY:Float) {
@@ -373,14 +385,56 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         animatorSet.start()
     }
 
+
+    fun onBackPressed(){
+        toggleFullScreen()
+    }
+    /**
+     * activity横竖屏切换调用此方法
+     */
+    fun onConfigurationChang(conf: Configuration?) :Boolean{
+        isPortrait = conf!!.orientation == Configuration.ORIENTATION_PORTRAIT
+        mHandler.post {
+            //tryFullScreen(!portrait)
+            if (isPortrait) {
+                this@SimplePlayerView.size(false,initHeight, false)
+            } else {
+                val heightPixels = mActivity!!.getResources().displayMetrics.heightPixels
+                val widthPixels = mActivity!!.getResources().displayMetrics.widthPixels
+                this@SimplePlayerView.size(false,Math.min(heightPixels, widthPixels), false)
+            }
+            updateFullScreenButton()
+        }
+        //orientationEventListener.enable()
+        return isPortrait
+    }
+
+    private fun size(width: Boolean, n: Int, dip: Boolean) {
+        var n = n
+        val lp = video_root.getLayoutParams()
+        if (n > 0 && dip) {
+            n = dip2pixel(context, n.toFloat())
+        }
+        if (width) {
+            lp.width = n
+        } else {
+            lp.height = n
+        }
+        video_root.setLayoutParams(lp)
+    }
+
+    fun dip2pixel(context: Context, n: Float): Int {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, n, context.resources.displayMetrics).toInt()
+    }
     /**
      * 全屏切换
      */
     private fun toggleFullScreen(): SimplePlayerView {
-
         if (getScreenOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
             mActivity!!.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         } else {
+            //因为是延迟初始化，所以在这里需要使用initHeight
+            Log.i(TAG,"记录竖屏状态下的hiehgt：" + initHeight)
             mActivity!!.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
         }
         //updateFullScreenButton()
@@ -391,6 +445,20 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         layoutParams.width = LayoutParams.MATCH_PARENT
         layoutParams.height = LayoutParams.MATCH_PARENT
         setLayoutParams(layoutParams)
+        changeWindow()
+    }
+
+    fun changeWindow(){
+        val attrs = mActivity!!.getWindow().getAttributes()
+        if (isPortrait) {
+            attrs.flags = attrs.flags and WindowManager.LayoutParams.FLAG_FULLSCREEN.inv()
+            mActivity!!.getWindow().setAttributes(attrs)
+            mActivity!!.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        } else {
+            attrs.flags = attrs.flags or WindowManager.LayoutParams.FLAG_FULLSCREEN
+            mActivity!!.getWindow().setAttributes(attrs)
+            mActivity!!.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        }
     }
 
     private fun getScreenOrientation(): Int {
@@ -496,6 +564,8 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         mHandler.removeMessages(MESSAGE_HIDE_CENTER_BOX)
         mHandler.sendEmptyMessageDelayed(MESSAGE_HIDE_CENTER_BOX, 500)
         ll_video_progress.visibility = View.GONE
+        video_volume_controller_root.visibility = View.GONE
+        video_brightness_controller_root.visibility = View.GONE
     }
 
     private fun getActivityFromContext(context: Context?): Activity? {
@@ -570,21 +640,26 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             if (volume < 0)
                 volume = 0
         }
-        var index = (percent * mMaxVolume!!).toInt() + volume
-        if (index > mMaxVolume!!) {
-            index = mMaxVolume!!
+        var index = (percent * mMaxVolume).toInt() + volume
+        if (index > mMaxVolume) {
+            index = mMaxVolume
         } else if (index < 0) {
             index = 0
         }
         // 变更声音
         mAudioManager!!.setStreamVolume(AudioManager.STREAM_MUSIC, index, 0)
         // 变更进度条
-        val i = (index * 1.0 / mMaxVolume!! * 100).toInt()
+        val i = (index * 1.0 / mMaxVolume * 100).toInt()
         var s = "" + i + "%"
         if (i == 0) {
             s = "off"
         }
         DebugLog.d("", "onVolumeSlide:$s")
+        if (video_volume_controller_root.visibility == View.GONE){
+            video_volume_controller_root.visibility = View.VISIBLE
+        }
+        video_volume_controller.max = 100
+        video_volume_controller.setProgress(i)
     }
 
     /**
@@ -624,7 +699,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
      */
     private fun onBrightnessSlide(percent: Float) {
         if (brightness < 0) {
-            brightness = mActivity!!.getWindow()!!.getAttributes()!!.screenBrightness
+            brightness = mActivity!!.getWindow().getAttributes().screenBrightness
             if (brightness <= 0.00f) {
                 brightness = 0.50f
             } else if (brightness < 0.01f) {
@@ -632,13 +707,19 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             }
         }
         DebugLog.d("", "brightness:$brightness,percent:$percent")
-        val lpa = mActivity!!.getWindow()!!.getAttributes()
+        val lpa = mActivity!!.getWindow().getAttributes()
         lpa.screenBrightness = brightness + percent
         if (lpa.screenBrightness > 1.0f) {
             lpa.screenBrightness = 1.0f
         } else if (lpa.screenBrightness < 0.01f) {
             lpa.screenBrightness = 0.01f
         }
-        mActivity?.getWindow()?.setAttributes(lpa)
+        mActivity!!.getWindow().setAttributes(lpa)
+
+        if (video_brightness_controller_root.visibility == View.GONE){
+            video_brightness_controller_root.visibility = View.VISIBLE
+        }
+        video_brightness_controller.max = 100
+        video_brightness_controller.setProgress((lpa.screenBrightness*100).toInt())
     }
 }
