@@ -5,6 +5,7 @@
               android:layout_height="wrap_content"
               android:background="#11000000"
               android:gravity="center_vertical"
+
               android:orientation="horizontal">
 
     <ImageView
@@ -12,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_img_back"
+        android:padding="5dp"
         android:layout_margin="5dp"/>
 
     <TextView
@@ -20,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ellipsize="marquee"
-        android:padding="8dp"
+        android:padding="5dp"
         android:singleLine="true"
         android:textColor="@android:color/white"
         android:textSize="12dp"
@@ -31,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_img_more"
-        android:layout_margin="5dp"/>
+        android:layout_margin="5dp"
+        android:padding="5dp"/>
 
 </LinearLayout>

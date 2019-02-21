@@ -26,6 +26,7 @@ import android.support.v4.app.Fragment
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.*
+import com.bilibili.lingxiao.ijkplayer.NetworkUtil
 import kotlinx.android.synthetic.main.simple_player_topbar.view.*
 import kotlin.math.log
 import kotlin.properties.Delegates
@@ -33,9 +34,8 @@ import kotlin.properties.Delegates
 
 class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr),View.OnTouchListener {
 
-    var mCurrentPosition = 0
-    var mVideoState = PlayState.STATE_IDLE
-
+    private var mCurrentPosition = 0
+    private var mVideoState = PlayState.STATE_IDLE
     /**
      * 同步进度
      */
@@ -52,10 +52,6 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
      * 重新播放
      */
     private val MESSAGE_RESTART_PLAY = 4
-    /**
-     * 播放的时候是否需要网络提示，默认显示网络提示，true为显示网络提示，false不显示网络提示
-     */
-    private var isGNetWork = true
 
     /**
      * 是否在拖动进度条中，默认为停止拖动，true为在拖动中，false为停止拖动
@@ -92,6 +88,11 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
      * 记录播放器竖屏时的高度 延迟初始化
      */
     private val initHeight: Int by lazy { this@SimplePlayerView.height }
+
+    /**
+     * 是否显示网络改变提示
+     */
+    var isShowNetworkHint = true
 
     private var mVideoUrl: String by Delegates.notNull<String>()
 
@@ -148,20 +149,20 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         mMaxVolume = mAudioManager?.getStreamMaxVolume(AudioManager.STREAM_MUSIC)!!
 
         video_play.setOnClickListener{
-            if (isLive){
-                video_view.stopPlayback()
-            }else{
-                if (video_view.isPlaying){
-                    pausePlay()
-                    video_play.setImageResource(R.drawable.ic_img_pause)
-                    play_icon.setImageResource(R.drawable.ic_img_pause)
-                    play_icon.visibility = View.VISIBLE
+            if (video_view.isPlaying){
+                if (isLive){
+                    video_view.stopPlayback()
                 }else{
-                    startPlay()
-                    video_play.setImageResource(R.drawable.ic_img_play)
-                    play_icon.setImageResource(R.drawable.ic_img_play)
-                    play_icon.visibility = View.INVISIBLE
+                    pausePlay()
                 }
+                video_play.setImageResource(R.drawable.ic_img_pause)
+                play_icon.setImageResource(R.drawable.ic_img_pause)
+                play_icon.visibility = View.VISIBLE
+            }else{
+                startPlay()
+                video_play.setImageResource(R.drawable.ic_img_play)
+                play_icon.setImageResource(R.drawable.ic_img_play)
+                play_icon.visibility = View.INVISIBLE
             }
         }
         play_icon.setOnClickListener{
@@ -178,6 +179,10 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
                     play_icon.visibility = View.INVISIBLE
                 },500)
             }
+        }
+        video_button_continue.setOnClickListener{
+            video_netTie.visibility = View.GONE
+            video_view.start()
         }
 
         //video_seekBar.setOnSeekBarChangeListener(mVideoProgressListener)
@@ -229,6 +234,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
     private fun statusChanged(what: Int) {
         this.mVideoState = what
         Log.i(TAG,"播放状态: " + mVideoState)
+
         when(mVideoState){
             PlayState.STATE_COMPLETED ->{
                 Log.d(TAG,"播放结束")
@@ -251,6 +257,11 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             }
             PlayState.MEDIA_INFO_VIDEO_INTERRUPT->{
                 Log.d(TAG,"直播停止推流")
+                if (isShowNetworkHint &&
+                    NetworkUtil.getNetworkType(context) != NetworkUtil.NetworkType.NETWORK_WIFI &&
+                    NetworkUtil.getNetworkType(context) != NetworkUtil.NetworkType.NETWORK_NO){
+                    video_netTie.visibility = View.VISIBLE
+                }
             }
             PlayState.STATE_ERROR,
             PlayState.MEDIA_INFO_UNKNOWN,
@@ -310,7 +321,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         return position
     }
 
-    fun setVideoUrl(url: String){
+    fun setVideoUrl(url: String): SimplePlayerView{
         this.mVideoUrl = url
         if(isLive){
             video_seekBar.visibility = View.INVISIBLE
@@ -320,16 +331,21 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         //video_view.setAspectRatio(IRenderView.AR_ASPECT_FIT_PARENT)
         video_view.setAspectRatio(IRenderView.AR_16_9_FIT_PARENT)
         video_view.setVideoURI(Uri.parse(url),isLive)
+        return this
     }
 
     fun startPlay(){
         if (isLive){
+            video_view.setVideoPath(mVideoUrl)
             video_view.seekTo(0)
-        }else{
-
         }
-        //video_view.seekTo(mCurrentPosition)
-        video_view.start()
+        if (isShowNetworkHint &&
+            NetworkUtil.getNetworkType(context) != NetworkUtil.NetworkType.NETWORK_WIFI &&
+            NetworkUtil.getNetworkType(context) != NetworkUtil.NetworkType.NETWORK_NO){
+            video_netTie.visibility = View.VISIBLE
+        }else{
+            video_view.start()
+        }
     }
 
     fun pausePlay(){
@@ -342,6 +358,18 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         video_view.release(true)
     }
 
+    fun setVideoTitle(title: String): SimplePlayerView{
+        video_title.text = title
+        return this
+    }
+
+    /**
+     * 是否显示网络状态提示
+     */
+    fun showNetWorkHint(show: Boolean): SimplePlayerView{
+        isShowNetworkHint = show
+        return this
+    }
     /**
      * 获取当前播放位置
      */
@@ -387,7 +415,10 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
 
 
     fun onBackPressed(){
-        toggleFullScreen()
+        //这个地方横屏才响应
+        if (!isPortrait){
+            toggleFullScreen()
+        }
     }
     /**
      * activity横竖屏切换调用此方法
@@ -411,7 +442,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     private fun size(width: Boolean, n: Int, dip: Boolean) {
         var n = n
-        val lp = video_root.getLayoutParams()
+        val lp = getLayoutParams()
         if (n > 0 && dip) {
             n = dip2pixel(context, n.toFloat())
         }
@@ -420,7 +451,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         } else {
             lp.height = n
         }
-        video_root.setLayoutParams(lp)
+        setLayoutParams(lp)
     }
 
     fun dip2pixel(context: Context, n: Float): Int {
@@ -437,14 +468,13 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             Log.i(TAG,"记录竖屏状态下的hiehgt：" + initHeight)
             mActivity!!.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
         }
-        //updateFullScreenButton()
         return this
     }
 
     private fun updateFullScreenButton() {
-        layoutParams.width = LayoutParams.MATCH_PARENT
-        layoutParams.height = LayoutParams.MATCH_PARENT
-        setLayoutParams(layoutParams)
+        //layoutParams.width = LayoutParams.MATCH_PARENT
+        //layoutParams.height = LayoutParams.MATCH_PARENT
+        //setLayoutParams(layoutParams)
         changeWindow()
     }
 
@@ -490,11 +520,15 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         return orientation
     }
     fun onPause(){
+        //恢复系统其它媒体的状态
+        muteAudioFocus(context,true)
         getCurrentPosition()
         video_view.release(false)
     }
 
     fun onResume(){
+        //暂停系统其它媒体的状态
+        muteAudioFocus(context,false)
         video_view.openVideo()
         if (isLive){
             video_view.seekTo(0)
@@ -508,35 +542,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         mHandler.removeCallbacksAndMessages(null)
         video_view.stopPlayback()
     }
-    private val mVideoProgressListener = object: SeekBar.OnSeekBarChangeListener{
-        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 
-            Log.i(TAG,"用户拖动改变："+fromUser)
-            if (!fromUser){
-                return
-            }
-            val duration = video_view.duration
-            val position = duration * progress
-            val time = generateTime(position)
-            video_currentTime.text = time
-        }
-
-        override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            //开始拖动
-            isDragging = true
-            mHandler.removeMessages(MESSAGE_SHOW_PROGRESS)
-            Log.i(TAG,"用户开始拖动")
-        }
-
-        override fun onStopTrackingTouch(seekBar: SeekBar?) {
-            //停止拖动
-            isDragging = false
-            mHandler.removeMessages(MESSAGE_SHOW_PROGRESS)
-            video_view.seekTo(video_view.duration * seekBar!!.progress)
-            mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_PROGRESS,1000)
-            Log.i(TAG,"用户停止拖动")
-        }
-    }
     override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
         //将触摸事件交给GestureDetector
         if(mGestureDector!!.onTouchEvent(motionEvent)){
@@ -581,6 +587,22 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             }
         }
         return null
+    }
+
+    /**
+     * @param bMute 值为true时为关闭背景音乐。
+     */
+    private fun muteAudioFocus(context: Context, bMute: Boolean): Boolean {
+        var bool = false
+        val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        if (bMute) {
+            val result = am.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+            bool = result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
+        } else {
+            val result = am.abandonAudioFocus(null)
+            bool = result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
+        }
+        return bool
     }
 
     private open inner class PlayerGestureDetector: GestureDetector.SimpleOnGestureListener(){

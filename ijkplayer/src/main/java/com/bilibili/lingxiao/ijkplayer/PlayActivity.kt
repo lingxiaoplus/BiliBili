@@ -15,10 +15,14 @@ class PlayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
+        //屏幕常亮
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         /** 普通播放 start **/
         var url = getIntent().getStringExtra("url");
-        simple_view.setVideoUrl(url)
-        simple_view.startPlay()
+        simple_view
+            .setVideoUrl(url)
+            .setVideoTitle("这是标题")
+            .startPlay()
 
     }
 

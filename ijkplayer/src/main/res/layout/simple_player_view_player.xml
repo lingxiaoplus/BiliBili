@@ -57,13 +57,15 @@
     </LinearLayout>
     <!-- 网络提示-->
     <LinearLayout
-            android:id="@+id/app_video_netTie"
+            android:id="@+id/video_netTie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#33000000"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            tools:visibility="visible"
+            android:visibility="gone"
+    >
 
         <TextView
                 android:layout_width="wrap_content"
@@ -72,19 +74,20 @@
                 android:gravity="center"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:text="您正在使用移动网络播放视频\n可能产生较高流量费用"
+                android:text="您正在使用移动网络播放视频，可能产生较高流量费用"
+                android:textSize="12sp"
                 android:textColor="@android:color/white"/>
 
-        <TextView
-                android:id="@+id/app_video_netTie_icon"
+        <Button
+                android:id="@+id/video_button_continue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/simple_player_btn"
-                android:gravity="center"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
                 android:text="继续"
-                android:textColor="@android:color/white"/>
+                android:background="@drawable/button_shape"
+                android:textColor="@android:color/white"
+                android:padding="2dp"
+        />
+
     </LinearLayout>
 
     <!-- 最大试看时长提示-->
