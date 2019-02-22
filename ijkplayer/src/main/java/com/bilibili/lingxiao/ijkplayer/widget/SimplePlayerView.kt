@@ -102,9 +102,12 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
     private var screenWidthPixels: Int? = 0
 
     private val isLive: Boolean
-        get() = (mVideoUrl.startsWith("rtmp://") ||mVideoUrl.startsWith("rtsp://")
-                || mVideoUrl.startsWith("http://") && mVideoUrl.endsWith(".m3u8")
-                || mVideoUrl.startsWith("http://") && mVideoUrl.endsWith(".flv"))
+        get() {
+            return mVideoUrl.startsWith("rtmp://") ||
+                    mVideoUrl.startsWith("rtsp://") ||
+                    mVideoUrl.startsWith("http://") && mVideoUrl.endsWith(".m3u8") ||
+                    mVideoUrl.startsWith("http://") && mVideoUrl.endsWith(".flv")
+        }
 
     companion object {
         val TAG = SimplePlayerView::class.java.simpleName

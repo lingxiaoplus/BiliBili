@@ -28,7 +28,7 @@ class HttpPresenter(view: HttpView, activity: MainActivity): BasePresenter<HttpV
             override fun onError(code: Int, desc: String?) {
                 mView?.showToast(desc)
                 mView?.diamissDialog()
-                Log.e(TAG,"请求失败" + desc + " 错误码： "+code);
+                Log.e(TAG,"请求失败" + desc + " 错误码： " + code)
             }
             override fun onCancel() {
 

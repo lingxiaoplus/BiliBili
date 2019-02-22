@@ -21,6 +21,7 @@ class MainActivity : BaseActivity() , HttpView{
     }
 
     override fun showDialog() {
+
         showProgressDialog("请求中...")
     }
 

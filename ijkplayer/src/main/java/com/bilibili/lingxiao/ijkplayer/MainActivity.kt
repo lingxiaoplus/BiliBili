@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() ,EasyPermissions.PermissionCallbacks{
 
     var urls = arrayOf("http://videotest-1252348761.cos.ap-chengdu.myqcloud.com/background.mp4",
             "rtsp://192.168.0.216:554/h264/ch1/main/av_stream",
-        "http://183.251.61.207/PLTV/88888888/224/3221225829/index.m3u8")
+        "http://221.228.226.23/11/t/j/v/b/tjvbwspwhqdmgouolposcsfafpedmb/sh.yinyuetai.com/691201536EE4912BF7E4F1E2C67B8119.mp4")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
