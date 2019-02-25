@@ -27,6 +27,7 @@
         <activity android:name=".PlayActivity"
                   android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
+        <activity android:name=".localvideo.VideoListActivity"/>
     </application>
 
 </manifest>
