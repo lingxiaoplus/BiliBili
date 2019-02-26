@@ -10,7 +10,7 @@
     <!--涟漪效果颜色-->
     <color name="grey">#000000</color>
     <color name="white">#11111111</color>
-    <color name="whiteNor">#FFFFFFFF</color>
+    <color name="whiteNor">#FFFFFF</color>
     <color name="trans">#00000000</color>
     <color name="colorGray">#e5e3e4</color>
     <!--splash background color start-->

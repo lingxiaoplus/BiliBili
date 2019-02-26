@@ -61,4 +61,7 @@ ext {
     leancloudVersion = "v4.7.3"
     qiniuVersion = "7.3.4"
     ijkplayerVersion = "0.8.8"
+
+    baseRecyclerAdapterVersion = "2.9.30"
+    daggerVersion = "2.21"
 }

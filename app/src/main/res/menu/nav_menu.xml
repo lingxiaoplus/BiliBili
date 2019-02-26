@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_home"
+            android:icon="@drawable/mall_mine_icon_home"
+            android:title="首页"
+            />
+        <item android:id="@+id/nav_vertical"
+            android:icon="@drawable/mall_mine_icon_home"
+            android:title="手机壁纸"
+            >
+        </item>
+        <item android:id="@+id/nav_mzitu"
+            android:icon="@drawable/mall_mine_icon_home"
+            android:title="妹子图(mzitu.com)"
+            />
+        <item android:id="@+id/nav_sousiba"
+            android:icon="@drawable/mall_mine_icon_home"
+            android:title="搜丝吧(sousiba.com)"
+            android:visible="false"
+            />
+        <item android:id="@+id/nav_cosplayla"
+            android:icon="@drawable/mall_mine_icon_home"
+            android:title="cosplay.la"
+            android:visible="true"
+            />
+        <!--<item android:id="@+id/nav_figure"-->
+            <!--android:icon="@drawable/ic_img_figure"-->
+            <!--android:title="斗图专题"/>-->
+        <item android:id="@+id/nav_find"
+            android:icon="@drawable/mall_mine_icon_home"
+            android:title="以图搜图"/>
+        <item android:id="@+id/nav_reception"
+            android:icon="@drawable/mall_mine_icon_home"
+            android:title="好评一波"/>
+        <item android:id="@+id/nav_exit"
+            android:icon="@drawable/mall_mine_icon_home"
+            android:title="退出软件"/>
+    </group>
+</menu>

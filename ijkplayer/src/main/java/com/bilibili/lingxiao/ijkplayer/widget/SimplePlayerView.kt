@@ -543,7 +543,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun onDestory(){
         mHandler.removeCallbacksAndMessages(null)
-        video_view.stopPlayback()
+        stopPlay()
     }
 
     override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
