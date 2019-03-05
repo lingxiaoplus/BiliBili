@@ -50,6 +50,9 @@ dependencies {
     // If you want to use Kotlin syntax with Android Lifecycle
     implementation "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:$rootProject.ext.rxlifescyleVersion"
     implementation "pub.devrel:easypermissions:$rootProject.ext.easypermissionsVersion"
+    implementation "com.facebook.fresco:fresco:$rootProject.ext.frescoVersion"
+    // 支持 GIF 动图，需要添加
+    implementation "com.facebook.fresco:animated-gif:$rootProject.ext.frescoVersion"
     implementation project(':common')
     implementation project(':ijkplayer')
 }

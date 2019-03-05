@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_img_game" />
-                            <entry key="sourceFile" value="D:\google下载\game.svg" />
+                            <entry key="outputName" value="ic_img_scan_qr_code" />
+                            <entry key="sourceFile" value="D:\google下载\扫码.svg" />
                           </map>
                         </option>
                       </PersistentState>

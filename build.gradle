@@ -64,4 +64,5 @@ ext {
 
     baseRecyclerAdapterVersion = "2.9.30"
     daggerVersion = "2.21"
+    frescoVersion = "1.13.0"
 }
