@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@color/pink400">
+        <shape android:shape="rectangle">
+            <!--背景色-->
+            <solid android:color="@color/white_alpha_96"/>
+            <!--圆角-->
+            <corners android:radius="@dimen/dp_4"/>
+            <!--设置边框线的宽度和颜色-->
+            <stroke android:width="2dp" android:color="@color/pink400"/>
+        </shape>
+    </item>
+    <item android:state_pressed="false" android:drawable="@color/pink_50">
+        <shape android:shape="rectangle">
+            <!--背景色-->
+            <solid android:color="@color/white_alpha_96"/>
+            <!--圆角-->
+            <corners android:radius="@dimen/dp_4"/>
+            <!--设置边框线的宽度和颜色-->
+            <stroke android:width="2dp" android:color="@color/pink_50"/>
+        </shape>
+    </item>
+</selector>

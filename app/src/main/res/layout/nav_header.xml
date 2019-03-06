@@ -23,14 +23,15 @@
             android:layout_marginStart="8dp"
             fresco:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="8dp"
-            fresco:layout_constraintTop_toTopOf="parent" android:id="@+id/simpleDraweeView"/>
+            fresco:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/nav_header"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="点击头像登录"
-            android:textColor="@color/whiteNor"
+            android:textColor="@color/white"
             android:layout_marginBottom="8dp" fresco:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="8dp" fresco:layout_constraintTop_toBottomOf="@+id/simpleDraweeView"
+            android:layout_marginTop="8dp" fresco:layout_constraintTop_toBottomOf="@+id/nav_header"
             fresco:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             fresco:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             fresco:layout_constraintVertical_bias="0.115"/>
@@ -38,12 +39,12 @@
     <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_img_scan_qr_code"
+            fresco:srcCompat="@drawable/ic_img_scan_qr_code"
             android:layout_marginEnd="8dp"
             fresco:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"
             fresco:layout_constraintTop_toTopOf="parent"
-            fresco:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
+            fresco:layout_constraintStart_toEndOf="@+id/nav_header"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
             fresco:layout_constraintBottom_toBottomOf="parent"
