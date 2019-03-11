@@ -178,7 +178,7 @@ class HttpRequest {
         val apiObservable: Observable<HttpResponse>
         when (method) {
             Method.GET -> apiObservable =
-                    RetrofitUtil.get().retrofit().create(UserApi::class.java)[apiUrl, map]
+                    RetrofitUtil.get().retrofit().create(UserApi::class.java).get(apiUrl, map)
             Method.POST -> apiObservable =
                     RetrofitUtil.get().retrofit().create(UserApi::class.java).post(apiUrl, map)
             //else -> apiObservable = RetrofitUtil.get().retrofit().create(UserApi::class.java).post(apiUrl, map)

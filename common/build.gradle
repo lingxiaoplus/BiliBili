@@ -75,8 +75,7 @@ dependencies {
     api "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"
     api "com.android.support:cardview-v7:$rootProject.ext.supportVersion"
     api "com.android.support:design:$rootProject.ext.supportVersion"
-    api "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

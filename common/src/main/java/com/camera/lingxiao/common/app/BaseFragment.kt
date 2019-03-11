@@ -130,7 +130,7 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
     /**
      * 初始化控件
      */
-    protected fun initWidget(root: View) {
+    protected open fun initWidget(root: View) {
         //mRootUnbinder = ButterKnife.bind(this, root)
     }
 

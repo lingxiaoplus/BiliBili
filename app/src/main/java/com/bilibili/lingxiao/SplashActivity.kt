@@ -1,12 +1,8 @@
 package com.bilibili.lingxiao
 
-import android.app.Activity
-import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import com.camera.lingxiao.common.app.BaseActivity
-import android.view.animation.Animation.AnimationListener
-import android.view.animation.Animation.RELATIVE_TO_SELF
 import android.view.animation.ScaleAnimation
 import android.view.animation.AnimationSet
 import kotlinx.android.synthetic.main.activity_splash.*

@@ -1,7 +1,5 @@
 package com.bilibili.lingxiao.user
 
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import android.view.View
 import com.bilibili.lingxiao.R
 import com.camera.lingxiao.common.app.BaseActivity
