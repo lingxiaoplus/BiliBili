@@ -13,7 +13,7 @@ class HttpResponse {
     /**
      * 描述信息
      */
-    @SerializedName("msg")
+    @SerializedName("message")
     var msg: String? = null
 
     /**
@@ -25,7 +25,7 @@ class HttpResponse {
     /**
      * 数据对象[成功返回对象,失败返回错误说明]
      */
-    @SerializedName("results")
+    @SerializedName("data")
     var results: Any? = null
 
     /**

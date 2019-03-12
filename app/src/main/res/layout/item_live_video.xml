@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+>
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/live_user_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:viewAspectRatio="1.43"
+                app:progressBarImageScaleType="centerInside"
+                app:progressBarImage="@drawable/ic_live_no_face"
+        />
+        <TextView
+                android:id="@+id/live_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="username"
+                android:layout_alignParentBottom="true"
+        />
+        <TextView
+                android:id="@+id/live_people_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="people number"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+        />
+    </RelativeLayout>
+    <TextView
+            android:id="@+id/live_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="title"
+    />
+    <TextView
+            android:id="@+id/live_category_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="category name"
+    />
+</LinearLayout>

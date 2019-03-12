@@ -71,4 +71,6 @@ dependencies {
     implementation "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
+    implementation "com.youth.banner:banner:$rootProject.ext.bannerVersion"
+    implementation project(':skinLibrary')
 }

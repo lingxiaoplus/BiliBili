@@ -14,11 +14,12 @@ class LivePresenter : BasePresenter<LiveView, LiveFragment> {
     fun getLiveList(roomId :Int){
         liveTrans.getLiveList(roomId,object :HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {
-                mView?.onGetLiveList()
+                var lists = res as Array<*>
+                mView?.onGetLiveList(lists[0] as LiveData)
             }
 
             override fun onError(code: Int, desc: String?) {
-
+                mView?.showToast(desc)
             }
 
             override fun onCancel() {

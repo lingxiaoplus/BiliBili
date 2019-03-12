@@ -14,7 +14,7 @@ import com.trello.rxlifecycle2.LifecycleProvider
 class LiveTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
     fun getLiveList(roomId: Int,callback : HttpRxCallback<Any>){
         request.clear()
-        request.put(HttpRequest.API_URL,"/AppRoom/index")
+        request.put(HttpRequest.API_URL,"/AppIndex/home")
         request.put("_device",GlobalProperties.DEVICE)
         request.put("appkey",GlobalProperties.APP_KEY)
         request.put("build",GlobalProperties.BUILD)
@@ -30,12 +30,13 @@ class LiveTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
                 LogUtils.d("获取到的数据" + element)
-                var modle = Gson().fromJson(element,Array<HttpModle>::class.java)
+                var modle = Gson().fromJson(element,LiveData::class.java)
                 val obj = arrayOfNulls<Any>(1)
                 obj[0] = modle
                 return obj
             }
         })
+
         getRequest().request(HttpRequest.Method.GET,request,callback)
     }
 }

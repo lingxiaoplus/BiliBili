@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    //ext.kotlin_version = '1.0.0'
     ext.kotlin_version = '1.2.71'
     repositories {
         google()
@@ -44,7 +45,7 @@ ext {
     gsonVersion = "2.7"
     frescoVersion = "0.12.0"
     retrofitVersion = "2.1.0"
-    bannerVersion = "1.4.9"
+    bannerVersion = "1.4.10"
     rxandroidVersion = "2.0.1"
     rxjavaVersion = "2.1.1"
     rxjavaAdapterVersion = "2.3.0"

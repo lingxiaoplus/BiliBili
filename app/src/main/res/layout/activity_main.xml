@@ -68,7 +68,7 @@
 
 
             </android.support.v7.widget.Toolbar>
-            <android.support.design.widget.TabLayout
+            <com.bilibili.lingxiao.widget.skin.SkinTabLayout
                     android:id="@+id/main_tabLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
                     app:tabIndicatorColor="@color/colorPrimary"
                     app:tabMaxWidth="0dp"
             >
-            </android.support.design.widget.TabLayout>
+            </com.bilibili.lingxiao.widget.skin.SkinTabLayout>
         </android.support.design.widget.AppBarLayout>
 
         <RelativeLayout
