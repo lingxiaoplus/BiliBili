@@ -27,6 +27,8 @@ class LiveTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         request.put("trace_id",GlobalProperties.getTraceId())
         request.put("ts",GlobalProperties.getSystemTime())
         request.put("version",GlobalProperties.VERSION)
+
+        LogUtils.d("屏幕像素---->" + GlobalProperties.SCALE)
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
                 LogUtils.d("获取到的数据" + element)

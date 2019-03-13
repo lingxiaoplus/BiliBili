@@ -4,7 +4,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.List;
 
-public class LiveData {
+public class LiveData implements MultiItemEntity{
 
 
         private List<BannerBean> banner;
@@ -42,6 +42,26 @@ public class LiveData {
         public void setPartitions(List<PartitionsBean> partitions) {
             this.partitions = partitions;
         }
+
+
+    public static final int BANNER = 1;
+    public static final int CATEGORY = 2;
+    public static final int RECOMMEND = 3;
+    public static final int PARTITION = 4;
+    private int itemType;
+
+    public LiveData(int type){
+        this.itemType = type;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
+
+    @Override
+    public int getItemType() {
+        return itemType;
+    }
 
 
     public static class RecommendDataBean {

@@ -36,10 +36,14 @@ object UIUtil {
             DisplayMetrics.DENSITY_MEDIUM -> return "mdpi"
             DisplayMetrics.DENSITY_HIGH -> return "hdpi"
             DisplayMetrics.DENSITY_XHIGH -> return "xhdpi"
-            DisplayMetrics.DENSITY_XXHIGH -> return "xxhdpi"
+            DisplayMetrics.DENSITY_XXHIGH,
+            DisplayMetrics.DENSITY_440,
+            DisplayMetrics.DENSITY_420,
+            DisplayMetrics.DENSITY_400 -> return "xxhdpi"
             DisplayMetrics.DENSITY_XXXHIGH -> return "xxxhdpi"
             DisplayMetrics.DENSITY_TV -> return "tvdpi"
-            else -> return displayMetrics.densityDpi.toString()
+            //else -> return displayMetrics.densityDpi.toString()
+            else -> return "xxxhdpi"
         }
     }
 }

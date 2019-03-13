@@ -26,5 +26,13 @@
         <item name="android:windowActionBar">false</item>
     </style>
 
-
+    <!--card style-->
+    <style name="cardStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
 </resources>
