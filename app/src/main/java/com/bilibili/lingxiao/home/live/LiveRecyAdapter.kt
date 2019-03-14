@@ -1,5 +1,6 @@
 package com.bilibili.lingxiao.home.live
 
+import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -8,38 +9,85 @@ import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.banner.BannerImageLoader
 import com.bilibili.lingxiao.home.live.category.LiveCategoryAdapter
 import com.bilibili.lingxiao.home.live.partitions.PartitionAdapter
+import com.bilibili.lingxiao.home.live.partitions.PartitionVideoAdapter
 import com.bilibili.lingxiao.home.live.recommend.LiveRecommendAdapter
 import com.camera.lingxiao.common.utills.LogUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.util.MultiTypeDelegate
+import com.facebook.drawee.view.SimpleDraweeView
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 
-class LiveRecyAdapter : BaseMultiItemQuickAdapter<LiveData, BaseViewHolder> {
-    constructor(data: MutableList<LiveData>) :super(data){
-        addItemType(LiveData.BANNER,R.layout.layout_banner)
-        addItemType(LiveData.CATEGORY,R.layout.layout_category)
+class LiveRecyAdapter : BaseMultiItemQuickAdapter<MultiItemLiveData, BaseViewHolder> {
+    constructor(data: MutableList<MultiItemLiveData>) :super(data){
+        addItemType(MultiItemLiveData.BANNER,R.layout.layout_banner)
+        addItemType(MultiItemLiveData.CATEGORY,R.layout.item_live_category)
         addItemType(LiveData.RECOMMEND,R.layout.layout_recommend)
-        addItemType(LiveData.PARTITION,R.layout.layout_category)
-    }
-    override fun convert(helper: BaseViewHolder, item: LiveData) {
-        when(helper.itemViewType){
-            LiveData.BANNER-> {
-                var banner:Banner = helper.getView(R.id.live_banner)
-                initBanner(banner,item.banner)
-            }
-            LiveData.CATEGORY->{
-                initCategory(helper,item.entranceIcons)
-            }
-            LiveData.RECOMMEND->{
-                initRecommend(helper,item.recommend_data.lives)
-            }
-            LiveData.PARTITION->{
-                initPartition(helper,item.partitions)
+        addItemType(LiveData.PARTITION,R.layout.layout_partition)
+
+        /*multiTypeDelegate = object : MultiTypeDelegate<LiveData>() {
+            override fun getItemType(entity: LiveData): Int {
+                //根据你的实体类来判断布局类型
+                return entity.itemType
             }
         }
+        multiTypeDelegate
+            .registerItemType(LiveData.BANNER,R.layout.layout_banner)
+            .registerItemType(LiveData.CATEGORY,R.layout.layout_category)
+            .registerItemType(LiveData.RECOMMEND,R.layout.layout_recommend)
+            .registerItemType(LiveData.PARTITION,R.layout.layout_category)*/
+    }
+    override fun convert(helper: BaseViewHolder, item: MultiItemLiveData) {
+        when(helper.itemViewType){
+            MultiItemLiveData.BANNER-> {
+                var banner :Banner = helper.getView(R.id.live_banner)
+                initBanner(banner,item.bannerList)
+            }
+            MultiItemLiveData.CATEGORY->{
+                //initCategory(helper,item.entranceIcons)
+                helper.setText(R.id.item_live_title,item.entranceIconsBean.name)
+                var image : SimpleDraweeView = helper.getView(R.id.item_live_image)
+                image.setImageURI(Uri.parse(item.entranceIconsBean.entrance_icon.src))
+            }
+            MultiItemLiveData.RECOMMEND->{
+                initRecommend(helper,item.liveList)
+            }
+            MultiItemLiveData.PARTITION->{
+                helper.setText(R.id.live_category_name,item.partitionsBean.partition.name)
+                LogUtils.d("LiveRecyAdapter 获取到Partition  name 的值-》》" + item.partitionsBean.partition.name)
+                initRecy(helper,item.partitionsBean.lives)
+                //initPartition(helper,item.partitions)
+            }
+        }
+    }
+
+
+    private fun initRecy(helper: BaseViewHolder, data: MutableList<LiveData.PartitionsBean.LivesBeanX>) {
+        var list = data
+        if (list.size > 4){
+            list = list.subList(0,4)
+        }
+        var categoryAdapter = PartitionVideoAdapter(R.layout.item_live_video,list)
+        var manager = GridLayoutManager(mContext,2)
+        val recyclerView:RecyclerView = helper.getView(R.id.live_partition_recy)
+        recyclerView.adapter = categoryAdapter
+        recyclerView.layoutManager = manager
+        recyclerView.isNestedScrollingEnabled = false
+
+        recyclerView.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    categoryAdapter.isScroller = false
+                    categoryAdapter.notifyDataSetChanged()
+                }else{
+                    categoryAdapter.isScroller = true
+                }
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+        })
     }
     var partitionAdapter:PartitionAdapter? = null
     private fun initPartition(helper: BaseViewHolder, partitions: MutableList<LiveData.PartitionsBean>) {
@@ -62,11 +110,6 @@ class LiveRecyAdapter : BaseMultiItemQuickAdapter<LiveData, BaseViewHolder> {
         var liveRecommendAdapter = LiveRecommendAdapter(R.layout.item_live_video,lives)
         recyclerView.adapter = liveRecommendAdapter
         recyclerView.isNestedScrollingEnabled = false
-        /*liveRecommendAdapter.setSpanSizeLookup(object :BaseQuickAdapter.SpanSizeLookup{
-            override fun getSpanSize(gridLayoutManager: GridLayoutManager?, position: Int): Int {
-                data.get(position).getSpanSize();
-            }
-        })*/
     }
 
     private fun initCategory(helper: BaseViewHolder, data: MutableList<LiveData.EntranceIconsBean>) {
@@ -79,26 +122,26 @@ class LiveRecyAdapter : BaseMultiItemQuickAdapter<LiveData, BaseViewHolder> {
     }
 
 
-    private fun initBanner(banner :Banner,bannerData: MutableList<LiveData.BannerBean>) {
+    private fun initBanner(banner :Banner,bannerData: List<LiveData.BannerBean>) {
         var images = ArrayList<String>()
-        for (item in bannerData){
-            images.add(item.img)
+        for (image in bannerData){
+            images?.add(image.img)
         }
         banner.setImageLoader(BannerImageLoader())
         //设置图片集合
-        banner.setImages(images);
+        banner.setImages(images)
         //设置banner动画效果
-        banner.setBannerAnimation(Transformer.DepthPage);
+        banner.setBannerAnimation(Transformer.DepthPage)
         //设置标题集合（当banner样式有显示title时）
         //live_banner.setBannerTitles(banner.get(0).title);
         //设置自动轮播，默认为true
-        banner.isAutoPlay(true);
+        banner.isAutoPlay(true)
         //设置轮播时间
-        banner.setDelayTime(3000);
+        banner.setDelayTime(3000)
         //设置指示器位置（当banner模式中有指示器时）
-        banner.setIndicatorGravity(BannerConfig.CENTER);
+        banner.setIndicatorGravity(BannerConfig.CENTER)
         //banner设置方法全部调用完毕时最后调用
-        banner.start();
+        banner.start()
     }
 
 }

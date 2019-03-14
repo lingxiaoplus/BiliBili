@@ -11,9 +11,13 @@ import java.math.BigDecimal
 
 class PartitionVideoAdapter(layoutResId: Int, data: MutableList<LiveData.PartitionsBean.LivesBeanX>) :
     BaseQuickAdapter<LiveData.PartitionsBean.LivesBeanX, BaseViewHolder>(layoutResId, data) {
+    var isScroller = false
     override fun convert(helper: BaseViewHolder, item: LiveData.PartitionsBean.LivesBeanX) {
-        var image :SimpleDraweeView = helper.getView(R.id.live_user_image)
-        image.setImageURI(Uri.parse(item.cover.src))
+        if (!isScroller){
+            var image :SimpleDraweeView = helper.getView(R.id.live_user_image)
+            image.setImageURI(Uri.parse(item.cover.src))
+        }
+
         helper.setText(R.id.live_title,item.title)
         helper.setText(R.id.live_category_name,item.area)
         helper.setText(R.id.live_username,item.owner.name)
@@ -32,4 +36,6 @@ class PartitionVideoAdapter(layoutResId: Int, data: MutableList<LiveData.Partiti
         val f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).toFloat()  //表明四舍五入，保留两位小数
         return f1.toString() + "万"
     }
+
+
 }

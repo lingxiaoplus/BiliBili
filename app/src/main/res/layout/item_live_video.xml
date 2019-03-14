@@ -19,8 +19,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:viewAspectRatio="1.43"
-                    app:progressBarImageScaleType="centerInside"
-                    app:progressBarImage="@drawable/ic_live_no_face"
+                    app:placeholderImageScaleType="centerInside"
+                    app:placeholderImage="@drawable/ic_live_no_face"
             />
             <FrameLayout
                     android:layout_width="match_parent"

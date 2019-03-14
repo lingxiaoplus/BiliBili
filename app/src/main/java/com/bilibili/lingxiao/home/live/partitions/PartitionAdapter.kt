@@ -15,7 +15,7 @@ class PartitionAdapter(layout:Int,data: MutableList<LiveData.PartitionsBean>)
         LogUtils.d("LiveRecyAdapter 获取到Partition  name 的值-》》" + item.partition.name)
         initRecy(helper,item.lives)
     }
-
+    //var categoryAdapter :PartitionVideoAdapter? = null
     private fun initRecy(helper: BaseViewHolder, data: MutableList<LiveData.PartitionsBean.LivesBeanX>) {
         var list = data
         if (list.size > 4){

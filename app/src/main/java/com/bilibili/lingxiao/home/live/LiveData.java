@@ -8,8 +8,8 @@ public class LiveData implements MultiItemEntity{
 
 
         private List<BannerBean> banner;
-        private List<EntranceIconsBean> entranceIcons;  //分类入口
-        private List<PartitionsBean> partitions;  //分隔的
+        private List<EntranceIconsBean> entranceIcons;
+        private List<PartitionsBean> partitions;
         private RecommendDataBean recommend_data;
         public RecommendDataBean getRecommend_data() {
             return recommend_data;
