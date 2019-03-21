@@ -22,6 +22,8 @@ import android.content.ContextWrapper
 import android.app.Activity
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.graphics.Color
+import android.os.Build
 import android.support.v4.app.Fragment
 import android.util.DisplayMetrics
 import android.util.TypedValue
@@ -101,7 +103,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
     private var mGestureDector:GestureDetector? = null
     private var screenWidthPixels: Int? = 0
 
-    private val isLive: Boolean
+    private var isLive: Boolean = false
         get() {
             return mVideoUrl.startsWith("rtmp://") ||
                     mVideoUrl.startsWith("rtsp://") ||
@@ -324,6 +326,10 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         return position
     }
 
+    fun setLive(live:Boolean): SimplePlayerView{
+        this.isLive = live
+        return this
+    }
     fun setVideoUrl(url: String): SimplePlayerView{
         this.mVideoUrl = url
         if(isLive){
@@ -391,20 +397,38 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
      */
     private fun hideBarUI(){
         if (isHiddenBar) return
-        toggleAnim(video_top,0f,-video_top.height.toFloat())
+        var margin = 0
+        var layoutParams = video_top.layoutParams as (ViewGroup.MarginLayoutParams)
+        if (isPortrait){
+            margin = layoutParams.topMargin
+        }else{
+            layoutParams.setMargins(0,0,0,0)
+            video_top.layoutParams = layoutParams
+        }
+        toggleAnim(video_top,0f,-video_top.height.toFloat() - margin)
         toggleAnim(video_bottom,0f, video_bottom.height.toFloat())
         isHiddenBar = true
+        setStatusBarTransparent(false)
     }
 
     private fun showBarUI(){
         if (!isHiddenBar) return
-        toggleAnim(video_top,-video_top.height.toFloat(),0f)
+        var margin = 0
+        var layoutParams = video_top.layoutParams as (ViewGroup.MarginLayoutParams)
+        if (isPortrait){
+            margin = layoutParams.topMargin
+        }else{
+            layoutParams.setMargins(0,0,0,0)
+            video_top.layoutParams = layoutParams
+        }
+        toggleAnim(video_top,-video_top.height.toFloat()-margin,0f)
         toggleAnim(video_bottom, video_bottom.height.toFloat(),0f)
         isHiddenBar = false
         /*//3秒之后隐藏状态栏
         mHandler.postDelayed({
             hideBarUI()
         },2000)*/
+        setStatusBarTransparent(true)
     }
 
     private fun toggleAnim(view: View ,fromY:Float,toY:Float) {
@@ -416,6 +440,29 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         animatorSet.start()
     }
 
+
+    /**
+     * 全透状态栏
+     */
+    protected fun setStatusBarTransparent(visible :Boolean) {
+        val window = mActivity!!.window
+        if (Build.VERSION.SDK_INT >= 21) {//21表示5.0
+            if (visible){
+                window.decorView.systemUiVisibility =
+                    View.SYSTEM_UI_FLAG_VISIBLE
+            }else{
+                window.decorView.systemUiVisibility =
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            }
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = Color.TRANSPARENT
+        } else if (Build.VERSION.SDK_INT >= 19) {//19表示4.4
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            //虚拟键盘也透明
+            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
 
     fun onBackPressed(){
         //这个地方横屏才响应
@@ -465,11 +512,11 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
      */
     private fun toggleFullScreen(): SimplePlayerView {
         if (getScreenOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            mActivity!!.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+            mActivity?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         } else {
             //因为是延迟初始化，所以在这里需要使用initHeight
             Log.i(TAG,"记录竖屏状态下的hiehgt：" + initHeight)
-            mActivity!!.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+            mActivity?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
         }
         return this
     }

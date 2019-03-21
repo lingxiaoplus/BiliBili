@@ -155,6 +155,9 @@
 
     <!-- 顶部栏-->
     <include android:id="@+id/video_top"
+             android:layout_marginTop="22dp"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
              layout="@layout/simple_player_topbar"/>
     <!-- 底部栏-->
     <include

@@ -76,7 +76,7 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
     /**
      * 初始化控件调用之前
      */
-    protected fun initBefore() {
+    protected open fun initBefore() {
         mBarcolor = SpUtils.getInt(this, ContentValue.SKIN_ID, R.color.colorPrimary)
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             //半透明

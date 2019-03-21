@@ -5,12 +5,14 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.view.View
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.banner.BannerImageLoader
 import com.bilibili.lingxiao.home.live.category.LiveCategoryAdapter
 import com.bilibili.lingxiao.home.live.partitions.PartitionAdapter
 import com.bilibili.lingxiao.home.live.partitions.PartitionVideoAdapter
 import com.bilibili.lingxiao.home.live.recommend.LiveRecommendAdapter
+import com.bilibili.lingxiao.utils.ToastUtil
 import com.camera.lingxiao.common.utills.LogUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -57,15 +59,15 @@ class LiveRecyAdapter : BaseMultiItemQuickAdapter<MultiItemLiveData, BaseViewHol
             }
             MultiItemLiveData.PARTITION->{
                 helper.setText(R.id.live_category_name,item.partitionsBean.partition.name)
-                LogUtils.d("LiveRecyAdapter 获取到Partition  name 的值-》》" + item.partitionsBean.partition.name)
-                initRecy(helper,item.partitionsBean.lives)
+                LogUtils.d("LiveRecyAdapter 获取到Partition name 的值-》》" + item.partitionsBean.partition.name)
+                initPartition(helper,item.partitionsBean.lives)
                 //initPartition(helper,item.partitions)
             }
         }
     }
 
 
-    private fun initRecy(helper: BaseViewHolder, data: MutableList<LiveData.PartitionsBean.LivesBeanX>) {
+    private fun initPartition(helper: BaseViewHolder, data: MutableList<LiveData.PartitionsBean.LivesBeanX>) {
         var list = data
         if (list.size > 4){
             list = list.subList(0,4)
@@ -88,19 +90,15 @@ class LiveRecyAdapter : BaseMultiItemQuickAdapter<MultiItemLiveData, BaseViewHol
                 super.onScrollStateChanged(recyclerView, newState)
             }
         })
-    }
-    var partitionAdapter:PartitionAdapter? = null
-    private fun initPartition(helper: BaseViewHolder, partitions: MutableList<LiveData.PartitionsBean>) {
-        if (partitionAdapter == null){
-            var manager = LinearLayoutManager(mContext)
-            val recyclerView:RecyclerView = helper.getView(R.id.recycerView)
-            partitionAdapter = PartitionAdapter(R.layout.layout_partition,partitions)
-            recyclerView.adapter = partitionAdapter
-            recyclerView.layoutManager = manager
-            LogUtils.d("LiveRecyAdapter 获取到Partition的值-》》" + partitions.size)
-        }else{
-            partitionAdapter?.addData(partitions)
-        }
+
+        categoryAdapter.setOnItemClickListener(object :OnItemClickListener{
+            override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                listener?.let {
+                    it.onPartitionClick(data[position],position)
+                }
+            }
+
+        })
     }
 
     private fun initRecommend(helper: BaseViewHolder, lives: MutableList<LiveData.RecommendDataBean.LivesBean>) {
@@ -110,15 +108,16 @@ class LiveRecyAdapter : BaseMultiItemQuickAdapter<MultiItemLiveData, BaseViewHol
         var liveRecommendAdapter = LiveRecommendAdapter(R.layout.item_live_video,lives)
         recyclerView.adapter = liveRecommendAdapter
         recyclerView.isNestedScrollingEnabled = false
-    }
 
-    private fun initCategory(helper: BaseViewHolder, data: MutableList<LiveData.EntranceIconsBean>) {
-        var categoryAdapter = LiveCategoryAdapter(R.layout.item_live_category,data)
-        var manager = GridLayoutManager(mContext,5)
-        val recyclerView:RecyclerView = helper.getView(R.id.recycerView)
-        recyclerView.adapter = categoryAdapter
-        recyclerView.layoutManager = manager
-        recyclerView.isNestedScrollingEnabled = false
+
+        liveRecommendAdapter.setOnItemClickListener(object :OnItemClickListener{
+            override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                ToastUtil.show(lives[position].playurl)
+                listener?.let {
+                    it.onRecommendClick(lives[position],position)
+                }
+            }
+        })
     }
 
 
@@ -144,4 +143,12 @@ class LiveRecyAdapter : BaseMultiItemQuickAdapter<MultiItemLiveData, BaseViewHol
         banner.start()
     }
 
+    private  var listener: OnMultiItemClickListener? = null
+    public fun setMultiItemClickListener(listener: OnMultiItemClickListener){
+        this.listener = listener
+    }
+    public interface OnMultiItemClickListener{
+        fun onRecommendClick(live: LiveData.RecommendDataBean.LivesBean,position:Int)
+        fun onPartitionClick(live: LiveData.PartitionsBean.LivesBeanX,position:Int)
+    }
 }

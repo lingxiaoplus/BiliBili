@@ -1,5 +1,6 @@
 package com.bilibili.lingxiao.home.live
 
+import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -14,6 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
+import kotlinx.android.synthetic.main.activity_live_play.*
 import kotlinx.android.synthetic.main.fragment_live.view.*
 import kotlin.properties.Delegates
 
@@ -54,6 +56,19 @@ class LiveFragment :BaseFragment() ,LiveView{
             livePresenter.getLiveList(1)
         }
         livePresenter.getLiveList(1)
+
+        liveAdapter.setMultiItemClickListener(object :LiveRecyAdapter.OnMultiItemClickListener{
+            override fun onRecommendClick(live: LiveData.RecommendDataBean.LivesBean, position: Int) {
+                ToastUtil.show("点击推荐："+live.playurl)
+                goToPlay(live.playurl)
+            }
+
+            override fun onPartitionClick(live: LiveData.PartitionsBean.LivesBeanX, position: Int) {
+                ToastUtil.show("点击下面的模块："+live.playurl)
+                goToPlay(live.playurl)
+            }
+
+        })
     }
 
     var bannerData = MultiItemLiveData(MultiItemLiveData.BANNER)
@@ -95,8 +110,11 @@ class LiveFragment :BaseFragment() ,LiveView{
         refresh.finishRefresh()
     }
 
-
-
+    fun goToPlay(play_url:String){
+        val intent = Intent(context,LivePlayActivity::class.java)
+        intent.putExtra("play_url",play_url)
+        startActivity(intent)
+    }
 
     override fun showDialog() {
 

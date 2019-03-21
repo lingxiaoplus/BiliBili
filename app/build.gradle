@@ -72,5 +72,6 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
     implementation "com.youth.banner:banner:$rootProject.ext.bannerVersion"
+    implementation "com.github.zackratos.ultimatebar:ultimatebar2:$rootProject.ext.ultimatebarVersion"
     implementation project(':skinLibrary')
 }

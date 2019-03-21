@@ -6,7 +6,7 @@
     <color name="colorAccent">#388E3C</color>
 
     <color name="colorWhite">#11111111</color>
-    <color name="colorTrans">#80000000</color>
+    <color name="colorTrans">#00000000</color>
     <!--涟漪效果颜色-->
     <color name="grey">#000000</color>
     <color name="white">#FFFFFF</color>
