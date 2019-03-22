@@ -30,12 +30,12 @@ class LivePlayActivity : BaseActivity() {
     }
 
     override fun initBefore() {
-        /*UltimateBar.newTransparentBuilder()
+        UltimateBar.newTransparentBuilder()
             .statusColor(resources.getColor(R.color.colorTrans))        // 状态栏颜色
             .statusAlpha(100)               // 状态栏透明度
             .applyNav(true)                // 是否应用到导航栏
             .build(this)
-            .apply();*/
+            .apply();
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {

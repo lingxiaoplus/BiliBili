@@ -392,6 +392,26 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         return mCurrentPosition
     }
 
+
+    private val mTopMargin:Int by lazy { (video_top.layoutParams as (ViewGroup.MarginLayoutParams)).topMargin }
+    private fun showBarUI(){
+        if (!isHiddenBar) return
+        var margin = 0
+        var layoutParams = video_top.layoutParams as (ViewGroup.MarginLayoutParams)
+        if (isPortrait){
+            margin = mTopMargin
+        }
+        layoutParams.setMargins(0,margin,0,0)
+        video_top.layoutParams = layoutParams
+        toggleAnim(video_top,-video_top.height.toFloat()-margin,0f)
+        toggleAnim(video_bottom, video_bottom.height.toFloat(),0f)
+        isHiddenBar = false
+        /*//3秒之后隐藏状态栏
+        mHandler.postDelayed({
+            hideBarUI()
+        },2000)*/
+    }
+
     /**
      * 隐藏顶部和底部的状态栏
      */
@@ -400,35 +420,14 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         var margin = 0
         var layoutParams = video_top.layoutParams as (ViewGroup.MarginLayoutParams)
         if (isPortrait){
-            margin = layoutParams.topMargin
-        }else{
-            layoutParams.setMargins(0,0,0,0)
-            video_top.layoutParams = layoutParams
+            margin = mTopMargin
         }
+        layoutParams.setMargins(0,margin,0,0)
+        video_top.layoutParams = layoutParams
         toggleAnim(video_top,0f,-video_top.height.toFloat() - margin)
         toggleAnim(video_bottom,0f, video_bottom.height.toFloat())
         isHiddenBar = true
-        setStatusBarTransparent(false)
-    }
 
-    private fun showBarUI(){
-        if (!isHiddenBar) return
-        var margin = 0
-        var layoutParams = video_top.layoutParams as (ViewGroup.MarginLayoutParams)
-        if (isPortrait){
-            margin = layoutParams.topMargin
-        }else{
-            layoutParams.setMargins(0,0,0,0)
-            video_top.layoutParams = layoutParams
-        }
-        toggleAnim(video_top,-video_top.height.toFloat()-margin,0f)
-        toggleAnim(video_bottom, video_bottom.height.toFloat(),0f)
-        isHiddenBar = false
-        /*//3秒之后隐藏状态栏
-        mHandler.postDelayed({
-            hideBarUI()
-        },2000)*/
-        setStatusBarTransparent(true)
     }
 
     private fun toggleAnim(view: View ,fromY:Float,toY:Float) {
