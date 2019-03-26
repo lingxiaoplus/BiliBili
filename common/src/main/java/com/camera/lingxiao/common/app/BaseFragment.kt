@@ -62,7 +62,7 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
             }
             LogUtils.i("BaseFragment不是空：");
         }*/
-        // TODO: 18-6-29 上面的方式会报空指针 ,因为我使用的弱引用
+        // TODO: 18-6-29 上面的方式会报空指针 ,因为我在p层使用的弱引用
         val layId = contentLayoutId
         val root = inflater.inflate(layId, container, false)
         initWidget(root)

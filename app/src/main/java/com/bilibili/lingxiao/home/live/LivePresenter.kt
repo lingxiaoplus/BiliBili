@@ -2,13 +2,14 @@ package com.bilibili.lingxiao.home.live
 
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.observer.HttpRxCallback
+import com.trello.rxlifecycle2.LifecycleProvider
 import javax.inject.Inject
 
 class LivePresenter : BasePresenter<LiveView, LiveFragment> {
 
     var liveTrans :LiveTrans
     constructor(view: LiveView, fragment: LiveFragment):super(view, fragment){
-        liveTrans = LiveTrans(fragment)
+        liveTrans = LiveTrans(fragment as LifecycleProvider<Any>)
     }
 
     fun getLiveList(roomId :Int){

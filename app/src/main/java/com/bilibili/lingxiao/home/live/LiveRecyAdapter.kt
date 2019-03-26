@@ -22,9 +22,12 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
+import kotlin.properties.Delegates
 
 class LiveRecyAdapter : BaseMultiItemQuickAdapter<MultiItemLiveData, BaseViewHolder> {
-    constructor(data: MutableList<MultiItemLiveData>) :super(data){
+    var recycledViewPool:RecyclerView.RecycledViewPool by Delegates.notNull()
+    constructor(data: MutableList<MultiItemLiveData>, recycledViewPool: RecyclerView.RecycledViewPool) :super(data){
+        this.recycledViewPool = recycledViewPool
         addItemType(MultiItemLiveData.BANNER,R.layout.layout_banner)
         addItemType(MultiItemLiveData.CATEGORY,R.layout.item_live_category)
         addItemType(LiveData.RECOMMEND,R.layout.layout_recommend)
@@ -78,6 +81,7 @@ class LiveRecyAdapter : BaseMultiItemQuickAdapter<MultiItemLiveData, BaseViewHol
         recyclerView.adapter = categoryAdapter
         recyclerView.layoutManager = manager
         recyclerView.isNestedScrollingEnabled = false
+        recyclerView.setRecycledViewPool(recycledViewPool)
 
         recyclerView.addOnScrollListener(object :RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -108,14 +112,11 @@ class LiveRecyAdapter : BaseMultiItemQuickAdapter<MultiItemLiveData, BaseViewHol
         var liveRecommendAdapter = LiveRecommendAdapter(R.layout.item_live_video,lives)
         recyclerView.adapter = liveRecommendAdapter
         recyclerView.isNestedScrollingEnabled = false
-
+        recyclerView.setRecycledViewPool(recycledViewPool)
 
         liveRecommendAdapter.setOnItemClickListener(object :OnItemClickListener{
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                ToastUtil.show(lives[position].playurl)
-                listener?.let {
-                    it.onRecommendClick(lives[position],position)
-                }
+                listener?.onRecommendClick(lives[position],position)
             }
         })
     }

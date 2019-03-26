@@ -17,6 +17,7 @@ class LivePlayActivity : BaseActivity() {
     override fun initWidget() {
         super.initWidget()
         //屏幕常亮
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         tabArray = resources.getStringArray(R.array.live_tab)
         for (name in tabArray){

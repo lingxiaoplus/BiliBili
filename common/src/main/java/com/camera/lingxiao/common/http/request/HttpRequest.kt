@@ -66,18 +66,31 @@ class HttpRequest {
     }
 
     /**
-     * 发送其他api请求
+     * 全路径请求
      * 备注:自动管理生命周期
      * @param lifecycle 实现RxActivity/RxFragment 参数为空不管理生命周期
      * @param callback  回调
      */
-    fun requestOther(url: String, lifecycle: LifecycleProvider<Any>, callback: HttpRxCallback<Any>) {
+    fun requestFullPath(
+        method: Method,
+        url: String, lifecycle: LifecycleProvider<Any>?, callback: HttpRxCallback<Any>) {
         val apiObservable: Observable<Any>
-        apiObservable = RetrofitUtil
-            .get()
-            .retrofit()
-            .create(UserApi::class.java)
-            .other(url)
+        when(method){
+            Method.GET ->{
+                apiObservable = RetrofitUtil
+                    .get()
+                    .retrofit()
+                    .create(UserApi::class.java)
+                    .fullPathGet(url)
+            }
+            else->{
+                apiObservable = RetrofitUtil
+                    .get()
+                    .retrofit()
+                    .create(UserApi::class.java)
+                    .fullPathPost(url)
+            }
+        }
         HttpRxObservable.getOtherObservable(apiObservable, lifecycle, callback).subscribe(callback)
     }
 

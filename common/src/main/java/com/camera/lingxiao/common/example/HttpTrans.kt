@@ -10,7 +10,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.trello.rxlifecycle2.LifecycleProvider
 
-class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
+class HttpTrans(mLifecycle: LifecycleProvider<Any>) : BaseTransation(mLifecycle) {
     //http://gank.io/api/random/data/Android/20
     fun getResult(callback : HttpRxCallback<Any>){
         request.clear()

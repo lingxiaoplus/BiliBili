@@ -2,7 +2,6 @@ package com.bilibili.lingxiao.home.live
 
 import com.bilibili.lingxiao.GlobalProperties
 import com.camera.lingxiao.common.app.BaseTransation
-import com.camera.lingxiao.common.example.HttpModle
 import com.camera.lingxiao.common.http.ParseHelper
 import com.camera.lingxiao.common.http.request.HttpRequest
 import com.camera.lingxiao.common.observer.HttpRxCallback
@@ -11,10 +10,9 @@ import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.trello.rxlifecycle2.LifecycleProvider
 
-class LiveTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
+class LiveTrans(mLifecycle: LifecycleProvider<Any>) : BaseTransation(mLifecycle) {
     fun getLiveList(roomId: Int,callback : HttpRxCallback<Any>){
         request.clear()
-        request.put(HttpRequest.API_URL,"/AppIndex/home")
         request.put("_device",GlobalProperties.DEVICE)
         request.put("appkey",GlobalProperties.APP_KEY)
         request.put("build",GlobalProperties.BUILD)
@@ -38,7 +36,8 @@ class LiveTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
                 return obj
             }
         })
-
-        getRequest().request(HttpRequest.Method.GET,request,callback)
+        var url = GlobalProperties.LIVE_HOST + GlobalProperties.getUrlParamsByMap(request)
+        LogUtils.d("拼接的url---->" + url)
+        getRequest().requestFullPath(HttpRequest.Method.GET,url, mLifecycle,callback)
     }
 }

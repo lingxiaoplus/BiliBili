@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.util.Log
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.observer.HttpRxCallback
+import com.trello.rxlifecycle2.LifecycleProvider
 import java.util.*
 
 class HttpPresenter(view: HttpView, activity: MainActivity): BasePresenter<HttpView,MainActivity>(view,activity){
@@ -13,7 +14,7 @@ class HttpPresenter(view: HttpView, activity: MainActivity): BasePresenter<HttpV
         val TAG: String? = MainActivity::class.java.simpleName;
     }
     init {
-        httpTrans = HttpTrans(this.mActivity!!)
+        httpTrans = HttpTrans(this.mActivity as LifecycleProvider<Any>)
     }
 
     fun getResult(){

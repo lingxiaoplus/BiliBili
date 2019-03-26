@@ -18,6 +18,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import kotlinx.android.synthetic.main.activity_live_play.*
 import kotlinx.android.synthetic.main.fragment_live.view.*
 import kotlin.properties.Delegates
+import android.support.v7.widget.RecyclerView
+
+
 
 class LiveFragment :BaseFragment() ,LiveView{
 
@@ -46,8 +49,10 @@ class LiveFragment :BaseFragment() ,LiveView{
                 }
             }
         })
-
-        liveAdapter = LiveRecyAdapter(liveList)
+        //让互相嵌套的RecyclerView的item都进入同一个共享池
+        val recycledViewPool = RecyclerView.RecycledViewPool()
+        root.live_recy.setRecycledViewPool(recycledViewPool)
+        liveAdapter = LiveRecyAdapter(liveList,recycledViewPool)
         root.live_recy.adapter = liveAdapter
         root.live_recy.layoutManager = manager
         refresh = root.refresh

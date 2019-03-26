@@ -43,7 +43,7 @@ object ContentValue {
     val GANKURL = "http://gank.io/api/data/%E7%A6%8F%E5%88%A9/"
 
     //baseurl
-    val BASE_URL = "http://live.bilibili.com"
+    val BASE_URL = "http://app.bilibili.com"
     /**
      * 竖屏 最热
      */

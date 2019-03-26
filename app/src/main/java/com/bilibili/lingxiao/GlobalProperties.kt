@@ -3,13 +3,15 @@ package com.bilibili.lingxiao
 import android.util.Log
 import com.bilibili.lingxiao.utils.MD5Util
 import com.bilibili.lingxiao.utils.UIUtil
+import com.camera.lingxiao.common.oss.StringUtils
 import okhttp3.HttpUrl
+import java.net.URLEncoder
 import java.security.NoSuchAlgorithmException
 import java.text.SimpleDateFormat
 import java.util.*
 
 object GlobalProperties {
-    val LIVE_HOST = "http://live.bilibili.com"
+    val LIVE_HOST = "http://live.bilibili.com/AppIndex/home/?"
     private val SECRET_KEY = "ea85624dfcf12d7cc7b2b3a94fac1f2c"
     val PARAM_SIGN = "sign"
     val APP_KEY = "c1b107428d337928"
@@ -71,4 +73,25 @@ object GlobalProperties {
         val ts = System.currentTimeMillis() / 1000
         return ts.toString()
     }
+
+    /**
+     * 将map转换成url
+     *
+     * @param map
+     * @return
+     */
+    fun getUrlParamsByMap(map: Map<String, Any>): String {
+        var sb =  StringBuffer()
+        for ((key,value)in map){
+            sb.append(key + "=")
+            if (StringUtils.isEmpty(value.toString())) {
+                sb.append("&")
+            } else {
+                var va = URLEncoder.encode(value.toString(), "UTF-8");
+                sb.append(va + "&");
+            }
+        }
+        return sb.toString()
+    }
+
 }
