@@ -53,6 +53,12 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
      * 得到当前界面的资源文件id
      */
     protected abstract val contentLayoutId: Int
+    /**
+     * 初始化dagger注入
+     */
+    protected open fun initInject(){
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +71,7 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
             if (layId != 0) {
                 setContentView(layId)
             }
+            initInject()
             initBefore()
             initWidget()
             initData()

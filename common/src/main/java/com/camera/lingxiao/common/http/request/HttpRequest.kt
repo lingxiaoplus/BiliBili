@@ -1,6 +1,6 @@
 package com.camera.lingxiao.common.http.request
 
-import com.camera.lingxiao.common.api.UserApi
+import com.camera.lingxiao.common.api.MainApi
 import com.camera.lingxiao.common.http.response.HttpResponse
 import com.camera.lingxiao.common.observable.HttpRxObservable
 import com.camera.lingxiao.common.observer.HttpRxCallback
@@ -73,25 +73,25 @@ class HttpRequest {
      */
     fun requestFullPath(
         method: Method,
-        url: String, lifecycle: LifecycleProvider<Any>?, callback: HttpRxCallback<Any>) {
-        val apiObservable: Observable<Any>
+        url: String, lifecycle: LifecycleProvider<*>?, callback: HttpRxCallback<Any>) {
+        val apiObservable: Observable<HttpResponse>
         when(method){
             Method.GET ->{
                 apiObservable = RetrofitUtil
                     .get()
                     .retrofit()
-                    .create(UserApi::class.java)
+                    .create(MainApi::class.java)
                     .fullPathGet(url)
             }
             else->{
                 apiObservable = RetrofitUtil
                     .get()
                     .retrofit()
-                    .create(UserApi::class.java)
+                    .create(MainApi::class.java)
                     .fullPathPost(url)
             }
         }
-        HttpRxObservable.getOtherObservable(apiObservable, lifecycle, callback).subscribe(callback)
+        HttpRxObservable.getObservable(apiObservable, lifecycle, callback).subscribe(callback)
     }
 
     /**
@@ -166,7 +166,7 @@ class HttpRequest {
         apiObservable = RetrofitUtil
             .get()
             .retrofit()
-            .create(UserApi::class.java)
+            .create(MainApi::class.java)
             .desk(strings[0], strings[1], strings[2], strings[3], strings[4], map)
 
         HttpRxObservable.getObservable(apiObservable, lifecycle, callback).subscribe(callback)
@@ -191,10 +191,10 @@ class HttpRequest {
         val apiObservable: Observable<HttpResponse>
         when (method) {
             Method.GET -> apiObservable =
-                    RetrofitUtil.get().retrofit().create(UserApi::class.java).get(apiUrl, map)
+                    RetrofitUtil.get().retrofit().create(MainApi::class.java).get(apiUrl, map)
             Method.POST -> apiObservable =
-                    RetrofitUtil.get().retrofit().create(UserApi::class.java).post(apiUrl, map)
-            //else -> apiObservable = RetrofitUtil.get().retrofit().create(UserApi::class.java).post(apiUrl, map)
+                    RetrofitUtil.get().retrofit().create(MainApi::class.java).post(apiUrl, map)
+            //else -> apiObservable = RetrofitUtil.get().retrofit().create(MainApi::class.java).post(apiUrl, map)
         }
         return apiObservable
     }

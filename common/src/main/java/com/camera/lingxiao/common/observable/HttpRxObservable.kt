@@ -113,7 +113,7 @@ object HttpRxObservable {
      */
     fun getOtherObservable(
         apiObservable: Observable<Any>,
-        lifecycle: LifecycleProvider<Any>?,
+        lifecycle: LifecycleProvider<*>?,
         callback: HttpRxCallback<Any>?
     ): Observable<*> {
         //showLog(request);

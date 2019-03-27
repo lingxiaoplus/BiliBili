@@ -8,16 +8,12 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.banner.BannerImageLoader
-import com.bilibili.lingxiao.home.live.category.LiveCategoryAdapter
-import com.bilibili.lingxiao.home.live.partitions.PartitionAdapter
 import com.bilibili.lingxiao.home.live.partitions.PartitionVideoAdapter
 import com.bilibili.lingxiao.home.live.recommend.LiveRecommendAdapter
-import com.bilibili.lingxiao.utils.ToastUtil
 import com.camera.lingxiao.common.utills.LogUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.chad.library.adapter.base.util.MultiTypeDelegate
 import com.facebook.drawee.view.SimpleDraweeView
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
@@ -30,8 +26,8 @@ class LiveRecyAdapter : BaseMultiItemQuickAdapter<MultiItemLiveData, BaseViewHol
         this.recycledViewPool = recycledViewPool
         addItemType(MultiItemLiveData.BANNER,R.layout.layout_banner)
         addItemType(MultiItemLiveData.CATEGORY,R.layout.item_live_category)
-        addItemType(LiveData.RECOMMEND,R.layout.layout_recommend)
-        addItemType(LiveData.PARTITION,R.layout.layout_partition)
+        addItemType(MultiItemLiveData.RECOMMEND,R.layout.layout_recommend)
+        addItemType(MultiItemLiveData.PARTITION,R.layout.layout_partition)
 
         /*multiTypeDelegate = object : MultiTypeDelegate<LiveData>() {
             override fun getItemType(entity: LiveData): Int {
@@ -97,9 +93,7 @@ class LiveRecyAdapter : BaseMultiItemQuickAdapter<MultiItemLiveData, BaseViewHol
 
         categoryAdapter.setOnItemClickListener(object :OnItemClickListener{
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                listener?.let {
-                    it.onPartitionClick(data[position],position)
-                }
+                listener?.onPartitionClick(data[position],position)
             }
 
         })

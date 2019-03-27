@@ -66,6 +66,7 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
         val layId = contentLayoutId
         val root = inflater.inflate(layId, container, false)
         initWidget(root)
+        initInject()
         mRoot = root
         return mRoot
     }
@@ -125,6 +126,13 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
     override fun onDetach() {
         super.onDetach()
         mListener?.onDetach()
+    }
+
+    /**
+     * 初始化dagger注入
+     */
+    protected open fun initInject(){
+
     }
 
     /**

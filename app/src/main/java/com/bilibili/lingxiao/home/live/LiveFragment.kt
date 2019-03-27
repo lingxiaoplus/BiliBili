@@ -11,18 +11,17 @@ import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.utils.ToastUtil
 
 import com.camera.lingxiao.common.app.BaseFragment
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
-import com.scwang.smartrefresh.layout.api.RefreshLayout
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener
-import kotlinx.android.synthetic.main.activity_live_play.*
 import kotlinx.android.synthetic.main.fragment_live.view.*
 import kotlin.properties.Delegates
 import android.support.v7.widget.RecyclerView
-
-
+import com.bilibili.lingxiao.dagger.DaggerUiComponent
+import com.bilibili.lingxiao.utils.UIUtil
+import javax.inject.Inject
 
 class LiveFragment :BaseFragment() ,LiveView{
+
+
 
     var livePresenter: LivePresenter = LivePresenter(this,this)
     val TAG = LiveFragment::class.java.simpleName
@@ -30,16 +29,21 @@ class LiveFragment :BaseFragment() ,LiveView{
 
     private var liveAdapter:LiveRecyAdapter by Delegates.notNull()
     private var refresh: SmartRefreshLayout by Delegates.notNull()
+
     override val contentLayoutId: Int
         get() = R.layout.fragment_live
 
+    override fun initInject() {
+        super.initInject()
+        UIUtil.getUiComponent().inject(this)
+    }
     override fun initWidget(root: View) {
         super.initWidget(root)
         var manager = GridLayoutManager(context,10,GridLayoutManager.VERTICAL,false)
         manager.setSpanSizeLookup(object :GridLayoutManager.SpanSizeLookup(){
             override fun getSpanSize(position: Int): Int {
                 var type = liveAdapter.data.get(position).itemType
-                Log.e(TAG,"获取到的类型"+type)
+                //Log.e(TAG,"获取到的类型"+type)
                 when(type){
                     MultiItemLiveData.BANNER-> return 10
                     MultiItemLiveData.CATEGORY-> return 2
@@ -49,6 +53,7 @@ class LiveFragment :BaseFragment() ,LiveView{
                 }
             }
         })
+
         //让互相嵌套的RecyclerView的item都进入同一个共享池
         val recycledViewPool = RecyclerView.RecycledViewPool()
         root.live_recy.setRecycledViewPool(recycledViewPool)
@@ -58,19 +63,21 @@ class LiveFragment :BaseFragment() ,LiveView{
         refresh = root.refresh
         refresh.autoRefresh()
         refresh.setOnRefreshListener {
-            livePresenter.getLiveList(1)
+            livePresenter.getLiveList()
         }
-        livePresenter.getLiveList(1)
+        livePresenter.getLiveList()
 
         liveAdapter.setMultiItemClickListener(object :LiveRecyAdapter.OnMultiItemClickListener{
             override fun onRecommendClick(live: LiveData.RecommendDataBean.LivesBean, position: Int) {
-                ToastUtil.show("点击推荐："+live.playurl)
-                goToPlay(live.playurl)
+                val intent = Intent(context,LivePlayActivity::class.java)
+                intent.putExtra("play_url",live.playurl)
+                startActivity(intent)
             }
 
             override fun onPartitionClick(live: LiveData.PartitionsBean.LivesBeanX, position: Int) {
-                ToastUtil.show("点击下面的模块："+live.playurl)
-                goToPlay(live.playurl)
+                val intent = Intent(context,LivePlayActivity::class.java)
+                intent.putExtra("play_url",live.playurl)
+                startActivity(intent)
             }
 
         })
@@ -113,12 +120,6 @@ class LiveFragment :BaseFragment() ,LiveView{
 
         liveAdapter.notifyDataSetChanged()
         refresh.finishRefresh()
-    }
-
-    fun goToPlay(play_url:String){
-        val intent = Intent(context,LivePlayActivity::class.java)
-        intent.putExtra("play_url",play_url)
-        startActivity(intent)
     }
 
     override fun showDialog() {

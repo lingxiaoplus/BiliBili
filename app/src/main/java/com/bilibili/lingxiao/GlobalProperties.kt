@@ -11,7 +11,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object GlobalProperties {
-    val LIVE_HOST = "http://live.bilibili.com/AppIndex/home/?"
+    val LIVE_HOST = "http://live.bilibili.com/AppIndex/home/?"   //直播api
+    val COMMEND_HOST = "http://app.bilibili.com/x/feed/index?"   //推荐api
     private val SECRET_KEY = "ea85624dfcf12d7cc7b2b3a94fac1f2c"
     val PARAM_SIGN = "sign"
     val APP_KEY = "c1b107428d337928"

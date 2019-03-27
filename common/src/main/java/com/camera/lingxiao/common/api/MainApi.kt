@@ -19,7 +19,7 @@ import retrofit2.http.Query
 import retrofit2.http.QueryMap
 import retrofit2.http.Url
 
-interface UserApi {
+interface MainApi {
     /**
      * GET请求
      *
@@ -47,14 +47,14 @@ interface UserApi {
      * @return
      */
     @GET
-    fun fullPathGet(@Url url: String): Observable<Any>
+    fun fullPathGet(@Url url: String): Observable<HttpResponse>
     /**
      * 全路径Post调用
      * @param url 全路径
      * @return
      */
     @POST
-    fun fullPathPost(@Url url: String): Observable<Any>
+    fun fullPathPost(@Url url: String): Observable<HttpResponse>
 
     /**
      * 首页轮播图

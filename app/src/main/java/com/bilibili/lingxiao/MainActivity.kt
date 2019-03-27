@@ -8,20 +8,43 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.PagerAdapter
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.View
-import com.bilibili.lingxiao.home.FragmentFactory
+import com.bilibili.lingxiao.home.hot.HotFragment
+import com.bilibili.lingxiao.home.live.LiveFragment
+import com.bilibili.lingxiao.home.mikan.MikanFragment
+import com.bilibili.lingxiao.home.recommend.RecommendFragment
 import com.bilibili.lingxiao.user.LoginActivity
+import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity
+import com.camera.lingxiao.common.app.BaseFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
+
     var tabArray = arrayOf("直播","推荐","热门","追番")
     var drawerOpened = false
     private val mPermessions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+
+    @Inject
+    lateinit var liveFragment: LiveFragment
+    @Inject
+    lateinit var recommendFragment: RecommendFragment
+    @Inject
+    lateinit var hotFragment: HotFragment
+    @Inject
+    lateinit var mikanFragment: MikanFragment
+
+    var fragmentList:ArrayList<BaseFragment> = arrayListOf()
+
     override val contentLayoutId: Int
         get() = R.layout.activity_main
 
+    override fun initInject() {
+        super.initInject()
+        UIUtil.getUiComponent().inject(this)
+    }
     override fun initWidget() {
         super.initWidget()
         //权限检测
@@ -59,6 +82,11 @@ class MainActivity : BaseActivity() {
 
         main_viewPager.adapter = MainPagerAdapter(supportFragmentManager)
         main_tabLayout.setupWithViewPager(main_viewPager)
+
+        fragmentList.add(liveFragment)
+        fragmentList.add(recommendFragment)
+        fragmentList.add(hotFragment)
+        fragmentList.add(mikanFragment)
     }
 
     override fun onBackPressed() {
@@ -76,7 +104,7 @@ class MainActivity : BaseActivity() {
         }
 
         override fun getItem(position: Int): Fragment {
-            return FragmentFactory.createFragment(position)
+            return fragmentList.get(position)
         }
 
         override fun getPageTitle(position: Int): CharSequence? {

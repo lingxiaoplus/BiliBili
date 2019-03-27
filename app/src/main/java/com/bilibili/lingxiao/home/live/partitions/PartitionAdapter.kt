@@ -11,9 +11,9 @@ import com.chad.library.adapter.base.BaseViewHolder
 class PartitionAdapter(layout:Int,data: MutableList<LiveData.PartitionsBean>)
     :BaseQuickAdapter<LiveData.PartitionsBean,BaseViewHolder>(layout,data){
     override fun convert(helper: BaseViewHolder, item: LiveData.PartitionsBean) {
-        helper.setText(R.id.live_category_name,item.partition.name)
-        LogUtils.d("LiveRecyAdapter 获取到Partition  name 的值-》》" + item.partition.name)
-        initRecy(helper,item.lives)
+        helper.setText(R.id.live_category_name,item.partition?.name)
+        LogUtils.d("LiveRecyAdapter 获取到Partition  name 的值-》》" + item.partition?.name)
+        initRecy(helper, item.lives)
     }
     //var categoryAdapter :PartitionVideoAdapter? = null
     private fun initRecy(helper: BaseViewHolder, data: MutableList<LiveData.PartitionsBean.LivesBeanX>) {

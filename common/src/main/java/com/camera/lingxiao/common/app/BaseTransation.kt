@@ -5,7 +5,7 @@ import com.trello.rxlifecycle2.LifecycleProvider
 
 import java.util.TreeMap
 
-open class BaseTransation(protected var mLifecycle: LifecycleProvider<Any>) {
+open class BaseTransation(protected var mLifecycle: LifecycleProvider<*>?) {
     protected var mHttpRequest: HttpRequest? = null
     protected var request: TreeMap<String, Any>
 

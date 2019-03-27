@@ -26,6 +26,7 @@
                 android:layout_height="wrap_content"
                 android:text="全部直播"
         />
+
     </com.bilibili.lingxiao.widget.skin.SmartSkinRefreshLayout>
 
 </LinearLayout>

@@ -3,6 +3,8 @@ package com.bilibili.lingxiao.utils
 import android.content.Context
 import android.util.DisplayMetrics
 import android.view.WindowManager
+import com.bilibili.lingxiao.dagger.DaggerUiComponent
+import com.bilibili.lingxiao.dagger.UiComponent
 
 object UIUtil {
     var mContext :Context? = null
@@ -45,5 +47,9 @@ object UIUtil {
             //else -> return displayMetrics.densityDpi.toString()
             else -> return "xxxhdpi"
         }
+    }
+
+    fun getUiComponent(): UiComponent {
+        return DaggerUiComponent.builder().build()
     }
 }

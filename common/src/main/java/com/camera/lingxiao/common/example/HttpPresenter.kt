@@ -14,7 +14,7 @@ class HttpPresenter(view: HttpView, activity: MainActivity): BasePresenter<HttpV
         val TAG: String? = MainActivity::class.java.simpleName;
     }
     init {
-        httpTrans = HttpTrans(this.mActivity as LifecycleProvider<Any>)
+        httpTrans = HttpTrans(this.mActivity!!)
     }
 
     fun getResult(){
