@@ -1,7 +1,6 @@
 package com.bilibili.lingxiao
 
 import com.bilibili.lingxiao.home.live.LiveData
-import com.bilibili.lingxiao.home.recommend.RecommendData
 import com.camera.lingxiao.common.app.BaseTransation
 import com.camera.lingxiao.common.http.ParseHelper
 import com.camera.lingxiao.common.http.request.HttpRequest

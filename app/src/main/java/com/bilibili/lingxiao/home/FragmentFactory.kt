@@ -4,9 +4,8 @@ import android.util.SparseArray
 import com.bilibili.lingxiao.home.hot.HotFragment
 import com.bilibili.lingxiao.home.live.LiveFragment
 import com.bilibili.lingxiao.home.mikan.MikanFragment
-import com.bilibili.lingxiao.home.recommend.RecommendFragment
+import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.camera.lingxiao.common.app.BaseFragment
-import java.util.HashMap
 
 object FragmentFactory{
     val TYPE_LIVE = 0

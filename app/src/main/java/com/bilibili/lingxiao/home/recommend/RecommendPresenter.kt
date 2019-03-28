@@ -1,9 +1,10 @@
 package com.bilibili.lingxiao.home.recommend
 
+import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.observer.HttpRxCallback
 
-class RecommendPresenter :BasePresenter<RecommendView,RecommendFragment>{
+class RecommendPresenter :BasePresenter<RecommendView, RecommendFragment>{
     var liveTrans : RecommendTrans
     constructor(view: RecommendView, fragment: RecommendFragment):super(view, fragment){
         liveTrans = RecommendTrans(fragment)
@@ -14,7 +15,7 @@ class RecommendPresenter :BasePresenter<RecommendView,RecommendFragment>{
         liveTrans.getRecommendList(operationState,object :HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {
                 var lists = res as Array<*>
-                mView?.onGetRecommendData(lists[0] as RecommendData)
+                mView?.onGetRecommendData(lists[0] as List<RecommendData>)
             }
 
             override fun onError(code: Int, desc: String?) {

@@ -8,6 +8,7 @@ import com.camera.lingxiao.common.observer.HttpRxCallback
 import com.camera.lingxiao.common.utills.LogUtils
 import com.google.gson.Gson
 import com.google.gson.JsonElement
+import com.google.gson.reflect.TypeToken
 import com.trello.rxlifecycle2.LifecycleProvider
 
 class RecommendTrans(mLifecycle: LifecycleProvider<*>) :BaseTransation(mLifecycle){
@@ -62,7 +63,10 @@ class RecommendTrans(mLifecycle: LifecycleProvider<*>) :BaseTransation(mLifecycl
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
                 LogUtils.e("RecommendTrans获取到的数据" + element)
-                var modle = Gson().fromJson(element, RecommendData::class.java)
+                val type = object : TypeToken<List<RecommendData>>() {}.getType()
+                var gson = Gson()
+                var modle = gson.fromJson<List<RecommendData>>(element,type)
+                //var modle = Gson().fromJson(element, type)
                 val obj = arrayOfNulls<Any>(1)
                 obj[0] = modle
                 return obj

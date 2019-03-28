@@ -15,7 +15,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import kotlinx.android.synthetic.main.fragment_live.view.*
 import kotlin.properties.Delegates
 import android.support.v7.widget.RecyclerView
-import com.bilibili.lingxiao.dagger.DaggerUiComponent
 import com.bilibili.lingxiao.utils.UIUtil
 import javax.inject.Inject
 

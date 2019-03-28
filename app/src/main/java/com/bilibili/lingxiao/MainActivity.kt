@@ -5,13 +5,12 @@ import android.Manifest
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.PagerAdapter
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.View
 import com.bilibili.lingxiao.home.hot.HotFragment
 import com.bilibili.lingxiao.home.live.LiveFragment
 import com.bilibili.lingxiao.home.mikan.MikanFragment
-import com.bilibili.lingxiao.home.recommend.RecommendFragment
+import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.user.LoginActivity
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity

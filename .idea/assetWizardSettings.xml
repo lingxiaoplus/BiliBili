@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_img_refresh" />
-                            <entry key="sourceFile" value="D:\google下载\refresh-o.svg" />
+                            <entry key="outputName" value="ic_img_play" />
+                            <entry key="sourceFile" value="D:\google下载\播放.svg" />
                           </map>
                         </option>
                       </PersistentState>
