@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
             android:name=".App"
             android:allowBackup="true"
@@ -32,7 +33,21 @@
         </activity>
         <activity android:name=".user.LoginActivity">
         </activity>
-        <activity android:name=".home.live.LivePlayActivity" android:configChanges="orientation|keyboardHidden|screenSize">
+        <activity
+                android:name=".home.live.LivePlayActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
+        <activity android:name=".home.PlayActivity">
+            <!-- 要想在别的App上能成功调起App，必须添加intent过滤器 -->
+            <!-- 协议部分，随便设置 -->
+            <intent-filter>
+                <!--协议部分，随便设置-->
+                <data android:scheme="bilibili" android:host="video" />
+                <!--下面这几行也必须得设置-->
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
         </activity>
     </application>
 

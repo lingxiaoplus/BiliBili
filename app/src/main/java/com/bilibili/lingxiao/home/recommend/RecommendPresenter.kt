@@ -3,6 +3,7 @@ package com.bilibili.lingxiao.home.recommend
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.observer.HttpRxCallback
+import com.camera.lingxiao.common.utills.LogUtils
 
 class RecommendPresenter :BasePresenter<RecommendView, RecommendFragment>{
     var liveTrans : RecommendTrans
@@ -19,7 +20,7 @@ class RecommendPresenter :BasePresenter<RecommendView, RecommendFragment>{
             }
 
             override fun onError(code: Int, desc: String?) {
-
+                mView?.showToast(desc)
             }
 
             override fun onCancel() {

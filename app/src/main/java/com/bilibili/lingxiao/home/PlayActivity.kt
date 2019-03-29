@@ -1,36 +1,34 @@
-package com.bilibili.lingxiao.home.live
+package com.bilibili.lingxiao.home
 
 import android.content.res.Configuration
-import android.graphics.Color
-import android.net.Uri
 import android.view.WindowManager
 import com.bilibili.lingxiao.R
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.utills.LogUtils
 import com.github.zackratos.ultimatebar.UltimateBar
-import kotlinx.android.synthetic.main.activity_live_play.*
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_play.*
 import java.net.URLDecoder
-import kotlin.properties.Delegates
 
-class LivePlayActivity : BaseActivity() {
-    var  tabArray: Array<String> by Delegates.notNull()
+class PlayActivity : BaseActivity() {
     override val contentLayoutId: Int
-        get() = R.layout.activity_live_play
+        get() = R.layout.activity_play
 
     override fun initWidget() {
         super.initWidget()
-        //屏幕常亮
-
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        tabArray = resources.getStringArray(R.array.live_tab)
-        for (name in tabArray){
-            live_tablayout.addTab(live_tablayout.newTab().setText(name))
-        }
 
-        val play_url = intent.getStringExtra("play_url")
-        live_play
+        var uri = intent.data
+        //uri.getQueryParameter("player_width")
+        //uri.getQueryParameter("player_height")
+        //uri.getQueryParameter("player_rotate")
+        var player_preload = URLDecoder.decode(uri.getQueryParameter("player_preload"),"UTF-8")
+        var videoData = Gson().fromJson(player_preload,VideoData::class.java)
+        LogUtils.d("需要播放的video信息：" + videoData.url)
+
+        play_view
             .setLive(true)
-            .setVideoUrl(play_url)
+            .setVideoUrl(videoData.url)
             .startPlay()
     }
 
@@ -45,25 +43,24 @@ class LivePlayActivity : BaseActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
         super.onConfigurationChanged(newConfig)
-        live_play.onConfigurationChang(newConfig)
+        play_view.onConfigurationChang(newConfig)
     }
     override fun onResume() {
         super.onResume()
-        live_play.onResume()
+        play_view.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        live_play.onPause()
+        play_view.onPause()
     }
     override fun onDestroy() {
         super.onDestroy()
-        live_play.onDestory()
+        play_view.onDestory()
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        live_play.onBackPressed()
+        play_view.onBackPressed()
     }
-
 }

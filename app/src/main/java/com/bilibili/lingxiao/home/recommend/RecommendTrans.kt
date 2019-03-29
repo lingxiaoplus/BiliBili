@@ -20,7 +20,7 @@ class RecommendTrans(mLifecycle: LifecycleProvider<*>) :BaseTransation(mLifecycl
     val STATE_NORMAL = 0
     val STATE_INITIAL = 1  //初始化
     val STATE_REFRESHING = 2  //下拉刷新
-    val STATE_LOAD_MORE = 3  //上啦加载
+    val STATE_LOAD_MORE = 3  //上拉加载   没有轮播图
     private val LOGIN_EVENT_NORMAL = 0
     private val LOGIN_EVENT_INITIAL = 1
     private val OPEN_EVENT_NULL = ""
@@ -62,7 +62,7 @@ class RecommendTrans(mLifecycle: LifecycleProvider<*>) :BaseTransation(mLifecycl
 
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
-                LogUtils.e("RecommendTrans获取到的数据" + element)
+
                 val type = object : TypeToken<List<RecommendData>>() {}.getType()
                 var gson = Gson()
                 var modle = gson.fromJson<List<RecommendData>>(element,type)

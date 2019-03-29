@@ -1,9 +1,14 @@
 package com.bilibili.lingxiao.home.recommend.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.Toolbar
 import android.view.View
+import android.widget.FrameLayout
 import com.bilibili.lingxiao.R
+import com.bilibili.lingxiao.home.PlayActivity
 import com.bilibili.lingxiao.home.live.banner.BannerImageLoader
 import com.bilibili.lingxiao.home.recommend.RecommendData
 import com.bilibili.lingxiao.home.recommend.RecommendPresenter
@@ -12,10 +17,12 @@ import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.utills.LogUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
-import kotlinx.android.synthetic.main.layout_recommend.view.*
+import kotlinx.android.synthetic.main.fragment_recommend.*
+import kotlinx.android.synthetic.main.fragment_recommend.view.*
 import kotlin.properties.Delegates
 
 class RecommendFragment :BaseFragment(), RecommendView {
@@ -24,6 +31,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
     private var mRecommendList: List<RecommendData> = arrayListOf()
     private var mAdapter:RecommendRecyAdapter by Delegates.notNull()
     private var banner:Banner by Delegates.notNull()
+    private var operationState = 1  //1表示首次请求数据，有轮播图返回，2代表下拉刷新  3代表上拉加载更多
     override val contentLayoutId: Int
         get() = R.layout.fragment_recommend
 
@@ -35,23 +43,60 @@ class RecommendFragment :BaseFragment(), RecommendView {
     override fun initWidget(root: View) {
         super.initWidget(root)
         mAdapter = RecommendRecyAdapter(R.layout.item_video,mRecommendList)
-        banner = Banner(context)
-        mAdapter.addHeaderView(banner)
+        var view = View.inflate(context,R.layout.layout_banner,null)
+        banner = view.findViewById(R.id.live_banner)
+        mAdapter.addHeaderView(view)
         var manager = GridLayoutManager(context,2)
-        //var manager = LinearLayoutManager()
+        manager.setSpanSizeLookup(object :GridLayoutManager.SpanSizeLookup(){
+            override fun getSpanSize(position: Int): Int {
+                if(position == 0){
+                    return 2
+                }else{
+                    return 1
+                }
+            }
+        })
         root.recycerView.adapter = mAdapter
         root.recycerView.layoutManager = manager
-        root.recycerView.isNestedScrollingEnabled = false
-        recommendPresenter.getRecommendList(1)
+        //root.recycerView.isNestedScrollingEnabled = false
+        recommendPresenter.getRecommendList(operationState)
+
+        root.refresh.autoRefresh()
+        root.refresh.setOnRefreshListener {
+            operationState = 2
+            recommendPresenter.getRecommendList(operationState)
+        }
+        root.refresh.setOnLoadMoreListener {
+            operationState = 3
+            recommendPresenter.getRecommendList(operationState)
+        }
+        mAdapter.setOnItemClickListener(object :BaseQuickAdapter.OnItemClickListener{
+            override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                //val intent = Intent(context,PlayActivity::class.java)
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(mRecommendList.get(position).uri)
+                )
+                intent.putExtra("play_url",mRecommendList.get(position).uri)
+                startActivity(intent)
+            }
+
+        })
     }
     override fun onGetRecommendData(recommendData: List<RecommendData>) {
-        ToastUtil.show("成功")
-        var banner = recommendData.get(0)
-        for (data in recommendData.subList(1,recommendData.size)){
-            mAdapter.addData(data)
+        if (operationState == 1){
+            var banner = recommendData.get(0)
+            for (data in recommendData.subList(1,recommendData.size)){
+                mAdapter.addData(data)
+            }
+            initBanner(banner.banner_item)
+        }else{
+            for (data in recommendData){
+                mAdapter.addData(data)
+            }
         }
-        initBanner(banner.banner_item)
-        LogUtils.e("RecommendFragment ==》》》" + banner.toString())
+        refresh.finishRefresh()
+        refresh.finishLoadMore()
     }
 
     override fun showDialog() {
