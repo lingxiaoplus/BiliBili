@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="3dp"
+    >
+        <TextView
+                android:id="@+id/live_category_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="视频唱见"
+        />
+        <TextView
+                android:id="@+id/live_look_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="查看更多"
+                android:layout_gravity="right"
+                android:textColor="@color/black_alpha_112"
+                android:drawableRight="@drawable/ic_img_right"
+        />
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/live_partition_recy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

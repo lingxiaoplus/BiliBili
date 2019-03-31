@@ -1,0 +1,69 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    //ext.kotlin_version = '1.0.0'
+    ext.kotlin_version = '1.2.71'
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+ext {
+    //版本号相关
+    versionCode = 1
+    versionName = '1.0'
+    minSdkVersion = 19
+    targetSdkVersion = 28
+    compileSdkVersion = 28
+    buildToolsVersion = "26.0.0"
+    //依赖库相关
+    supportVersion = '28.0.0'
+    butterknifeVersion = '8.7.0'
+    circleimageVersion = '2.2.0'
+    constraintVersion = "1.0.2"
+    //沉浸式
+    ultimatebarVersion = "2.0.0"
+    gsonVersion = "2.7"
+    frescoVersion = "0.12.0"
+    retrofitVersion = "2.1.0"
+    bannerVersion = "1.4.10"
+    rxandroidVersion = "2.0.1"
+    rxjavaVersion = "2.1.1"
+    rxjavaAdapterVersion = "2.3.0"
+    rxlifescyleVersion = "2.2.1"
+    photoViewVersion = "2.1.4"
+    //拦截器
+    interceptorVersion = "3.10.0"
+    easypermissionsVersion = "2.0.1"
+    skinSupportVersion = "3.1.1"
+
+    dbFlowVersion = "4.2.4"
+    leak = "1.5.4"
+    hotfixVersion = "3.2.3"
+    leancloudVersion = "v4.7.3"
+    qiniuVersion = "7.3.4"
+    ijkplayerVersion = "0.8.8"
+
+    baseRecyclerAdapterVersion = "2.9.30"
+    daggerVersion = "2.21"
+    frescoVersion = "1.13.0"
+}

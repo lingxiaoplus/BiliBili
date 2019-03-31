@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/video_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/black">
+
+
+    <com.bilibili.lingxiao.ijkplayer.media.IjkVideoView
+            android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <LinearLayout
+            android:id="@+id/ll_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <!-- 封面显示-->
+        <ImageView
+                android:id="@+id/iv_trumb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:visibility="visible"/>
+    </LinearLayout>
+
+    <!--重新播放-->
+    <LinearLayout
+            android:id="@+id/app_video_replay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#33000000"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+        <!-- 播放状态-->
+        <TextView
+                android:id="@+id/app_video_status_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/small_problem"
+                android:textColor="@android:color/white"
+                android:textSize="14dp"/>
+
+        <ImageView
+                android:id="@+id/app_video_replay_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/simple_player_circle_outline_white_36dp"/>
+    </LinearLayout>
+    <!-- 网络提示-->
+    <LinearLayout
+            android:id="@+id/video_netTie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#33000000"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:visibility="visible"
+            android:visibility="gone"
+    >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="您正在使用移动网络播放视频，可能产生较高流量费用"
+                android:textSize="12sp"
+                android:textColor="@android:color/white"/>
+
+        <Button
+                android:id="@+id/video_button_continue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="继续"
+                android:background="@drawable/button_shape"
+                android:textColor="@android:color/white"
+                android:padding="2dp"
+        />
+
+    </LinearLayout>
+
+    <!-- 最大试看时长提示-->
+    <LinearLayout
+            android:id="@+id/app_video_freeTie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#33000000"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="试看时间已到请购买继续观看"
+                android:textColor="@android:color/white"/>
+
+        <TextView
+                android:id="@+id/app_video_freeTie_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="购买"
+                android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+    <!--加载中-->
+    <LinearLayout
+            android:id="@+id/app_video_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+        <ProgressBar
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:indeterminateBehavior="repeat"
+                android:indeterminateOnly="true"/>
+        <TextView
+                android:id="@+id/app_video_speed"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="188Kb/s"
+                android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+    <!-- 中间触摸提示-->
+    <include
+            layout="@layout/simple_player_touch_gestures"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
+    <!-- 顶部栏-->
+    <include android:id="@+id/video_top"
+             android:layout_marginTop="22dp"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             layout="@layout/simple_player_topbar"/>
+    <!-- 底部栏-->
+    <include
+            android:id="@+id/video_bottom"
+            layout="@layout/simple_player_controlbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+
+    <!--滑动时显示的进度-->
+    <LinearLayout
+            android:id="@+id/ll_video_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#90000000"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"
+    >
+        <TextView
+                android:id="@+id/video_progress_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textColor="@android:color/white"
+        />
+    </LinearLayout>
+    <!--声音亮度控制-->
+
+    <LinearLayout
+            android:id="@+id/video_volume_controller_root"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="#90000000"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+        <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_img_volice"
+                android:layout_margin="10dp"/>
+
+        <ProgressBar
+                android:id="@+id/video_volume_controller"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:maxHeight="2dp"
+                android:minHeight="2dp"
+                android:background="@color/colorRed200"
+                android:progressDrawable="@drawable/progress_red"
+                android:layout_marginRight="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/video_brightness_controller_root"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="#90000000"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+        <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_img_light"
+                android:layout_margin="10dp"/>
+
+        <ProgressBar
+                android:id="@+id/video_brightness_controller"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:maxHeight="2dp"
+                android:minHeight="2dp"
+                android:background="@color/colorRed200"
+                android:progressDrawable="@drawable/progress_red"
+                android:layout_marginRight="10dp"/>
+
+    </LinearLayout>
+
+
+    <!--分辨率选择-->
+    <LinearLayout
+            android:id="@+id/simple_player_select_stream_container"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="#80000000"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+        <ListView
+                android:id="@+id/simple_player_select_streams_list"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+    >
+        <ProgressBar
+                android:id="@+id/video_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <ImageView
+                android:id="@+id/play_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_img_pause"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                tools:visibility="visible"
+        />
+    </FrameLayout>
+
+
+</RelativeLayout>

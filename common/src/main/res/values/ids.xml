@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Toolbar的默认id名-->
+    <item name="toolbar" type="id" />
+    <!--recycler封装的tag属性-->
+    <item name="tag_recycler_holder" type="id" />
+    <!--默认头像的drawable名字-->
+    <item name="default_portrait" type="drawable" />
+</resources>
