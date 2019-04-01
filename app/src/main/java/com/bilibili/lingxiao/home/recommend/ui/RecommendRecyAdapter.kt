@@ -6,6 +6,7 @@ import com.bilibili.lingxiao.home.recommend.RecommendData
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
+import java.lang.Exception
 
 class RecommendRecyAdapter(layoutResId: Int, data: List<RecommendData>?) :
     BaseQuickAdapter<RecommendData, BaseViewHolder>(layoutResId, data) {
@@ -16,6 +17,12 @@ class RecommendRecyAdapter(layoutResId: Int, data: List<RecommendData>?) :
         helper.setText(R.id.comment_number,""+item.reply)
         helper.setText(R.id.category_name,"" + item.tname)
         var image : SimpleDraweeView = helper.getView(R.id.play_image)
-        image.setImageURI(Uri.parse(item.cover))
+
+        try {
+            image.setImageURI(Uri.parse(item.cover))
+        }catch (ex:Exception){
+            ex.printStackTrace()
+        }
+
     }
 }

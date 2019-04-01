@@ -1,20 +1,36 @@
 package com.bilibili.lingxiao.play
 
 import android.content.res.Configuration
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
 import android.view.WindowManager
 import com.bilibili.lingxiao.R
+import com.bilibili.lingxiao.dagger.DaggerUiComponent
 import com.camera.lingxiao.common.app.BaseActivity
+import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.utills.LogUtils
 import com.github.zackratos.ultimatebar.UltimateBar
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_play.*
 import java.net.URLDecoder
+import javax.inject.Inject
 
 class PlayActivity : BaseActivity() {
     var tabArray = arrayOf("简介","评论")
+    var fragmentList:ArrayList<BaseFragment> = arrayListOf()
+    @Inject
+    lateinit var  introduceFragment:IntroduceFragment
+    @Inject
+    lateinit var  commentFragment: CommentFragment
+
     override val contentLayoutId: Int
         get() = R.layout.activity_play
 
+    override fun initInject() {
+        super.initInject()
+        DaggerUiComponent.builder().build().inject(this)
+    }
     override fun initWidget() {
         super.initWidget()
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -35,6 +51,12 @@ class PlayActivity : BaseActivity() {
         for (name in tabArray){
             skin_tabLayout.addTab(skin_tabLayout.newTab().setText(name))
         }
+
+        play_viewpager.adapter = PlayPagerAdapter(supportFragmentManager)
+        skin_tabLayout.setupWithViewPager(play_viewpager)
+
+        fragmentList.add(introduceFragment)
+        fragmentList.add(commentFragment)
     }
 
     override fun initBefore() {
@@ -67,5 +89,20 @@ class PlayActivity : BaseActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         play_view.onBackPressed()
+    }
+
+    inner class PlayPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
+
+        override fun getCount(): Int {
+            return tabArray.size
+        }
+
+        override fun getItem(position: Int): Fragment {
+            return fragmentList.get(position)
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return tabArray.get(position)
+        }
     }
 }

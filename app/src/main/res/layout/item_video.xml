@@ -28,29 +28,58 @@
                     android:layout_alignParentBottom="true"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
+                    android:layout_margin="3dp"
             >
-                <TextView
-                        android:id="@+id/play_number"
+                <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="play number"
-                        android:textColor="@color/white"
-                        tools:textColor="@color/black"
-                        android:layout_margin="3dp"
-                        android:drawableLeft="@drawable/ic_img_play"
-                />
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_vertical"
+                >
+                    <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:srcCompat="@drawable/ic_img_tv"
+                            android:layout_margin="3dp"
+                            android:layout_gravity="center_vertical"
+                    />
+                    <TextView
+                            android:id="@+id/play_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="play number"
+                            android:textColor="@color/white"
+                            tools:textColor="@color/black"
+                            android:layout_gravity="center_vertical"
+                    />
+                </LinearLayout>
 
-                <TextView
-                        android:id="@+id/comment_number"
+
+                <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_img_comment"
-                        android:text="comment"
-                        android:textColor="@color/white"
-                        tools:textColor="@color/black"
-                        android:layout_gravity="end"
+                        android:orientation="horizontal"
                         android:layout_margin="3dp"
-                />
+                        android:layout_gravity="end"
+                >
+                    <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:srcCompat="@drawable/ic_img_comment"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="3dp"
+                    />
+                    <TextView
+                            android:id="@+id/comment_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="comment"
+                            android:textColor="@color/white"
+                            tools:textColor="@color/black"
+                            android:layout_gravity="center_vertical"
+                    />
+                </LinearLayout>
+
             </FrameLayout>
 
         </RelativeLayout>
