@@ -6,6 +6,8 @@ import com.bilibili.lingxiao.home.live.LiveFragment
 import com.bilibili.lingxiao.home.mikan.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.dagger.scope.PerUi
+import com.bilibili.lingxiao.play.CommentFragment
+import com.bilibili.lingxiao.play.IntroduceFragment
 import dagger.Module
 import dagger.Provides
 @Module
@@ -32,6 +34,18 @@ class UiModule {
     @PerUi
     fun provideMikanFragment() : MikanFragment {
         return MikanFragment()
+    }
+
+    @Provides
+    @PerUi
+    fun provideIntroduceFragment() : IntroduceFragment {
+        return IntroduceFragment()
+    }
+
+    @Provides
+    @PerUi
+    fun provideCommentFragment() : CommentFragment {
+        return CommentFragment()
     }
 
     private lateinit var context: Context

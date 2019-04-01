@@ -3,12 +3,8 @@ package com.bilibili.lingxiao.home.recommend.ui
 import android.content.Intent
 import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.Toolbar
 import android.view.View
-import android.widget.FrameLayout
 import com.bilibili.lingxiao.R
-import com.bilibili.lingxiao.home.PlayActivity
 import com.bilibili.lingxiao.home.live.banner.BannerImageLoader
 import com.bilibili.lingxiao.home.recommend.RecommendData
 import com.bilibili.lingxiao.home.recommend.RecommendPresenter
@@ -16,7 +12,6 @@ import com.bilibili.lingxiao.home.recommend.RecommendView
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
-import com.camera.lingxiao.common.utills.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
@@ -85,6 +80,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
     }
     override fun onGetRecommendData(recommendData: List<RecommendData>) {
         if (operationState == 1){
+
             var banner = recommendData.get(0)
             for (data in recommendData.subList(1,recommendData.size)){
                 mAdapter.addData(data)

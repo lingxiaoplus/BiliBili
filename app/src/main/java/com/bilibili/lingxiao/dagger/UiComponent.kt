@@ -6,6 +6,9 @@ import com.bilibili.lingxiao.home.live.LiveFragment
 import com.bilibili.lingxiao.home.mikan.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.dagger.scope.PerUi
+import com.bilibili.lingxiao.play.CommentFragment
+import com.bilibili.lingxiao.play.IntroduceFragment
+import com.bilibili.lingxiao.play.PlayActivity
 import dagger.Component
 
 @Component(modules = [UiModule::class])
@@ -15,6 +18,9 @@ interface UiComponent {
     fun inject(recommendFragment: RecommendFragment)
     fun inject(hotFragment: HotFragment)
     fun inject(mikanFragment: MikanFragment)
+    fun inject(introduceFragment: IntroduceFragment)
+    fun inject(commentFragment: CommentFragment)
 
     fun inject(mainActivity: MainActivity)
+    fun inject(playActivity: PlayActivity)
 }

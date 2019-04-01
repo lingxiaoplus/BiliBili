@@ -37,7 +37,7 @@
                 android:name=".home.live.LivePlayActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
-        <activity android:name=".home.PlayActivity" android:configChanges="orientation|keyboardHidden|screenSize">
+        <activity android:name=".play.PlayActivity" android:configChanges="orientation|keyboardHidden|screenSize">
             <!-- 要想在别的App上能成功调起App，必须添加intent过滤器 -->
             <!-- 协议部分，随便设置 -->
             <intent-filter>
