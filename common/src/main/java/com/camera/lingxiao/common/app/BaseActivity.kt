@@ -34,6 +34,7 @@ import java.io.File
 
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
+import org.greenrobot.eventbus.EventBus
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -281,6 +282,9 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
     override fun onStart() {
         super.onStart()
         mListener?.onStart()
+        if (isRegisterEventBus()){
+            EventBus.getDefault().register(this)
+        }
     }
 
     override fun onRestart() {
@@ -302,8 +306,19 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
     override fun onStop() {
         super.onStop()
         mListener?.onStop()
+        if (isRegisterEventBus()){
+            EventBus.getDefault().unregister(this)
+        }
     }
 
+    /**
+     * 是否注册事件分发
+     *
+     * @return true绑定EventBus事件分发，默认不绑定，子类需要绑定的话复写此方法返回true.
+     */
+    protected fun isRegisterEventBus() :Boolean{
+        return false
+    }
     /**
      * 当点击界面导航返回时，Finish当前界面
      * @return

@@ -21,6 +21,7 @@ import com.trello.rxlifecycle2.components.support.RxFragment
 import pub.devrel.easypermissions.EasyPermissions
 
 import android.content.ContentValues.TAG
+import org.greenrobot.eventbus.EventBus
 import pub.devrel.easypermissions.AppSettingsDialog
 
 
@@ -93,6 +94,9 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
     override fun onStart() {
         super.onStart()
         mListener?.onStart()
+        if (isRegisterEventBus()){
+            EventBus.getDefault().register(this)
+        }
     }
 
     override fun onResume() {
@@ -108,6 +112,9 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
     override fun onStop() {
         super.onStop()
         mListener?.onStop()
+        if (isRegisterEventBus()){
+            EventBus.getDefault().unregister(this)
+        }
     }
 
     override fun onDestroyView() {
@@ -133,6 +140,15 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
      */
     protected open fun initInject(){
 
+    }
+
+    /**
+     * 是否注册事件分发
+     *
+     * @return true绑定EventBus事件分发，默认不绑定，子类需要绑定的话复写此方法返回true.
+     */
+    protected open fun isRegisterEventBus() :Boolean{
+        return false
     }
 
     /**

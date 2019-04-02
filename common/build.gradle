@@ -69,7 +69,7 @@ dependencies {
     //七牛对象存储
     implementation "com.qiniu:qiniu-android-sdk:$rootProject.ext.qiniuVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-
+    implementation "org.greenrobot:eventbus:$rootProject.ext.eventBusVersion"
 
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.ext.baseRecyclerAdapterVersion"
     api "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"

@@ -18,6 +18,7 @@ import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlinx.android.synthetic.main.fragment_recommend.*
 import kotlinx.android.synthetic.main.fragment_recommend.view.*
+import org.greenrobot.eventbus.EventBus
 import kotlin.properties.Delegates
 
 class RecommendFragment :BaseFragment(), RecommendView {
@@ -68,6 +69,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
         mAdapter.setOnItemClickListener(object :BaseQuickAdapter.OnItemClickListener{
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
                 //val intent = Intent(context,PlayActivity::class.java)
+                EventBus.getDefault().post(mRecommendList.get(position))
                 val intent = Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(mRecommendList.get(position).uri)
@@ -78,6 +80,8 @@ class RecommendFragment :BaseFragment(), RecommendView {
 
         })
     }
+
+
     override fun onGetRecommendData(recommendData: List<RecommendData>) {
         if (operationState == 1){
 

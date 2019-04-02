@@ -23,7 +23,7 @@ android {
 
         ndk {
             // 设置支持的SO库架构
-            abiFilters 'armeabi-v7a'
+            abiFilters 'armeabi-v7a', 'x86', 'x86_64'
         }
     }
     compileOptions {
@@ -73,5 +73,6 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
     implementation "com.youth.banner:banner:$rootProject.ext.bannerVersion"
     implementation "com.github.zackratos.ultimatebar:ultimatebar2:$rootProject.ext.ultimatebarVersion"
+    implementation "org.greenrobot:eventbus:$rootProject.ext.eventBusVersion"
     implementation project(':skinLibrary')
 }
