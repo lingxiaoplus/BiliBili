@@ -61,12 +61,26 @@
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:text="这个是简介"
     />
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/endpage_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:background="@color/black_alpha_32"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+    />
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
     </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

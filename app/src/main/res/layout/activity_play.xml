@@ -42,9 +42,12 @@
             android:id="@+id/skin_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabGravity="center"
+            android:minHeight="20dp"
+            app:tabIndicatorHeight="2dp"
+            app:tabGravity="fill"
             app:tabPaddingStart="40dp"
             app:tabPaddingEnd="40dp"
+            app:tabIndicatorFullWidth="false"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
     >
     </com.bilibili.lingxiao.widget.skin.SkinTabLayout>
