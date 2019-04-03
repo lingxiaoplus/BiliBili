@@ -1,12 +1,15 @@
 package com.bilibili.lingxiao.play
 
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.dagger.DaggerUiComponent
 import com.bilibili.lingxiao.home.recommend.RecommendData
 import com.camera.lingxiao.common.app.BaseFragment
+import com.camera.lingxiao.common.utills.LogUtils
+import kotlinx.android.synthetic.main.fragment_introduce.*
 import kotlinx.android.synthetic.main.fragment_introduce.view.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -37,8 +40,11 @@ class IntroduceFragment :BaseFragment(){
     override fun isRegisterEventBus(): Boolean {
         return true
     }
-    
-    @Subscribe(threadMode = ThreadMode.MAIN)
+
+    /**
+     * 粘性事件
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public fun onGetVideoDetail(data: RecommendData) {
         var recommend = EndPageData(resources.getDrawable(R.drawable.ic_recommend),""+data.like)
         var dislike = EndPageData(resources.getDrawable(R.drawable.ic_dislike),"不喜欢")
@@ -50,6 +56,8 @@ class IntroduceFragment :BaseFragment(){
         endPageAdapter.addData(coin)
         endPageAdapter.addData(collect)
         endPageAdapter.addData(share)
-
+        img_head.setImageURI(Uri.parse(data.face))
+        username.setText(data.name)
+        fensi.setText("" + data.reply + "个粉丝")
     }
 }

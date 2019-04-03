@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FoldableLayout">
+        <attr name="maxCollapsedLines" format="integer"/>
+        <attr name="animDuration" format="integer"/>
+        <attr name="animAlphaStart" format="float"/>
+
+        <attr name="textViewId" format="reference"/>
+        <attr name="expandCollapseToggleId" format="reference"/>
+    </declare-styleable>
+</resources>

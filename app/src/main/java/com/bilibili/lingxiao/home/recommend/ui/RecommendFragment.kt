@@ -69,7 +69,8 @@ class RecommendFragment :BaseFragment(), RecommendView {
         mAdapter.setOnItemClickListener(object :BaseQuickAdapter.OnItemClickListener{
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
                 //val intent = Intent(context,PlayActivity::class.java)
-                EventBus.getDefault().post(mRecommendList.get(position))
+                var recommendData:RecommendData = mRecommendList.get(position)
+                EventBus.getDefault().postSticky(recommendData)
                 val intent = Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(mRecommendList.get(position).uri)
