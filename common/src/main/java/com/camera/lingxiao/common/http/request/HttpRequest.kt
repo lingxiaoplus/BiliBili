@@ -92,6 +92,36 @@ class HttpRequest {
             }
         }
         HttpRxObservable.getObservable(apiObservable, lifecycle, callback).subscribe(callback)
+        //HttpRxObservable.getOtherObservable(apiObservable,lifecycle,callback).subscribe(callback)
+    }
+
+    /**
+     * 全路径请求
+     * 备注:自动管理生命周期
+     * @param lifecycle 实现RxActivity/RxFragment 参数为空不管理生命周期
+     * @param callback  回调
+     */
+    fun requestFullPathWithoutCheck(
+        method: Method,
+        url: String, lifecycle: LifecycleProvider<*>?, callback: HttpRxCallback<Any>) {
+        val apiObservable: Observable<Any>
+        when(method){
+            Method.GET ->{
+                apiObservable = RetrofitUtil
+                    .get()
+                    .retrofit()
+                    .create(MainApi::class.java)
+                    .fullPathGetWithoutCheck(url)
+            }
+            else->{
+                apiObservable = RetrofitUtil
+                    .get()
+                    .retrofit()
+                    .create(MainApi::class.java)
+                    .fullPathPostWithoutCheck(url)
+            }
+        }
+        HttpRxObservable.getOtherObservable(apiObservable,lifecycle,callback).subscribe(callback)
     }
 
     /**

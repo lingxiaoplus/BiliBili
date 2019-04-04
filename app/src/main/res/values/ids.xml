@@ -2,4 +2,5 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <item type="id" name="expand_textview"/>
     <item type="id" name="expand_collapse"/>
+    <item type="id" name="expand_message_textview"/>
 </resources>

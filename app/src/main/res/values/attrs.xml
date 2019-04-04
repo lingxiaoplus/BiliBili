@@ -5,7 +5,15 @@
         <attr name="animDuration" format="integer"/>
         <attr name="animAlphaStart" format="float"/>
 
+        <attr name="expandToggleType" format="enum">
+            <enum name="ImageButton" value="0"/>
+            <enum name="TextView" value="1"/>
+        </attr>
+        <attr name="expandIndicator" format="reference"/>
+        <attr name="collapseIndicator" format="reference"/>
+
         <attr name="textViewId" format="reference"/>
+        <attr name="messageViewId" format="reference"/>
         <attr name="expandCollapseToggleId" format="reference"/>
     </declare-styleable>
 </resources>

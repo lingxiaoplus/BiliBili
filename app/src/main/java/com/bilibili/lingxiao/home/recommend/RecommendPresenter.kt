@@ -11,7 +11,6 @@ class RecommendPresenter :BasePresenter<RecommendView, RecommendFragment>{
         liveTrans = RecommendTrans(fragment)
     }
 
-
     fun getRecommendList(operationState:Int){
         liveTrans.getRecommendList(operationState,object :HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {

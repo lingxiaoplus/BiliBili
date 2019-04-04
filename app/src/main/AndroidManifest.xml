@@ -20,6 +20,15 @@
                 android:name="org.apache.http.legacy"
                 android:required="false"/>
 
+        <provider
+                android:name="android.support.v4.content.FileProvider"
+                android:authorities="${applicationId}.fileProvider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/provider_paths"/>
+        </provider>
         <activity android:name=".MainActivity">
         </activity>
         <activity
@@ -49,6 +58,10 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
+        <activity
+                android:name="com.tencent.bugly.beta.ui.BetaActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize|locale"
+                android:theme="@android:style/Theme.Translucent" />
     </application>
 
 </manifest>

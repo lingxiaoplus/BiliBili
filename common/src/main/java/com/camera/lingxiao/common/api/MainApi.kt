@@ -56,6 +56,22 @@ interface MainApi {
     @POST
     fun fullPathPost(@Url url: String): Observable<HttpResponse>
 
+
+    /**
+     * 全路径Get调用
+     * @param url 全路径
+     * @return
+     */
+    @GET
+    fun fullPathGetWithoutCheck(@Url url: String): Observable<Any>
+    /**
+     * 全路径Post调用
+     * @param url 全路径
+     * @return
+     */
+    @POST
+    fun fullPathPostWithoutCheck(@Url url: String): Observable<Any>
+
     /**
      * 首页轮播图
      * /v1/wallpaper/album/{id}/wallpaper/limit/skip/adult/order

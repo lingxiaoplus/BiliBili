@@ -9,6 +9,7 @@ import com.bilibili.lingxiao.home.live.banner.BannerImageLoader
 import com.bilibili.lingxiao.home.recommend.RecommendData
 import com.bilibili.lingxiao.home.recommend.RecommendPresenter
 import com.bilibili.lingxiao.home.recommend.RecommendView
+import com.bilibili.lingxiao.play.VideoDetailData
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
@@ -98,6 +99,9 @@ class RecommendFragment :BaseFragment(), RecommendView {
         }
         refresh.finishRefresh()
         refresh.finishLoadMore()
+    }
+    override fun onGetVideoDetail(videoDetailData: VideoDetailData) {
+
     }
 
     override fun showDialog() {
