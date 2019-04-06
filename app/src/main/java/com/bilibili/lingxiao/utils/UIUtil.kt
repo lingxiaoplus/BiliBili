@@ -35,7 +35,7 @@ object UIUtil {
         val displayMetrics = getContext().getResources().getDisplayMetrics()
         when (displayMetrics.densityDpi) {
             DisplayMetrics.DENSITY_LOW -> return "ldpi"
-            DisplayMetrics.DENSITY_MEDIUM -> return "mdpi"
+            DisplayMetrics.DENSITY_MEDIUM -> return "hdpi"  //mdpi不支持了
             DisplayMetrics.DENSITY_HIGH -> return "hdpi"
             DisplayMetrics.DENSITY_XHIGH -> return "xhdpi"
             DisplayMetrics.DENSITY_XXHIGH,

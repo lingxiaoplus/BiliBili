@@ -153,6 +153,9 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         mAudioManager = mActivity?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         mMaxVolume = mAudioManager?.getStreamMaxVolume(AudioManager.STREAM_MUSIC)!!
 
+        if (isShowNetworkHint){
+            video_progress.visibility = INVISIBLE
+        }
         video_play.setOnClickListener{
             if (video_view.isPlaying){
                 if (isLive){

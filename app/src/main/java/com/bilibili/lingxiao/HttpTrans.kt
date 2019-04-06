@@ -1,7 +1,8 @@
 package com.bilibili.lingxiao
 
 import com.bilibili.lingxiao.home.live.LiveData
-import com.bilibili.lingxiao.play.VideoDetailData
+import com.bilibili.lingxiao.play.model.VideoDetailData
+import com.bilibili.lingxiao.play.model.VideoRecoData
 import com.camera.lingxiao.common.app.BaseTransation
 import com.camera.lingxiao.common.http.ParseHelper
 import com.camera.lingxiao.common.http.request.HttpRequest
@@ -78,4 +79,30 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,url, mLifecycle,callback)
     }
 
+    /**
+     * 获取视频播放详情下面的推荐列表
+     * @param tid 分类编号 new排序为必填 其他为可选
+     * @param page 结果分页选择 默认为第1页
+     * @param pagesize 单页返回的记录条数，最大不超过100，默认为30
+     * @param order 排序方式 default new review hot damku comment promote
+     */
+    fun getRecommendList(tid:Int,page:Int,pagesize:Int,order:String,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("tid",tid)
+        request.put("page",page)
+        request.put("pagesize",pagesize)
+        request.put("order",order)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                LogUtils.d("获取到的数据" + element)
+                var modle = Gson().fromJson(element, VideoRecoData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        var url = GlobalProperties.COMMEND_VIDEO_HOST + GlobalProperties.getUrlParamsByMap(request)
+        LogUtils.d("拼接的url---->" + url)
+        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,url, mLifecycle,callback)
+    }
 }

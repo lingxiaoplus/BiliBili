@@ -1,177 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v4.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
->
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginBottom="3dp"
-    >
-        <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/img_head"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:progressBarImageScaleType="centerInside"
-                app:progressBarImage="@drawable/ic_img_header"
-                app:roundAsCircle="true"
-                app:roundingBorderWidth="1dp"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"/>
-        <LinearLayout
-                android:layout_toRightOf="@id/img_head"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:orientation="vertical">
-            <TextView
-                    android:id="@+id/username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/user_name_text_size"
-                    android:text="没有如果"
-            />
-            <TextView
-                    android:id="@+id/fensi"
-                    style="@style/TextMessage"
-                    android:text="213个粉丝"
-            />
-        </LinearLayout>
+        android:orientation="vertical">
+    <LinearLayout
 
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="关注"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@color/pink_300"
-        />
-    </RelativeLayout>
-
-    <com.bilibili.lingxiao.widget.FoldableLayout
-            android:id="@+id/fold_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:maxCollapsedLines="1"
+            android:layout_height="match_parent"
             android:orientation="vertical"
     >
-
-        <FrameLayout
+        <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
         >
-            <TextView
-                    android:id="@id/expand_textview"
+            <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/img_head"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:progressBarImageScaleType="centerInside"
+                    app:progressBarImage="@drawable/ic_img_header"
+                    app:roundAsCircle="true"
+                    app:roundingBorderWidth="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"/>
+            <LinearLayout
+                    android:layout_toRightOf="@id/img_head"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/description_text_size"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="45dp"
-                    android:ellipsize="end"
-                    android:text="biaoti"
-            />
-            <ImageButton
-                    android:id="@id/expand_collapse"
-                    android:layout_width="30dp"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+                <TextView
+                        android:id="@+id/username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/user_name_text_size"
+                        android:text="没有如果"
+                />
+                <TextView
+                        android:id="@+id/fensi"
+                        style="@style/TextMessage"
+                        android:text="213个粉丝"
+                />
+            </LinearLayout>
+
+            <Button
+                    android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:background="@android:color/transparent"
-                    android:layout_margin="10dp"
-                    android:layout_gravity="right|bottom"
+                    android:text="关注"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/pink_300"
             />
-        </FrameLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <com.bilibili.lingxiao.widget.FoldableLayout
+                android:id="@+id/fold_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                app:maxCollapsedLines="1"
+                android:orientation="vertical"
         >
+
             <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_margin="5dp"
                     android:gravity="center_vertical"
             >
-                <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        app:srcCompat="@drawable/ic_img_tv"
-                        android:layout_margin="2dp"
-                />
                 <TextView
-                        android:id="@+id/play_num"
-                        style="@style/TextMessage"
-                        android:text="14.1万"
+                        android:id="@id/expand_textview"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/description_text_size"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="45dp"
+                        android:ellipsize="end"
+                        android:text="biaoti"
+                />
+                <ImageButton
+                        android:id="@id/expand_collapse"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@android:color/transparent"
+                        android:layout_margin="10dp"
+                        android:layout_gravity="right|bottom"
                 />
             </LinearLayout>
 
             <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_margin="5dp"
-                    android:gravity="center_vertical"
             >
-                <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        app:srcCompat="@drawable/ic_img_comment"
-                        android:layout_margin="2dp"
-                />
-                <TextView
-                        android:id="@+id/damku_num"
-                        style="@style/TextMessage"
-                        android:text="14.1万"
-                />
-                <TextView
-                        style="@style/TextMessage"
-                        android:text="        "
-                />
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp"
+                        android:gravity="center_vertical"
+                >
+                    <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:srcCompat="@drawable/ic_img_tv"
+                            android:layout_margin="2dp"
+                    />
+                    <TextView
+                            android:id="@+id/play_num"
+                            style="@style/TextMessage"
+                            android:text="14.1万"
+                    />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp"
+                        android:gravity="center_vertical"
+                >
+                    <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="15dp"
+                            app:srcCompat="@drawable/ic_img_danmaku"
+                            android:layout_margin="2dp"
+                    />
+                    <TextView
+                            android:id="@+id/damku_num"
+                            style="@style/TextMessage"
+                            android:text="14.1万"
+                    />
+                    <TextView
+                            android:id="@+id/av_num"
+                            style="@style/TextMessage"
+                            android:text="        "
+                    />
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
+            <TextView
+                    android:id="@id/expand_message_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="neirong"
+            />
+        </com.bilibili.lingxiao.widget.FoldableLayout>
 
-        <TextView
-                android:id="@id/expand_message_textview"
-                android:layout_width="match_parent"
+
+        <com.bilibili.lingxiao.widget.ColorTextView
+                android:id="@+id/type_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:padding="5dp"
+                app:ctvBackground="@color/black_alpha_32"
+                app:ctvCornerSize="30"
+                app:ctvText="我是原文本"
+                app:ctvTextColor="@color/black_alpha_240"
+                app:ctvTextSize="14sp"
+                android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="neirong"
         />
-    </com.bilibili.lingxiao.widget.FoldableLayout>
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/endpage_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
 
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:background="@color/black_alpha_32"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+        />
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/recommend_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/endpage_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.RecyclerView>
 
-    <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0.6dp"
-            android:background="@color/black_alpha_32"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-    />
-    <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-    </android.support.v7.widget.RecyclerView>
-
-</LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

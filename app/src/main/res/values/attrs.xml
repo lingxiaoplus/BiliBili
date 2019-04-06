@@ -16,4 +16,12 @@
         <attr name="messageViewId" format="reference"/>
         <attr name="expandCollapseToggleId" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="ColorTextView">
+        <attr name="ctvText" format="string" />
+        <attr name="ctvBackground" format="color"/>
+        <attr name="ctvTextSize" format="dimension"/>
+        <attr name="ctvTextColor" format="color"/>
+        <attr name="ctvCornerSize" format="integer"/>
+    </declare-styleable>
 </resources>

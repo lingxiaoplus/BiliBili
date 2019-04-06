@@ -1,4 +1,4 @@
-package com.bilibili.lingxiao.play
+package com.bilibili.lingxiao.play.model
 
 import com.google.gson.annotations.SerializedName
 

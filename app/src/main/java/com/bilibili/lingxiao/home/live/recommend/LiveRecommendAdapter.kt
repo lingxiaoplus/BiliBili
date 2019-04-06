@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.LiveData
+import com.bilibili.lingxiao.utils.StringUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
@@ -19,18 +20,9 @@ class LiveRecommendAdapter(layout:Int,data:List<LiveData.RecommendDataBean.Lives
         helper.setText(R.id.live_title,item.title)
         helper.setText(R.id.live_category_name,item.area_v2_name)
         helper.setText(R.id.live_username,item.owner?.name)
-        helper.setText(R.id.live_people_number,getPeopleNumber(item.online))
+        helper.setText(R.id.live_people_number,StringUtil.getBigDecimalNumber(item.online))
 
         //Log.d(TAG,"标题"+item.title + "类型" +item.area_v2_name)
     }
 
-    private fun getPeopleNumber(num:Int): String{
-        if (num < 1000){
-            return num.toString()
-        }
-        var float = num / 1000.0
-        val b = BigDecimal(float)
-        val f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).toFloat()  //表明四舍五入，保留两位小数
-        return f1.toString() + "万"
-    }
 }

@@ -17,6 +17,8 @@ import android.widget.TextView
 import com.bilibili.lingxiao.R
 import com.camera.lingxiao.common.utills.LogUtils
 
+
+
 /**
  * 可折叠的Layout
  * @author lingxiao
@@ -102,9 +104,10 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
         mTextView?.maxLines = Int.MAX_VALUE
         mMessageTextView?.maxLines = Int.MAX_VALUE
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        if (mTextView!!.lineCount <= mMaxCollapsedLines){
+        //单行不显示
+        /*if (mTextView!!.lineCount <= mMaxCollapsedLines){
             return
-        }
+        }*/
         mTextHeightWithMaxLines = getRealTextViewHeight(mTextView!!)
         mMessageTextHeight = getRealTextViewHeight(mMessageTextView!!)
 
@@ -149,7 +152,7 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
         mUpdateListener = ValueAnimator.AnimatorUpdateListener { animation ->
             var interpolatedTime = animation.animatedValue as Float
             val newHeight = (endHeight - startHeight) * interpolatedTime + startHeight
-            mTextView?.setMaxHeight((newHeight - mMarginBetweenTxtAndBottom).toInt())
+            mTextView?.setMaxHeight((newHeight - mMarginBetweenTxtAndBottom - mMessageTextHeight).toInt())
             mMessageTextView?.maxHeight = (newHeight - height + mMessageTextHeight).toInt()
             this@FoldableLayout.getLayoutParams().height = newHeight.toInt()
             this@FoldableLayout.requestLayout()

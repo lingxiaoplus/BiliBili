@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.view.WindowManager
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.dagger.DaggerUiComponent
+import com.bilibili.lingxiao.play.model.VideoData
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.utills.LogUtils
