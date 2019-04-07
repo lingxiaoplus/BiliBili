@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_introduce.*
 import kotlinx.android.synthetic.main.fragment_introduce.view.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 class IntroduceFragment :BaseFragment(),RecommendView{
 
@@ -87,7 +88,9 @@ class IntroduceFragment :BaseFragment(),RecommendView{
         avNum.append(data.param)
         av_num.text = avNum.toString()
         videoPresenter.getDetailInfo(1,data.param)
-        videoPresenter.getRecommendList(data.tid,0)
+        val random = Random()
+        val ret = random.nextInt(100)
+        videoPresenter.getRecommendList(data.tid,ret)
 
     }
 

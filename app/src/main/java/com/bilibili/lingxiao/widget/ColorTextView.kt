@@ -16,8 +16,7 @@ import com.bilibili.lingxiao.R
 import java.util.*
 import android.view.View
 import android.graphics.RectF
-
-
+import com.bilibili.lingxiao.utils.UIUtil
 
 
 class ColorTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
@@ -84,7 +83,9 @@ class ColorTextView @JvmOverloads constructor(context: Context, attrs: Attribute
                 R.styleable.ColorTextView_ctvCornerSize ->
                     //默认圆角为0
                     mCornerSize = a.getInteger(attr, 0).toFloat()
+
             }
+
 
         }
         a.recycle()
@@ -140,11 +141,11 @@ class ColorTextView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val rec = RectF(0f, 0f, measuredWidth.toFloat(), measuredHeight.toFloat())
+        val rec = RectF(0f, 0f, measuredWidth.toFloat() , measuredHeight.toFloat())
         canvas.drawRoundRect(rec, mCornerSize, mCornerSize, mBackgroundPaint)
         mtitlePaint.color = mTitleTextColor
         val fontMetrics = mtitlePaint.fontMetricsInt
         val baseline = (measuredHeight - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top
-        canvas.drawText(mTitleText, paddingLeft.toFloat(), baseline.toFloat(), mtitlePaint)
+        canvas.drawText(mTitleText, paddingLeft.toFloat() , baseline.toFloat(), mtitlePaint)
     }
 }

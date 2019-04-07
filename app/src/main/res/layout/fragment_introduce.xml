@@ -169,12 +169,13 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 app:ctvBackground="@color/black_alpha_32"
-                app:ctvCornerSize="30"
+                app:ctvCornerSize="40"
                 app:ctvText="我是原文本"
-                app:ctvTextColor="@color/black_alpha_240"
+                app:ctvMargin="3dp"
+                app:ctvTextColor="@color/black_alpha_144"
                 app:ctvTextSize="14sp"
-                android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
         />
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/endpage_recycler"

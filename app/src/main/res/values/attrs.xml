@@ -23,5 +23,6 @@
         <attr name="ctvTextSize" format="dimension"/>
         <attr name="ctvTextColor" format="color"/>
         <attr name="ctvCornerSize" format="integer"/>
+        <attr name="ctvMargin" format="dimension"></attr>
     </declare-styleable>
 </resources>
