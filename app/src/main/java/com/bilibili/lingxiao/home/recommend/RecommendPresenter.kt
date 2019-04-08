@@ -28,4 +28,6 @@ class RecommendPresenter :BasePresenter<RecommendView, RecommendFragment>{
 
         })
     }
+
+
 }

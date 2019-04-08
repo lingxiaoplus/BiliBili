@@ -1,6 +1,7 @@
 package com.bilibili.lingxiao
 
 import com.bilibili.lingxiao.home.live.LiveData
+import com.bilibili.lingxiao.play.model.CommentData
 import com.bilibili.lingxiao.play.model.VideoDetailData
 import com.bilibili.lingxiao.play.model.VideoRecoData
 import com.camera.lingxiao.common.app.BaseTransation
@@ -104,5 +105,34 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         var url = GlobalProperties.COMMEND_VIDEO_HOST + GlobalProperties.getUrlParamsByMap(request)
         LogUtils.d("拼接的url---->" + url)
         getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,url, mLifecycle,callback)
+    }
+
+    fun getComment(oid:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("appkey",GlobalProperties.APP_KEY)
+        request.put("build",GlobalProperties.BUILD)
+        request.put("device",GlobalProperties.DEVICE)
+        request.put("mobi_app",GlobalProperties.MOBI_APP)
+        request.put("platform",GlobalProperties.PLATFORM)
+        request.put("pn",1)
+        request.put("ps",20)
+        request.put("sort",0)
+        request.put("type",1)
+        request.put("oid",oid)
+        request.put("trace_id",GlobalProperties.getTraceId())
+        request.put("ts",GlobalProperties.getSystemTime())
+        request.put("version",GlobalProperties.VERSION)
+
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, CommentData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        var url = GlobalProperties.COMMENT_HOST + GlobalProperties.getUrlParamsByMap(request)
+        LogUtils.d("拼接的评论url---->" + url)
+        getRequest().requestFullPath(HttpRequest.Method.GET,url, mLifecycle,callback)
     }
 }

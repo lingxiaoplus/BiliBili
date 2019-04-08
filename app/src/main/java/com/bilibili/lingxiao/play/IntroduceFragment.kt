@@ -9,6 +9,7 @@ import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.dagger.DaggerUiComponent
 import com.bilibili.lingxiao.home.recommend.RecommendData
 import com.bilibili.lingxiao.home.recommend.RecommendView
+import com.bilibili.lingxiao.play.model.CommentData
 import com.bilibili.lingxiao.play.model.VideoDetailData
 import com.bilibili.lingxiao.play.model.VideoRecoData
 import com.bilibili.lingxiao.utils.StringUtil
@@ -21,7 +22,6 @@ import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
 class IntroduceFragment :BaseFragment(),RecommendView{
-
 
     var mEndPageList = arrayListOf<EndPageData>()
     var mRecommendList = arrayListOf<VideoRecoData.VideoInfo>()
@@ -113,6 +113,10 @@ class IntroduceFragment :BaseFragment(),RecommendView{
 
         mRecommendList.addAll(videoRecoData.list)
         videoDetailAdapter.notifyDataSetChanged()
+    }
+
+    override fun onGetVideoComment(commentData: CommentData) {
+
     }
 
     override fun showDialog() {

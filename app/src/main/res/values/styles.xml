@@ -42,4 +42,9 @@
         <item name="android:textSize">@dimen/fen_si_text_size</item>
         <item name="android:textColor">@color/black_alpha_112</item>
     </style>
+
+    <style name="image_small">
+        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_width">20dp</item>
+    </style>
 </resources>

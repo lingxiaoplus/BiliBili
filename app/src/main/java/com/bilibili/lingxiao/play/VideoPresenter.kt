@@ -2,15 +2,17 @@ package com.bilibili.lingxiao.play
 
 import com.bilibili.lingxiao.HttpTrans
 import com.bilibili.lingxiao.home.recommend.RecommendView
+import com.bilibili.lingxiao.play.model.CommentData
 import com.bilibili.lingxiao.play.model.VideoDetailData
 import com.bilibili.lingxiao.play.model.VideoRecoData
+import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.observer.HttpRxCallback
 
-class VideoPresenter : BasePresenter<RecommendView, IntroduceFragment>{
+class VideoPresenter : BasePresenter<RecommendView, BaseFragment>{
     var httpTrans : HttpTrans
 
-    constructor(view: RecommendView, fragment: IntroduceFragment):super(view, fragment){
+    constructor(view: RecommendView, fragment: BaseFragment):super(view, fragment){
         httpTrans = HttpTrans(fragment)
     }
 
@@ -49,4 +51,23 @@ class VideoPresenter : BasePresenter<RecommendView, IntroduceFragment>{
 
         })
     }
+
+    fun getComment(oid:Int){
+        httpTrans.getComment(oid,object :HttpRxCallback<Any>(){
+            override fun onSuccess(res: Any?) {
+                var lists = res as Array<*>
+                mView?.onGetVideoComment(lists[0] as CommentData)
+            }
+
+            override fun onError(code: Int, desc: String?) {
+                mView?.showToast(desc)
+            }
+
+            override fun onCancel() {
+
+            }
+
+        })
+    }
+
 }
