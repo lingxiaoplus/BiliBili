@@ -32,7 +32,7 @@ class CommentFragment :BaseFragment(),RecommendView{
 
         var recommendManager = LinearLayoutManager(context)
         root.comment_recy.layoutManager = recommendManager
-        mAdapter = CommentAdapter(R.layout.item_videodetail_recommend,mCommentList)
+        mAdapter = CommentAdapter(R.layout.item_comment,mCommentList)
         root.comment_recy.adapter = mAdapter
     }
 
