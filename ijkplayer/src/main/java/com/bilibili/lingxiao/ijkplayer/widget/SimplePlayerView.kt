@@ -29,7 +29,9 @@ import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.*
 import com.bilibili.lingxiao.ijkplayer.NetworkUtil
+import com.camera.lingxiao.common.utills.RxJavaHelp
 import kotlinx.android.synthetic.main.simple_player_topbar.view.*
+import master.flame.danmaku.ui.widget.DanmakuView
 import kotlin.math.log
 import kotlin.properties.Delegates
 
@@ -375,6 +377,16 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         return this
     }
 
+    /**
+     * 设置弹幕地址
+     */
+    fun setDanMaKuUrl(url: String){
+
+    }
+
+    fun getDanmakuView(): DanmakuView {
+        return danmaku
+    }
     /**
      * 是否显示网络状态提示
      */

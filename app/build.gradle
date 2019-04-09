@@ -76,5 +76,12 @@ dependencies {
     implementation "org.greenrobot:eventbus:$rootProject.ext.eventBusVersion"
     implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
     implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+
+    //烈焰弹幕
+    implementation "com.github.ctiao:DanmakuFlameMaster:$rootProject.ext.danmakuVersion"
+    implementation "com.github.ctiao:ndkbitmap-armv7a:$rootProject.ext.danmakuNdk"
+    // Other ABIs: optional
+    implementation "com.github.ctiao:ndkbitmap-armv5:$rootProject.ext.danmakuNdk"
+    implementation "com.github.ctiao:ndkbitmap-x86:$rootProject.ext.danmakuNdk"
     implementation project(':skinLibrary')
 }

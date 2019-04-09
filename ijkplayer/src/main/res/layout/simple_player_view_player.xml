@@ -9,10 +9,21 @@
         android:background="@android:color/black">
 
 
-    <com.bilibili.lingxiao.ijkplayer.media.IjkVideoView
-            android:id="@+id/video_view"
+    <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+    >
+
+        <com.bilibili.lingxiao.ijkplayer.media.IjkVideoView
+                android:id="@+id/video_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <master.flame.danmaku.ui.widget.DanmakuView
+                android:id="@+id/danmaku"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </FrameLayout>
+
 
     <LinearLayout
             android:id="@+id/ll_bg"

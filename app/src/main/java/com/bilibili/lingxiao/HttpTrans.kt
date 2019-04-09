@@ -107,14 +107,18 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,url, mLifecycle,callback)
     }
 
-    fun getComment(oid:Int,callback: HttpRxCallback<Any>){
+    /**
+     * @param oid av号
+     * @param page 第几页
+     */
+    fun getComment(oid:String,page:Int,callback: HttpRxCallback<Any>){
         request.clear()
         request.put("appkey",GlobalProperties.APP_KEY)
         request.put("build",GlobalProperties.BUILD)
         request.put("device",GlobalProperties.DEVICE)
         request.put("mobi_app",GlobalProperties.MOBI_APP)
         request.put("platform",GlobalProperties.PLATFORM)
-        request.put("pn",1)
+        request.put("pn",page)
         request.put("ps",20)
         request.put("sort",0)
         request.put("type",1)

@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
 >
 
     <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="@dimen/user_header_size"
             android:layout_height="@dimen/user_header_size"
             app:progressBarImageScaleType="centerInside"
-            app:overlayImage="@drawable/ic_img_user_head_default"
             app:roundAsCircle="true"
             app:roundingBorderWidth="1dp"
             android:layout_margin="10dp"
             android:id="@+id/header"/>
 
     <LinearLayout
+            android:id="@+id/ll_top"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_toRightOf="@id/header"
     >
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:gravity="center_vertical"
         >
             <TextView
                     android:id="@+id/username"
@@ -35,6 +36,13 @@
                     android:text="名字哈哈"
                     style="@style/TextMessage"
             />
+            <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/image_level"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    app:viewAspectRatio="2.0"
+                    android:layout_marginLeft="5dp"
+            />
         </LinearLayout>
         <TextView
                 android:id="@+id/build_num"
@@ -42,20 +50,26 @@
                 android:layout_height="wrap_content"
                 android:text="楼层数 #66  昨天"
                 style="@style/TextMessage"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
         />
         <TextView
                 android:id="@+id/comment_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="这是评论内容"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
         />
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
         >
             <ImageView
                     android:id="@+id/recommend"
-                    android:src="@drawable/ic_recommend"
+                    app:srcCompat="@drawable/ic_img_agree"
                     android:layout_centerVertical="true"
                     style="@style/image_small"
             />
@@ -70,7 +84,7 @@
             />
             <ImageView
                     android:id="@+id/dislike"
-                    android:src="@drawable/ic_dislike"
+                    app:srcCompat="@drawable/ic_img_disagree"
                     android:layout_centerVertical="true"
                     style="@style/image_small"
                     android:layout_toRightOf="@id/recommend_num"
@@ -78,7 +92,7 @@
             />
             <ImageView
                     android:id="@+id/share"
-                    android:src="@drawable/ic_share"
+                    app:srcCompat="@drawable/ic_img_relay"
                     android:layout_centerVertical="true"
                     style="@style/image_small"
                     android:layout_toRightOf="@id/dislike"
@@ -94,4 +108,12 @@
         </RelativeLayout>
 
     </LinearLayout>
-</LinearLayout>
+
+    <ImageView
+            android:id="@+id/segment"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/black_alpha_32"
+            android:layout_below="@id/ll_top"
+    />
+</RelativeLayout>

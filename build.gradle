@@ -67,4 +67,6 @@ ext {
     daggerVersion = "2.21"
     frescoVersion = "1.13.0"
     eventBusVersion = "3.1.1"
+    danmakuVersion = "0.9.25"
+    danmakuNdk = "0.9.21"
 }

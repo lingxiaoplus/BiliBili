@@ -1,16 +1,19 @@
 package com.bilibili.lingxiao.play.model
 
-data class CommentData(
+import com.chad.library.adapter.base.entity.MultiItemEntity
+
+data class CommentData (
     val config: Config,
     val hots: List<Reply>,
     val mode: Int,
     val notice: Notice,
     val page: Page,
-    val replies: List<Reply>,
+    val replies: List<Reply>?,
     val support_mode: List<Int>,
     val top: Any,
     val upper: Upper
 ) {
+
     data class Notice(
         val content: String,
         val id: Int,
@@ -139,7 +142,7 @@ data class CommentData(
         val attr: Int,
         val content: Content,
         val count: Int,
-        val ctime: Int,
+        val ctime: Long,
         val dialog: Int,
         val dialog_str: String,
         val fansgrade: Int,
@@ -152,15 +155,25 @@ data class CommentData(
         val parent: Int,
         val parent_str: String,
         val rcount: Int,
-        val replies: Any,
+        val replies: Any?,
         val root: Int,
         val root_str: String,
         val rpid: Int,
         val rpid_str: String,
         val state: Int,
         val type: Int,
-        val up_action: UpAction
-    ) {
+        val up_action: UpAction,
+        val viewType:Int
+    ) : MultiItemEntity{
+        companion object {
+            val REPLIE = 0
+            val SEGMENT = 1
+        }
+
+        override fun getItemType(): Int {
+            return viewType
+        }
+
         data class Member(
             val DisplayRank: String,
             val avatar: String,

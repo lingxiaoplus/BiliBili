@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+>
+    <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="0.6dp"
+            android:background="@color/black_alpha_32"
+            android:layout_marginRight="10dp"
+    />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="更多热门评论 >"
+            android:textColor="@color/blue300"
+    />
+    <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="0.6dp"
+            android:background="@color/black_alpha_32"
+            android:layout_marginLeft="10dp"
+    />
+</LinearLayout>
