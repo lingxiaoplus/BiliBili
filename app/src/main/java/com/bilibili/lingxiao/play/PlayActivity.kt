@@ -4,9 +4,12 @@ import android.content.res.Configuration
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.util.Log
 import android.view.WindowManager
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.dagger.DaggerUiComponent
+import com.bilibili.lingxiao.ijkplayer.danmuku.BiliDanmukuCompressionTools
+import com.bilibili.lingxiao.ijkplayer.danmuku.BiliDanmukuParser
 import com.bilibili.lingxiao.play.model.VideoData
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
@@ -21,12 +24,21 @@ import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_play.*
+import master.flame.danmaku.controller.DrawHandler
 import master.flame.danmaku.danmaku.loader.ILoader
 import master.flame.danmaku.danmaku.loader.IllegalDataException
 import master.flame.danmaku.danmaku.loader.android.DanmakuLoaderFactory
+import master.flame.danmaku.danmaku.model.BaseDanmaku
+import master.flame.danmaku.danmaku.model.DanmakuTimer
+import master.flame.danmaku.danmaku.model.IDisplayer
+import master.flame.danmaku.danmaku.model.android.DanmakuContext
 import master.flame.danmaku.ui.widget.DanmakuView
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.io.ByteArrayInputStream
 import java.io.IOException
+import java.io.InputStream
+import java.lang.StringBuilder
 import java.net.URLDecoder
 import java.util.*
 import java.util.zip.DataFormatException
@@ -42,6 +54,8 @@ class PlayActivity : BaseActivity() {
     @Inject
     lateinit var  commentFragment: CommentFragment
 
+    lateinit var mDanmakuContext: DanmakuContext
+    val TAG = PlayActivity::class.java.simpleName
     override val contentLayoutId: Int
         get() = R.layout.activity_play
 
@@ -87,50 +101,98 @@ class PlayActivity : BaseActivity() {
         fragmentList.add(commentFragment)
 
         danmakuView = play_view.getDanmakuView()
-
+        initDanmaku()
+        getDanmaku(videoData.cid)
 
     }
 
 
-    fun getDanmaku(){
-        RxJavaHelp.workWithLifecycle(this,object :ObservableOnSubscribe<Any>{
-            override fun subscribe(e: ObservableEmitter<Any>) {
-                /*var loader: ILoader? = null
-                try {
-                    val rsp = Jsoup.connect(uri).timeout(20000).execute() as HttpConnection.Response
-                    val stream = ByteArrayInputStream(BiliDanmukuCompressionTools.decompressXML(rsp.bodyAsBytes()))
+    fun getDanmaku(cid:Int){
+        RxJavaHelp.workWithLifecycle(this,object :ObservableOnSubscribe<BiliDanmukuParser>{
+            override fun subscribe(e: ObservableEmitter<BiliDanmukuParser>) {
 
-                    loader = DanmakuLoaderFactory.create(DanmakuLoaderFactory.TAG_BILI)
-                    loader!!.load(stream)
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                } catch (e: DataFormatException) {
-                    e.printStackTrace()
-                } catch (e: IllegalDataException) {
-                    e.printStackTrace()
+                var url = StringBuilder()
+                url.append("http://comment.bilibili.com/")
+                url.append(cid)
+                url.append(".xml")
+                var client =  OkHttpClient();//创建OkHttpClient对象
+                var request = Request.Builder()
+                    .url(url.toString())//请求接口。如果需要传参拼接到接口后面。
+                    .build();//创建Request 对象
+                var response = client.newCall(request).execute();//得到Response 对象
+                if (response.isSuccessful()) {
+                    var response = response.body()
+                    var loader = DanmakuLoaderFactory.create(DanmakuLoaderFactory.TAG_BILI)
+                    var bytes = BiliDanmukuCompressionTools.decompressXML(response?.bytes())
+                    var inputStream = ByteArrayInputStream(bytes)
+
+                    loader.load(inputStream)
+                    val parser = BiliDanmukuParser()
+                    assert(loader != null)
+                    val dataSource = loader.dataSource
+                    parser.load(dataSource)
+                    e.onNext(parser)
+                    e.onComplete()
                 }
-
-                val parser = BiliDanmukuParser()
-                assert(loader != null)
-                val dataSource = loader!!.dataSource
-                parser.load(dataSource)
-                emitter.onNext(parser)*/
             }
 
-        },object : HttpRxObserver<Any>("danmku") {
+        },object : HttpRxObserver<BiliDanmukuParser>("danmku") {
             override fun onStart(d: Disposable) {
 
             }
 
             override fun onError(e: ApiException) {
-
+                Log.e(TAG,"播放弹幕失败" + e)
             }
 
-            override fun onSuccess(response: Any) {
+            override fun onSuccess(response: BiliDanmukuParser) {
+                danmakuView.prepare(response, mDanmakuContext)
+                danmakuView.showFPS(false)//是否显示FPS
+                danmakuView.enableDanmakuDrawingCache(true)
+                danmakuView.setCallback(object : DrawHandler.Callback {
+                    override fun prepared() {
+                        danmakuView.start()
+                        Log.d(TAG,"开始播放弹幕")
+                    }
 
+                    override fun updateTimer(danmakuTimer: DanmakuTimer) {
+
+                    }
+
+                    override fun danmakuShown(danmaku: BaseDanmaku) {
+                        Log.d(TAG,"弹幕：" + danmaku.text)
+                    }
+
+                    override fun drawingFinished() {
+
+                    }
+                })
             }
 
         })
+    }
+
+    private fun initDanmaku() {
+        mDanmakuContext = DanmakuContext.create()
+        // 设置最大行数,从右向左滚动(有其它方向可选)
+        var maxLinesPair = HashMap<Int, Int>()
+        maxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 3)
+        //配置弹幕库
+        danmakuView.enableDanmakuDrawingCache(true)
+        // 设置是否禁止重叠
+        var overlappingEnablePair = HashMap<Int, Boolean>()
+        overlappingEnablePair.put(BaseDanmaku.TYPE_SCROLL_LR, true)
+        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_BOTTOM, true)
+        mDanmakuContext.setDanmakuStyle(IDisplayer.DANMAKU_STYLE_STROKEN, 3f) //设置描边样式
+            .setDuplicateMergingEnabled(false)
+            .setScrollSpeedFactor(1.2f) //是否启用合并重复弹幕
+            .setScaleTextSize(1.2f) //设置弹幕滚动速度系数,只对滚动弹幕有效
+            // 默认使用{@link SimpleTextCacheStuffer}只支持纯文字显示,
+            // 如果需要图文混排请设置{@link SpannedCacheStuffer}
+            // 如果需要定制其他样式请扩展{@link SimpleTextCacheStuffer}|{@link SpannedCacheStuffer}
+            .setMaximumLines(maxLinesPair) //设置最大显示行数
+            .preventOverlapping(overlappingEnablePair) //设置防弹幕重叠，null为允许重叠
+
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
