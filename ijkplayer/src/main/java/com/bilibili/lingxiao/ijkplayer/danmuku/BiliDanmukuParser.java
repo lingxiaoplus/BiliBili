@@ -2,6 +2,7 @@ package com.bilibili.lingxiao.ijkplayer.danmuku;
 
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.util.Log;
 import master.flame.danmaku.danmaku.model.*;
 import master.flame.danmaku.danmaku.model.android.DanmakuFactory;
 import master.flame.danmaku.danmaku.model.android.Danmakus;
@@ -33,7 +34,7 @@ public class BiliDanmukuParser extends BaseDanmakuParser {
 
     private float mDispScaleX;
     private float mDispScaleY;
-
+    private static final String TAG = BiliDanmukuParser.class.getSimpleName();
     @Override
     public Danmakus parse() {
 
@@ -110,10 +111,11 @@ public class BiliDanmukuParser extends BaseDanmakuParser {
                     item = mContext.mDanmakuFactory.createDanmaku(type, mContext);
                     if (item != null) {
                         item.setTime(time);
-                        item.textSize = textSize * (mDispDensity - 0.6f);
+                        item.textSize = textSize * (mDispDensity - 0.6f) / BiliDanmuku.INSTANCE.getTextSizeOffset();
                         item.textColor = color;
                         item.textShadowColor = color <= Color.BLACK ? Color.WHITE : Color.BLACK;
                         item.flags = flag;
+                        Log.i(TAG,"字体大小："+item.textSize);
                     }
                 }
             }

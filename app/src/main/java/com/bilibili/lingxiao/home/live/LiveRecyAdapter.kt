@@ -14,49 +14,50 @@ import com.camera.lingxiao.common.utills.LogUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.util.MultiTypeDelegate
 import com.facebook.drawee.view.SimpleDraweeView
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlin.properties.Delegates
 
-class LiveRecyAdapter : BaseMultiItemQuickAdapter<MultiItemLiveData, BaseViewHolder> {
+class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
     var recycledViewPool:RecyclerView.RecycledViewPool by Delegates.notNull()
-    constructor(data: MutableList<MultiItemLiveData>, recycledViewPool: RecyclerView.RecycledViewPool) :super(data){
+    constructor(data:MutableList<MultiItemLiveData>,recycledViewPool:RecyclerView.RecycledViewPool) :super(data){
         this.recycledViewPool = recycledViewPool
-        addItemType(MultiItemLiveData.BANNER,R.layout.layout_banner)
+       /* addItemType(MultiItemLiveData.BANNER,R.layout.layout_banner)
         addItemType(MultiItemLiveData.CATEGORY,R.layout.item_live_category)
         addItemType(MultiItemLiveData.RECOMMEND,R.layout.layout_recommend)
-        addItemType(MultiItemLiveData.PARTITION,R.layout.layout_partition)
+        addItemType(MultiItemLiveData.PARTITION,R.layout.layout_partition)*/
 
-        /*multiTypeDelegate = object : MultiTypeDelegate<LiveData>() {
-            override fun getItemType(entity: LiveData): Int {
+        multiTypeDelegate = object : MultiTypeDelegate<MultiItemLiveData>() {
+            override fun getItemType(entity: MultiItemLiveData): Int {
                 //根据你的实体类来判断布局类型
                 return entity.itemType
             }
         }
         multiTypeDelegate
             .registerItemType(LiveData.BANNER,R.layout.layout_banner)
-            .registerItemType(LiveData.CATEGORY,R.layout.layout_category)
+            .registerItemType(LiveData.CATEGORY,R.layout.item_live_category)
             .registerItemType(LiveData.RECOMMEND,R.layout.layout_recommend)
-            .registerItemType(LiveData.PARTITION,R.layout.layout_category)*/
+            .registerItemType(LiveData.PARTITION,R.layout.layout_partition)
     }
     override fun convert(helper: BaseViewHolder, item: MultiItemLiveData) {
         when(helper.itemViewType){
-            MultiItemLiveData.BANNER-> {
+            LiveData.BANNER-> {
                 var banner :Banner = helper.getView(R.id.live_banner)
                 initBanner(banner,item.bannerList)
             }
-            MultiItemLiveData.CATEGORY->{
+            LiveData.CATEGORY->{
                 //initCategory(helper,item.entranceIcons)
                 helper.setText(R.id.item_live_title,item.entranceIconsBean.name)
                 var image : SimpleDraweeView = helper.getView(R.id.item_live_image)
                 image.setImageURI(Uri.parse(item.entranceIconsBean.entrance_icon.src))
             }
-            MultiItemLiveData.RECOMMEND->{
+            LiveData.RECOMMEND->{
                 initRecommend(helper,item.liveList)
             }
-            MultiItemLiveData.PARTITION->{
+            LiveData.PARTITION->{
                 helper.setText(R.id.live_category_name,item.partitionsBean.partition.name)
                 LogUtils.d("LiveRecyAdapter 获取到Partition name 的值-》》" + item.partitionsBean.partition.name)
                 initPartition(helper,item.partitionsBean.lives)
@@ -64,7 +65,6 @@ class LiveRecyAdapter : BaseMultiItemQuickAdapter<MultiItemLiveData, BaseViewHol
             }
         }
     }
-
 
     private fun initPartition(helper: BaseViewHolder, data: MutableList<LiveData.PartitionsBean.LivesBeanX>) {
         var list = data

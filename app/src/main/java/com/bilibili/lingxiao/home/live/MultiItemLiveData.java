@@ -4,17 +4,12 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.List;
 
-public class MultiItemLiveData implements MultiItemEntity {
+public class MultiItemLiveData {
     public static final int BANNER = 1;
     public static final int CATEGORY = 2;
     public static final int RECOMMEND = 3;
     public static final int PARTITION = 4;
-    private int itemType;
-
-    @Override
-    public int getItemType() {
-        return itemType;
-    }
+    public int itemType;
 
     public MultiItemLiveData(int type){
         this.itemType = type;

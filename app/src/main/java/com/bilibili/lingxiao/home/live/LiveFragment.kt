@@ -19,9 +19,6 @@ import com.bilibili.lingxiao.utils.UIUtil
 import javax.inject.Inject
 
 class LiveFragment :BaseFragment() ,LiveView{
-
-
-
     var livePresenter: LivePresenter = LivePresenter(this,this)
     val TAG = LiveFragment::class.java.simpleName
     var liveList = arrayListOf<MultiItemLiveData>()
@@ -83,7 +80,6 @@ class LiveFragment :BaseFragment() ,LiveView{
     }
 
     var bannerData = MultiItemLiveData(MultiItemLiveData.BANNER)
-
     var recommendData = MultiItemLiveData(MultiItemLiveData.RECOMMEND)
     override fun onGetLiveList(data: LiveData) {
         liveList.clear()
@@ -105,17 +101,6 @@ class LiveFragment :BaseFragment() ,LiveView{
             partitionData.partitionsBean = partition
             liveList.add(partitionData)
         }
-        /*var bannerData = LiveData(LiveData.BANNER)
-        bannerData.banner = data.banner
-
-        var categoryData = LiveData(LiveData.CATEGORY)
-        categoryData.entranceIcons = data.entranceIcons
-
-        var recommendData = LiveData(LiveData.RECOMMEND)
-        recommendData.recommend_data = data.recommend_data
-
-        var partitionData = LiveData(LiveData.PARTITION)
-        partitionData.partitions = data.partitions*/
 
         liveAdapter.notifyDataSetChanged()
         refresh.finishRefresh()

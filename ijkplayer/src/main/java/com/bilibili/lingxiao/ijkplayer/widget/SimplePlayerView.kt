@@ -29,9 +29,16 @@ import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.*
 import com.bilibili.lingxiao.ijkplayer.NetworkUtil
+import com.bilibili.lingxiao.ijkplayer.danmuku.BiliDanmuku
+import com.bilibili.lingxiao.ijkplayer.danmuku.BiliDanmukuParser
+import com.camera.lingxiao.common.exception.ApiException
+import com.camera.lingxiao.common.observer.HttpRxObserver
 import com.camera.lingxiao.common.utills.RxJavaHelp
 import kotlinx.android.synthetic.main.simple_player_topbar.view.*
 import master.flame.danmaku.ui.widget.DanmakuView
+import okhttp3.*
+import java.io.IOException
+import java.lang.StringBuilder
 import kotlin.math.log
 import kotlin.properties.Delegates
 
@@ -360,16 +367,22 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         }else{
             video_view.start()
         }
+        danmaku.start(mDanmukuPosition)
+
     }
 
+    private var mDanmukuPosition = 0L
     fun pausePlay(){
         mVideoState = PlayState.STATE_PAUSED
         getCurrentPosition()
         video_view.pause()
+        danmaku.pause()
+        mDanmukuPosition = danmaku.currentTime
     }
     fun stopPlay(){
         video_view.stopPlayback()
         video_view.release(true)
+        danmaku.stop()
     }
 
     fun setVideoTitle(title: String): SimplePlayerView{
@@ -378,15 +391,15 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
     }
 
     /**
-     * 设置弹幕地址
+     * 初始化弹幕库
+     * @param cid 根据cid获取弹幕
      */
-    fun setDanMaKuUrl(url: String){
-
+    fun initDanMaKu(cid:Int): SimplePlayerView{
+        BiliDanmuku.initDanmaku(danmaku)
+        getDanmakuFromCid(cid)
+        return this
     }
 
-    fun getDanmakuView(): DanmakuView {
-        return danmaku
-    }
     /**
      * 是否显示网络状态提示
      */
@@ -442,7 +455,6 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         toggleAnim(video_top,0f,-video_top.height.toFloat() - margin)
         toggleAnim(video_bottom,0f, video_bottom.height.toFloat())
         isHiddenBar = true
-
     }
 
     private fun toggleAnim(view: View ,fromY:Float,toY:Float) {
@@ -453,6 +465,8 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         animatorSet.play(animatorx)
         animatorSet.start()
     }
+
+
 
 
     /**
@@ -588,6 +602,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         muteAudioFocus(context,true)
         getCurrentPosition()
         video_view.release(false)
+        danmaku.pause()
     }
 
     fun onResume(){
@@ -599,12 +614,13 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         }else{
             video_view.seekTo(mCurrentPosition)
         }
-
+        danmaku.resume()
     }
 
     fun onDestory(){
         mHandler.removeCallbacksAndMessages(null)
         stopPlay()
+        danmaku.release()
     }
 
     override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
@@ -807,5 +823,38 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         }
         video_brightness_controller.max = 100
         video_brightness_controller.setProgress((lpa.screenBrightness*100).toInt())
+    }
+
+    /**
+     * 获取弹幕并播放
+     */
+    private fun getDanmakuFromCid(cid:Int){
+        var url = StringBuilder()
+        url.append("http://comment.bilibili.com/")
+        url.append(cid)
+        url.append(".xml")
+        var client =  OkHttpClient();//创建OkHttpClient对象
+        var request = Request.Builder()
+            .url(url.toString())//请求接口。如果需要传参拼接到接口后面。
+            .build();//创建Request 对象
+        //var response = client.newCall(request).execute();//得到Response 对象
+        client.newCall(request).enqueue(object :Callback{
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e(TAG,"播放弹幕失败" + e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful()) {
+                    var response = response.body()
+                    val parser = BiliDanmuku.parseDanmaku(response?.bytes())
+                    danmaku.post {
+                        BiliDanmuku.playDanmaku(parser,danmaku)
+                    }
+                }else{
+                    Log.e(TAG,"播放弹幕失败" + response)
+                }
+            }
+
+        })
     }
 }

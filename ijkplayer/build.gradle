@@ -60,6 +60,7 @@ dependencies {
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.ext.baseRecyclerAdapterVersion"
     implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"
     implementation "com.android.support:cardview-v7:$rootProject.ext.supportVersion"
+    implementation 'com.squareup.okhttp3:okhttp:3.13.1'
     //烈焰弹幕
     implementation "com.github.ctiao:DanmakuFlameMaster:$rootProject.ext.danmakuVersion"
     implementation "com.github.ctiao:ndkbitmap-armv7a:$rootProject.ext.danmakuNdk"

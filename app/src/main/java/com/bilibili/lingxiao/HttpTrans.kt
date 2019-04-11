@@ -139,4 +139,20 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         LogUtils.d("拼接的评论url---->" + url)
         getRequest().requestFullPath(HttpRequest.Method.GET,url, mLifecycle,callback)
     }
+
+    /**
+     * 获取国内，日本推荐的番剧
+     * https://bangumi.bilibili.com/appindex/follow_index_page?appkey=1d8b6e7d45233436&build=502000&mobi_app=android&platform=android&ts=1493967208000&sign=3eff79d895af9cf800016%20fe8f6bc6ce0
+     */
+    fun getBanGumiRecommend(){
+
+    }
+
+    /**
+     * 获取编辑推荐的番剧
+     * https://bangumi.bilibili.com/appindex/follow_index_fall?appkey=1d8b6e7d45233436&build=509000&cursor=0&mobi_app=android&platform=android&ts=1499937514&sign=2dae626fed99d43abbc9d09cfd124641
+     */
+    fun getBanGumiFall(){
+
+    }
 }

@@ -1,8 +1,16 @@
 package com.bilibili.lingxiao.home.live;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.util.List;
 
 public class LiveData {
+    public static final int BANNER = 1;
+    public static final int CATEGORY = 2;
+    public static final int RECOMMEND = 3;
+    public static final int PARTITION = 4;
+    public int itemType;
+
     private List<BannerBean> banner;
     private List<EntranceIconsBean> entranceIcons;
     private List<PartitionsBean> partitions;
@@ -39,6 +47,8 @@ public class LiveData {
     public void setPartitions(List<PartitionsBean> partitions) {
         this.partitions = partitions;
     }
+
+
 
     public static class RecommendDataBean {
 
@@ -657,7 +667,6 @@ public class LiveData {
         private String position;
         private String sort_num;
         private String img;
-
         public String getId() {
             return id;
         }

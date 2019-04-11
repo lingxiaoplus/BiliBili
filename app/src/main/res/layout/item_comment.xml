@@ -111,9 +111,7 @@
 
     <ImageView
             android:id="@+id/segment"
-            android:layout_width="match_parent"
-            android:layout_height="0.4dp"
-            android:background="@color/black_alpha_32"
+            style="@style/between_line"
             android:layout_below="@id/ll_top"
     />
 </RelativeLayout>

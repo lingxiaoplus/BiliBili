@@ -16,6 +16,7 @@ object GlobalProperties {
     val DETAIL_HOST = "http://api.bilibili.cn/view?"  //视频详情
     val COMMEND_VIDEO_HOST = "http://api.bilibili.cn/recommend?"  //视频详情下面的推荐
     val COMMENT_HOST = "http://api.bilibili.com/x/v2/reply?"  //评论
+    val bangumi = "http://bangumi.bilibili.com/appindex/"
 
     private val SECRET_KEY = "ea85624dfcf12d7cc7b2b3a94fac1f2c"
     val PARAM_SIGN = "sign"

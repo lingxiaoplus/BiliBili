@@ -26,6 +26,7 @@ class CommentFragment :BaseFragment(),RecommendView{
 
     private var page = 1 //评论页数
     private var avNum = ""
+
     override val contentLayoutId: Int
         get() = R.layout.fragment_comment
 
