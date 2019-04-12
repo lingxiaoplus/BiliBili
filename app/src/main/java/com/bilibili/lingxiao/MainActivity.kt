@@ -80,12 +80,14 @@ class MainActivity : BaseActivity() {
         })
 
         main_viewPager.adapter = MainPagerAdapter(supportFragmentManager)
+
         main_tabLayout.setupWithViewPager(main_viewPager)
 
         fragmentList.add(liveFragment)
         fragmentList.add(recommendFragment)
         fragmentList.add(hotFragment)
         fragmentList.add(mikanFragment)
+        main_viewPager.currentItem = fragmentList.size
     }
 
     override fun onBackPressed() {

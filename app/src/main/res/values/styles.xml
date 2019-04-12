@@ -36,12 +36,21 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
+
+    <style name="TextTitle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">@dimen/user_name_text_size</item>
+        <item name="android:textColor">@color/black_alpha_176</item>
+    </style>
     <style name="TextMessage">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/fen_si_text_size</item>
         <item name="android:textColor">@color/black_alpha_112</item>
     </style>
+
+
 
     <style name="image_small">
         <item name="android:layout_height">15dp</item>

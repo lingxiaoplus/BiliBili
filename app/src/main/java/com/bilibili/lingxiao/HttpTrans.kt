@@ -1,6 +1,8 @@
 package com.bilibili.lingxiao
 
 import com.bilibili.lingxiao.home.live.LiveData
+import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
+import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
 import com.bilibili.lingxiao.play.model.CommentData
 import com.bilibili.lingxiao.play.model.VideoDetailData
 import com.bilibili.lingxiao.play.model.VideoRecoData
@@ -144,15 +146,52 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
      * 获取国内，日本推荐的番剧
      * https://bangumi.bilibili.com/appindex/follow_index_page?appkey=1d8b6e7d45233436&build=502000&mobi_app=android&platform=android&ts=1493967208000&sign=3eff79d895af9cf800016%20fe8f6bc6ce0
      */
-    fun getBanGumiRecommend(){
-
+    fun getBanGumiRecommend(callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("appkey",GlobalProperties.APP_KEY)
+        request.put("build",GlobalProperties.BUILD)
+        request.put("device",GlobalProperties.DEVICE)
+        request.put("mobi_app",GlobalProperties.MOBI_APP)
+        request.put("platform",GlobalProperties.PLATFORM)
+        request.put("ts",GlobalProperties.getSystemTime())
+        request.put("version",GlobalProperties.VERSION)
+        //request.put("sign",GlobalProperties.)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, MiKanRecommendData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        var url = GlobalProperties.BANGUMI_CN_AND_JP_HOST + GlobalProperties.getUrlParamsByMap(request)
+        LogUtils.d("拼接番剧的url---->" + url)
+        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,url, mLifecycle,callback)
     }
 
     /**
      * 获取编辑推荐的番剧
      * https://bangumi.bilibili.com/appindex/follow_index_fall?appkey=1d8b6e7d45233436&build=509000&cursor=0&mobi_app=android&platform=android&ts=1499937514&sign=2dae626fed99d43abbc9d09cfd124641
      */
-    fun getBanGumiFall(){
-
+    fun getBanGumiFall(cursor:Long,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("appkey",GlobalProperties.APP_KEY)
+        request.put("build",GlobalProperties.BUILD)
+        request.put("cursor",cursor)
+        request.put("mobi_app",GlobalProperties.MOBI_APP)
+        request.put("platform",GlobalProperties.PLATFORM)
+        request.put("ts",GlobalProperties.getSystemTime())
+        request.put("version",GlobalProperties.VERSION)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, MiKanFallData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        var url = GlobalProperties.BANGUMI_FALL_HOST + GlobalProperties.getUrlParamsByMap(request)
+        LogUtils.d("拼接编辑推荐的番剧的url---->" + url)
+        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,url, mLifecycle,callback)
     }
 }

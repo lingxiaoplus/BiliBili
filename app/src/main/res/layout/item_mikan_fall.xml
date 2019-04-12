@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:layout_margin="10dp"
+>
+    <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/mikan_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:viewAspectRatio="3.5"
+    />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextTitle"
+            android:text="这是标题"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:id="@+id/title"
+    />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMessage"
+            android:text="这是内容"
+            android:maxLines="4"
+            android:ellipsize="end"
+            android:id="@+id/content"
+    />
+</LinearLayout>
