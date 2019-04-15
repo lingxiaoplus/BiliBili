@@ -1,7 +1,7 @@
 package com.bilibili.lingxiao.home
 
 import android.util.SparseArray
-import com.bilibili.lingxiao.home.hot.HotFragment
+import com.bilibili.lingxiao.home.category.CategoryFragment
 import com.bilibili.lingxiao.home.live.LiveFragment
 import com.bilibili.lingxiao.home.mikan.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
@@ -19,7 +19,7 @@ object FragmentFactory{
             when(type){
                 TYPE_LIVE-> fragment = LiveFragment()
                 TYPE_RECOMMEND-> fragment = RecommendFragment()
-                TYPE_HOT-> fragment = HotFragment()
+                TYPE_HOT-> fragment = CategoryFragment()
                 TYPE_MIKAN-> fragment = MikanFragment()
                 else-> fragment = LiveFragment()
             }

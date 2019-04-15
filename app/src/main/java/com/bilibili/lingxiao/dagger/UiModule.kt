@@ -1,7 +1,7 @@
 package com.bilibili.lingxiao.dagger
 
 import android.content.Context
-import com.bilibili.lingxiao.home.hot.HotFragment
+import com.bilibili.lingxiao.home.category.CategoryFragment
 import com.bilibili.lingxiao.home.live.LiveFragment
 import com.bilibili.lingxiao.home.mikan.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
@@ -26,8 +26,8 @@ class UiModule {
 
     @Provides
     @PerUi
-    fun provideHotFragment() : HotFragment {
-        return HotFragment()
+    fun provideHotFragment() : CategoryFragment {
+        return CategoryFragment()
     }
 
     @Provides

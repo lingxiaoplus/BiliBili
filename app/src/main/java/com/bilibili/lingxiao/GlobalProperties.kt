@@ -18,6 +18,8 @@ object GlobalProperties {
     val COMMENT_HOST = "http://api.bilibili.com/x/v2/reply?"  //评论
     val BANGUMI_CN_AND_JP_HOST = "http://bangumi.bilibili.com/appindex/follow_index_page?" //国内外推荐番剧
     val BANGUMI_FALL_HOST = "http://bangumi.bilibili.com/appindex/follow_index_fall?" //编辑推荐番剧
+    val CATEGORY_HOST = "http://app.bilibili.com/x/v2/region?" //分区
+    val CATEGORY_RECOMMEND_HOST = "http://app.bilibili.com/x/v2/show/index?" //分区推荐
 
     private val SECRET_KEY = "ea85624dfcf12d7cc7b2b3a94fac1f2c"
     val PARAM_SIGN = "sign"

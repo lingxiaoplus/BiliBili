@@ -1,5 +1,7 @@
 package com.bilibili.lingxiao
 
+import com.bilibili.lingxiao.home.category.RegionData
+import com.bilibili.lingxiao.home.category.RegionRecommendData
 import com.bilibili.lingxiao.home.live.LiveData
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
@@ -13,6 +15,7 @@ import com.camera.lingxiao.common.observer.HttpRxCallback
 import com.camera.lingxiao.common.utills.LogUtils
 import com.google.gson.Gson
 import com.google.gson.JsonElement
+import com.google.gson.reflect.TypeToken
 import com.trello.rxlifecycle2.LifecycleProvider
 
 class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
@@ -193,5 +196,46 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         var url = GlobalProperties.BANGUMI_FALL_HOST + GlobalProperties.getUrlParamsByMap(request)
         LogUtils.d("拼接编辑推荐的番剧的url---->" + url)
         getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,url, mLifecycle,callback)
+    }
+
+
+    fun getCategory(callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("build",GlobalProperties.BUILD)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                val type = object : TypeToken<List<RegionData.Data>>() {}.getType()
+                var modle:List<RegionData.Data> = Gson().fromJson<List<RegionData.Data>>(element, type)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        var url = GlobalProperties.CATEGORY_HOST + GlobalProperties.getUrlParamsByMap(request)
+        LogUtils.d("拼接分区的url---->" + url)
+        //getRequest().request(HttpRequest.Method.GET,url, mLifecycle,callback)
+        getRequest().requestFullPath(HttpRequest.Method.GET,url, mLifecycle,callback)
+    }
+
+    fun getCategoryRecommend(callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("appkey",GlobalProperties.APP_KEY)
+        request.put("build",GlobalProperties.BUILD)
+        request.put("mobi_app",GlobalProperties.MOBI_APP)
+        request.put("platform",GlobalProperties.PLATFORM)
+        request.put("ts",GlobalProperties.getSystemTime())
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                val type = object : TypeToken<List<RegionRecommendData.Data>>() {}.getType()
+                var modle:List<RegionRecommendData.Data> = Gson().fromJson<List<RegionRecommendData.Data>>(element, type)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        var url = GlobalProperties.CATEGORY_RECOMMEND_HOST + GlobalProperties.getUrlParamsByMap(request)
+        LogUtils.d("拼接分区推荐的url---->" + url)
+        //getRequest().request(HttpRequest.Method.GET,url, mLifecycle,callback)
+        getRequest().requestFullPath(HttpRequest.Method.GET,url, mLifecycle,callback)
     }
 }

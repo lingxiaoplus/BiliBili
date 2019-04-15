@@ -1,4 +1,4 @@
-package com.bilibili.lingxiao.home.live.category
+package com.bilibili.lingxiao.home.category
 
 import android.net.Uri
 import com.bilibili.lingxiao.R
@@ -7,12 +7,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
 
-class LiveCategoryAdapter(layoutResId: Int, data: List<LiveData.EntranceIconsBean>?) :
-    BaseQuickAdapter<LiveData.EntranceIconsBean, BaseViewHolder>(layoutResId, data) {
+class RegionAdapter(layoutResId: Int, data: List<RegionData.Data>?) :
+    BaseQuickAdapter<RegionData.Data, BaseViewHolder>(layoutResId, data) {
 
-    override fun convert(helper: BaseViewHolder, item: LiveData.EntranceIconsBean) {
+    override fun convert(helper: BaseViewHolder, item: RegionData.Data) {
         helper.setText(R.id.item_live_title,item.name)
         var image :SimpleDraweeView = helper.getView(R.id.item_live_image)
-        image.setImageURI(Uri.parse(item.entrance_icon.src))
+        image.setImageURI(Uri.parse(item.logo))
     }
 }

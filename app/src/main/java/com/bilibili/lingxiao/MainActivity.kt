@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.View
-import com.bilibili.lingxiao.home.hot.HotFragment
+import com.bilibili.lingxiao.home.category.CategoryFragment
 import com.bilibili.lingxiao.home.live.LiveFragment
 import com.bilibili.lingxiao.home.mikan.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
@@ -31,7 +31,7 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var recommendFragment: RecommendFragment
     @Inject
-    lateinit var hotFragment: HotFragment
+    lateinit var hotFragment: CategoryFragment
     @Inject
     lateinit var mikanFragment: MikanFragment
 
