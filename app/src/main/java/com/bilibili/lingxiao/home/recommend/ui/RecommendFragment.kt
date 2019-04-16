@@ -42,6 +42,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
     override fun initWidget(root: View) {
         super.initWidget(root)
         mAdapter = RecommendRecyAdapter(R.layout.item_video,mRecommendList)
+
         var view = View.inflate(context,R.layout.layout_banner,null)
         banner = view.findViewById(R.id.live_banner)
         mAdapter.addHeaderView(view)
@@ -96,9 +97,15 @@ class RecommendFragment :BaseFragment(), RecommendView {
             initBanner(banner.banner_item)
         }else{
             for (data in recommendData){
-                mAdapter.addData(data)
+                if (mAdapter.itemCount > 0){
+                    mAdapter.addData(1,data)
+                }else{
+                    mAdapter.addData(data)
+                }
+
             }
         }
+
         refresh.finishRefresh()
         refresh.finishLoadMore()
     }

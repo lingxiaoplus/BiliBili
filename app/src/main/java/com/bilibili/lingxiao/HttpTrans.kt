@@ -199,7 +199,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
     }
 
 
-    fun getCategory(callback: HttpRxCallback<Any>){
+    fun getRegion(callback: HttpRxCallback<Any>){
         request.clear()
         request.put("build",GlobalProperties.BUILD)
         callback.setParseHelper(object : ParseHelper {
@@ -217,7 +217,10 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         getRequest().requestFullPath(HttpRequest.Method.GET,url, mLifecycle,callback)
     }
 
-    fun getCategoryRecommend(callback: HttpRxCallback<Any>){
+    /**
+     * 分区推荐信息
+     */
+    fun getRegionRecommend(callback: HttpRxCallback<Any>){
         request.clear()
         request.put("appkey",GlobalProperties.APP_KEY)
         request.put("build",GlobalProperties.BUILD)
@@ -235,7 +238,6 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         })
         var url = GlobalProperties.CATEGORY_RECOMMEND_HOST + GlobalProperties.getUrlParamsByMap(request)
         LogUtils.d("拼接分区推荐的url---->" + url)
-        //getRequest().request(HttpRequest.Method.GET,url, mLifecycle,callback)
-        getRequest().requestFullPath(HttpRequest.Method.GET,url, mLifecycle,callback)
+        getRequest().requestFullPath(HttpRequest.Method.GET, url, mLifecycle, callback)
     }
 }

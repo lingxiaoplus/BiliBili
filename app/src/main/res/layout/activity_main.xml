@@ -96,15 +96,34 @@
         </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
 
-    <!--侧滑菜单-->
-    <android.support.design.widget.NavigationView
-            android:id="@+id/main_navigation"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:layout_gravity="start"
-            app:menu="@menu/nav_menu"
-            android:fitsSystemWindows="false"
-            app:itemTextColor="@drawable/nav_menu_text_color"
-            app:itemIconTint="@drawable/nav_menu_text_color"
-    />
+    >
+        <!--侧滑菜单-->
+        <android.support.design.widget.NavigationView
+                android:id="@+id/main_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+
+                app:menu="@menu/nav_menu"
+                android:fitsSystemWindows="false"
+                app:itemTextColor="@drawable/nav_menu_text_color"
+                app:itemIconTint="@drawable/nav_menu_text_color"
+                android:scrollbars="vertical"
+        >
+        </android.support.design.widget.NavigationView>
+        <include
+                layout="@layout/bottom_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+        />
+    </LinearLayout>
+
+
 </android.support.v4.widget.DrawerLayout>

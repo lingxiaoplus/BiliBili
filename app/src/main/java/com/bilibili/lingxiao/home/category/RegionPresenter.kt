@@ -10,7 +10,7 @@ class RegionPresenter(view: RegionView, fragment: CategoryFragment) :
         HttpTrans(fragment)
     }
     fun getRegion(){
-        httpTrans.getCategory(object :HttpRxCallback<Any>(){
+        httpTrans.getRegion(object :HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {
                 var lists = res as Array<*>
                 mView?.onGetRegion(lists[0] as List<RegionData.Data>)
@@ -24,6 +24,23 @@ class RegionPresenter(view: RegionView, fragment: CategoryFragment) :
 
             }
 
+        })
+    }
+
+    fun getRegionRecommend(){
+        httpTrans.getRegionRecommend(object :HttpRxCallback<Any>(){
+            override fun onSuccess(res: Any?) {
+                var lists = res as Array<*>
+                mView?.onGetRegionRecommend(lists[0] as List<RegionRecommendData.Data>)
+            }
+
+            override fun onError(code: Int, desc: String?) {
+                mView?.showToast(desc)
+            }
+
+            override fun onCancel() {
+
+            }
         })
     }
 }

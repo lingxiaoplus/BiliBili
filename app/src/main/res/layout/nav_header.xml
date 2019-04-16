@@ -4,7 +4,7 @@
         xmlns:fresco="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="180dp"
         android:background="@color/colorPrimary"
 >
     <com.facebook.drawee.view.SimpleDraweeView
@@ -16,26 +16,84 @@
             fresco:roundAsCircle="true"
             fresco:roundingBorderWidth="1dp"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="8dp"
-            fresco:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="8dp"
+            android:layout_margin="8dp"
             fresco:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="8dp"
             fresco:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="8dp"
+            fresco:layout_constraintBottom_toBottomOf="parent"
             fresco:layout_constraintTop_toTopOf="parent"
             android:id="@+id/nav_header"/>
-    <TextView
+
+    <LinearLayout
+            android:id="@+id/ll_user_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="点击头像登录"
-            android:textColor="@color/white"
-            android:layout_marginBottom="8dp" fresco:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="8dp" fresco:layout_constraintTop_toBottomOf="@+id/nav_header"
-            fresco:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            fresco:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            fresco:layout_constraintVertical_bias="0.115"/>
+            android:orientation="horizontal"
+            fresco:layout_constraintBottom_toBottomOf="parent"
+            fresco:layout_constraintTop_toBottomOf="@+id/nav_header"
+            fresco:layout_constraintEnd_toEndOf="parent"
+            fresco:layout_constraintStart_toStartOf="parent"
+            fresco:layout_constraintLeft_toLeftOf="parent"
+            fresco:layout_constraintRight_toRightOf="parent"
+            android:gravity="center_vertical"
+    >
+        <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="你的名字"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+               />
 
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fresco:srcCompat="@drawable/ic_user_level_2"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            fresco:layout_constraintBottom_toBottomOf="parent"
+            fresco:layout_constraintTop_toBottomOf="@+id/ll_user_info"
+            fresco:layout_constraintEnd_toEndOf="parent"
+            fresco:layout_constraintStart_toStartOf="parent"
+            fresco:layout_constraintLeft_toLeftOf="parent"
+            fresco:layout_constraintRight_toRightOf="parent"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp"
+    >
+        <TextView
+                android:id="@+id/icon_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B币：0.0"
+                android:textSize="14sp"
+                android:textColor="@color/white_alpha_160"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+        />
+        <TextView
+                android:id="@+id/ying_bi_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="硬币：701.0"
+                android:textSize="14sp"
+                android:textColor="@color/white_alpha_160"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+        />
+    </LinearLayout>
     <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -50,4 +108,13 @@
             fresco:layout_constraintBottom_toBottomOf="parent"
             fresco:layout_constraintHorizontal_bias="0.929"
             fresco:layout_constraintVertical_bias="0.195"/>
+
+    <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            fresco:srcCompat="@drawable/bili_drawerbg_not_logined"
+            fresco:layout_constraintRight_toRightOf="parent"
+            fresco:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.2"
+    />
 </android.support.constraint.ConstraintLayout>

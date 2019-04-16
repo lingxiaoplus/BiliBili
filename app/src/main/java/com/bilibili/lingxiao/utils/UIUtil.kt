@@ -52,4 +52,17 @@ object UIUtil {
     fun getUiComponent(): UiComponent {
         return DaggerUiComponent.builder().build()
     }
+
+    fun getMipMapId(context: Context,iconName:String): Int{
+        val mipmapId = context.getResources().getIdentifier(iconName, "mipmap",
+            context.getPackageName())
+        return mipmapId
+    }
+
+    fun getDimenId(context: Context,dimenName:String): Int{
+        //deimens资源 id 获取
+        val dimenId = context.getResources().getIdentifier(dimenName, "dimen",
+            context.getPackageName())
+        return dimenId
+    }
 }

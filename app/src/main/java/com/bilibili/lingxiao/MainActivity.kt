@@ -87,7 +87,9 @@ class MainActivity : BaseActivity() {
         fragmentList.add(recommendFragment)
         fragmentList.add(hotFragment)
         fragmentList.add(mikanFragment)
-        main_viewPager.currentItem = fragmentList.size
+        main_viewPager.currentItem = 1
+        //设置viewpager缓存页面个数
+        main_viewPager.setOffscreenPageLimit(4)
     }
 
     override fun onBackPressed() {
