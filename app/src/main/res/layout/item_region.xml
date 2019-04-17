@@ -38,8 +38,8 @@
         />
         <Button
                 android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:background="@color/black_alpha_64"
+                android:layout_height="@dimen/button_height"
+                android:background="@drawable/button_more_background"
                 android:textColor="@color/white"
                 android:text="进去看看"
                 app:layout_constraintRight_toRightOf="parent"
@@ -68,8 +68,8 @@
         <Button
                 android:id="@+id/button_more"
                 android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:background="@color/white"
+                android:layout_height="@dimen/button_height"
+                android:background="@color/white_alpha_240"
                 android:text="更多番剧"
                 android:textColor="@color/black_alpha_112"
                 app:layout_constraintLeft_toLeftOf="parent"

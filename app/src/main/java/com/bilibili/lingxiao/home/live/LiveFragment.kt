@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_live.view.*
 import kotlin.properties.Delegates
 import android.support.v7.widget.RecyclerView
 import com.bilibili.lingxiao.utils.UIUtil
+import kotlinx.android.synthetic.main.fragment_live.*
 import javax.inject.Inject
 
 class LiveFragment :BaseFragment() ,LiveView{
@@ -57,11 +58,9 @@ class LiveFragment :BaseFragment() ,LiveView{
         root.live_recy.adapter = liveAdapter
         root.live_recy.layoutManager = manager
         refresh = root.refresh
-        refresh.autoRefresh()
         refresh.setOnRefreshListener {
             livePresenter.getLiveList()
         }
-        livePresenter.getLiveList()
 
         liveAdapter.setMultiItemClickListener(object :LiveRecyAdapter.OnMultiItemClickListener{
             override fun onRecommendClick(live: LiveData.RecommendDataBean.LivesBean, position: Int) {
@@ -77,6 +76,18 @@ class LiveFragment :BaseFragment() ,LiveView{
             }
 
         })
+    }
+
+    override fun onFirstVisiblity() {
+        super.onFirstVisiblity()
+        refresh.autoRefresh()
+    }
+
+    override fun onVisiblityChanged(visiblity: Boolean) {
+        super.onVisiblityChanged(visiblity)
+        if (visiblity && liveAdapter.itemCount - liveAdapter.headerLayoutCount - liveAdapter.footerLayoutCount < 1){
+            refresh.autoRefresh()
+        }
     }
 
     var bannerData = MultiItemLiveData(MultiItemLiveData.BANNER)

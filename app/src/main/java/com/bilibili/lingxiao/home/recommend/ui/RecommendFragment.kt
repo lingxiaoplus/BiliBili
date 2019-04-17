@@ -23,6 +23,12 @@ import kotlinx.android.synthetic.main.fragment_recommend.*
 import kotlinx.android.synthetic.main.fragment_recommend.view.*
 import org.greenrobot.eventbus.EventBus
 import kotlin.properties.Delegates
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.graphics.drawable.BitmapDrawable
+import android.widget.TextView
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 
 class RecommendFragment :BaseFragment(), RecommendView {
 
@@ -42,7 +48,6 @@ class RecommendFragment :BaseFragment(), RecommendView {
     override fun initWidget(root: View) {
         super.initWidget(root)
         mAdapter = RecommendRecyAdapter(R.layout.item_video,mRecommendList)
-
         var view = View.inflate(context,R.layout.layout_banner,null)
         banner = view.findViewById(R.id.live_banner)
         mAdapter.addHeaderView(view)
@@ -59,11 +64,8 @@ class RecommendFragment :BaseFragment(), RecommendView {
         root.recycerView.adapter = mAdapter
         root.recycerView.layoutManager = manager
         //root.recycerView.isNestedScrollingEnabled = false
-        recommendPresenter.getRecommendList(operationState)
 
-        root.refresh.autoRefresh()
         root.refresh.setOnRefreshListener {
-            operationState = 2
             recommendPresenter.getRecommendList(operationState)
         }
         root.refresh.setOnLoadMoreListener {
@@ -82,30 +84,39 @@ class RecommendFragment :BaseFragment(), RecommendView {
                 intent.putExtra("play_url",mRecommendList.get(position).uri)
                 startActivity(intent)
             }
-
         })
+        mAdapter.setOnItemChildClickListener { adapter, view, position ->
+            when(view.id){
+                R.id.image_more-> showPopupWindow(mRecommendList.get(position))
+            }
+        }
     }
 
+    override fun onFirstVisiblity() {
+        super.onFirstVisiblity()
+        refresh.autoRefresh()
+    }
+
+    override fun onVisiblityChanged(visiblity: Boolean) {
+        super.onVisiblityChanged(visiblity)
+        if (visiblity && mAdapter.itemCount - mAdapter.headerLayoutCount - mAdapter.footerLayoutCount < 1){
+            refresh.autoRefresh()
+        }
+    }
 
     override fun onGetRecommendData(recommendData: List<RecommendData>) {
         if (operationState == 1){
-
             var banner = recommendData.get(0)
             for (data in recommendData.subList(1,recommendData.size)){
                 mAdapter.addData(data)
             }
             initBanner(banner.banner_item)
+            operationState = 2
         }else{
             for (data in recommendData){
-                if (mAdapter.itemCount > 0){
-                    mAdapter.addData(1,data)
-                }else{
-                    mAdapter.addData(data)
-                }
-
+                mAdapter.addData(data)
             }
         }
-
         refresh.finishRefresh()
         refresh.finishLoadMore()
     }
@@ -150,5 +161,40 @@ class RecommendFragment :BaseFragment(), RecommendView {
         banner.setIndicatorGravity(BannerConfig.CENTER)
         //banner设置方法全部调用完毕时最后调用
         banner.start()
+    }
+
+    private fun showPopupWindow(data :RecommendData) {
+        //设置contentView
+        backgroundAlpha(0.5f)
+        val contentView = LayoutInflater.from(activity).inflate(R.layout.pop_detail_menu, null)
+        var mPopWindow = PopupWindow(
+            contentView,
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT, true
+        )
+        mPopWindow.setAnimationStyle(R.style.contextMenuAnim);
+        mPopWindow.setContentView(contentView)
+        //设置各个控件的点击响应
+        val text_cancel = contentView.findViewById<TextView>(R.id.pop_cancel)
+        text_cancel.setOnClickListener({
+            mPopWindow.dismiss()
+        })
+        contentView.findViewById<TextView>(R.id.pop_up_name).text = data.dislike_reasons[0].reason_name
+        //显示PopupWindow
+        mPopWindow.setBackgroundDrawable(BitmapDrawable())
+        val rootview = LayoutInflater.from(activity)
+            .inflate(R.layout.fragment_recommend, null)
+        mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0)
+        mPopWindow.setOnDismissListener {
+            backgroundAlpha(1f)
+        }
+    }
+
+    fun backgroundAlpha(bgAlpha: Float) {
+        activity?.let {
+            val lp = it.getWindow().getAttributes()
+            lp.alpha = bgAlpha //0.0-1.0
+            it.getWindow().setAttributes(lp)
+        }
     }
 }

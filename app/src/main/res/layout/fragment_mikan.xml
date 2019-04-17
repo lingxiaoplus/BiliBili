@@ -55,10 +55,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>
-            <com.scwang.smartrefresh.layout.footer.BallPulseFooter
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-            </com.scwang.smartrefresh.layout.footer.BallPulseFooter>
+            <include layout="@layout/footer_loadmore"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"/>
         </com.bilibili.lingxiao.widget.skin.SmartSkinRefreshLayout>
 
     </LinearLayout>

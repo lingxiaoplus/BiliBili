@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.View
+import android.view.ViewGroup
 import com.bilibili.lingxiao.home.category.CategoryFragment
 import com.bilibili.lingxiao.home.live.LiveFragment
 import com.bilibili.lingxiao.home.mikan.MikanFragment
@@ -22,7 +23,7 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
-    var tabArray = arrayOf("直播","推荐","热门","追番")
+    var tabArray = arrayOf("直播","推荐","分区","追番")
     var drawerOpened = false
     private val mPermessions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
 
@@ -112,6 +113,10 @@ class MainActivity : BaseActivity() {
 
         override fun getPageTitle(position: Int): CharSequence? {
             return tabArray.get(position)
+        }
+
+        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+            //super.destroyItem(container, position, `object`)
         }
     }
 

@@ -10,6 +10,7 @@ import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
+import kotlinx.android.synthetic.main.fragment_mikan.*
 import kotlinx.android.synthetic.main.fragment_mikan.view.*
 import kotlinx.android.synthetic.main.item_mikan_fall.*
 import kotlinx.android.synthetic.main.mikan_content_cn.*
@@ -54,9 +55,10 @@ class MikanFragment :BaseFragment(),MikanView{
         root.recyclerview_edit.layoutManager = manager_fall
         root.recyclerview_edit.adapter = mFallAdapter
 
-        miKanPresenter.getBanGuMiRecommend()
-        miKanPresenter.getBanGuMiFall(0L)
 
+        root.refresh.setOnRefreshListener({
+            miKanPresenter.getBanGuMiRecommend()
+        })
         root.refresh.setOnLoadMoreListener {
             var cursor:Long? = mFallAdapter.data.get(mFallAdapter.itemCount -1).cursor
             if (cursor != null && cursor != 0L)
@@ -64,7 +66,22 @@ class MikanFragment :BaseFragment(),MikanView{
         }
     }
 
+    override fun onFirstVisiblity() {
+        super.onFirstVisiblity()
+        refresh.autoRefresh()
+    }
+
+    override fun onVisiblityChanged(visiblity: Boolean) {
+        super.onVisiblityChanged(visiblity)
+        if (visiblity && mCNAdapter.itemCount - mCNAdapter.headerLayoutCount - mCNAdapter.footerLayoutCount < 1){
+            refresh.autoRefresh()
+        }
+    }
+
     override fun onGetMikanRecommend(data: MiKanRecommendData) {
+        mCNVideoList.clear()
+        mJPVideoList.clear()
+
         mCNAdapter.addData(data.result.recommendCn.recommend)
         mJPAdapter.addData(data.result.recommendJp.recommend)
         if (data.result.recommendCn.foot.size > 0){
@@ -78,10 +95,16 @@ class MikanFragment :BaseFragment(),MikanView{
             title.text =data.result.recommendJp.foot[0].title
             content.text = data.result.recommendJp.foot[0].desc
         }
+        miKanPresenter.getBanGuMiFall(0L)
     }
 
     override fun onGetMikanFall(data: MiKanFallData) {
+        mEditList.clear()
         mFallAdapter.addData(data.result)
+
+        refresh.finishRefresh()
+        refresh.finishLoadMore()
+
     }
 
     override fun showDialog() {

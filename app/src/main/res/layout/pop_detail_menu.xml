@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextTitle"
+            android:text="添加至稍后再看"
+            android:padding="10dp"
+    />
+    <ImageView
+            style="@style/between_line"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+    />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+    >
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextTitle"
+                android:text="反馈"
+        />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextMessage"
+                android:text=" (选择后将优化首页此类内容)"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+    >
+        <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginRight="10dp"
+                android:text="恐怖血腥"
+                android:background="@drawable/button_pop_background"
+
+        />
+        <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginLeft="10dp"
+                android:text="色情低俗"
+                android:background="@drawable/button_pop_background"
+
+        />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+    >
+        <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginRight="10dp"
+                android:text="封面恶心"
+                android:background="@drawable/button_pop_background"
+
+        />
+        <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginLeft="10dp"
+                android:text="标题党/封面党"
+                android:background="@drawable/button_pop_background"
+
+        />
+    </LinearLayout>
+    <ImageView
+            style="@style/between_line"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+    />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+    >
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextTitle"
+                android:text="不感兴趣"
+        />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextMessage"
+                android:text=" (选择后将减少相似内容推荐)"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+    >
+        <Button
+                android:id="@+id/pop_up_name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginRight="10dp"
+                android:text="UP主：啦啦啦"
+                android:background="@drawable/button_pop_background"
+
+        />
+        <Button
+                android:id="@+id/pop_category"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginLeft="10dp"
+                android:text="分区：动物圈"
+                android:background="@drawable/button_pop_background"
+
+        />
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+    >
+        <Button
+                android:id="@+id/pop_region"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginRight="10dp"
+                android:text="频道：样子"
+                android:background="@drawable/button_pop_background"
+
+        />
+        <Button
+                android:id="@+id/pop_dislike"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginLeft="10dp"
+                android:text="不感兴趣"
+                android:background="@drawable/button_pop_background"
+
+        />
+    </LinearLayout>
+    <ImageView
+            style="@style/between_line"
+            android:layout_height="10dp"
+    />
+    <TextView
+            android:id="@+id/pop_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:gravity="center"
+            android:padding="15dp"
+            android:background="@drawable/pop_selector"
+    />
+</LinearLayout>

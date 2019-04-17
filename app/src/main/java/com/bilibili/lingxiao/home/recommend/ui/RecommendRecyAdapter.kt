@@ -1,6 +1,7 @@
 package com.bilibili.lingxiao.home.recommend.ui
 
 import android.net.Uri
+import android.widget.ImageView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.recommend.RecommendData
 import com.bilibili.lingxiao.utils.StringUtil
@@ -17,8 +18,9 @@ class RecommendRecyAdapter(layoutResId: Int, data: List<RecommendData>?) :
         helper.setText(R.id.play_number,StringUtil.getBigDecimalNumber(item.play))
         helper.setText(R.id.comment_number,StringUtil.getBigDecimalNumber(item.reply))
         helper.setText(R.id.category_name,"" + item.tname)
-        var image : SimpleDraweeView = helper.getView(R.id.play_image)
 
+        helper.addOnClickListener(R.id.image_more)
+        var image : SimpleDraweeView = helper.getView(R.id.play_image)
         try {
             image.setImageURI(Uri.parse(item.cover))
         }catch (ex:Exception){

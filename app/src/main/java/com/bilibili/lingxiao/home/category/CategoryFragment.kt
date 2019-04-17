@@ -8,6 +8,7 @@ import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
+import kotlinx.android.synthetic.main.fragment_hot.*
 import kotlinx.android.synthetic.main.fragment_hot.view.*
 
 class CategoryFragment :BaseFragment() ,RegionView{
@@ -40,8 +41,23 @@ class CategoryFragment :BaseFragment() ,RegionView{
         regionAdapter = RegionAdapter(regionList,recycledViewPool)
         root.category_recyclerview.adapter = regionAdapter
         root.category_recyclerview.layoutManager = manager
-        regionPresenter.getRegion()
+        root.refresh.setOnRefreshListener({
+            regionPresenter.getRegion()
+        })
     }
+
+    override fun onFirstVisiblity() {
+        super.onFirstVisiblity()
+        refresh.autoRefresh()
+    }
+
+    override fun onVisiblityChanged(visiblity: Boolean) {
+        super.onVisiblityChanged(visiblity)
+        if (visiblity && regionAdapter.itemCount - regionAdapter.headerLayoutCount - regionAdapter.footerLayoutCount < 1){
+            refresh.autoRefresh()
+        }
+    }
+
 
     override fun onGetRegion(regions: List<RegionData.Data>) {
         regionList.clear()
@@ -64,6 +80,10 @@ class CategoryFragment :BaseFragment() ,RegionView{
             data.recommendData = recommend
             regionAdapter.addData(data)
         }
+        refresh.finishRefresh()
+        refresh.finishLoadMore()
+        regionAdapter.loadMoreEnd()
+
     }
 
     override fun showDialog() {

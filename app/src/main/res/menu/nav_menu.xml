@@ -45,6 +45,25 @@
         <item android:id="@+id/nav_buyset"
               android:icon="@drawable/ic_nav_buyset"
               android:title="我的订单"
+        />
+    </group>
+
+    <group
+
+            android:checkableBehavior="single"
+    >
+        <item
+              android:icon="@drawable/ic_nav_create_center"
+              android:title="创作中心"/>
+        <item
+              android:icon="@drawable/ic_nav_big_vip"
+              android:title="我的大会员"/>
+        <item
+              android:icon="@drawable/ic_nav_free_flow"
+              android:title="免流量服务"/>
+        <item
+              android:icon="@drawable/ic_nav_buyset"
+              android:title="我的订单"
               android:orderInCategory="200"
         />
     </group>

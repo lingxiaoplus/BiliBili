@@ -5,4 +5,6 @@
     <dimen name="user_name_text_size">14sp</dimen>
     <dimen name="fen_si_text_size">12sp</dimen>
     <dimen name="description_text_size">16sp</dimen>
+    
+    <dimen name="button_height">30dp</dimen>
 </resources>

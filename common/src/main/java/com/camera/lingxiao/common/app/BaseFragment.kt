@@ -31,7 +31,8 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
     //private var mRootUnbinder: Unbinder? = null
     var mListener: LifeCycleListener? = null
     private var progressDialog: ProgressDialog? = null
-
+    private var firstVisibility = true
+    protected var reuseView = true
     protected abstract val contentLayoutId: Int
 
     override fun onAttach(activity: Activity) {
@@ -45,6 +46,7 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
         if (mListener != null) {
             mListener!!.onCreate(savedInstanceState)
         }
+        firstVisibility = true
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -66,28 +68,46 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
         // TODO: 18-6-29 上面的方式会报空指针 ,因为我在p层使用的弱引用
         val layId = contentLayoutId
         val root = inflater.inflate(layId, container, false)
-        initWidget(root)
         initInject()
+        initWidget(root)
         mRoot = root
         return mRoot
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (mRoot == null){
+            mRoot = view
+        }
+        super.onViewCreated(if (reuseView) mRoot!! else view, savedInstanceState)
+        if (userVisibleHint){
+            if (firstVisibility){
+                onFirstVisiblity()
+                firstVisibility = false
+            }
+            onVisiblityChanged(true)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mListener?.onActivityCreated(savedInstanceState)
-        if (!setLazyMode()) {
-            initData()
-        }
+        initData()
     }
 
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        //单个的fragment会存在问题
-        if (isVisibleToUser) {
-            if (setLazyMode()) {
-                initData()
+        //单个的fragment不会调用这个方法
+        if (mRoot == null){
+            return
+        }
+        if (firstVisibility){
+            if (isVisibleToUser){
+                onFirstVisiblity()
+                firstVisibility = false
             }
+        }else{
+            onVisiblityChanged(isVisibleToUser)
         }
     }
 
@@ -176,6 +196,17 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
      */
     protected fun setLazyMode(): Boolean {
         return false
+    }
+
+    /**
+     * fragment首次可见
+     */
+    protected open fun onFirstVisiblity(){
+        LogUtils.e("fragment对用户可见了")
+    }
+
+    protected open fun onVisiblityChanged(visiblity:Boolean){
+
     }
 
     /**

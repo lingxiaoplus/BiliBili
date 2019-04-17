@@ -6,10 +6,10 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="5dp"
               android:layout_marginBottom="5dp"
-              android:showDividers="beginning"
               android:background="@color/white"
               android:clickable="true"
               android:focusable="true"
+              android:alpha="1"
 >
     <ImageView
             style="@style/between_line"

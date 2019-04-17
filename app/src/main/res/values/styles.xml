@@ -32,7 +32,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:layout_margin">3dp</item>
+        <item name="android:layout_margin">5dp</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
@@ -62,5 +62,11 @@
         <item name="android:layout_height">0.4dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/black_alpha_32</item>
+    </style>
+
+    <!--popwindow anim-->
+    <style name="contextMenuAnim" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/pop_show</item>
+        <item name="android:windowExitAnimation">@anim/pop_hide</item>
     </style>
 </resources>
