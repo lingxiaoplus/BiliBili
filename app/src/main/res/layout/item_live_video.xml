@@ -66,6 +66,7 @@
                 android:id="@+id/live_category_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/TextMessage"
                 android:text="category name"
                 android:layout_margin="3dp"
         />

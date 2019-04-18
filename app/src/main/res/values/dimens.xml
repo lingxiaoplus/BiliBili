@@ -7,4 +7,12 @@
     <dimen name="description_text_size">16sp</dimen>
     
     <dimen name="button_height">30dp</dimen>
+
+    <dimen name="normal_icon_size">30dp</dimen>
+    <dimen name="filter_bar_size">40.0dp</dimen>
+
+    <dimen name="text_size_xlarge">18sp</dimen>
+    <dimen name="text_size_large">16sp</dimen>
+    <dimen name="text_size_normal">14sp</dimen>
+
 </resources>

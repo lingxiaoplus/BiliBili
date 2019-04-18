@@ -25,16 +25,24 @@
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_scrollFlags="scroll|enterAlways|snap"
+                    app:contentInsetStart="0dp"
             >
+                <ImageView
+                        android:id="@+id/image_drawer_home"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_drawer_home"
+                />
                 <com.facebook.drawee.view.SimpleDraweeView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="@dimen/normal_icon_size"
+                        android:layout_height="@dimen/normal_icon_size"
                         app:progressBarImageScaleType="centerInside"
                         app:progressBarImage="@drawable/ic_img_user_head_default"
                         app:overlayImage="@drawable/ic_img_user_head_default"
                         app:roundAsCircle="true"
                         app:roundingBorderWidth="1dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
                 />
                 <RelativeLayout android:layout_width="wrap_content"
                                 android:layout_height="match_parent">
@@ -46,26 +54,28 @@
                             android:layout_alignParentRight="true"
                     >
                         <ImageView
-                                android:layout_width="wrap_content"
+                                android:id="@+id/image_download"
+                                android:layout_width="@dimen/normal_icon_size"
                                 android:layout_height="match_parent"
-                                android:src="@drawable/ic_img_download"
+                                app:srcCompat="@drawable/ic_img_download"
                                 android:layout_marginLeft="@dimen/dp_4"
                                 android:layout_marginRight="@dimen/dp_4"/>
                         <ImageView
-                                android:layout_width="wrap_content"
+                                android:id="@+id/image_game"
+                                android:layout_width="@dimen/normal_icon_size"
                                 android:layout_height="match_parent"
-                                android:src="@drawable/ic_img_game"
+                                app:srcCompat="@drawable/ic_img_game"
                                 android:layout_marginLeft="@dimen/dp_4"
                                 android:layout_marginRight="@dimen/dp_4"/>
                         <ImageView
-                                android:layout_width="wrap_content"
+                                android:id="@+id/image_search"
+                                android:layout_width="@dimen/normal_icon_size"
                                 android:layout_height="match_parent"
-                                android:src="@drawable/ic_img_search"
+                                app:srcCompat="@drawable/ic_img_search"
                                 android:layout_marginLeft="@dimen/dp_4"
                                 android:layout_marginRight="@dimen/dp_4"/>
                     </LinearLayout>
                 </RelativeLayout>
-
 
             </android.support.v7.widget.Toolbar>
             <com.bilibili.lingxiao.widget.skin.SkinTabLayout

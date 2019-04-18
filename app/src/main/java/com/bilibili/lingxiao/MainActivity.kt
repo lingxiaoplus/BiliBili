@@ -2,10 +2,12 @@ package com.bilibili.lingxiao
 
 
 import android.Manifest
+import android.support.design.internal.NavigationMenuView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.ActionBarDrawerToggle
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import com.bilibili.lingxiao.home.category.CategoryFragment
@@ -55,9 +57,11 @@ class MainActivity : BaseActivity() {
         }
         setSupportActionBar(main_toolbar)
         //设置返回键可用
-        supportActionBar?.setHomeButtonEnabled(true);
-        supportActionBar?.setDisplayHomeAsUpEnabled(true);
-        var drawerToggle = object : ActionBarDrawerToggle(this,main_drawer_layout,main_toolbar,R.string.open,R.string.close){
+        //supportActionBar?.setHomeButtonEnabled(true);
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true);
+
+        supportActionBar?.setDisplayShowTitleEnabled(false);
+        /*var drawerToggle = object : ActionBarDrawerToggle(this,main_drawer_layout,main_toolbar,R.string.open,R.string.close){
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
                 drawerOpened = true
@@ -67,10 +71,19 @@ class MainActivity : BaseActivity() {
                 super.onDrawerClosed(drawerView)
                 drawerOpened = false
             }
+        }*/
+        //drawerToggle.syncState()//设置左箭头与Home图标的切换与侧滑同步
+        //main_drawer_layout.addDrawerListener(drawerToggle)//设置侧滑监听
+        image_drawer_home.setOnClickListener {
+            if (drawerOpened){
+                main_drawer_layout.closeDrawer(Gravity.START)
+            }else{
+                main_drawer_layout.openDrawer(Gravity.START)
+            }
         }
-
-        drawerToggle.syncState()//设置左箭头与Home图标的切换与侧滑同步
-        main_drawer_layout.addDrawerListener(drawerToggle)//设置侧滑监听
+        image_download.setOnClickListener {  }
+        image_game.setOnClickListener {  }
+        image_search.setOnClickListener {  }
         for (name in tabArray){
             main_tabLayout.addTab(main_tabLayout.newTab().setText(name))
         }
@@ -79,6 +92,9 @@ class MainActivity : BaseActivity() {
         header_view.setOnClickListener({
             StartActivity(LoginActivity::class.java,false)
         })
+        //隐藏NavigationView右侧滚动条
+        var navigationMenuView = main_navigation.getChildAt(0) as NavigationMenuView
+        navigationMenuView.isVerticalScrollBarEnabled = false
 
         main_viewPager.adapter = MainPagerAdapter(supportFragmentManager)
 

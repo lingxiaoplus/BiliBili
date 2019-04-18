@@ -37,27 +37,31 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
             }
         }
         multiTypeDelegate
-            .registerItemType(LiveData.BANNER,R.layout.layout_banner)
-            .registerItemType(LiveData.CATEGORY,R.layout.item_live_category)
+            //.registerItemType(LiveData.BANNER,R.layout.layout_banner)
+            //.registerItemType(LiveData.CATEGORY,R.layout.item_live_category)
             .registerItemType(LiveData.RECOMMEND,R.layout.layout_recommend)
             .registerItemType(LiveData.PARTITION,R.layout.layout_partition)
     }
     override fun convert(helper: BaseViewHolder, item: MultiItemLiveData) {
         when(helper.itemViewType){
             LiveData.BANNER-> {
-                var banner :Banner = helper.getView(R.id.live_banner)
-                initBanner(banner,item.bannerList)
+                //var banner :Banner = helper.getView(R.id.live_banner)
+                //initBanner(banner,item.bannerList)
             }
             LiveData.CATEGORY->{
                 //initCategory(helper,item.entranceIcons)
-                helper.setText(R.id.item_live_title,item.entranceIconsBean.name)
-                var image : SimpleDraweeView = helper.getView(R.id.item_live_image)
-                image.setImageURI(Uri.parse(item.entranceIconsBean.entrance_icon.src))
+                //helper.setText(R.id.item_live_title,item.entranceIconsBean.name)
+                //var image : SimpleDraweeView = helper.getView(R.id.item_live_image)
+                //image.setImageURI(Uri.parse(item.entranceIconsBean.entrance_icon.src))
             }
             LiveData.RECOMMEND->{
                 initRecommend(helper,item.liveList)
+                helper.setText(R.id.live_recommend_more,"更多"+item.partitionsBean.partition.count+"个推荐直播")
             }
             LiveData.PARTITION->{
+                var image : SimpleDraweeView = helper.getView(R.id.image_part)
+                image.setImageURI(Uri.parse(item.partitionsBean.partition.sub_icon.src))
+
                 helper.setText(R.id.live_category_name,item.partitionsBean.partition.name)
                 LogUtils.d("LiveRecyAdapter 获取到Partition name 的值-》》" + item.partitionsBean.partition.name)
                 initPartition(helper,item.partitionsBean.lives)

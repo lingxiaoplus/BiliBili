@@ -163,15 +163,22 @@ class RecommendFragment :BaseFragment(), RecommendView {
         banner.start()
     }
 
-    private fun showPopupWindow(data :RecommendData) {
-        //设置contentView
-        backgroundAlpha(0.5f)
-        val contentView = LayoutInflater.from(activity).inflate(R.layout.pop_detail_menu, null)
-        var mPopWindow = PopupWindow(
+    val contentView by lazy {
+        LayoutInflater.from(activity).inflate(R.layout.pop_detail_menu, null)
+    }
+    val mPopWindow by lazy {
+        PopupWindow(
             contentView,
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT, true
         )
+    }
+    private fun showPopupWindow(data :RecommendData) {
+        if (mPopWindow.isShowing){
+            return
+        }
+        //设置contentView
+        backgroundAlpha(0.5f)
         mPopWindow.setAnimationStyle(R.style.contextMenuAnim);
         mPopWindow.setContentView(contentView)
         //设置各个控件的点击响应

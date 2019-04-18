@@ -308,6 +308,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     public void openVideo() {
         if (mUri == null || mSurfaceHolder == null) {
             // not ready for playback just yet, will try again later
+            Log.e(TAG,"如果没有画面，请检查是否开启了硬件加速");
             return;
         }
         // we shouldn't clear the target state, because somebody might have

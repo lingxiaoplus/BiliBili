@@ -5,7 +5,9 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center"
-              android:layout_margin="5dp">
+              android:layout_margin="5dp"
+              android:background="@color/white"
+>
     <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/item_live_image"
             android:layout_width="50dp"
