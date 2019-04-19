@@ -8,6 +8,8 @@ import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
+import com.camera.lingxiao.common.utills.LogUtils
+import com.facebook.drawee.backends.pipeline.Fresco
 import kotlinx.android.synthetic.main.fragment_hot.*
 import kotlinx.android.synthetic.main.fragment_hot.view.*
 
@@ -44,6 +46,7 @@ class CategoryFragment :BaseFragment() ,RegionView{
         root.refresh.setOnRefreshListener({
             regionPresenter.getRegion()
         })
+        //root.refresh.setEnableAutoLoadMore(false)
     }
 
     override fun onFirstVisiblity() {

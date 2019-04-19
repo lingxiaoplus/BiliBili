@@ -17,6 +17,7 @@
             android:layout_centerVertical="true"
     />
     <LinearLayout
+            android:id="@+id/ll_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -118,4 +119,10 @@
             />
         </RelativeLayout>
     </LinearLayout>
+    <ImageView
+            style="@style/between_line"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@id/ll_detail"
+    />
 </RelativeLayout>

@@ -56,7 +56,7 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
             }
             LiveData.RECOMMEND->{
                 initRecommend(helper,item.liveList)
-                helper.setText(R.id.live_recommend_more,"更多"+item.partitionsBean.partition.count+"个推荐直播")
+                helper.setText(R.id.live_recommend_more,"更多"+item.partitionsBean.partition.count+"个推荐直播 >")
             }
             LiveData.PARTITION->{
                 var image : SimpleDraweeView = helper.getView(R.id.image_part)

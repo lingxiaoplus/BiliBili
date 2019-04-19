@@ -41,13 +41,15 @@
     <com.bilibili.lingxiao.widget.skin.SkinTabLayout
             android:id="@+id/skin_tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/button_height"
             android:minHeight="20dp"
             app:tabIndicatorHeight="2dp"
             app:tabGravity="fill"
             app:tabPaddingStart="40dp"
             app:tabPaddingEnd="40dp"
             app:tabIndicatorFullWidth="false"
+            android:elevation="2dp"
+            android:background="@color/white"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
     >
     </com.bilibili.lingxiao.widget.skin.SkinTabLayout>

@@ -42,8 +42,6 @@ class IntroduceFragment :BaseFragment(),RecommendView{
         endPageAdapter = EndPageAdapter(R.layout.item_endpage,mEndPageList)
         root.endpage_recycler.adapter = endPageAdapter
         root.endpage_recycler.isNestedScrollingEnabled = false
-
-
         //下面的推荐视频
         var recommendManager = LinearLayoutManager(context)
         root.recommend_recycler.layoutManager = recommendManager
@@ -110,7 +108,6 @@ class IntroduceFragment :BaseFragment(),RecommendView{
     }
 
     override fun onGetVideoRecommend(videoRecoData: VideoRecoData) {
-
         mRecommendList.addAll(videoRecoData.list)
         videoDetailAdapter.notifyDataSetChanged()
     }

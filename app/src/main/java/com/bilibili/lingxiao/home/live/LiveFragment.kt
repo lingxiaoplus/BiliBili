@@ -38,6 +38,10 @@ class LiveFragment :BaseFragment() ,LiveView{
         View.inflate(activity,R.layout.live_top_region,null)
     }
 
+    private val footerShowAllView by lazy {
+        View.inflate(activity,R.layout.footer_live_showall,null)
+    }
+
     override val contentLayoutId: Int
         get() = R.layout.fragment_live
 
@@ -78,6 +82,7 @@ class LiveFragment :BaseFragment() ,LiveView{
         }
 
         liveAdapter.addHeaderView(topView)
+        liveAdapter.addFooterView(footerShowAllView)
         liveAdapter.setMultiItemClickListener(object :LiveRecyAdapter.OnMultiItemClickListener{
             override fun onRecommendClick(live: LiveData.RecommendDataBean.LivesBean, position: Int) {
                 val intent = Intent(context,LivePlayActivity::class.java)
@@ -121,6 +126,9 @@ class LiveFragment :BaseFragment() ,LiveView{
         }*/
 
         recommendData.liveList = data.recommend_data.lives
+        recommendData.partitionsBean = if (data.partitions.size > 0) data.partitions[0] else
+            LiveData.PartitionsBean()
+        recommendData.partitionsBean.partition = data.recommend_data.partition
         liveList.add(recommendData)
 
         for (partition in data.partitions){

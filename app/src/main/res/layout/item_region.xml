@@ -69,7 +69,7 @@
                 android:id="@+id/button_more"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/button_height"
-                android:background="@color/white_alpha_240"
+                android:background="@drawable/button_white_line_background"
                 android:text="更多番剧"
                 android:textColor="@color/black_alpha_112"
                 app:layout_constraintLeft_toLeftOf="parent"

@@ -17,11 +17,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
         </com.scwang.smartrefresh.header.BezierCircleHeader>
-        <android.support.v7.widget.RecyclerView
+        <com.bilibili.lingxiao.widget.ScrollerloadRecyclerView
                 android:id="@+id/recycerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
+        </com.bilibili.lingxiao.widget.ScrollerloadRecyclerView>
         <include layout="@layout/footer_loadmore"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"/>

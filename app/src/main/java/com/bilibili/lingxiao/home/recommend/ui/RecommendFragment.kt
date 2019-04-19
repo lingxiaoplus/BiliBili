@@ -112,6 +112,8 @@ class RecommendFragment :BaseFragment(), RecommendView {
             }
             initBanner(banner.banner_item)
             operationState = 2
+        }else if (operationState == 2){
+            mAdapter.setNewData(recommendData)
         }else{
             for (data in recommendData){
                 mAdapter.addData(data)

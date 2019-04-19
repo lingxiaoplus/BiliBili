@@ -50,11 +50,11 @@
                 android:id="@+id/refresh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <android.support.v7.widget.RecyclerView
+            <com.bilibili.lingxiao.widget.ScrollerloadRecyclerView
                     android:id="@+id/recyclerview_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-            </android.support.v7.widget.RecyclerView>
+            </com.bilibili.lingxiao.widget.ScrollerloadRecyclerView>
             <include layout="@layout/footer_loadmore"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"/>

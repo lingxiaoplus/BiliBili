@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminateDrawable="@drawable/progress_style_circle"
-                android:indeterminateDuration="3500"
+                android:indeterminateDuration="1000"
         />
         <TextView
                 android:layout_width="wrap_content"

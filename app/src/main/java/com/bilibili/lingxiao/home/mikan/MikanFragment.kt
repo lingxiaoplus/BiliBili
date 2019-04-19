@@ -64,6 +64,7 @@ class MikanFragment :BaseFragment(),MikanView{
             if (cursor != null && cursor != 0L)
             miKanPresenter.getBanGuMiFall(cursor)
         }
+        root.refresh.setEnableNestedScroll(true)
     }
 
     override fun onFirstVisiblity() {

@@ -6,12 +6,13 @@
               android:layout_height="wrap_content"
               android:gravity="center"
               android:layout_margin="5dp"
-              android:background="@color/white"
 >
     <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/item_live_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            app:placeholderImageScaleType="centerInside"
+            app:placeholderImage="@drawable/bangumi_follow_home_ic_bangumi"
     />
     <TextView
             android:id="@+id/item_live_title"

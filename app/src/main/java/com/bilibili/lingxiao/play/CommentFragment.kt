@@ -64,6 +64,7 @@ class CommentFragment :BaseFragment(),RecommendView{
         avNum = data.param
         videoPresenter.getComment(avNum,page)
     }
+
     override fun onGetRecommendData(recommendData: List<RecommendData>) {
 
     }

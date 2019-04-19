@@ -45,6 +45,7 @@ class ColorTextView @JvmOverloads constructor(context: Context, attrs: Attribute
      * 绘制时控制文本绘制的范围
      */
     private lateinit var mtitleBound: Rect
+    private var textWidthMargin:Int = 10
     private lateinit var mtitlePaint: Paint
     private lateinit var mBackgroundPaint: Paint
     private val colors = arrayOf(
@@ -96,7 +97,7 @@ class ColorTextView @JvmOverloads constructor(context: Context, attrs: Attribute
         mtitlePaint = Paint()
         mtitlePaint.setTextSize(mTitleTextSize.toFloat())
         mtitleBound = Rect()
-        mtitlePaint.getTextBounds(mTitleText, 0, mTitleText!!.length, mtitleBound)
+        mtitlePaint.getTextBounds(mTitleText, 0, mTitleText.length, mtitleBound)
 
         mBackgroundPaint = Paint(Paint.FILTER_BITMAP_FLAG)
         mBackgroundPaint.isAntiAlias = true
@@ -120,12 +121,12 @@ class ColorTextView @JvmOverloads constructor(context: Context, attrs: Attribute
         val width: Int
         val height: Int
         if (widthMode == View.MeasureSpec.EXACTLY) {
-            width = widthSize
+            width = widthSize + textWidthMargin * 2
         } else {
             mtitlePaint.setTextSize(mTitleTextSize)
             mtitlePaint.getTextBounds(mTitleText, 0, mTitleText.length, mtitleBound)
             //measureText 是字体整体宽度 getTextBounds获得的是字符串的最小矩形区域
-            width = Math.min(paddingLeft + mtitleBound.width() + paddingRight, widthSize)
+            width = Math.min(paddingLeft + mtitleBound.width() + paddingRight + textWidthMargin * 2, widthSize)
         }
 
         if (heightMode == View.MeasureSpec.EXACTLY) {
@@ -146,6 +147,6 @@ class ColorTextView @JvmOverloads constructor(context: Context, attrs: Attribute
         mtitlePaint.color = mTitleTextColor
         val fontMetrics = mtitlePaint.fontMetricsInt
         val baseline = (measuredHeight - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top
-        canvas.drawText(mTitleText, paddingLeft.toFloat() , baseline.toFloat(), mtitlePaint)
+        canvas.drawText(mTitleText, paddingLeft.toFloat() + textWidthMargin.toFloat() , baseline.toFloat(), mtitlePaint)
     }
 }

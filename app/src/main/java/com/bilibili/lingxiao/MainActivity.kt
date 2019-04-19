@@ -132,7 +132,7 @@ class MainActivity : BaseActivity() {
         }
 
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            //super.destroyItem(container, position, `object`)
+            super.destroyItem(container, position, `object`)
         }
     }
 

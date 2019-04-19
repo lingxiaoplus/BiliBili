@@ -16,17 +16,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
         </com.scwang.smartrefresh.header.BezierCircleHeader>
-        <android.support.v7.widget.RecyclerView
+        <com.bilibili.lingxiao.widget.ScrollerloadRecyclerView
                 android:id="@+id/live_recy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
-        <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="全部直播"
-        />
+        </com.bilibili.lingxiao.widget.ScrollerloadRecyclerView>
 
     </com.bilibili.lingxiao.widget.skin.SmartSkinRefreshLayout>
-
 </LinearLayout>

@@ -8,9 +8,11 @@ import android.widget.ImageView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.utils.StringUtil
 import com.bilibili.lingxiao.utils.UIUtil
+import com.camera.lingxiao.common.utills.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.util.MultiTypeDelegate
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import kotlin.properties.Delegates
 
@@ -46,6 +48,7 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
                 recycler.setRecycledViewPool(recycledViewPool)
                 recycler.layoutManager = manager
                 recycler.adapter = adapter
+
 
                 var image_region:ImageView = helper.getView(R.id.image_logo)
                 var logo = UIUtil.getMipMapId(mContext,"ic_category_t" + item.recommendData?.param)
