@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -8,27 +8,39 @@
 >
     <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/cover_image"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             app:viewAspectRatio="1.43"
+            app:roundedCornerRadius="@dimen/dp_4"
+            android:scaleType="centerCrop"
             app:placeholderImageScaleType="centerInside"
             app:placeholderImage="@drawable/ic_live_no_face"
             android:layout_margin="5dp"
             android:layout_centerVertical="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/ll_detail"
+            app:layout_constraintVertical_bias="0.5"
     />
     <LinearLayout
             android:id="@+id/ll_detail"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_toRightOf="@id/cover_image"
             android:layout_margin="5dp"
+            app:layout_constraintLeft_toRightOf="@id/cover_image"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.5"
     >
         <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/description_text_size"
+                android:textSize="@dimen/user_name_text_size"
                 android:text="ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大"
                 android:maxLines="2"
                 android:ellipsize="end"
@@ -41,8 +53,8 @@
                 android:layout_margin="2dp"
         >
             <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     app:srcCompat="@drawable/ic_img_up_name"
                     android:layout_margin="2dp"
             />
@@ -65,15 +77,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_margin="5dp"
+                    android:layout_margin="1dp"
                     android:gravity="center_vertical"
                     android:layout_centerVertical="true"
             >
                 <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        app:srcCompat="@drawable/ic_img_tv"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        app:srcCompat="@drawable/ic_img_play_number"
                         android:layout_margin="2dp"
+                        android:tint="@color/black_alpha_64"
                 />
                 <TextView
                         android:id="@+id/play_num"
@@ -88,15 +101,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_margin="5dp"
+                    android:layout_margin="1dp"
                     android:gravity="center_vertical"
                     android:layout_centerVertical="true"
             >
                 <ImageView
-                        android:layout_width="20dp"
+                        android:layout_width="15dp"
                         android:layout_height="15dp"
-                        app:srcCompat="@drawable/ic_img_danmaku"
+                        app:srcCompat="@drawable/ic_img_danmaku_number"
+                        android:tint="@color/black_alpha_64"
                         android:layout_margin="2dp"
+
                 />
                 <TextView
                         android:id="@+id/damku_num"
@@ -124,5 +139,9 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_below="@id/ll_detail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
     />
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:elevation="@dimen/dp_10"
+        android:translationZ="@dimen/dp_10"
+        android:background="@color/white"
+>
+    <TextView
+            android:id="@+id/pop_add_blacklist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            style="@style/TextTitle"
+            android:text="加入黑名单                        "
+            android:background="@drawable/pop_bottom_text"
+            android:padding="10dp"/>
+
+    <TextView
+            android:id="@+id/pop_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            style="@style/TextTitle"
+            android:text="举报"
+            android:background="@drawable/pop_bottom_text"
+            android:padding="10dp"/>
+</LinearLayout>

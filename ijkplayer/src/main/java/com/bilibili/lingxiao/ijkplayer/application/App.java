@@ -8,5 +8,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         //CrashReport.initCrashReport(getApplicationContext(), "180f968345", true);
+
     }
 }

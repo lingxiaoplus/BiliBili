@@ -18,5 +18,7 @@ class VideoDetailAdapter : BaseQuickAdapter<VideoRecoData.VideoInfo, BaseViewHol
         helper.setText(R.id.damku_num,StringUtil.getBigDecimalNumber(item.videoReview))
         var image : SimpleDraweeView = helper.getView(R.id.cover_image)
         image.setImageURI(Uri.parse(item.pic))
+
+        helper.addOnClickListener(R.id.more)
     }
 }

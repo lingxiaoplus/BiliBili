@@ -82,19 +82,20 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/description_text_size"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="45dp"
+                        android:layout_marginRight="15dp"
                         android:ellipsize="end"
                         android:text="biaoti"
                 />
                 <ImageButton
                         android:id="@id/expand_collapse"
-                        style="@style/image_small"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:background="@android:color/transparent"
-                        android:layout_margin="10dp"
-                        android:layout_gravity="right|bottom"
+                        android:padding="10dp"
+                        android:layout_marginRight="10dp"
                 />
             </LinearLayout>
 
@@ -112,8 +113,8 @@
                         android:gravity="center_vertical"
                 >
                     <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             app:srcCompat="@drawable/ic_img_play_number"
                             android:tint="@color/black_alpha_64"
                             android:layout_margin="2dp"
@@ -133,7 +134,7 @@
                         android:gravity="center_vertical"
                 >
                     <ImageView
-                            android:layout_width="20dp"
+                            android:layout_width="15dp"
                             android:layout_height="15dp"
                             app:srcCompat="@drawable/ic_img_danmaku_number"
                             android:layout_margin="2dp"
@@ -165,6 +166,22 @@
         </com.bilibili.lingxiao.widget.FoldableLayout>
 
 
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/endpage_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+
+
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:background="@color/black_alpha_32"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+        />
+
         <com.bilibili.lingxiao.widget.ColorTextView
                 android:id="@+id/type_name"
                 android:layout_width="wrap_content"
@@ -178,22 +195,8 @@
                 app:ctvTextSize="14sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
         />
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/endpage_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
 
-        <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="0.6dp"
-                android:background="@color/black_alpha_32"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-        />
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/recommend_recycler"
                 android:layout_width="match_parent"

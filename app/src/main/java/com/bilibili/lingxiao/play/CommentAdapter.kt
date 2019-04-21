@@ -6,6 +6,7 @@ import android.widget.ImageView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.play.model.CommentData
 import com.bilibili.lingxiao.utils.DateUtil
+import com.bilibili.lingxiao.utils.StringUtil
 import com.camera.lingxiao.common.utills.LogUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -35,7 +36,7 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
                 helper.setText(R.id.username,item.member.uname)
 
                 helper.setText(R.id.comment_desc,item.content.message)
-                helper.setText(R.id.recommend_num,""+item.like)
+                helper.setText(R.id.recommend_num,StringUtil.getBigDecimalNumber(item.like))
                 var levelImage:SimpleDraweeView = helper.getView(R.id.image_level)
                 var level = item.member.level_info.current_level
                 if (level > 6 || level < 0) level = 0
@@ -48,6 +49,7 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
                     var segment:ImageView = helper.getView(R.id.segment)
                     segment.visibility = View.GONE
                 }
+                helper.addOnClickListener(R.id.more)
             }
             CommentData.Reply.SEGMENT ->{
 

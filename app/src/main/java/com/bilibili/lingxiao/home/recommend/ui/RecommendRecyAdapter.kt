@@ -2,6 +2,7 @@ package com.bilibili.lingxiao.home.recommend.ui
 
 import android.net.Uri
 import android.widget.ImageView
+import com.bilibili.lingxiao.BaseRecyAdapter
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.recommend.RecommendData
 import com.bilibili.lingxiao.utils.StringUtil

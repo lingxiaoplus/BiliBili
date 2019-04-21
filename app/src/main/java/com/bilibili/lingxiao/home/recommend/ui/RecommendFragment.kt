@@ -29,6 +29,8 @@ import android.graphics.drawable.BitmapDrawable
 import android.widget.TextView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import com.bilibili.lingxiao.web.WebActivity
+import com.youth.banner.listener.OnBannerListener
 
 class RecommendFragment :BaseFragment(), RecommendView {
 
@@ -90,6 +92,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
                 R.id.image_more-> showPopupWindow(mRecommendList.get(position))
             }
         }
+        mAdapter.setEmptyView(View.inflate(context,R.layout.layout_empty,null))
     }
 
     override fun onFirstVisiblity() {
@@ -141,6 +144,8 @@ class RecommendFragment :BaseFragment(), RecommendView {
 
     override fun showToast(text: String?) {
         ToastUtil.show(text)
+        refresh.finishRefresh()
+        refresh.finishLoadMore()
     }
 
     private fun initBanner(bannerData: List<RecommendData.BannerItem>) {
@@ -163,6 +168,17 @@ class RecommendFragment :BaseFragment(), RecommendView {
         banner.setIndicatorGravity(BannerConfig.CENTER)
         //banner设置方法全部调用完毕时最后调用
         banner.start()
+
+        banner.setOnBannerListener(object :OnBannerListener{
+            override fun OnBannerClick(position: Int) {
+                var intent = Intent(context,WebActivity::class.java)
+                intent.putExtra("uri",bannerData[position].uri)
+                intent.putExtra("title",bannerData[position].title)
+                intent.putExtra("image",bannerData[position].image)
+                startActivity(intent)
+            }
+
+        })
     }
 
     val contentView by lazy {

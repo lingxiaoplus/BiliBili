@@ -1,64 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+<com.bilibili.lingxiao.widget.skin.SmartSkinRefreshLayout
+        android:id="@+id/refresh"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <LinearLayout
+        android:layout_height="match_parent"
+        app:srlPrimaryColor="@color/colorPrimary"
+>
+    <com.scwang.smartrefresh.header.BezierCircleHeader
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-    >
-        <include layout="@layout/mikan_header"/>
-        <include layout="@layout/mikan_content_jp"/>
-        <ImageView
-                android:id="@+id/between_line_large"
-                style="@style/between_line"
-                android:layout_height="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-        />
-        <include layout="@layout/mikan_content_cn"/>
-        <ImageView
-                style="@style/between_line"
-                android:layout_height="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-        />
+            android:layout_height="wrap_content">
+    </com.scwang.smartrefresh.header.BezierCircleHeader>
+    <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_margin="5dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
         >
-            <ImageView
-                    android:layout_width="wrap_content"
+            <include layout="@layout/mikan_header"/>
+            <include layout="@layout/mikan_content_jp"/>
+            <include layout="@layout/mikan_content_cn"/>
+            <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:layout_margin="5dp"
-                    app:srcCompat="@drawable/bangumi_common_ic_editor_recommend"
-            />
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextMessage"
-                    android:text="番剧推荐"
-                    android:layout_marginLeft="5dp"
-            />
-        </LinearLayout>
-        <com.bilibili.lingxiao.widget.skin.SmartSkinRefreshLayout
-                android:id="@+id/refresh"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            >
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        app:srcCompat="@drawable/bangumi_common_ic_editor_recommend"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextMessage"
+                        android:text="番剧推荐"
+                        android:layout_marginLeft="5dp"
+                />
+            </LinearLayout>
             <com.bilibili.lingxiao.widget.ScrollerloadRecyclerView
                     android:id="@+id/recyclerview_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
             </com.bilibili.lingxiao.widget.ScrollerloadRecyclerView>
-            <include layout="@layout/footer_loadmore"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"/>
-        </com.bilibili.lingxiao.widget.skin.SmartSkinRefreshLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+    <include layout="@layout/footer_loadmore"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"/>
+</com.bilibili.lingxiao.widget.skin.SmartSkinRefreshLayout>

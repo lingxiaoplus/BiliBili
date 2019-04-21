@@ -50,6 +50,7 @@
             app:tabIndicatorFullWidth="false"
             android:elevation="2dp"
             android:background="@color/white"
+            app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
     >
     </com.bilibili.lingxiao.widget.skin.SkinTabLayout>

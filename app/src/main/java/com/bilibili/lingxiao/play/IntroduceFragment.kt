@@ -15,6 +15,7 @@ import com.bilibili.lingxiao.play.model.VideoRecoData
 import com.bilibili.lingxiao.utils.StringUtil
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.camera.lingxiao.common.app.BaseFragment
+import com.camera.lingxiao.common.utills.PopwindowUtil
 import kotlinx.android.synthetic.main.fragment_introduce.*
 import kotlinx.android.synthetic.main.fragment_introduce.view.*
 import org.greenrobot.eventbus.Subscribe
@@ -49,6 +50,26 @@ class IntroduceFragment :BaseFragment(),RecommendView{
         root.recommend_recycler.adapter = videoDetailAdapter
         root.recommend_recycler.isNestedScrollingEnabled = false
 
+
+        videoDetailAdapter.setOnItemChildClickListener { adapter, view, position ->
+            when(view.id){
+                R.id.more ->{
+                    val popwindowUtil = PopwindowUtil.PopupWindowBuilder(activity!!)
+                        .setView(R.layout.pop_comment)
+                        .setFocusable(true)
+                        .setTouchable(true)
+                        .setOutsideTouchable(true)
+                        .create()
+                    popwindowUtil.showAsDropDown(view,0,-view.getHeight());
+                    popwindowUtil.getView<View>(R.id.pop_add_blacklist)!!.setOnClickListener {
+                        popwindowUtil.dissmiss()
+                    }
+                    popwindowUtil.getView<View>(R.id.pop_report)!!.setOnClickListener {
+                            v -> popwindowUtil.dissmiss()
+                    }
+                }
+            }
+        }
     }
 
     data class EndPageData(val icon:Drawable,val message:String){

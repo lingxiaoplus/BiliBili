@@ -15,4 +15,5 @@
     <dimen name="text_size_large">16sp</dimen>
     <dimen name="text_size_normal">14sp</dimen>
 
+    <dimen name="web_image_background_height">180dp</dimen>
 </resources>

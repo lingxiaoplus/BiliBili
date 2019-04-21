@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_live.view.*
 import kotlin.properties.Delegates
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.widget.ImageView
 import com.bilibili.lingxiao.home.live.banner.BannerImageLoader
 import com.bilibili.lingxiao.utils.UIUtil
 import com.youth.banner.Banner
@@ -95,8 +96,11 @@ class LiveFragment :BaseFragment() ,LiveView{
                 intent.putExtra("play_url",live.playurl)
                 startActivity(intent)
             }
-
         })
+        var emptyView = View.inflate(context,R.layout.layout_empty,null)
+        var image = emptyView.findViewById<ImageView>(R.id.image_error)
+        image.setImageDrawable(resources.getDrawable(R.drawable.img_holder_error_style3))
+        liveAdapter.setEmptyView(emptyView)
     }
 
     override fun onFirstVisiblity() {
@@ -177,5 +181,6 @@ class LiveFragment :BaseFragment() ,LiveView{
 
     override fun showToast(text: String?) {
         ToastUtil.show(text)
+        refresh.finishRefresh()
     }
 }

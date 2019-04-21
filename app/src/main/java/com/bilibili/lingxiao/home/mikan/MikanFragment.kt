@@ -4,6 +4,7 @@ import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.ImageView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
@@ -65,6 +66,10 @@ class MikanFragment :BaseFragment(),MikanView{
             miKanPresenter.getBanGuMiFall(cursor)
         }
         root.refresh.setEnableNestedScroll(true)
+        var emptyView = View.inflate(context,R.layout.layout_empty,null)
+        var image = emptyView.findViewById<ImageView>(R.id.image_error)
+        image.setImageDrawable(resources.getDrawable(R.drawable.img_holder_error_style3))
+        mFallAdapter.setEmptyView(emptyView)
     }
 
     override fun onFirstVisiblity() {
@@ -100,7 +105,7 @@ class MikanFragment :BaseFragment(),MikanView{
     }
 
     override fun onGetMikanFall(data: MiKanFallData) {
-        mEditList.clear()
+        //mEditList.clear()
         mFallAdapter.addData(data.result)
 
         refresh.finishRefresh()
@@ -117,5 +122,7 @@ class MikanFragment :BaseFragment(),MikanView{
 
     override fun showToast(text: String?) {
         ToastUtil.show(text)
+        refresh.finishRefresh()
+        refresh.finishLoadMore()
     }
 }

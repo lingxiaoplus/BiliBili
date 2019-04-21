@@ -3,6 +3,7 @@ package com.bilibili.lingxiao.play
 import android.support.design.widget.TabLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.ImageView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.dagger.DaggerUiComponent
 import com.bilibili.lingxiao.home.recommend.RecommendData
@@ -13,6 +14,7 @@ import com.bilibili.lingxiao.play.model.VideoRecoData
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.utills.LogUtils
+import com.camera.lingxiao.common.utills.PopwindowUtil
 import kotlinx.android.synthetic.main.fragment_comment.*
 import kotlinx.android.synthetic.main.fragment_comment.view.*
 import org.greenrobot.eventbus.Subscribe
@@ -50,6 +52,31 @@ class CommentFragment :BaseFragment(),RecommendView{
             page++
             videoPresenter.getComment(avNum,page)
         })
+        var emptyView = View.inflate(context,R.layout.layout_empty,null)
+        var image = emptyView.findViewById<ImageView>(R.id.image_error)
+        image.setImageDrawable(resources.getDrawable(R.drawable.bilipay_common_error_tip))
+        mAdapter.setEmptyView(emptyView)
+
+        mAdapter.setOnItemChildClickListener { adapter, view, position ->
+            when(view.id){
+                R.id.more ->{
+                    val popwindowUtil = PopwindowUtil.PopupWindowBuilder(activity!!)
+                        .setView(R.layout.pop_comment)
+                        .setFocusable(true)
+                        .setTouchable(true)
+                        .setOutsideTouchable(true)
+                        .create()
+                    popwindowUtil.showAsDropDown(view,0,-view.getHeight());
+                    popwindowUtil.getView<View>(R.id.pop_add_blacklist)!!.setOnClickListener {
+                        popwindowUtil.dissmiss()
+                    }
+                    popwindowUtil.getView<View>(R.id.pop_report)!!.setOnClickListener {
+                            v -> popwindowUtil.dissmiss()
+                    }
+                }
+            }
+        }
+       
     }
 
     override fun isRegisterEventBus(): Boolean {

@@ -10,6 +10,7 @@
             android:layout_width="@dimen/user_header_size"
             android:layout_height="@dimen/user_header_size"
             app:progressBarImageScaleType="centerInside"
+            app:progressBarImage="@drawable/ic_img_user_head_default"
             app:roundAsCircle="true"
             app:roundingBorderWidth="1dp"
             android:layout_margin="10dp"
@@ -64,12 +65,12 @@
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
         >
             <ImageView
                     android:id="@+id/recommend"
-                    app:srcCompat="@drawable/ic_img_agree"
+                    app:srcCompat="@drawable/biligame_comment_liked"
                     android:layout_centerVertical="true"
                     style="@style/image_small"
             />
@@ -84,7 +85,7 @@
             />
             <ImageView
                     android:id="@+id/dislike"
-                    app:srcCompat="@drawable/ic_img_disagree"
+                    app:srcCompat="@drawable/biligame_comment_disliked"
                     android:layout_centerVertical="true"
                     style="@style/image_small"
                     android:layout_toRightOf="@id/recommend_num"
@@ -92,11 +93,12 @@
             />
             <ImageView
                     android:id="@+id/share"
-                    app:srcCompat="@drawable/ic_img_relay"
+                    app:srcCompat="@drawable/ic_following_repost"
                     android:layout_centerVertical="true"
                     style="@style/image_small"
                     android:layout_toRightOf="@id/dislike"
                     android:layout_marginLeft="20dp"
+                    android:visibility="gone"
             />
             <ImageView
                     android:id="@+id/more"

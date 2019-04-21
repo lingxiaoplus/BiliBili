@@ -8,9 +8,9 @@
               android:layout_margin="5dp">
     <ImageView
             android:id="@+id/item_image"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            style="@style/image_small"
             android:layout_margin="3dp"
+            android:tint="@color/black_alpha_64"
     />
     <TextView
             android:id="@+id/item_title"

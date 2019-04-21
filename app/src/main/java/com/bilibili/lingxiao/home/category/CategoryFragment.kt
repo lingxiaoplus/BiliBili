@@ -4,6 +4,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
@@ -31,11 +32,14 @@ class CategoryFragment :BaseFragment() ,RegionView{
         manager.setSpanSizeLookup(object :GridLayoutManager.SpanSizeLookup(){
             override fun getSpanSize(position: Int): Int {
                 //先设置adapter 再设置manager才会调用
-                var type = regionAdapter.data.get(position).itemType
+                var type = 0
+                if (regionAdapter.data.size > 0){
+                    type = regionAdapter.data.get(position).itemType
+                }
                 when(type){
                     MultiRegionData.REGION_ITEM-> return 1
                     MultiRegionData.REGION_RECOMMEND-> return 4
-                    else-> return 0
+                    else-> return 4
                 }
             }
         })
@@ -47,6 +51,10 @@ class CategoryFragment :BaseFragment() ,RegionView{
             regionPresenter.getRegion()
         })
         //root.refresh.setEnableAutoLoadMore(false)
+        var emptyView = View.inflate(context,R.layout.layout_empty,null)
+        var image = emptyView.findViewById<ImageView>(R.id.image_error)
+        image.setImageDrawable(resources.getDrawable(R.drawable.bilipay_common_error_tip))
+        regionAdapter.setEmptyView(emptyView)
     }
 
     override fun onFirstVisiblity() {
@@ -94,9 +102,12 @@ class CategoryFragment :BaseFragment() ,RegionView{
     }
 
     override fun diamissDialog() {
+
     }
 
     override fun showToast(text: String?) {
         ToastUtil.show(text)
+        refresh.finishRefresh()
+        refresh.finishLoadMore()
     }
 }

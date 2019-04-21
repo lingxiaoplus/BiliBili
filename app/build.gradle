@@ -52,16 +52,21 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "com.trello.rxlifecycle2:rxlifecycle:$rootProject.ext.rxlifescyleVersion"
+
     // If you want to use Android Lifecycle for providers
     implementation "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:$rootProject.ext.rxlifescyleVersion"
+
     // If you want pre-written Activities and Fragments you can subclass as providers
     implementation "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.ext.rxlifescyleVersion"
+
     // If you want to use Kotlin syntax
     implementation "com.trello.rxlifecycle2:rxlifecycle-kotlin:$rootProject.ext.rxlifescyleVersion"
+
     // If you want to use Kotlin syntax with Android Lifecycle
     implementation "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:$rootProject.ext.rxlifescyleVersion"
     implementation "pub.devrel:easypermissions:$rootProject.ext.easypermissionsVersion"
     implementation "com.facebook.fresco:fresco:$rootProject.ext.frescoVersion"
+
     // 支持 GIF 动图，需要添加
     implementation "com.facebook.fresco:animated-gif:$rootProject.ext.frescoVersion"
     implementation project(':common')
@@ -74,14 +79,21 @@ dependencies {
     implementation "com.youth.banner:banner:$rootProject.ext.bannerVersion"
     implementation "com.github.zackratos.ultimatebar:ultimatebar2:$rootProject.ext.ultimatebarVersion"
     implementation "org.greenrobot:eventbus:$rootProject.ext.eventBusVersion"
-    implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
-    implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+    implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'
+
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
 
     //烈焰弹幕
     implementation "com.github.ctiao:DanmakuFlameMaster:$rootProject.ext.danmakuVersion"
     implementation "com.github.ctiao:ndkbitmap-armv7a:$rootProject.ext.danmakuNdk"
+
     // Other ABIs: optional
     implementation "com.github.ctiao:ndkbitmap-armv5:$rootProject.ext.danmakuNdk"
     implementation "com.github.ctiao:ndkbitmap-x86:$rootProject.ext.danmakuNdk"
     implementation project(':skinLibrary')
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation files('lib/tbs_sdk_thirdapp_v4.3.0.1020_43633_sharewithdownload_withoutGame_obfs_20190111_105200.jar')
 }
