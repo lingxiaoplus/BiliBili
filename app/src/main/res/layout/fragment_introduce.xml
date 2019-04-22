@@ -195,6 +195,7 @@
                 app:ctvTextSize="14sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:elevation="@dimen/dp_4"
         />
 
         <android.support.v7.widget.RecyclerView

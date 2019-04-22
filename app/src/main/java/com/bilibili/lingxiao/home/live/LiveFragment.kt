@@ -1,12 +1,9 @@
 package com.bilibili.lingxiao.home.live
 
 import android.content.Intent
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 
 import android.view.View
-import android.widget.Toast
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.utils.ToastUtil
 
@@ -15,17 +12,17 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import kotlinx.android.synthetic.main.fragment_live.view.*
 import kotlin.properties.Delegates
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.widget.ImageView
 import com.bilibili.lingxiao.home.live.banner.BannerImageLoader
+import com.bilibili.lingxiao.home.live.play.LivePlayActivity
 import com.bilibili.lingxiao.utils.UIUtil
+import com.bilibili.lingxiao.web.WebActivity
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
+import com.youth.banner.listener.OnBannerListener
 import kotlinx.android.synthetic.main.fragment_live.*
 import kotlinx.android.synthetic.main.layout_banner.view.*
-import java.util.zip.Inflater
-import javax.inject.Inject
 
 class LiveFragment :BaseFragment() ,LiveView{
     var livePresenter: LivePresenter = LivePresenter(this,this)
@@ -75,25 +72,27 @@ class LiveFragment :BaseFragment() ,LiveView{
         val recycledViewPool = RecyclerView.RecycledViewPool()
         root.live_recy.setRecycledViewPool(recycledViewPool)
         liveAdapter = LiveRecyAdapter(liveList,recycledViewPool)
+        liveAdapter.addHeaderView(topView)
+        liveAdapter.addFooterView(footerShowAllView)
         root.live_recy.adapter = liveAdapter
         root.live_recy.layoutManager = manager
         refresh = root.refresh
         refresh.setOnRefreshListener {
             livePresenter.getLiveList()
         }
-
-        liveAdapter.addHeaderView(topView)
-        liveAdapter.addFooterView(footerShowAllView)
+        refresh.setEnableScrollContentWhenRefreshed(false)
         liveAdapter.setMultiItemClickListener(object :LiveRecyAdapter.OnMultiItemClickListener{
             override fun onRecommendClick(live: LiveData.RecommendDataBean.LivesBean, position: Int) {
-                val intent = Intent(context,LivePlayActivity::class.java)
+                val intent = Intent(context, LivePlayActivity::class.java)
                 intent.putExtra("play_url",live.playurl)
+                intent.putExtra("room_id",live.room_id)
                 startActivity(intent)
             }
 
             override fun onPartitionClick(live: LiveData.PartitionsBean.LivesBeanX, position: Int) {
-                val intent = Intent(context,LivePlayActivity::class.java)
+                val intent = Intent(context, LivePlayActivity::class.java)
                 intent.putExtra("play_url",live.playurl)
+                intent.putExtra("room_id",live.room_id)
                 startActivity(intent)
             }
         })
@@ -101,6 +100,7 @@ class LiveFragment :BaseFragment() ,LiveView{
         var image = emptyView.findViewById<ImageView>(R.id.image_error)
         image.setImageDrawable(resources.getDrawable(R.drawable.img_holder_error_style3))
         liveAdapter.setEmptyView(emptyView)
+        floatingBtnToogle(root.live_recy,root.fab_live)
     }
 
     override fun onFirstVisiblity() {
@@ -113,13 +113,14 @@ class LiveFragment :BaseFragment() ,LiveView{
         if (visiblity && liveAdapter.itemCount - liveAdapter.headerLayoutCount - liveAdapter.footerLayoutCount < 1){
             refresh.autoRefresh()
         }
+        //TODO: 在fragment中，当可见的时候，会存在自己添加的头布局自动上拉
+        live_recy.smoothScrollToPosition(0)
     }
 
     //var bannerData = MultiItemLiveData(MultiItemLiveData.BANNER)
     var recommendData = MultiItemLiveData(MultiItemLiveData.RECOMMEND)
     override fun onGetLiveList(data: LiveData) {
         liveList.clear()
-
         //bannerData.bannerList = data.banner
         //liveList.add(bannerData)
         initBanner(topView.live_banner,data.banner)
@@ -169,6 +170,17 @@ class LiveFragment :BaseFragment() ,LiveView{
         //banner设置方法全部调用完毕时最后调用
         banner.start()
         initBanner = true
+
+        banner.setOnBannerListener(object : OnBannerListener {
+            override fun OnBannerClick(position: Int) {
+                var intent = Intent(context, WebActivity::class.java)
+                intent.putExtra("uri",bannerData[position].link)
+                intent.putExtra("title",bannerData[position].title)
+                intent.putExtra("image",bannerData[position].img)
+                startActivity(intent)
+            }
+
+        })
     }
 
     override fun showDialog() {

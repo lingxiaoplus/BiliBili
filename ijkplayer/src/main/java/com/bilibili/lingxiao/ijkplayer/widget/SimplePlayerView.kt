@@ -256,11 +256,13 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             PlayState.STATE_COMPLETED ->{
                 Log.d(TAG,"播放结束")
                 mCurrentPosition = 0
+                mVideoState = PlayState.STATE_COMPLETED
             }
 
             PlayState.STATE_PREPARING,PlayState.MEDIA_INFO_BUFFERING_START,PlayState.STATE_PREPARING->{
                 Log.d(TAG,"视频缓冲")
                 video_progress.visibility = View.VISIBLE
+                mVideoState = PlayState.STATE_PREPARING
             }
             PlayState.MEDIA_INFO_VIDEO_RENDERING_START,
             PlayState.STATE_PREPARED,
@@ -271,6 +273,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
                     hideBarUI()
                     mHandler.sendEmptyMessage(MESSAGE_SHOW_PROGRESS)
                 },500)
+                mVideoState = PlayState.STATE_PLAYING
             }
             PlayState.MEDIA_INFO_VIDEO_INTERRUPT->{
                 Log.d(TAG,"直播停止推流")
@@ -288,6 +291,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             PlayState.MEDIA_ERROR_TIMED_OUT,
             PlayState.MEDIA_ERROR_SERVER_DIED->{
                 Log.d(TAG,"播放错误")
+                mVideoState = PlayState.STATE_ERROR
             }
         }
     }
@@ -418,6 +422,13 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             mCurrentPosition = -1
         }
         return mCurrentPosition
+    }
+
+    fun isPlaying():Boolean{
+        when(mVideoState){
+            PlayState.STATE_PLAYING -> return true
+            else -> return false
+        }
     }
 
 
@@ -857,4 +868,5 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
 
         })
     }
+
 }

@@ -9,7 +9,9 @@ import com.camera.lingxiao.common.app.BaseActivity
 import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_web.*
 import android.content.Intent
+import android.graphics.Bitmap
 import android.util.Log
+import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebSettings
 import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
@@ -60,6 +62,21 @@ class WebActivity : BaseActivity() {
                 }
                 //返回true代表在当前webview中打开，返回false表示打开浏览器
                 return super.shouldOverrideUrlLoading(view, url)
+            }
+
+            override fun onPageStarted(p0: WebView?, p1: String?, p2: Bitmap?) {
+                super.onPageStarted(p0, p1, p2)
+                showProgressDialog("加载中...")
+            }
+            override fun onPageFinished(p0: WebView?, p1: String?) {
+                super.onPageFinished(p0, p1)
+                cancleProgressDialog()
+            }
+        }
+
+        webview.webChromeClient = object :WebChromeClient(){
+            override fun onProgressChanged(p0: WebView?, p1: Int) {
+                super.onProgressChanged(p0, p1)
             }
         }
     }

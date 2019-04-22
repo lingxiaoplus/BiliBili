@@ -99,6 +99,8 @@ class PlayActivity : BaseActivity() {
 
         fragmentList.add(introduceFragment)
         fragmentList.add(commentFragment)
+        setSupportActionBar(toolbar)
+        toolbar.title = ""
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {

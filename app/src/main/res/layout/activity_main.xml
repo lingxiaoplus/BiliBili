@@ -32,6 +32,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ic_drawer_home"
+                        android:background="@drawable/ripple_background"
                 />
                 <com.facebook.drawee.view.SimpleDraweeView
                         android:layout_width="@dimen/normal_icon_size"
@@ -58,6 +59,7 @@
                                 android:layout_width="@dimen/normal_icon_size"
                                 android:layout_height="match_parent"
                                 app:srcCompat="@drawable/ic_img_download"
+                                android:background="@drawable/ripple_background"
                                 android:layout_marginLeft="@dimen/dp_4"
                                 android:layout_marginRight="@dimen/dp_4"/>
                         <ImageView
@@ -65,6 +67,7 @@
                                 android:layout_width="@dimen/normal_icon_size"
                                 android:layout_height="match_parent"
                                 app:srcCompat="@drawable/ic_img_game"
+                                android:background="@drawable/ripple_background"
                                 android:layout_marginLeft="@dimen/dp_4"
                                 android:layout_marginRight="@dimen/dp_4"/>
                         <ImageView
@@ -72,6 +75,7 @@
                                 android:layout_width="@dimen/normal_icon_size"
                                 android:layout_height="match_parent"
                                 app:srcCompat="@drawable/ic_img_search"
+                                android:background="@drawable/ripple_background"
                                 android:layout_marginLeft="@dimen/dp_4"
                                 android:layout_marginRight="@dimen/dp_4"/>
                     </LinearLayout>

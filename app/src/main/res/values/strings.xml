@@ -16,4 +16,6 @@
     <string name="nav_game">游戏</string>
     <string name="nav_mobile_game">手游</string>
     <string name="nav_painting">绘画</string>
+    <string name="scroll_behavior">com.bilibili.lingxiao.widget.behavior.ScrollAwareFabBehaviorDefault</string>
+    <string name="player_behavior">com.bilibili.lingxiao.widget.behavior.PlayerBehavior</string>
 </resources>

@@ -106,6 +106,7 @@
                     android:layout_centerVertical="true"
                     style="@style/image_small"
                     android:layout_alignParentRight="true"
+                    android:background="@drawable/ripple_background"
             />
         </RelativeLayout>
 

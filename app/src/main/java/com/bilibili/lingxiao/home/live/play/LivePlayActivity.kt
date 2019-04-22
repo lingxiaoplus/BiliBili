@@ -1,4 +1,4 @@
-package com.bilibili.lingxiao.home.live
+package com.bilibili.lingxiao.home.live.play
 
 import android.content.res.Configuration
 import android.graphics.Color
@@ -32,6 +32,8 @@ class LivePlayActivity : BaseActivity() {
             .setLive(true)
             .setVideoUrl(play_url)
             .startPlay()
+        val roomId = intent.getIntExtra("room_id",0)
+        DanMaKuTool.joinRoom(roomId)
     }
 
     override fun initBefore() {
@@ -59,6 +61,7 @@ class LivePlayActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         live_play.onDestory()
+        DanMaKuTool.exitRoom()
     }
 
     override fun onBackPressed() {

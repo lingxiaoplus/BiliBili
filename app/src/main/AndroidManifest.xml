@@ -48,11 +48,12 @@
         <activity android:name=".user.LoginActivity">
         </activity>
         <activity
-                android:name=".home.live.LivePlayActivity"
+                android:name=".home.live.play.LivePlayActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
         <activity
                 android:name=".play.PlayActivity"
+                android:label=""
                 android:configChanges="orientation|keyboardHidden|screenSize">
 
             <!-- 要想在别的App上能成功调起App，必须添加intent过滤器 -->

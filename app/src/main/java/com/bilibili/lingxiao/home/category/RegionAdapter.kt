@@ -1,8 +1,10 @@
 package com.bilibili.lingxiao.home.category
 
 import android.net.Uri
+import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import com.bilibili.lingxiao.R
@@ -68,6 +70,8 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
             image.setImageURI(Uri.parse(item.cover))
             helper.setText(R.id.play_title,item.title)
             helper.setText(R.id.play_number,StringUtil.getBigDecimalNumber(item.play))
+            helper.setText(R.id.comment_number,StringUtil.getBigDecimalNumber(item.danmaku))
+            helper.getView<ConstraintLayout>(R.id.cons_category).visibility = View.GONE
         }
     }
 }

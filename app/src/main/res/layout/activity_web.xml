@@ -24,6 +24,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
                     android:visibility="invisible"
+                    android:background="@color/colorTrans"
                     app:layout_collapseMode="parallax"/>
             <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"

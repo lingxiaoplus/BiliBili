@@ -67,6 +67,7 @@ class CategoryFragment :BaseFragment() ,RegionView{
         if (visiblity && regionAdapter.itemCount - regionAdapter.headerLayoutCount - regionAdapter.footerLayoutCount < 1){
             refresh.autoRefresh()
         }
+        category_recyclerview.smoothScrollToPosition(0)
     }
 
 
@@ -94,7 +95,7 @@ class CategoryFragment :BaseFragment() ,RegionView{
         refresh.finishRefresh()
         refresh.finishLoadMore()
         regionAdapter.loadMoreEnd()
-
+        category_recyclerview.smoothScrollToPosition(0)
     }
 
     override fun showDialog() {
