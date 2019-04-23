@@ -70,7 +70,7 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
         }
     }
 
-    private fun initPartition(helper: BaseViewHolder, data: MutableList<LiveData.PartitionsBean.LivesBeanX>) {
+    private fun initPartition(helper: BaseViewHolder, data: MutableList<LiveData.RecommendDataBean.LivesBean>) {
         var list = data
         if (list.size > 4){
             list = list.subList(0,4)
@@ -148,6 +148,6 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
     }
     public interface OnMultiItemClickListener{
         fun onRecommendClick(live: LiveData.RecommendDataBean.LivesBean,position:Int)
-        fun onPartitionClick(live: LiveData.PartitionsBean.LivesBeanX,position:Int)
+        fun onPartitionClick(live: LiveData.RecommendDataBean.LivesBean,position:Int)
     }
 }

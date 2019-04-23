@@ -803,7 +803,7 @@ public class LiveData {
          */
 
         private RecommendDataBean.PartitionBean partition;
-        private List<LivesBeanX> lives;
+        private List<RecommendDataBean.LivesBean> lives;
 
         public RecommendDataBean.PartitionBean getPartition() {
             return partition;
@@ -813,11 +813,11 @@ public class LiveData {
             this.partition = partition;
         }
 
-        public List<LivesBeanX> getLives() {
+        public List<RecommendDataBean.LivesBean> getLives() {
             return lives;
         }
 
-        public void setLives(List<LivesBeanX> lives) {
+        public void setLives(List<RecommendDataBean.LivesBean> lives) {
             this.lives = lives;
         }
 

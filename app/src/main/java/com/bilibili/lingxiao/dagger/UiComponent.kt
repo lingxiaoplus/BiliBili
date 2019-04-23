@@ -6,6 +6,10 @@ import com.bilibili.lingxiao.home.live.LiveFragment
 import com.bilibili.lingxiao.home.mikan.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.dagger.scope.PerUi
+import com.bilibili.lingxiao.home.live.play.FansFragment
+import com.bilibili.lingxiao.home.live.play.InteractFragment
+import com.bilibili.lingxiao.home.live.play.LivePlayActivity
+import com.bilibili.lingxiao.home.live.play.UpInfoFragment
 import com.bilibili.lingxiao.play.CommentFragment
 import com.bilibili.lingxiao.play.IntroduceFragment
 import com.bilibili.lingxiao.play.PlayActivity
@@ -21,6 +25,11 @@ interface UiComponent {
     fun inject(introduceFragment: IntroduceFragment)
     fun inject(commentFragment: CommentFragment)
 
+    fun inject(interactFragment: InteractFragment)
+    fun inject(upInfoFragment: UpInfoFragment)
+    fun inject(fansFragment: FansFragment)
+
     fun inject(mainActivity: MainActivity)
     fun inject(playActivity: PlayActivity)
+    fun inject(livePlayActivity: LivePlayActivity)
 }

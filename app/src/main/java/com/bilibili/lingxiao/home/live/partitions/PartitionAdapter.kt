@@ -16,7 +16,7 @@ class PartitionAdapter(layout:Int,data: MutableList<LiveData.PartitionsBean>)
         initRecy(helper, item.lives)
     }
     //var categoryAdapter :PartitionVideoAdapter? = null
-    private fun initRecy(helper: BaseViewHolder, data: MutableList<LiveData.PartitionsBean.LivesBeanX>) {
+    private fun initRecy(helper: BaseViewHolder, data: MutableList<LiveData.RecommendDataBean.LivesBean>) {
         var list = data
         if (list.size > 4){
             list = list.subList(0,4)

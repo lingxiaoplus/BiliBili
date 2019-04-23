@@ -23,6 +23,7 @@ import com.youth.banner.Transformer
 import com.youth.banner.listener.OnBannerListener
 import kotlinx.android.synthetic.main.fragment_live.*
 import kotlinx.android.synthetic.main.layout_banner.view.*
+import org.greenrobot.eventbus.EventBus
 
 class LiveFragment :BaseFragment() ,LiveView{
     var livePresenter: LivePresenter = LivePresenter(this,this)
@@ -87,13 +88,15 @@ class LiveFragment :BaseFragment() ,LiveView{
                 intent.putExtra("play_url",live.playurl)
                 intent.putExtra("room_id",live.room_id)
                 startActivity(intent)
+                EventBus.getDefault().postSticky(live)
             }
 
-            override fun onPartitionClick(live: LiveData.PartitionsBean.LivesBeanX, position: Int) {
+            override fun onPartitionClick(live: LiveData.RecommendDataBean.LivesBean, position: Int) {
                 val intent = Intent(context, LivePlayActivity::class.java)
                 intent.putExtra("play_url",live.playurl)
                 intent.putExtra("room_id",live.room_id)
                 startActivity(intent)
+                EventBus.getDefault().postSticky(live)
             }
         })
         var emptyView = View.inflate(context,R.layout.layout_empty,null)

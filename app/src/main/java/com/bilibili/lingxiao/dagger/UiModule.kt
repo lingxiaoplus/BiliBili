@@ -6,6 +6,9 @@ import com.bilibili.lingxiao.home.live.LiveFragment
 import com.bilibili.lingxiao.home.mikan.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.dagger.scope.PerUi
+import com.bilibili.lingxiao.home.live.play.FansFragment
+import com.bilibili.lingxiao.home.live.play.InteractFragment
+import com.bilibili.lingxiao.home.live.play.UpInfoFragment
 import com.bilibili.lingxiao.play.CommentFragment
 import com.bilibili.lingxiao.play.IntroduceFragment
 import dagger.Module
@@ -46,6 +49,24 @@ class UiModule {
     @PerUi
     fun provideCommentFragment() : CommentFragment {
         return CommentFragment()
+    }
+
+    @Provides
+    @PerUi
+    fun provideInteractFragment() : InteractFragment {
+        return InteractFragment()
+    }
+
+    @Provides
+    @PerUi
+    fun provideUpInfoFragment() : UpInfoFragment {
+        return UpInfoFragment()
+    }
+
+    @Provides
+    @PerUi
+    fun provideFansFragment() : FansFragment {
+        return FansFragment()
     }
 
     private lateinit var context: Context

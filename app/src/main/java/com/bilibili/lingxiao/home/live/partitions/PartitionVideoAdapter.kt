@@ -9,10 +9,10 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
 import java.math.BigDecimal
 
-class PartitionVideoAdapter(layoutResId: Int, data: MutableList<LiveData.PartitionsBean.LivesBeanX>) :
-    BaseQuickAdapter<LiveData.PartitionsBean.LivesBeanX, BaseViewHolder>(layoutResId, data) {
+class PartitionVideoAdapter(layoutResId: Int, data: MutableList<LiveData.RecommendDataBean.LivesBean>) :
+    BaseQuickAdapter<LiveData.RecommendDataBean.LivesBean, BaseViewHolder>(layoutResId, data) {
     var isScroller = false
-    override fun convert(helper: BaseViewHolder, item: LiveData.PartitionsBean.LivesBeanX) {
+    override fun convert(helper: BaseViewHolder, item: LiveData.RecommendDataBean.LivesBean) {
         if (!isScroller){
             var image :SimpleDraweeView = helper.getView(R.id.live_user_image)
             image.setImageURI(Uri.parse(item.cover.src))

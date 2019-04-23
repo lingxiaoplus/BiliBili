@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.util.Log
 import android.view.WindowManager
 import com.bilibili.lingxiao.R
+import com.bilibili.lingxiao.adapter.PlayPagerAdapter
 import com.bilibili.lingxiao.dagger.DaggerUiComponent
 import com.bilibili.lingxiao.ijkplayer.danmuku.BiliDanmuku
 import com.bilibili.lingxiao.ijkplayer.danmuku.BiliDanmukuCompressionTools
@@ -93,12 +94,10 @@ class PlayActivity : BaseActivity() {
         for (name in tabArray){
             skin_tabLayout.addTab(skin_tabLayout.newTab().setText(name))
         }
-
-        play_viewpager.adapter = PlayPagerAdapter(supportFragmentManager)
-        skin_tabLayout.setupWithViewPager(play_viewpager)
-
         fragmentList.add(introduceFragment)
         fragmentList.add(commentFragment)
+        play_viewpager.adapter = PlayPagerAdapter(supportFragmentManager,tabArray,fragmentList)
+        skin_tabLayout.setupWithViewPager(play_viewpager)
         setSupportActionBar(toolbar)
         toolbar.title = ""
     }
@@ -119,25 +118,11 @@ class PlayActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         play_view.onDestory()
+        fragmentList.clear()
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
         play_view.onBackPressed()
-    }
-
-    inner class PlayPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
-
-        override fun getCount(): Int {
-            return tabArray.size
-        }
-
-        override fun getItem(position: Int): Fragment {
-            return fragmentList.get(position)
-        }
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            return tabArray.get(position)
-        }
     }
 }

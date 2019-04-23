@@ -5,18 +5,35 @@ import android.graphics.Color
 import android.net.Uri
 import android.view.WindowManager
 import com.bilibili.lingxiao.R
+import com.bilibili.lingxiao.adapter.PlayPagerAdapter
+import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity
+import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.utills.LogUtils
 import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_live_play.*
 import java.net.URLDecoder
+import java.util.ArrayList
+import javax.inject.Inject
 import kotlin.properties.Delegates
 
 class LivePlayActivity : BaseActivity() {
+    @Inject
+    lateinit var interactFragment: InteractFragment
+    @Inject
+    lateinit var upInfoFragment: UpInfoFragment
+    @Inject
+    lateinit var fansFragment: FansFragment
+    var fragmentList: ArrayList<BaseFragment> = arrayListOf()
+
     var  tabArray: Array<String> by Delegates.notNull()
     override val contentLayoutId: Int
         get() = R.layout.activity_live_play
 
+    override fun initInject() {
+        super.initInject()
+        UIUtil.getUiComponent().inject(this)
+    }
     override fun initWidget() {
         super.initWidget()
         //屏幕常亮
@@ -34,6 +51,13 @@ class LivePlayActivity : BaseActivity() {
             .startPlay()
         val roomId = intent.getIntExtra("room_id",0)
         DanMaKuTool.joinRoom(roomId)
+
+        fragmentList.add(interactFragment)
+        fragmentList.add(upInfoFragment)
+        fragmentList.add(fansFragment)
+        fragmentList.add(interactFragment)
+        live_viewpager.adapter = PlayPagerAdapter(supportFragmentManager,tabArray,fragmentList)
+        live_tablayout.setupWithViewPager(live_viewpager)
     }
 
     override fun initBefore() {
@@ -62,6 +86,7 @@ class LivePlayActivity : BaseActivity() {
         super.onDestroy()
         live_play.onDestory()
         DanMaKuTool.exitRoom()
+        fragmentList.clear()
     }
 
     override fun onBackPressed() {

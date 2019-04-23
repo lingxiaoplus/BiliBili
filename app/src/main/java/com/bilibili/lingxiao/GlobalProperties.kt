@@ -22,6 +22,7 @@ object GlobalProperties {
     val CATEGORY_RECOMMEND_HOST = "http://app.bilibili.com/x/v2/show/index?" //分区推荐
     var USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Mobile Safari/537.36"
 
+    var LIVE_UP_INFO = "https://api.live.bilibili.com/room/v1/Room/get_info" //获取up主的信息
     var LIVE_DANMAKU_URL = "wss://broadcastlv.chat.bilibili.com:2245/sub"  //直播弹幕 websocket
 
     private val SECRET_KEY = "ea85624dfcf12d7cc7b2b3a94fac1f2c"
