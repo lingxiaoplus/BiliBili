@@ -109,13 +109,14 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
             return
         }*/
         mTextHeightWithMaxLines = getRealTextViewHeight(mTextView!!)
-        mMessageTextHeight = getRealTextViewHeight(mMessageTextView!!)
-
+        if(mMessageTextView != null){
+            mMessageTextHeight = getRealTextViewHeight(mMessageTextView!!)
+        }
 
         if (mCollapsed){
             mTextView!!.maxLines = mMaxCollapsedLines
 
-            mMessageTextView!!.maxLines = 0
+            mMessageTextView?.maxLines = 0
         }
         mToggleView?.setVisibility(View.VISIBLE)
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
