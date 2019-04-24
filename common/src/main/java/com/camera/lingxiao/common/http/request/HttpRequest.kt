@@ -4,6 +4,7 @@ import com.camera.lingxiao.common.api.MainApi
 import com.camera.lingxiao.common.http.response.HttpResponse
 import com.camera.lingxiao.common.observable.HttpRxObservable
 import com.camera.lingxiao.common.observer.HttpRxCallback
+import com.camera.lingxiao.common.utills.LogUtils
 import com.camera.lingxiao.common.utills.RetrofitUtil
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.android.ActivityEvent
@@ -73,7 +74,7 @@ class HttpRequest {
      */
     fun requestFullPath(
         method: Method,
-        url: String, lifecycle: LifecycleProvider<*>?, callback: HttpRxCallback<Any>) {
+        url: String, prams: TreeMap<String, Any>, lifecycle: LifecycleProvider<*>?, callback: HttpRxCallback<Any>) {
         val apiObservable: Observable<HttpResponse>
         when(method){
             Method.GET ->{
@@ -81,16 +82,17 @@ class HttpRequest {
                     .get()
                     .retrofit()
                     .create(MainApi::class.java)
-                    .fullPathGet(url)
+                    .fullPathGet(url,prams)
             }
             else->{
                 apiObservable = RetrofitUtil
                     .get()
                     .retrofit()
                     .create(MainApi::class.java)
-                    .fullPathPost(url)
+                    .fullPathPost(url,prams)
             }
         }
+
         HttpRxObservable.getObservable(apiObservable, lifecycle, callback).subscribe(callback)
         //HttpRxObservable.getOtherObservable(apiObservable,lifecycle,callback).subscribe(callback)
     }
@@ -103,7 +105,7 @@ class HttpRequest {
      */
     fun requestFullPathWithoutCheck(
         method: Method,
-        url: String, lifecycle: LifecycleProvider<*>?, callback: HttpRxCallback<Any>) {
+        url: String, prams: TreeMap<String, Any>, lifecycle: LifecycleProvider<*>?, callback: HttpRxCallback<Any>) {
         val apiObservable: Observable<Any>
         when(method){
             Method.GET ->{
@@ -111,14 +113,14 @@ class HttpRequest {
                     .get()
                     .retrofit()
                     .create(MainApi::class.java)
-                    .fullPathGetWithoutCheck(url)
+                    .fullPathGetWithoutCheck(url,prams)
             }
             else->{
                 apiObservable = RetrofitUtil
                     .get()
                     .retrofit()
                     .create(MainApi::class.java)
-                    .fullPathPostWithoutCheck(url)
+                    .fullPathPostWithoutCheck(url,prams)
             }
         }
         HttpRxObservable.getOtherObservable(apiObservable,lifecycle,callback).subscribe(callback)

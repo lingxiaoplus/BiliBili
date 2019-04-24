@@ -5,12 +5,8 @@ import com.bilibili.lingxiao.GlobalProperties
 import okhttp3.*
 import okio.ByteString
 import org.json.JSONObject
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.OutputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.nio.charset.Charset
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -32,10 +28,8 @@ object DanMaKuTool {
                 inRoomMessage.put("protover",1)
                 inRoomMessage.put("uid",0)
                 inRoomMessage.put("roomid",roomId)  //必填
-
                 var bytes = inRoomMessage.toString().toByteArray(Charsets.UTF_8)
-                var buffer = sendCmd(7,bytes)
-                webSocket.send(ByteString.of(buffer))
+                sendCmd(7,bytes,webSocket)
                 startTask(webSocket)
                 Log.i(TAG,"websocket连接成功，发送进房消息" + inRoomMessage.toString())
             }
@@ -57,9 +51,9 @@ object DanMaKuTool {
 
     }
 
-    private fun sendCmd(cmd:Int,bytes:ByteArray) :ByteBuffer{
+    private fun sendCmd(cmd: Int, bytes: ByteArray, webSocket: WebSocket){
         var buffer = ByteBuffer.allocate(16 + bytes.size)
-        buffer.order(ByteOrder.LITTLE_ENDIAN)
+        buffer.order(ByteOrder.BIG_ENDIAN)  //字节序为大端模式
         buffer.putInt(16 + bytes.size)
         buffer.putShort(16)  //头部长度
         buffer.putShort(1)  //协议版本，目前是1
@@ -67,7 +61,7 @@ object DanMaKuTool {
         buffer.putInt(1)  //sequence，可以取常数1
         Log.i(TAG,"发送消息的头部长度" + buffer.position())
         buffer.put(bytes)
-        return buffer
+        webSocket.send(ByteString.of(buffer))
     }
 
     //每秒发送一条消息
@@ -75,7 +69,8 @@ object DanMaKuTool {
     private fun startTask(webSocket: okhttp3.WebSocket?){
         timer = Timer()
         var timerTask = timerTask {
-            webSocket?.send("" + System.currentTimeMillis())
+            sendCmd(2,"".toByteArray(),webSocket!!)
+            //webSocket?.send("" + System.currentTimeMillis())
             //除了文本内容外，还可以将如图像，声音，视频等内容转为ByteString发送
             //boolean send(ByteString bytes);
         }

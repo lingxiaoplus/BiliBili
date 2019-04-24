@@ -118,7 +118,9 @@ class IntroduceFragment :BaseFragment(),RecommendView{
     }
 
     override fun onGetVideoDetail(data: VideoDetailData) {
-        fold_layout.setMessageText(data.description)
+        if (data.description != null){
+            fold_layout.setMessageText(data.description)
+        }
         play_num.text = StringUtil.getBigDecimalNumber(data.play)
         var dataArray = data.created_at.split("\\s+")
         if (dataArray.size > 1){

@@ -1,4 +1,4 @@
-package com.bilibili.lingxiao.home.live;
+package com.bilibili.lingxiao.home.live.model;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 

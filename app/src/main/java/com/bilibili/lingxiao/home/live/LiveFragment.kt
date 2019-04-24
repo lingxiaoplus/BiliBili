@@ -14,6 +14,8 @@ import kotlin.properties.Delegates
 import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
 import com.bilibili.lingxiao.home.live.banner.BannerImageLoader
+import com.bilibili.lingxiao.home.live.model.LiveData
+import com.bilibili.lingxiao.home.live.model.MultiItemLiveData
 import com.bilibili.lingxiao.home.live.play.LivePlayActivity
 import com.bilibili.lingxiao.utils.UIUtil
 import com.bilibili.lingxiao.web.WebActivity

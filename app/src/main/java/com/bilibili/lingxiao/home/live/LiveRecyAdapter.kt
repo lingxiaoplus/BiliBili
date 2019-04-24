@@ -2,16 +2,15 @@ package com.bilibili.lingxiao.home.live
 
 import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.banner.BannerImageLoader
+import com.bilibili.lingxiao.home.live.model.LiveData
+import com.bilibili.lingxiao.home.live.model.MultiItemLiveData
 import com.bilibili.lingxiao.home.live.partitions.PartitionVideoAdapter
 import com.bilibili.lingxiao.home.live.recommend.LiveRecommendAdapter
 import com.camera.lingxiao.common.utills.LogUtils
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.util.MultiTypeDelegate
@@ -23,7 +22,7 @@ import kotlin.properties.Delegates
 
 class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
     var recycledViewPool:RecyclerView.RecycledViewPool by Delegates.notNull()
-    constructor(data:MutableList<MultiItemLiveData>,recycledViewPool:RecyclerView.RecycledViewPool) :super(data){
+    constructor(data:MutableList<MultiItemLiveData>, recycledViewPool:RecyclerView.RecycledViewPool) :super(data){
         this.recycledViewPool = recycledViewPool
        /* addItemType(MultiItemLiveData.BANNER,R.layout.layout_banner)
         addItemType(MultiItemLiveData.CATEGORY,R.layout.item_live_category)
@@ -147,7 +146,7 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
         this.listener = listener
     }
     public interface OnMultiItemClickListener{
-        fun onRecommendClick(live: LiveData.RecommendDataBean.LivesBean,position:Int)
-        fun onPartitionClick(live: LiveData.RecommendDataBean.LivesBean,position:Int)
+        fun onRecommendClick(live: LiveData.RecommendDataBean.LivesBean, position:Int)
+        fun onPartitionClick(live: LiveData.RecommendDataBean.LivesBean, position:Int)
     }
 }

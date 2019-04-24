@@ -1,8 +1,10 @@
 package com.bilibili.lingxiao
 
+import android.util.Log
 import com.bilibili.lingxiao.home.category.RegionData
 import com.bilibili.lingxiao.home.category.RegionRecommendData
-import com.bilibili.lingxiao.home.live.LiveData
+import com.bilibili.lingxiao.home.live.model.LiveData
+import com.bilibili.lingxiao.home.live.model.LiveUpData
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
 import com.bilibili.lingxiao.play.model.CommentData
@@ -19,6 +21,8 @@ import com.google.gson.reflect.TypeToken
 import com.trello.rxlifecycle2.LifecycleProvider
 
 class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
+    private var debug = true
+    private val TAG = HttpTrans::class.java.simpleName
     fun getLiveList(callback : HttpRxCallback<Any>){
         request.clear()
         request.put("_device",GlobalProperties.DEVICE)
@@ -34,7 +38,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         request.put("ts",GlobalProperties.getSystemTime())
         request.put("version",GlobalProperties.VERSION)
 
-        LogUtils.d("屏幕像素---->" + GlobalProperties.SCALE)
+
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
                 LogUtils.d("获取到的数据" + element)
@@ -44,9 +48,11 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
                 return obj
             }
         })
-        var url = GlobalProperties.LIVE_HOST + GlobalProperties.getUrlParamsByMap(request)
-        LogUtils.d("拼接的url---->" + url)
-        getRequest().requestFullPath(HttpRequest.Method.GET,url, mLifecycle,callback)
+        if (debug){
+            var url = GlobalProperties.LIVE_HOST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"拼接的url---->$url, 屏幕像素---->${GlobalProperties.SCALE}" )
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET,GlobalProperties.LIVE_HOST, request, mLifecycle,callback)
     }
 
 
@@ -80,9 +86,11 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
                 return obj
             }
         })
-        var url = GlobalProperties.DETAIL_HOST + GlobalProperties.getUrlParamsByMap(request)
-        LogUtils.d("拼接的url---->" + url)
-        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,url, mLifecycle,callback)
+        if (debug){
+            var url = GlobalProperties.DETAIL_HOST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"拼接的url---->$url")
+        }
+        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,GlobalProperties.DETAIL_HOST,request, mLifecycle,callback)
     }
 
     /**
@@ -107,9 +115,11 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
                 return obj
             }
         })
-        var url = GlobalProperties.COMMEND_VIDEO_HOST + GlobalProperties.getUrlParamsByMap(request)
-        LogUtils.d("拼接的url---->" + url)
-        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,url, mLifecycle,callback)
+        if (debug){
+            var url = GlobalProperties.COMMEND_VIDEO_HOST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"拼接视频播放详情下面的推荐列表的url---->" + url)
+        }
+        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,GlobalProperties.COMMEND_VIDEO_HOST,request, mLifecycle,callback)
     }
 
     /**
@@ -140,9 +150,11 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
                 return obj
             }
         })
-        var url = GlobalProperties.COMMENT_HOST + GlobalProperties.getUrlParamsByMap(request)
-        LogUtils.d("拼接的评论url---->" + url)
-        getRequest().requestFullPath(HttpRequest.Method.GET,url, mLifecycle,callback)
+        if (debug){
+            var url = GlobalProperties.COMMENT_HOST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"拼接的评论url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET,GlobalProperties.COMMENT_HOST,request, mLifecycle,callback)
     }
 
     /**
@@ -167,9 +179,11 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
                 return obj
             }
         })
-        var url = GlobalProperties.BANGUMI_CN_AND_JP_HOST + GlobalProperties.getUrlParamsByMap(request)
-        LogUtils.d("拼接番剧的url---->" + url)
-        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,url, mLifecycle,callback)
+        if (debug){
+            var url = GlobalProperties.BANGUMI_CN_AND_JP_HOST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"拼接番剧的url---->$url")
+        }
+        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,GlobalProperties.BANGUMI_CN_AND_JP_HOST, request,mLifecycle,callback)
     }
 
     /**
@@ -193,9 +207,11 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
                 return obj
             }
         })
-        var url = GlobalProperties.BANGUMI_FALL_HOST + GlobalProperties.getUrlParamsByMap(request)
-        LogUtils.d("拼接编辑推荐的番剧的url---->" + url)
-        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,url, mLifecycle,callback)
+        if (debug){
+            var url = GlobalProperties.BANGUMI_FALL_HOST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"拼接编辑推荐的番剧的url---->$url")
+        }
+        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,GlobalProperties.BANGUMI_FALL_HOST,request, mLifecycle,callback)
     }
 
 
@@ -211,10 +227,11 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
                 return obj
             }
         })
-        var url = GlobalProperties.CATEGORY_HOST + GlobalProperties.getUrlParamsByMap(request)
-        LogUtils.d("拼接分区的url---->" + url)
-        //getRequest().request(HttpRequest.Method.GET,url, mLifecycle,callback)
-        getRequest().requestFullPath(HttpRequest.Method.GET,url, mLifecycle,callback)
+        if (debug){
+            var url = GlobalProperties.CATEGORY_HOST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"拼接分区的url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET,GlobalProperties.CATEGORY_HOST,request, mLifecycle,callback)
     }
 
     /**
@@ -236,8 +253,32 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
                 return obj
             }
         })
-        var url = GlobalProperties.CATEGORY_RECOMMEND_HOST + GlobalProperties.getUrlParamsByMap(request)
-        LogUtils.d("拼接分区推荐的url---->" + url)
-        getRequest().requestFullPath(HttpRequest.Method.GET, url, mLifecycle, callback)
+        if (debug){
+            var url = GlobalProperties.CATEGORY_RECOMMEND_HOST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"拼接分区推荐的url---->$url")
+        }
+
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.CATEGORY_RECOMMEND_HOST,request, mLifecycle, callback)
+    }
+
+    /**
+     * 获取直播间up的信息，主要是uid的获取
+     */
+    fun getLiveUpInfo(roomId:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("id",roomId)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element,LiveUpData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.LIVE_UP_INFO + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取直播up信息的url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.POST, GlobalProperties.LIVE_UP_INFO, request,mLifecycle, callback)
     }
 }

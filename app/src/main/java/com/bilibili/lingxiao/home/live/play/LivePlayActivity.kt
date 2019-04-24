@@ -6,27 +6,33 @@ import android.net.Uri
 import android.view.WindowManager
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.adapter.PlayPagerAdapter
+import com.bilibili.lingxiao.home.live.LivePresenter
+import com.bilibili.lingxiao.home.live.model.LiveUpData
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.utills.LogUtils
 import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_live_play.*
+import org.greenrobot.eventbus.EventBus
 import java.net.URLDecoder
 import java.util.ArrayList
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-class LivePlayActivity : BaseActivity() {
+class LivePlayActivity : BaseActivity() ,LivePlayView{
     @Inject
     lateinit var interactFragment: InteractFragment
     @Inject
     lateinit var upInfoFragment: UpInfoFragment
     @Inject
     lateinit var fansFragment: FansFragment
+    @Inject
+    lateinit var fleetListFragment: FleetListFragment
     var fragmentList: ArrayList<BaseFragment> = arrayListOf()
-
     var  tabArray: Array<String> by Delegates.notNull()
+
+    private var livePresenter = LivePlayPresenter(this,this)
     override val contentLayoutId: Int
         get() = R.layout.activity_live_play
 
@@ -50,14 +56,16 @@ class LivePlayActivity : BaseActivity() {
             .setVideoUrl(play_url)
             .startPlay()
         val roomId = intent.getIntExtra("room_id",0)
+        livePresenter.getUpInfo(roomId)
         DanMaKuTool.joinRoom(roomId)
 
         fragmentList.add(interactFragment)
         fragmentList.add(upInfoFragment)
         fragmentList.add(fansFragment)
-        fragmentList.add(interactFragment)
+        fragmentList.add(fleetListFragment)
         live_viewpager.adapter = PlayPagerAdapter(supportFragmentManager,tabArray,fragmentList)
         live_tablayout.setupWithViewPager(live_viewpager)
+
     }
 
     override fun initBefore() {
@@ -94,4 +102,19 @@ class LivePlayActivity : BaseActivity() {
         live_play.onBackPressed()
     }
 
+
+    override fun showDialog() {
+
+    }
+
+    override fun onGetUpInfo(liveUpData: LiveUpData) {
+        EventBus.getDefault().postSticky(liveUpData)
+        LogUtils.d("获取到直播up主信息-->${liveUpData}")
+    }
+
+    override fun diamissDialog() {
+    }
+
+    override fun showToast(text: String?) {
+    }
 }

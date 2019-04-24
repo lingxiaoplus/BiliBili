@@ -47,14 +47,15 @@ interface MainApi {
      * @return
      */
     @GET
-    fun fullPathGet(@Url url: String): Observable<HttpResponse>
+    fun fullPathGet(@Url url: String, @QueryMap request: TreeMap<String, Any>): Observable<HttpResponse>
     /**
      * 全路径Post调用
      * @param url 全路径
      * @return
      */
+    @FormUrlEncoded
     @POST
-    fun fullPathPost(@Url url: String): Observable<HttpResponse>
+    fun fullPathPost(@Url url: String, @FieldMap request: TreeMap<String, Any>): Observable<HttpResponse>
 
 
     /**
@@ -63,14 +64,15 @@ interface MainApi {
      * @return
      */
     @GET
-    fun fullPathGetWithoutCheck(@Url url: String): Observable<Any>
+    fun fullPathGetWithoutCheck(@Url url: String,@QueryMap request: TreeMap<String, Any>): Observable<Any>
     /**
      * 全路径Post调用
      * @param url 全路径
      * @return
      */
+    @FormUrlEncoded
     @POST
-    fun fullPathPostWithoutCheck(@Url url: String): Observable<Any>
+    fun fullPathPostWithoutCheck(@Url url: String,@QueryMap request: TreeMap<String, Any>): Observable<Any>
 
     /**
      * 首页轮播图

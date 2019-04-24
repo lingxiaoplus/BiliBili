@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import com.bilibili.lingxiao.adapter.PlayPagerAdapter
 import com.bilibili.lingxiao.home.category.CategoryFragment
 import com.bilibili.lingxiao.home.live.LiveFragment
 import com.bilibili.lingxiao.home.mikan.MikanFragment
@@ -96,14 +97,12 @@ class MainActivity : BaseActivity() {
         var navigationMenuView = main_navigation.getChildAt(0) as NavigationMenuView
         navigationMenuView.isVerticalScrollBarEnabled = false
 
-        main_viewPager.adapter = MainPagerAdapter(supportFragmentManager)
-
-        main_tabLayout.setupWithViewPager(main_viewPager)
-
         fragmentList.add(liveFragment)
         fragmentList.add(recommendFragment)
         fragmentList.add(hotFragment)
         fragmentList.add(mikanFragment)
+        main_viewPager.adapter = PlayPagerAdapter(supportFragmentManager,tabArray,fragmentList)
+        main_tabLayout.setupWithViewPager(main_viewPager)
         main_viewPager.currentItem = 1
         //设置viewpager缓存页面个数
         main_viewPager.setOffscreenPageLimit(4)
@@ -117,26 +116,10 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    inner class MainPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
-
-        override fun getCount(): Int {
-            return tabArray.size
-        }
-
-        override fun getItem(position: Int): Fragment {
-            return fragmentList.get(position)
-        }
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            return tabArray.get(position)
-        }
-
-        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            super.destroyItem(container, position, `object`)
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        fragmentList.clear()
     }
-
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults)

@@ -63,6 +63,8 @@
                 app:layout_constraintTop_toBottomOf="@id/live_user_image"
                 app:layout_constraintBottom_toTopOf="@id/live_category_name"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
         />
         <TextView
                 android:id="@+id/live_category_name"

@@ -3,7 +3,7 @@ package com.bilibili.lingxiao.home.live.partitions
 import android.net.Uri
 import android.util.Log
 import com.bilibili.lingxiao.R
-import com.bilibili.lingxiao.home.live.LiveData
+import com.bilibili.lingxiao.home.live.model.LiveData
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView

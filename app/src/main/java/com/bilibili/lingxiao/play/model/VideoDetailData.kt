@@ -13,7 +13,7 @@ data class VideoDetailData(
     val created: Int,
     val created_at: String,
     val credit: String,
-    val description: String,
+    val description: String?,
     val face: String,
     val favorites: Int,
     val from: String,

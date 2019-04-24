@@ -3,7 +3,7 @@ package com.bilibili.lingxiao.home.live.partitions
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.bilibili.lingxiao.R
-import com.bilibili.lingxiao.home.live.LiveData
+import com.bilibili.lingxiao.home.live.model.LiveData
 import com.camera.lingxiao.common.utills.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder

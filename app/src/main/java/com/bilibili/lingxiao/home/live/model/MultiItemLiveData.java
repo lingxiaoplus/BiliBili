@@ -1,6 +1,4 @@
-package com.bilibili.lingxiao.home.live;
-
-import com.chad.library.adapter.base.entity.MultiItemEntity;
+package com.bilibili.lingxiao.home.live.model;
 
 import java.util.List;
 

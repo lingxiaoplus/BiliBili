@@ -1,15 +1,9 @@
 package com.bilibili.lingxiao.home.live
 
-import android.util.Log
-import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.HttpTrans
+import com.bilibili.lingxiao.home.live.model.LiveData
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.observer.HttpRxCallback
-import okhttp3.*
-import okio.ByteString
-import org.json.JSONObject
-import java.util.*
-import kotlin.concurrent.timerTask
 
 class LivePresenter : BasePresenter<LiveView, LiveFragment> {
 

@@ -74,6 +74,6 @@ class RecommendTrans(mLifecycle: LifecycleProvider<*>) :BaseTransation(mLifecycl
         })
         var url = GlobalProperties.COMMEND_HOST + GlobalProperties.getUrlParamsByMap(request)
         LogUtils.d("拼接的url---->" + url)
-        getRequest().requestFullPath(HttpRequest.Method.GET,url, mLifecycle,callback)
+        getRequest().requestFullPath(HttpRequest.Method.GET,GlobalProperties.COMMEND_HOST,request, mLifecycle,callback)
     }
 }
