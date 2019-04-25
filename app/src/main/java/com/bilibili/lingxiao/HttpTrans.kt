@@ -5,6 +5,7 @@ import com.bilibili.lingxiao.home.category.RegionData
 import com.bilibili.lingxiao.home.category.RegionRecommendData
 import com.bilibili.lingxiao.home.live.model.LiveData
 import com.bilibili.lingxiao.home.live.model.LiveUpData
+import com.bilibili.lingxiao.home.live.play.fans.FansGoldListData
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
 import com.bilibili.lingxiao.play.model.CommentData
@@ -281,4 +282,83 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         }
         getRequest().requestFullPath(HttpRequest.Method.POST, GlobalProperties.LIVE_UP_INFO, request,mLifecycle, callback)
     }
+
+    /**
+     * 获取金瓜榜
+     */
+    fun getLiveGoldList(roomId:Int,ruid:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("next_offset","0")
+        request.put("room_id",roomId)
+        request.put("ruid",ruid)
+        request.put("rank_type","gold-rank")
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                //val type = object : TypeToken<List<FansGoldListData.FansInfo>>() {}.getType()
+                //var modle:List<FansGoldListData.FansInfo> = Gson().fromJson<List<FansGoldListData.FansInfo>>(element, type)
+                var modle:FansGoldListData = Gson().fromJson(element, FansGoldListData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.LIVE_UP_GOLD_LIST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取直播up金瓜榜的url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_UP_GOLD_LIST, request,mLifecycle, callback)
+    }
+
+    /**
+     * 获取礼物榜
+     */
+    fun getLiveToDayList(roomId:Int,ruid:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("next_offset",0)
+        request.put("room_id",roomId)
+        request.put("ruid",ruid)
+        request.put("rank_type","today-rank")
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                //val type = object : TypeToken<List<FansGoldListData.FansInfo>>() {}.getType()
+                //var modle:List<FansGoldListData.FansInfo> = Gson().fromJson<List<FansGoldListData.FansInfo>>(element, type)
+                var modle:FansGoldListData = Gson().fromJson(element, FansGoldListData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.LIVE_UP_GOLD_LIST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取直播up礼物榜的url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_UP_GOLD_LIST, request,mLifecycle, callback)
+    }
+
+
+    /**
+     * 获取粉丝榜
+     */
+    fun getLiveFansList(roomId:Int,ruid:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("page",1)
+        request.put("roomid",roomId)
+        request.put("ruid",ruid)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                //val type = object : TypeToken<List<FansGoldListData.FansInfo>>() {}.getType()
+                //var modle:List<FansGoldListData.FansInfo> = Gson().fromJson<List<FansGoldListData.FansInfo>>(element, type)
+                var modle:FansGoldListData = Gson().fromJson(element, FansGoldListData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.LIVE_FANS_LIST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取直播up粉丝榜的url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_FANS_LIST, request,mLifecycle, callback)
+    }
+
 }

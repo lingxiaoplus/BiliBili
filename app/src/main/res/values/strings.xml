@@ -18,4 +18,11 @@
     <string name="nav_painting">绘画</string>
     <string name="scroll_behavior">com.bilibili.lingxiao.widget.behavior.ScrollAwareFabBehaviorDefault</string>
     <string name="player_behavior">com.bilibili.lingxiao.widget.behavior.PlayerBehavior</string>
+
+
+    <string-array name="live_fans">
+        <item>金瓜子榜</item>
+        <item>礼物榜</item>
+        <item>粉丝榜</item>
+    </string-array>
 </resources>

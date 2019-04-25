@@ -338,7 +338,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         video_seekBar.max = duration
         video_seekBar.progress = position
         video_seekBar.secondaryProgress = bufferPos * 1000
-        Log.d(TAG,"视频时长：" + duration + "播放进度：" + position + "视频缓冲进度：" + bufferPos * 1000)
+        //Log.d(TAG,"视频时长：" + duration + "播放进度：" + position + "视频缓冲进度：" + bufferPos * 1000)
         return position
     }
 

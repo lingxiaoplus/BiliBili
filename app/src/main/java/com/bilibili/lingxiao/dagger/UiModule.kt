@@ -6,10 +6,11 @@ import com.bilibili.lingxiao.home.live.LiveFragment
 import com.bilibili.lingxiao.home.mikan.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.dagger.scope.PerUi
-import com.bilibili.lingxiao.home.live.play.FansFragment
+import com.bilibili.lingxiao.home.live.play.fans.FansFragment
 import com.bilibili.lingxiao.home.live.play.FleetListFragment
 import com.bilibili.lingxiao.home.live.play.InteractFragment
 import com.bilibili.lingxiao.home.live.play.UpInfoFragment
+import com.bilibili.lingxiao.home.live.play.fans.FansDetailFragment
 import com.bilibili.lingxiao.play.CommentFragment
 import com.bilibili.lingxiao.play.IntroduceFragment
 import dagger.Module

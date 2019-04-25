@@ -122,12 +122,15 @@ class IntroduceFragment :BaseFragment(),RecommendView{
             fold_layout.setMessageText(data.description)
         }
         play_num.text = StringUtil.getBigDecimalNumber(data.play)
-        var dataArray = data.created_at.split("\\s+")
-        if (dataArray.size > 1){
-            av_num.text = "  " + dataArray[0] + av_num.text.toString()
-        }else{
-            av_num.text = "  " + data.created_at + av_num.text.toString()
+        data.created_at?.let {
+            var dataArray = it.split("\\s+")
+            if (dataArray.size > 1){
+                av_num.text = "  " + dataArray[0] + av_num.text.toString()
+            }else{
+                av_num.text = "  " + it + av_num.text.toString()
+            }
         }
+
     }
 
     override fun onGetVideoRecommend(videoRecoData: VideoRecoData) {

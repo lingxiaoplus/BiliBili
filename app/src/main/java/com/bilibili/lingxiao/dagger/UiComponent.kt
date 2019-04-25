@@ -7,6 +7,8 @@ import com.bilibili.lingxiao.home.mikan.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.dagger.scope.PerUi
 import com.bilibili.lingxiao.home.live.play.*
+import com.bilibili.lingxiao.home.live.play.fans.FansDetailFragment
+import com.bilibili.lingxiao.home.live.play.fans.FansFragment
 import com.bilibili.lingxiao.play.CommentFragment
 import com.bilibili.lingxiao.play.IntroduceFragment
 import com.bilibili.lingxiao.play.PlayActivity

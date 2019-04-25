@@ -11,7 +11,7 @@ data class VideoDetailData(
     val cid: Int,
     val coins: Int,
     val created: Int,
-    val created_at: String,
+    val created_at: String?,
     val credit: String,
     val description: String?,
     val face: String,

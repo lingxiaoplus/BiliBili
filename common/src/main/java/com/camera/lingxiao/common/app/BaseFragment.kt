@@ -188,7 +188,7 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
     /**
      * 初始化相关参数
      */
-    protected fun initArgs(bundle: Bundle?) {}
+    protected open fun initArgs(bundle: Bundle?) {}
 
     /**
      * 是否开启懒加载，如果只有一个fragment，则重写该方法

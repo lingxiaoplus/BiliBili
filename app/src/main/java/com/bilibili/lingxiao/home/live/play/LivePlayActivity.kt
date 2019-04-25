@@ -1,13 +1,11 @@
 package com.bilibili.lingxiao.home.live.play
 
 import android.content.res.Configuration
-import android.graphics.Color
-import android.net.Uri
 import android.view.WindowManager
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.adapter.PlayPagerAdapter
-import com.bilibili.lingxiao.home.live.LivePresenter
 import com.bilibili.lingxiao.home.live.model.LiveUpData
+import com.bilibili.lingxiao.home.live.play.fans.FansFragment
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
@@ -15,7 +13,6 @@ import com.camera.lingxiao.common.utills.LogUtils
 import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_live_play.*
 import org.greenrobot.eventbus.EventBus
-import java.net.URLDecoder
 import java.util.ArrayList
 import javax.inject.Inject
 import kotlin.properties.Delegates

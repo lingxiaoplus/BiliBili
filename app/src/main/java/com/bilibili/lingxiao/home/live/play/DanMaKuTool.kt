@@ -41,11 +41,13 @@ object DanMaKuTool {
             override fun onClosed(webSocket: okhttp3.WebSocket, code: Int, reason: String) {
                 super.onClosed(webSocket, code, reason)
                 Log.i(TAG,"websocket断开连接")
+                exitRoom()
             }
 
             override fun onFailure(webSocket: okhttp3.WebSocket, t: Throwable, response: Response?) {
                 super.onFailure(webSocket, t, response)
                 Log.i(TAG,"websocket连接失败" + response.toString(),t)
+                exitRoom()
             }
         })
 

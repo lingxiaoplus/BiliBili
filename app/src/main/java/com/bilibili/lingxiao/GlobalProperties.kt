@@ -24,11 +24,13 @@ object GlobalProperties {
 
     var LIVE_UP_INFO = "https://api.live.bilibili.com/room/v1/Room/get_info" //获取up主的信息
     var LIVE_DANMAKU_URL = "wss://broadcastlv.chat.bilibili.com:2245/sub"  //直播弹幕 websocket
+    var LIVE_UP_GOLD_LIST = "http://api.live.bilibili.com/rankdb/v1/RoomRank/tabRanks?"  //金瓜子榜  礼物榜
+    var LIVE_FANS_LIST = "http://api.live.bilibili.com/rankdb/v2/RoomRank/mobileMedalRank?"  //粉丝榜
 
     private val SECRET_KEY = "ea85624dfcf12d7cc7b2b3a94fac1f2c"
     val PARAM_SIGN = "sign"
-    val APP_KEY = "c1b107428d337928"
-    val BUILD = "51900"
+    val APP_KEY = "c1b107428d337928"   //1d8b6e7d45233436
+    val BUILD = "51900"               //5400000
     val MOBI_APP = "android"
     val PLATFORM = "android"
     val DEVICE = "android"
