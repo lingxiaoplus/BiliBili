@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+>
+    <FrameLayout
+            android:id="@+id/frame_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+    >
+        <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/image_header"
+                style="@style/image_normal"
+                app:progressBarImageScaleType="centerInside"
+                app:progressBarImage="@drawable/ic_img_user_head_default"
+                app:roundAsCircle="true"
+                app:roundingBorderWidth="1dp"
+                android:padding="5dp"
+                android:layout_gravity="center"
+        />
+        <ImageView
+                style="@style/image_normal"
+                android:src="@drawable/ic_live_guard_governor_border_v2"
+                android:layout_gravity="center"
+        />
+    </FrameLayout>
+
+    <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMessage"
+            android:text="名字"
+            app:layout_constraintLeft_toRightOf="@id/frame_header"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="10dp"
+    />
+</android.support.constraint.ConstraintLayout>

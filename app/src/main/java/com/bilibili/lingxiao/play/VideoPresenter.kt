@@ -1,7 +1,7 @@
 package com.bilibili.lingxiao.play
 
 import com.bilibili.lingxiao.HttpTrans
-import com.bilibili.lingxiao.home.recommend.RecommendView
+import com.bilibili.lingxiao.home.recommend.view.RecommendView
 import com.bilibili.lingxiao.play.model.CommentData
 import com.bilibili.lingxiao.play.model.VideoDetailData
 import com.bilibili.lingxiao.play.model.VideoRecoData

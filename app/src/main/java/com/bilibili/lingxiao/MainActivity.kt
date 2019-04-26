@@ -3,17 +3,12 @@ package com.bilibili.lingxiao
 
 import android.Manifest
 import android.support.design.internal.NavigationMenuView
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
-import com.bilibili.lingxiao.adapter.PlayPagerAdapter
-import com.bilibili.lingxiao.home.category.CategoryFragment
-import com.bilibili.lingxiao.home.live.LiveFragment
-import com.bilibili.lingxiao.home.mikan.MikanFragment
+import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
+import com.bilibili.lingxiao.home.category.ui.CategoryFragment
+import com.bilibili.lingxiao.home.live.ui.LiveFragment
+import com.bilibili.lingxiao.home.mikan.ui.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.user.LoginActivity
 import com.bilibili.lingxiao.utils.UIUtil
@@ -101,7 +96,8 @@ class MainActivity : BaseActivity() {
         fragmentList.add(recommendFragment)
         fragmentList.add(hotFragment)
         fragmentList.add(mikanFragment)
-        main_viewPager.adapter = PlayPagerAdapter(supportFragmentManager,tabArray,fragmentList)
+        main_viewPager.adapter =
+            PlayPagerAdapter(supportFragmentManager, tabArray, fragmentList)
         main_tabLayout.setupWithViewPager(main_viewPager)
         main_viewPager.currentItem = 1
         //设置viewpager缓存页面个数

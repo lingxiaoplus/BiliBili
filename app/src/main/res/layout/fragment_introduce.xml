@@ -50,16 +50,32 @@
                 />
             </LinearLayout>
 
-            <Button
+            <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_height"
-                    android:text="关注"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"
+                    android:background="@color/colorPrimary"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:background="@color/pink_300"
-            />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+            >
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_add_follow"
+                        android:layout_marginLeft="10dp"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="关注"
+                        android:textSize="14sp"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="10dp"
+                />
+            </LinearLayout>
         </RelativeLayout>
 
         <com.bilibili.lingxiao.widget.FoldableLayout

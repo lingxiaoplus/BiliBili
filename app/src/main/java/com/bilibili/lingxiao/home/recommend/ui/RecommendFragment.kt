@@ -5,10 +5,10 @@ import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.bilibili.lingxiao.R
-import com.bilibili.lingxiao.home.live.banner.BannerImageLoader
-import com.bilibili.lingxiao.home.recommend.RecommendData
+import com.bilibili.lingxiao.home.live.BannerImageLoader
+import com.bilibili.lingxiao.home.recommend.model.RecommendData
 import com.bilibili.lingxiao.home.recommend.RecommendPresenter
-import com.bilibili.lingxiao.home.recommend.RecommendView
+import com.bilibili.lingxiao.home.recommend.view.RecommendView
 import com.bilibili.lingxiao.play.model.CommentData
 import com.bilibili.lingxiao.play.model.VideoDetailData
 import com.bilibili.lingxiao.play.model.VideoRecoData
@@ -77,7 +77,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
         mAdapter.setOnItemClickListener(object :BaseQuickAdapter.OnItemClickListener{
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
                 //val intent = Intent(context,PlayActivity::class.java)
-                var recommendData:RecommendData = mRecommendList.get(position)
+                var recommendData: RecommendData = mRecommendList.get(position)
                 EventBus.getDefault().postSticky(recommendData)
                 val intent = Intent(
                     Intent.ACTION_VIEW,
@@ -191,7 +191,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
             LinearLayout.LayoutParams.WRAP_CONTENT, true
         )
     }
-    private fun showPopupWindow(data :RecommendData) {
+    private fun showPopupWindow(data : RecommendData) {
         if (mPopWindow.isShowing){
             return
         }

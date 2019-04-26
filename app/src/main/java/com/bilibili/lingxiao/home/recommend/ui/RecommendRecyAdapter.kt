@@ -1,10 +1,9 @@
 package com.bilibili.lingxiao.home.recommend.ui
 
 import android.net.Uri
-import android.widget.ImageView
-import com.bilibili.lingxiao.BaseRecyAdapter
+
 import com.bilibili.lingxiao.R
-import com.bilibili.lingxiao.home.recommend.RecommendData
+import com.bilibili.lingxiao.home.recommend.model.RecommendData
 import com.bilibili.lingxiao.utils.StringUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -13,7 +12,6 @@ import java.lang.Exception
 
 class RecommendRecyAdapter(layoutResId: Int, data: List<RecommendData>?) :
     BaseQuickAdapter<RecommendData, BaseViewHolder>(layoutResId, data) {
-
     override fun convert(helper: BaseViewHolder, item: RecommendData) {
         helper.setText(R.id.play_title,item.title)
         helper.setText(R.id.play_number,StringUtil.getBigDecimalNumber(item.play))

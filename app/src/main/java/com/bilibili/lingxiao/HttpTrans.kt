@@ -1,11 +1,9 @@
 package com.bilibili.lingxiao
 
 import android.util.Log
-import com.bilibili.lingxiao.home.category.RegionData
-import com.bilibili.lingxiao.home.category.RegionRecommendData
-import com.bilibili.lingxiao.home.live.model.LiveData
-import com.bilibili.lingxiao.home.live.model.LiveUpData
-import com.bilibili.lingxiao.home.live.play.fans.FansGoldListData
+import com.bilibili.lingxiao.home.category.model.RegionData
+import com.bilibili.lingxiao.home.category.model.RegionRecommendData
+import com.bilibili.lingxiao.home.live.model.*
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
 import com.bilibili.lingxiao.play.model.CommentData
@@ -296,7 +294,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             override fun parse(element: JsonElement): Any? {
                 //val type = object : TypeToken<List<FansGoldListData.FansInfo>>() {}.getType()
                 //var modle:List<FansGoldListData.FansInfo> = Gson().fromJson<List<FansGoldListData.FansInfo>>(element, type)
-                var modle:FansGoldListData = Gson().fromJson(element, FansGoldListData::class.java)
+                var modle: FansGoldListData = Gson().fromJson(element, FansGoldListData::class.java)
                 val obj = arrayOfNulls<Any>(1)
                 obj[0] = modle
                 return obj
@@ -322,7 +320,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             override fun parse(element: JsonElement): Any? {
                 //val type = object : TypeToken<List<FansGoldListData.FansInfo>>() {}.getType()
                 //var modle:List<FansGoldListData.FansInfo> = Gson().fromJson<List<FansGoldListData.FansInfo>>(element, type)
-                var modle:FansGoldListData = Gson().fromJson(element, FansGoldListData::class.java)
+                var modle: FansGoldListData = Gson().fromJson(element, FansGoldListData::class.java)
                 val obj = arrayOfNulls<Any>(1)
                 obj[0] = modle
                 return obj
@@ -348,7 +346,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             override fun parse(element: JsonElement): Any? {
                 //val type = object : TypeToken<List<FansGoldListData.FansInfo>>() {}.getType()
                 //var modle:List<FansGoldListData.FansInfo> = Gson().fromJson<List<FansGoldListData.FansInfo>>(element, type)
-                var modle:FansGoldListData = Gson().fromJson(element, FansGoldListData::class.java)
+                var modle: FansGoldListData = Gson().fromJson(element, FansGoldListData::class.java)
                 val obj = arrayOfNulls<Any>(1)
                 obj[0] = modle
                 return obj
@@ -361,4 +359,56 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_FANS_LIST, request,mLifecycle, callback)
     }
 
+    /**
+     * 获取大航海
+     * @param page 1 页码
+     * @param pageSize 20 个数
+     */
+    fun getLiveFleetList(page:Int,pageSize:Int,ruid:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("page",page)
+        request.put("page_size",pageSize)
+        request.put("ruid",ruid)
+        request.put("mobi_app",GlobalProperties.MOBI_APP)
+        request.put("ts",GlobalProperties.getSystemTime())
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle: FleetListData = Gson().fromJson(element, FleetListData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.LIVE_FLEET_LIST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取直播up大航海的url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_FLEET_LIST, request,mLifecycle, callback)
+    }
+
+    /**
+     * 直播up主的视频投稿
+     */
+    fun getLiveUpVideoList(page:Int,pageSize:Int,ruid:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("pn",page)
+        request.put("ps",pageSize)
+        request.put("mid",ruid)
+        request.put("mobi_app",GlobalProperties.MOBI_APP)
+        request.put("ts",GlobalProperties.getSystemTime())
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                val type = object : TypeToken<List<UpInfoData>>() {}.getType()
+                var modle:List<UpInfoData> = Gson().fromJson<List<UpInfoData>>(element, type)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.LIVE_UP_VIDEO_LIST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取直播up视频投稿的url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_UP_VIDEO_LIST, request,mLifecycle, callback)
+    }
 }

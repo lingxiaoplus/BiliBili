@@ -3,6 +3,7 @@ package com.bilibili.lingxiao.home.mikan
 import com.bilibili.lingxiao.HttpTrans
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
+import com.bilibili.lingxiao.home.mikan.ui.MikanFragment
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.observer.HttpRxCallback
 

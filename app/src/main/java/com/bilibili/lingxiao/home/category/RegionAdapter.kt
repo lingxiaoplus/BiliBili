@@ -8,19 +8,19 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import com.bilibili.lingxiao.R
+import com.bilibili.lingxiao.home.category.model.MultiRegionData
+import com.bilibili.lingxiao.home.category.model.RegionRecommendData
 import com.bilibili.lingxiao.utils.StringUtil
 import com.bilibili.lingxiao.utils.UIUtil
-import com.camera.lingxiao.common.utills.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.util.MultiTypeDelegate
-import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import kotlin.properties.Delegates
 
 class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
     var recycledViewPool: RecyclerView.RecycledViewPool by Delegates.notNull()
-    constructor(data:MutableList<MultiRegionData>,recycledViewPool:RecyclerView.RecycledViewPool) :super(data){
+    constructor(data:MutableList<MultiRegionData>, recycledViewPool:RecyclerView.RecycledViewPool) :super(data){
         this.recycledViewPool = recycledViewPool
         multiTypeDelegate = object : MultiTypeDelegate<MultiRegionData>() {
             override fun getItemType(entity: MultiRegionData): Int {

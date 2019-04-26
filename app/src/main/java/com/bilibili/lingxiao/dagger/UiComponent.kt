@@ -1,17 +1,19 @@
 package com.bilibili.lingxiao.dagger
 
 import com.bilibili.lingxiao.MainActivity
-import com.bilibili.lingxiao.home.category.CategoryFragment
-import com.bilibili.lingxiao.home.live.LiveFragment
-import com.bilibili.lingxiao.home.mikan.MikanFragment
+import com.bilibili.lingxiao.home.category.ui.CategoryFragment
+import com.bilibili.lingxiao.home.live.ui.LiveFragment
+import com.bilibili.lingxiao.home.mikan.ui.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.dagger.scope.PerUi
-import com.bilibili.lingxiao.home.live.play.*
-import com.bilibili.lingxiao.home.live.play.fans.FansDetailFragment
-import com.bilibili.lingxiao.home.live.play.fans.FansFragment
-import com.bilibili.lingxiao.play.CommentFragment
-import com.bilibili.lingxiao.play.IntroduceFragment
-import com.bilibili.lingxiao.play.PlayActivity
+import com.bilibili.lingxiao.home.live.ui.play.FansFragment
+import com.bilibili.lingxiao.home.live.ui.play.FleetListFragment
+import com.bilibili.lingxiao.home.live.ui.play.InteractFragment
+import com.bilibili.lingxiao.home.live.ui.play.UpInfoFragment
+import com.bilibili.lingxiao.home.live.ui.LivePlayActivity
+import com.bilibili.lingxiao.play.ui.CommentFragment
+import com.bilibili.lingxiao.play.ui.IntroduceFragment
+import com.bilibili.lingxiao.play.ui.PlayActivity
 import dagger.Component
 
 @Component(modules = [UiModule::class])

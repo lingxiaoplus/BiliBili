@@ -48,11 +48,11 @@
         <activity android:name=".user.LoginActivity">
         </activity>
         <activity
-                android:name=".home.live.play.LivePlayActivity"
+                android:name=".home.live.ui.LivePlayActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
         <activity
-                android:name=".play.PlayActivity"
+                android:name=".play.ui.PlayActivity"
                 android:label=""
                 android:configChanges="orientation|keyboardHidden|screenSize">
 

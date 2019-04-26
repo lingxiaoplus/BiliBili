@@ -62,6 +62,16 @@
         <item name="android:layout_width">30dp</item>
     </style>
 
+    <style name="image_live_top">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">50dp</item>
+    </style>
+
+    <style name="image_live_top1">
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">60dp</item>
+    </style>
+
     <!--分割线-->
     <style name="between_line">
         <item name="android:layout_height">0.4dp</item>
