@@ -44,7 +44,7 @@ class FansDetailFragment :BaseFragment(), FansDetailView {
 
         root.recycerView.layoutManager = manager
         root.recycerView.adapter = fansAdapter
-        root.recycerView.setItemViewCacheSize(20)  //设置viewholder缓存大小，如果recyclerview数量太少，会存在数据错乱的问题
+        //root.recycerView.setItemViewCacheSize(20)  //设置viewholder缓存大小，如果recyclerview数量太少，会存在数据错乱的问题
         root.refresh.setOnRefreshListener {
             if (position == 0){
                 presenter.getFansGoldList(roomId,uid)

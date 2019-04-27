@@ -9,6 +9,7 @@ import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.model.LiveUpData
 import com.bilibili.lingxiao.home.live.adapter.FleetAdapter
 import com.bilibili.lingxiao.home.live.model.FleetListData
+import com.bilibili.lingxiao.home.live.model.LiveChatData
 import com.bilibili.lingxiao.home.live.model.UpInfoData
 import com.bilibili.lingxiao.home.live.presenter.FleetPresenter
 import com.bilibili.lingxiao.home.live.view.LivePlayView
@@ -110,6 +111,8 @@ class FleetListFragment :BaseFragment(), LivePlayView {
         }
     }
 
+    override fun onGetUpChatHistory(list: List<LiveChatData.Room>) {
+    }
     override fun showDialog() {
 
     }

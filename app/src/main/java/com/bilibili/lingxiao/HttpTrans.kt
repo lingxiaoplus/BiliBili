@@ -281,6 +281,31 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         getRequest().requestFullPath(HttpRequest.Method.POST, GlobalProperties.LIVE_UP_INFO, request,mLifecycle, callback)
     }
 
+
+    /**
+     * 获取直播间用户的信息
+     * @param ruid  直播间up主的uid
+     * @param uid 直播间用户的uid
+     */
+    fun getLiveUserInfo(ruid:Int,uid :Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("ruid",ruid)
+        request.put("uid",uid)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element,LiveUpData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.LIVE_USER_INFO + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取直播用户信息的url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.POST, GlobalProperties.LIVE_USER_INFO, request,mLifecycle, callback)
+    }
+
     /**
      * 获取金瓜榜
      */
@@ -410,5 +435,28 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             Log.d(TAG,"获取直播up视频投稿的url---->$url")
         }
         getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_UP_VIDEO_LIST, request,mLifecycle, callback)
+    }
+
+    /**
+     * 获取聊天的历史记录
+     */
+    fun getHistoryChat(roomId: Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("room_id",roomId)
+        request.put("mobi_app",GlobalProperties.MOBI_APP)
+        request.put("ts",GlobalProperties.getSystemTime())
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, LiveChatData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.LIVE_UP_CHAT_HISTORY + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取直播up聊天的历史记录的url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_UP_CHAT_HISTORY, request,mLifecycle, callback)
     }
 }

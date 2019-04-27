@@ -4,10 +4,8 @@ import android.content.res.Configuration
 import android.view.WindowManager
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
-import com.bilibili.lingxiao.home.live.model.LiveUpData
 import com.bilibili.lingxiao.home.live.DanMaKuTool
-import com.bilibili.lingxiao.home.live.model.FleetListData
-import com.bilibili.lingxiao.home.live.model.UpInfoData
+import com.bilibili.lingxiao.home.live.model.*
 import com.bilibili.lingxiao.home.live.ui.play.FansFragment
 import com.bilibili.lingxiao.home.live.presenter.LivePlayPresenter
 import com.bilibili.lingxiao.home.live.ui.play.FleetListFragment
@@ -39,7 +37,7 @@ class LivePlayActivity : BaseActivity() , LivePlayView {
     var fragmentList: ArrayList<BaseFragment> = arrayListOf()
     var  tabArray: Array<String> by Delegates.notNull()
 
-    private var livePresenter = LivePlayPresenter(this, this)
+    public var livePresenter = LivePlayPresenter(this, this)
     override val contentLayoutId: Int
         get() = R.layout.activity_live_play
 
@@ -94,6 +92,10 @@ class LivePlayActivity : BaseActivity() , LivePlayView {
         live_play.onResume()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        live_play.onRestart()
+    }
     override fun onPause() {
         super.onPause()
         live_play.onPause()
@@ -125,6 +127,13 @@ class LivePlayActivity : BaseActivity() , LivePlayView {
 
     override fun onGetUpVideoList(list: List<UpInfoData>) {
 
+    }
+
+    override fun onGetUpChatHistory(list: List<LiveChatData.Room>) {
+
+    }
+
+    override fun onGetUserInfo(liveUpData: LiveUserData) {
     }
     override fun diamissDialog() {
 

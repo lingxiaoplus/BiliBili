@@ -10,7 +10,7 @@
 >
     <LinearLayout
             android:id="@+id/ll_top2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
@@ -44,19 +44,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextTitle"
-                android:text="用户名字"
+                android:maxLines="1"
+                android:maxWidth="100dp"
+                android:ellipsize="end"
         />
     </LinearLayout>
 
     <LinearLayout
             android:id="@+id/ll_top1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
             app:layout_constraintLeft_toRightOf="@id/ll_top2"
             app:layout_constraintRight_toLeftOf="@id/ll_top3"
             app:layout_constraintBottom_toBottomOf="parent"
+
     >
         <FrameLayout
                 android:layout_width="wrap_content"
@@ -84,14 +87,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextTitle"
-                android:text="用户名字"
+                android:maxWidth="100dp"
+                android:ellipsize="end"
         />
     </LinearLayout>
 
 
     <LinearLayout
             android:id="@+id/ll_top3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
@@ -125,7 +129,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextTitle"
-                android:text="用户名字"
+                android:maxWidth="100dp"
+                android:ellipsize="end"
         />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

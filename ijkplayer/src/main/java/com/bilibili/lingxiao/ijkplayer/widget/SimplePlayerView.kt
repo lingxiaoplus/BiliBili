@@ -628,6 +628,16 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         danmaku.resume()
     }
 
+    fun onRestart(){
+        video_view.openVideo()
+        if (isLive){
+            video_view.seekTo(0)
+        }else{
+            video_view.seekTo(mCurrentPosition)
+        }
+        danmaku.restart()
+    }
+
     fun onDestory(){
         mHandler.removeCallbacksAndMessages(null)
         stopPlay()

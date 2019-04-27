@@ -8,10 +8,7 @@ import android.text.Html
 import android.util.Log
 import android.view.View
 import com.bilibili.lingxiao.R
-import com.bilibili.lingxiao.home.live.model.FleetListData
-import com.bilibili.lingxiao.home.live.model.LiveData
-import com.bilibili.lingxiao.home.live.model.LiveUpData
-import com.bilibili.lingxiao.home.live.model.UpInfoData
+import com.bilibili.lingxiao.home.live.model.*
 import com.bilibili.lingxiao.home.live.presenter.UpVideoPresenter
 import com.bilibili.lingxiao.home.live.view.LivePlayView
 import com.bilibili.lingxiao.home.recommend.model.RecommendData
@@ -38,6 +35,7 @@ class UpInfoFragment :BaseFragment() , LivePlayView {
     private val upVideoPresenter: UpVideoPresenter by lazy {
         UpVideoPresenter(this,this)
     }
+    private var mPage = 1
     override val contentLayoutId: Int
         get() = R.layout.fragment_up_info
     override fun initInject() {
@@ -63,7 +61,13 @@ class UpInfoFragment :BaseFragment() , LivePlayView {
         root.recycerView.layoutManager = manager
         mAdapter.setEmptyView(View.inflate(context,R.layout.layout_empty,null))
         root.refresh.setOnRefreshListener{
-            upVideoPresenter.getUpVideo(1,20,ruid)
+            mPage = 1
+            videoList.clear()
+            upVideoPresenter.getUpVideo(mPage,20,ruid)
+        }
+        root.refresh.setOnLoadMoreListener{
+            mPage++
+            upVideoPresenter.getUpVideo(mPage,20,ruid)
         }
     }
 
@@ -104,15 +108,18 @@ class UpInfoFragment :BaseFragment() , LivePlayView {
     }
 
     override fun onGetUpVideoList(list: List<UpInfoData>) {
-        videoList.clear()
         mAdapter.addData(list)
         refresh.finishRefresh()
+        refresh.finishLoadMore()
     }
 
 
     override fun onGetFleetList(fleetListData: FleetListData) {
     }
     override fun onGetUpInfo(liveUpData: LiveUpData) {
+    }
+
+    override fun onGetUpChatHistory(list: List<LiveChatData.Room>) {
     }
     override fun showDialog() {
     }
