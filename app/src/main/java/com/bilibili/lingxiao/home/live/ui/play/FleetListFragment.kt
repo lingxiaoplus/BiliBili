@@ -6,12 +6,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bilibili.lingxiao.R
-import com.bilibili.lingxiao.home.live.model.LiveUpData
 import com.bilibili.lingxiao.home.live.adapter.FleetAdapter
-import com.bilibili.lingxiao.home.live.model.FleetListData
-import com.bilibili.lingxiao.home.live.model.LiveChatData
-import com.bilibili.lingxiao.home.live.model.UpInfoData
+import com.bilibili.lingxiao.home.live.model.*
 import com.bilibili.lingxiao.home.live.presenter.FleetPresenter
+import com.bilibili.lingxiao.home.live.ui.LivePlayActivity
 import com.bilibili.lingxiao.home.live.view.LivePlayView
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
@@ -53,6 +51,11 @@ class FleetListFragment :BaseFragment(), LivePlayView {
         var image = emptyView.findViewById<ImageView>(R.id.image_error)
         image.setImageDrawable(resources.getDrawable(R.drawable.ic_empty_list_not_found))
         mFleetAdapter.setEmptyView(emptyView)
+
+        mFleetAdapter.setOnItemClickListener { adapter, view, position ->
+            var act = activity as LivePlayActivity
+            act.getUserInfo(fleetList[position].uid)
+        }
     }
 
     override fun isRegisterEventBus(): Boolean {
@@ -84,6 +87,9 @@ class FleetListFragment :BaseFragment(), LivePlayView {
         refresh.finishRefresh()
     }
 
+    override fun onGetUserInfo(liveUpData: LiveUserData) {
+
+    }
     private val topHeaders by lazy {
         arrayOf<SimpleDraweeView>(
             headerView.findViewById<SimpleDraweeView>(R.id.image_top1),

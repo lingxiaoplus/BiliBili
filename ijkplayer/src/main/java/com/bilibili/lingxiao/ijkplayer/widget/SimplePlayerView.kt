@@ -28,22 +28,19 @@ import android.support.v4.app.Fragment
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.*
+import android.widget.ImageView
+import android.widget.TextView
 import com.bilibili.lingxiao.ijkplayer.NetworkUtil
 import com.bilibili.lingxiao.ijkplayer.danmuku.BiliDanmuku
-import com.bilibili.lingxiao.ijkplayer.danmuku.BiliDanmukuParser
-import com.camera.lingxiao.common.exception.ApiException
-import com.camera.lingxiao.common.observer.HttpRxObserver
-import com.camera.lingxiao.common.utills.RxJavaHelp
+import kotlinx.android.synthetic.main.simple_player_controlbar_fullscreen.view.*
 import kotlinx.android.synthetic.main.simple_player_topbar.view.*
-import master.flame.danmaku.ui.widget.DanmakuView
 import okhttp3.*
 import java.io.IOException
 import java.lang.StringBuilder
-import kotlin.math.log
 import kotlin.properties.Delegates
 
 
-class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr),View.OnTouchListener {
+class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr),View.OnTouchListener,View.OnClickListener {
 
     private var mCurrentPosition = 0
     private var mVideoState = PlayState.STATE_IDLE
@@ -101,6 +98,20 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
     private val initHeight: Int by lazy { this@SimplePlayerView.height }
 
     /**
+     * 播放器底部导航栏 在竖直时候的view
+     */
+    private val bottomBarHalf:View by lazy {
+        View.inflate(context,R.layout.simple_player_controlbar,null)
+    }
+
+    /**
+     * 播放器底部导航栏 在全屏时候的view
+     */
+    private val bottomBarFullScreen:View by lazy {
+        View.inflate(context,R.layout.simple_player_controlbar_fullscreen,null)
+    }
+
+    /**
      * 是否显示网络改变提示
      */
     var isShowNetworkHint = true
@@ -155,53 +166,40 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         initView(context)
     }
 
+    /*private lateinit var video_play:ImageView
+    private lateinit var video_seekBar:SeekBar
+    private lateinit var video_currentTime:TextView
+    private lateinit var video_fullscreen:ImageView
+    private lateinit var video_endTime:TextView
+    private lateinit var tv_sprit:TextView
+    private fun setBottomBarView(){
+        if (isPortrait){
+            video_play = bottomBarHalf.findViewById(R.id.video_play)
+            video_seekBar = bottomBarHalf.findViewById(R.id.video_seekBar)
+            video_currentTime = bottomBarHalf.findViewById(R.id.video_currentTime)
+            video_fullscreen = bottomBarHalf.findViewById(R.id.video_fullscreen)
+            video_endTime = bottomBarHalf.findViewById(R.id.video_endTime)
+            tv_sprit = bottomBarHalf.findViewById(R.id.tv_sprit)
+        }else{
+            video_play = bottomBarFullScreen.findViewById(R.id.video_play)
+            video_seekBar = bottomBarFullScreen.findViewById(R.id.video_seekBar)
+        }
+    }*/
     private fun initView(context: Context) {
         View.inflate(context, R.layout.simple_player_view_player, this)
         mActivity = getActivityFromContext(context)
         screenWidthPixels = mActivity?.getResources()?.getDisplayMetrics()?.widthPixels
         mAudioManager = mActivity?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         mMaxVolume = mAudioManager?.getStreamMaxVolume(AudioManager.STREAM_MUSIC)!!
-
         if (isShowNetworkHint){
             video_progress.visibility = INVISIBLE
         }
-        video_play.setOnClickListener{
-            if (video_view.isPlaying){
-                if (isLive){
-                    video_view.stopPlayback()
-                }else{
-                    pausePlay()
-                }
-                video_play.setImageResource(R.drawable.ic_img_pause)
-                play_icon.setImageResource(R.drawable.ic_img_pause)
-                play_icon.visibility = View.VISIBLE
-            }else{
-                startPlay()
-                video_play.setImageResource(R.drawable.ic_img_play)
-                play_icon.setImageResource(R.drawable.ic_img_play)
-                play_icon.visibility = View.INVISIBLE
-            }
-        }
-        play_icon.setOnClickListener{
-            if (video_view.isPlaying){
-                pausePlay()
-                video_play.setImageResource(R.drawable.ic_img_pause)
-                play_icon.setImageResource(R.drawable.ic_img_pause)
-                play_icon.visibility = View.VISIBLE
-            }else{
-                startPlay()
-                video_play.setImageResource(R.drawable.ic_img_play)
-                play_icon.setImageResource(R.drawable.ic_img_play)
-                mHandler.postDelayed({
-                    play_icon.visibility = View.INVISIBLE
-                },500)
-            }
-        }
-        video_button_continue.setOnClickListener{
-            video_netTie.visibility = View.GONE
-            video_view.start()
-        }
-
+        video_play.setOnClickListener(this)
+        //video_play_full.setOnClickListener(this)
+        play_icon.setOnClickListener(this)
+        video_button_continue.setOnClickListener(this)
+        //video_fullscreen.setOnClickListener(this)
+        video_finish.setOnClickListener(this)
         //video_seekBar.setOnSeekBarChangeListener(mVideoProgressListener)
         video_seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -231,21 +229,61 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             statusChanged(what)
             return@setOnInfoListener true
         }
-
-        video_fullscreen.setOnClickListener{
-            toggleFullScreen()
-        }
-        video_finish.setOnClickListener{
-            if (isPortrait){
-                mActivity?.finish()
-            }else{
-                toggleFullScreen()
-            }
-        }
         mGestureDector = GestureDetector(getContext(),object : PlayerGestureDetector(){})
         setClickable(true) //设置可点击
         setOnTouchListener(this)
 
+    }
+
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.video_play,R.id.video_play_full->{
+                if (video_view.isPlaying){
+                    if (isLive){
+                        video_view.stopPlayback()
+                    }else{
+                        pausePlay()
+                    }
+                    video_play.setImageResource(R.drawable.ic_img_pause)
+                    video_play_full.setImageResource(R.drawable.ic_img_pause)
+                    play_icon.setImageResource(R.drawable.ic_img_pause)
+                    play_icon.visibility = View.VISIBLE
+                }else{
+                    startPlay()
+                    video_play.setImageResource(R.drawable.ic_img_play)
+                    video_play_full.setImageResource(R.drawable.ic_img_play)
+                    play_icon.setImageResource(R.drawable.ic_img_play)
+                    play_icon.visibility = View.INVISIBLE
+                }
+            }
+            R.id.play_icon->{
+                if (video_view.isPlaying){
+                    pausePlay()
+                    video_play.setImageResource(R.drawable.ic_img_pause)
+                    play_icon.setImageResource(R.drawable.ic_img_pause)
+                    play_icon.visibility = View.VISIBLE
+                }else{
+                    startPlay()
+                    video_play.setImageResource(R.drawable.ic_img_play)
+                    play_icon.setImageResource(R.drawable.ic_img_play)
+                    mHandler.postDelayed({
+                        play_icon.visibility = View.INVISIBLE
+                    },500)
+                }
+            }
+            R.id.video_button_continue->{
+                video_netTie.visibility = View.GONE
+                video_view.start()
+            }
+            R.id.video_fullscreen-> toggleFullScreen()
+            R.id.video_finish->{
+                if (isPortrait){
+                    mActivity?.finish()
+                }else{
+                    toggleFullScreen()
+                }
+            }
+        }
     }
 
     private fun statusChanged(what: Int) {

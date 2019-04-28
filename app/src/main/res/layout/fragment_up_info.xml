@@ -114,7 +114,6 @@
                 android:id="@+id/refresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="300dp"
                 app:srlPrimaryColor="@color/colorPrimary"
                 app:layout_constraintTop_toBottomOf="@id/text_video"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -128,13 +127,16 @@
             <com.bilibili.lingxiao.widget.ScrollerloadRecyclerView
                     android:id="@+id/recycerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:minHeight="200dp"
+            >
 
             </com.bilibili.lingxiao.widget.ScrollerloadRecyclerView>
             <include
                     layout="@layout/footer_loadmore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
             />
         </com.bilibili.lingxiao.widget.skin.SmartSkinRefreshLayout>
 

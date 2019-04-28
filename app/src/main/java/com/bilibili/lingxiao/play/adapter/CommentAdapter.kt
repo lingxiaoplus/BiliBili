@@ -1,8 +1,13 @@
 package com.bilibili.lingxiao.play.adapter
 
 import android.net.Uri
+import android.text.SpannableString
+import android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.play.model.CommentData
 import com.bilibili.lingxiao.utils.DateUtil
@@ -24,6 +29,13 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
         R.drawable.mall_mine_vip_level_5,
         R.drawable.mall_mine_vip_level_6
     )
+    private val replies by lazy {
+        arrayOf(
+            R.id.comment_hot1,
+            R.id.comment_hot2,
+            R.id.comment_hot3
+        )
+    }
     constructor(data: List<CommentData.Reply>):super(data){
         addItemType(CommentData.Reply.REPLIE,R.layout.item_comment)
         addItemType(CommentData.Reply.SEGMENT,R.layout.item_hot_segment)
@@ -38,7 +50,7 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
                 helper.setText(R.id.comment_desc,item.content.message)
                 helper.setText(R.id.recommend_num,StringUtil.getBigDecimalNumber(item.like))
                 var levelImage:SimpleDraweeView = helper.getView(R.id.image_level)
-                var level = item.member.level_info.current_level
+                var level = item.member.levelInfo.currentLevel
                 if (level > 6 || level < 0) level = 0
                 levelImage.setImageResource(levelImages[level])
 
@@ -50,11 +62,42 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
                     segment.visibility = View.GONE
                 }
                 helper.addOnClickListener(R.id.more)
+
+                item.replies?.let {
+                    helper.getView<LinearLayout>(R.id.ll_comment_replie).visibility = View.VISIBLE
+                    var more = helper.getView<TextView>(R.id.comment_hot_more)
+                    if (it.size > 3){
+                        for ((index,id) in replies.withIndex()){
+                            var name = it[index].member.uname + ": "
+                            var message = it[index].content.message
+                            helper
+                                .setText(id,getColorText(name,message))
+                                .setVisible(id,true)
+                        }
+                        more.visibility = View.VISIBLE
+                        more.text = "共${it.size}条回复 >"
+                    }else{
+                        more.visibility = View.GONE
+                        for ((index,reply) in it.withIndex()){
+                            var name = reply.member.uname + ": "
+                            var message = reply.content.message
+                            helper
+                                .setText(replies[index],getColorText(name,message))
+                                .setVisible(replies[index],true)
+                        }
+                    }
+                }
             }
             CommentData.Reply.SEGMENT ->{
 
             }
         }
+    }
 
+    fun getColorText(name:String,message:String) :SpannableString{
+        var spannableString = SpannableString(name + message)
+        var foregroundColorSpan = ForegroundColorSpan(mContext.resources.getColor(R.color.blue300))
+        spannableString.setSpan(foregroundColorSpan,0,name.length,SPAN_INCLUSIVE_INCLUSIVE)
+        return spannableString
     }
 }

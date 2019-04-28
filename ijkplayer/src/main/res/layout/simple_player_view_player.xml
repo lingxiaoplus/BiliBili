@@ -171,13 +171,25 @@
              android:layout_height="wrap_content"
              layout="@layout/simple_player_topbar"/>
     <!-- 底部栏-->
-    <include
-            android:id="@+id/video_bottom"
-            layout="@layout/simple_player_controlbar"
+
+    <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"/>
-
+            android:layout_alignParentBottom="true"
+    >
+        <include
+                android:id="@+id/video_bottom"
+                layout="@layout/simple_player_controlbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        <!--<include
+                android:id="@+id/video_bottom"
+                layout="@layout/simple_player_controlbar_fullscreen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        />-->
+    </FrameLayout>
     <!--滑动时显示的进度-->
     <LinearLayout
             android:id="@+id/ll_video_progress"

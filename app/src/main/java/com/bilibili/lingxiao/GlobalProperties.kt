@@ -15,7 +15,7 @@ object GlobalProperties {
     val COMMEND_HOST = "http://app.bilibili.com/x/feed/index?"   //推荐api
     val DETAIL_HOST = "http://api.bilibili.cn/view?"  //视频详情
     val COMMEND_VIDEO_HOST = "http://api.bilibili.cn/recommend?"  //视频详情下面的推荐
-    val COMMENT_HOST = "http://api.bilibili.com/x/v2/reply?"  //评论
+    val COMMENT_HOST = "http://api.bilibili.com/x/v2/reply/main?"  //评论
     val BANGUMI_CN_AND_JP_HOST = "http://bangumi.bilibili.com/appindex/follow_index_page?" //国内外推荐番剧
     val BANGUMI_FALL_HOST = "http://bangumi.bilibili.com/appindex/follow_index_fall?" //编辑推荐番剧
     val CATEGORY_HOST = "http://app.bilibili.com/x/v2/region?" //分区

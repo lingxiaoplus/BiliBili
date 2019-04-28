@@ -2,7 +2,9 @@
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
 >
     <ImageView
             android:id="@+id/image_bg"
@@ -13,8 +15,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ll_info"
     />
     <TextView
+            android:id="@+id/image_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
@@ -25,6 +29,7 @@
             android:layout_margin="10dp"
     />
     <ImageView
+            android:id="@+id/image_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/live_ic_player_close"
@@ -72,6 +77,7 @@
             android:gravity="center_horizontal"
     >
         <TextView
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextTitle"
@@ -91,18 +97,20 @@
                     android:src="@drawable/widget_live_icon_guard_captain"
             />
             <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/text_live_background"
-            android:text="UL 1"
-            android:textSize="10sp"
-            android:textColor="@color/colorPrimary"
-            android:padding="3dp"
-            android:layout_marginLeft="5dp"
+                    android:id="@+id/user_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_live_background"
+                    android:text="UL 1"
+                    android:textSize="10sp"
+                    android:textColor="@color/colorPrimary"
+                    android:padding="3dp"
+                    android:layout_marginLeft="5dp"
             />
         </LinearLayout>
 
         <TextView
+                android:id="@+id/follow_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextTitle"
@@ -117,26 +125,33 @@
             app:layout_constraintTop_toBottomOf="@id/ll_info"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ll_bottom"
             android:layout_margin="5dp"
-
+            android:background="@color/black_alpha_112"
     />
     <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/ll_bottom"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="5dp"
             app:layout_constraintTop_toBottomOf="@id/between_line"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
     >
         <TextView
+                android:id="@+id/text_user_space"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="个人空间"
                 android:gravity="center"
                 android:padding="10dp"
+                android:background="@drawable/pop_bottom_text"
         />
         <TextView
+                android:id="@+id/text_user_follow"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -144,6 +159,7 @@
                 android:textColor="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="10dp"
+                android:background="@drawable/pop_bottom_text"
         />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

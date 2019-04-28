@@ -9,6 +9,7 @@ import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.adapter.FansAdapter
 import com.bilibili.lingxiao.home.live.model.FansGoldListData
 import com.bilibili.lingxiao.home.live.presenter.FansDetailPresenter
+import com.bilibili.lingxiao.home.live.ui.LivePlayActivity
 import com.bilibili.lingxiao.home.live.view.FansDetailView
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.camera.lingxiao.common.app.BaseFragment
@@ -58,6 +59,11 @@ class FansDetailFragment :BaseFragment(), FansDetailView {
         var image = emptyView.findViewById<ImageView>(R.id.image_error)
         image.setImageDrawable(resources.getDrawable(R.drawable.ic_empty_cute_girl_box))
         fansAdapter.setEmptyView(emptyView)
+
+        fansAdapter.setOnItemClickListener { adapter, view, position ->
+            var act = activity as LivePlayActivity
+            act.getUserInfo(fansList[position].uid)
+        }
     }
 
     override fun onFirstVisiblity() {
@@ -81,5 +87,6 @@ class FansDetailFragment :BaseFragment(), FansDetailView {
 
     override fun showToast(text: String?) {
         ToastUtil.show(text)
+        refresh.finishRefresh()
     }
 }

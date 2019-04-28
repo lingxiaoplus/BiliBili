@@ -43,7 +43,7 @@ data class FansGoldListData(
         @SerializedName("score")
         val score: Int?,
         @SerializedName("uid")
-        val uid: Int?,
+        val uid: Int,
         @SerializedName("uname")
         val uname: String?,
         @SerializedName("medal_name")

@@ -1,170 +1,121 @@
 package com.bilibili.lingxiao.play.model
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.google.gson.annotations.SerializedName
 
-data class CommentData (
+data class CommentData(
+    @SerializedName("assist")
+    val assist: Int,
+    @SerializedName("blacklist")
+    val blacklist: Int,
+    @SerializedName("config")
     val config: Config,
+    @SerializedName("cursor")
+    val cursor: Cursor,
+    @SerializedName("folder")
+    val folder: Folder,
+    @SerializedName("hots")
     val hots: List<Reply>,
-    val mode: Int,
-    val notice: Notice,
-    val page: Page,
-    val replies: List<Reply>?,
-    val support_mode: List<Int>,
-    val top: Any,
-    val upper: Upper
+    @SerializedName("notice")
+    val notice: Any,
+    @SerializedName("replies")
+    val replies: List<Reply>,
+    @SerializedName("top")
+    val top: Top,
+    @SerializedName("upper")
+    val upper: Upper,
+    @SerializedName("vote")
+    val vote: Int
 ) {
-
-    data class Notice(
-        val content: String,
-        val id: Int,
-        val link: String,
-        val title: String
+    data class Config(
+        @SerializedName("read_only")
+        val readOnly: Boolean,
+        @SerializedName("show_del_log")
+        val showDelLog: Boolean,
+        @SerializedName("show_up_flag")
+        val showUpFlag: Boolean,
+        @SerializedName("showadmin")
+        val showadmin: Int,
+        @SerializedName("showentry")
+        val showentry: Int,
+        @SerializedName("showfloor")
+        val showfloor: Int,
+        @SerializedName("showtopic")
+        val showtopic: Int
     )
 
-    data class Hot(
-        val action: Int,
-        val assist: Int,
-        val attr: Int,
-        val content: Content,
-        val count: Int,
-        val ctime: Int,
-        val dialog: Int,
-        val dialog_str: String?,
-        val fansgrade: Int,
-        val floor: Int,
-        val folder: Folder,
-        val like: Int,
-        val member: Member,
-        val mid: Int,
-        val oid: Int,
-        val parent: Int,
-        val parent_str: String,
-        val rcount: Int,
-        val replies: Any,
-        val root: Int,
-        val root_str: String,
-        val rpid: Int,
-        val rpid_str: String,
-        val state: Int,
-        val type: Int,
-        val up_action: UpAction
-    ) {
-        data class Member(
-            val DisplayRank: String,
-            val avatar: String,
-            val fans_detail: Any,
-            val following: Int,
-            val level_info: LevelInfo,
-            val mid: String,
-            val nameplate: Nameplate,
-            val official_verify: OfficialVerify,
-            val pendant: Pendant,
-            val rank: String,
-            val sex: String,
-            val sign: String,
-            val uname: String,
-            val vip: Vip
-        ) {
-            data class LevelInfo(
-                val current_exp: Int,
-                val current_level: Int,
-                val current_min: Int,
-                val next_exp: Int
-            )
-
-            data class Nameplate(
-                val condition: String,
-                val image: String,
-                val image_small: String,
-                val level: String,
-                val name: String,
-                val nid: Int
-            )
-
-            data class OfficialVerify(
-                val desc: String,
-                val type: Int
-            )
-
-            data class Vip(
-                val accessStatus: Int,
-                val dueRemark: String,
-                val themeType: Int,
-                val vipDueDate: Long,
-                val vipStatus: Int,
-                val vipStatusWarn: String,
-                val vipType: Int
-            )
-
-            data class Pendant(
-                val expire: Int,
-                val image: String,
-                val name: String,
-                val pid: Int
-            )
-        }
-
-        data class UpAction(
-            val like: Boolean,
-            val reply: Boolean
-        )
-
-        data class Content(
-            val device: String,
-            val members: List<Any>,
-            val message: String,
-            val plat: Int
-        )
-
-        data class Folder(
-            val has_folded: Boolean,
-            val is_folded: Boolean,
-            val rule: String
-        )
-    }
-
-    data class Upper(
-        val mid: Int,
-        val top: Any,
-        val vote: Any
-    )
-
-    data class Page(
-        val acount: Int,
-        val count: Int,
-        val num: Int,
-        val size: Int
+    data class Cursor(
+        @SerializedName("all_count")
+        val allCount: Int,
+        @SerializedName("is_begin")
+        val isBegin: Boolean,
+        @SerializedName("is_end")
+        val isEnd: Boolean,
+        @SerializedName("mode")
+        val mode: Int,
+        @SerializedName("name")
+        val name: String,
+        @SerializedName("next")
+        val next: Int,
+        @SerializedName("prev")
+        val prev: Int,
+        @SerializedName("support_mode")
+        val supportMode: List<Int>
     )
 
     data class Reply(
+        @SerializedName("action")
         val action: Int,
+        @SerializedName("assist")
         val assist: Int,
+        @SerializedName("attr")
         val attr: Int,
+        @SerializedName("content")
         val content: Content,
+        @SerializedName("count")
         val count: Int,
+        @SerializedName("ctime")
         val ctime: Long,
+        @SerializedName("dialog")
         val dialog: Int,
-        val dialog_str: String?,
+        @SerializedName("fansgrade")
         val fansgrade: Int,
+        @SerializedName("floor")
         val floor: Int,
+        @SerializedName("folder")
         val folder: Folder,
+        @SerializedName("like")
         val like: Int,
+        @SerializedName("member")
         val member: Member,
+        @SerializedName("mid")
         val mid: Int,
+        @SerializedName("oid")
         val oid: Int,
+        @SerializedName("parent")
         val parent: Int,
-        val parent_str: String,
+        @SerializedName("parent_str")
+        val parentStr: String,
+        @SerializedName("rcount")
         val rcount: Int,
-        val replies: Any?,
+        @SerializedName("replies")
+        val replies: List<Hot.Reply>?,
+        @SerializedName("root")
         val root: Int,
-        val root_str: String,
+        @SerializedName("root_str")
+        val rootStr: String,
+        @SerializedName("rpid")
         val rpid: Int,
-        val rpid_str: String,
+        @SerializedName("rpid_str")
+        val rpidStr: String,
+        @SerializedName("state")
         val state: Int,
+        @SerializedName("type")
         val type: Int,
-        val up_action: UpAction,
+        @SerializedName("up_action")
+        val upAction: UpAction,
         val viewType:Int
-    ) : MultiItemEntity{
+    ) : MultiItemEntity {
         companion object {
             val REPLIE = 0
             val SEGMENT = 1
@@ -173,86 +124,922 @@ data class CommentData (
         override fun getItemType(): Int {
             return viewType
         }
+        data class Content(
+            @SerializedName("device")
+            val device: String,
+            @SerializedName("members")
+            val members: List<Any>,
+            @SerializedName("message")
+            val message: String,
+            @SerializedName("plat")
+            val plat: Int
+        )
 
         data class Member(
-            val DisplayRank: String,
+            @SerializedName("DisplayRank")
+            val displayRank: String,
+            @SerializedName("avatar")
             val avatar: String,
-            val fans_detail: Any,
+            @SerializedName("fans_detail")
+            val fansDetail: Any,
+            @SerializedName("following")
             val following: Int,
-            val level_info: LevelInfo,
+            @SerializedName("level_info")
+            val levelInfo: LevelInfo,
+            @SerializedName("mid")
             val mid: String,
+            @SerializedName("nameplate")
             val nameplate: Nameplate,
-            val official_verify: OfficialVerify,
+            @SerializedName("official_verify")
+            val officialVerify: OfficialVerify,
+            @SerializedName("pendant")
             val pendant: Pendant,
+            @SerializedName("rank")
             val rank: String,
+            @SerializedName("sex")
             val sex: String,
+            @SerializedName("sign")
             val sign: String,
+            @SerializedName("uname")
             val uname: String,
+            @SerializedName("vip")
             val vip: Vip
         ) {
-            data class LevelInfo(
-                val current_exp: Int,
-                val current_level: Int,
-                val current_min: Int,
-                val next_exp: Int
-            )
-
             data class Nameplate(
+                @SerializedName("condition")
                 val condition: String,
+                @SerializedName("image")
                 val image: String,
-                val image_small: String,
+                @SerializedName("image_small")
+                val imageSmall: String,
+                @SerializedName("level")
                 val level: String,
+                @SerializedName("name")
                 val name: String,
+                @SerializedName("nid")
                 val nid: Int
             )
 
             data class OfficialVerify(
+                @SerializedName("desc")
                 val desc: String,
+                @SerializedName("type")
                 val type: Int
             )
 
-            data class Vip(
-                val accessStatus: Int,
-                val dueRemark: String,
-                val themeType: Int,
-                val vipDueDate: Long,
-                val vipStatus: Int,
-                val vipStatusWarn: String,
-                val vipType: Int
+            data class Pendant(
+                @SerializedName("expire")
+                val expire: Int,
+                @SerializedName("image")
+                val image: String,
+                @SerializedName("name")
+                val name: String,
+                @SerializedName("pid")
+                val pid: Int
             )
 
-            data class Pendant(
-                val expire: Int,
-                val image: String,
-                val name: String,
-                val pid: Int
+            data class LevelInfo(
+                @SerializedName("current_exp")
+                val currentExp: Int,
+                @SerializedName("current_level")
+                val currentLevel: Int,
+                @SerializedName("current_min")
+                val currentMin: Int,
+                @SerializedName("next_exp")
+                val nextExp: Int
+            )
+
+            data class Vip(
+                @SerializedName("accessStatus")
+                val accessStatus: Int,
+                @SerializedName("dueRemark")
+                val dueRemark: String,
+                @SerializedName("themeType")
+                val themeType: Int,
+                @SerializedName("vipDueDate")
+                val vipDueDate: Long,
+                @SerializedName("vipStatus")
+                val vipStatus: Int,
+                @SerializedName("vipStatusWarn")
+                val vipStatusWarn: String,
+                @SerializedName("vipType")
+                val vipType: Int
             )
         }
 
-        data class UpAction(
-            val like: Boolean,
-            val reply: Boolean
-        )
-
-        data class Content(
-            val device: String,
-            val members: List<Any>,
-            val message: String,
-            val plat: Int
-        )
-
         data class Folder(
-            val has_folded: Boolean,
-            val is_folded: Boolean,
+            @SerializedName("has_folded")
+            val hasFolded: Boolean,
+            @SerializedName("is_folded")
+            val isFolded: Boolean,
+            @SerializedName("rule")
             val rule: String
+        )
+
+        data class UpAction(
+            @SerializedName("like")
+            val like: Boolean,
+            @SerializedName("reply")
+            val reply: Boolean
         )
     }
 
-    data class Config(
-        val show_up_flag: Boolean,
-        val showadmin: Int,
-        val showentry: Int,
-        val showfloor: Int,
-        val showtopic: Int
+    data class Hot(
+        @SerializedName("action")
+        val action: Int,
+        @SerializedName("assist")
+        val assist: Int,
+        @SerializedName("attr")
+        val attr: Int,
+        @SerializedName("content")
+        val content: Content,
+        @SerializedName("count")
+        val count: Int,
+        @SerializedName("ctime")
+        val ctime: Int,
+        @SerializedName("dialog")
+        val dialog: Int,
+        @SerializedName("fansgrade")
+        val fansgrade: Int,
+        @SerializedName("floor")
+        val floor: Int,
+        @SerializedName("folder")
+        val folder: Folder,
+        @SerializedName("like")
+        val like: Int,
+        @SerializedName("member")
+        val member: Member,
+        @SerializedName("mid")
+        val mid: Int,
+        @SerializedName("oid")
+        val oid: Int,
+        @SerializedName("parent")
+        val parent: Int,
+        @SerializedName("parent_str")
+        val parentStr: String,
+        @SerializedName("rcount")
+        val rcount: Int,
+        @SerializedName("replies")
+        val replies: List<Reply>,
+        @SerializedName("root")
+        val root: Int,
+        @SerializedName("root_str")
+        val rootStr: String,
+        @SerializedName("rpid")
+        val rpid: Int,
+        @SerializedName("rpid_str")
+        val rpidStr: String,
+        @SerializedName("state")
+        val state: Int,
+        @SerializedName("type")
+        val type: Int,
+        @SerializedName("up_action")
+        val upAction: UpAction
+    ) {
+        data class Reply(
+            @SerializedName("action")
+            val action: Int,
+            @SerializedName("assist")
+            val assist: Int,
+            @SerializedName("attr")
+            val attr: Int,
+            @SerializedName("content")
+            val content: Content,
+            @SerializedName("count")
+            val count: Int,
+            @SerializedName("ctime")
+            val ctime: Int,
+            @SerializedName("dialog")
+            val dialog: Int,
+            @SerializedName("fansgrade")
+            val fansgrade: Int,
+            @SerializedName("floor")
+            val floor: Int,
+            @SerializedName("folder")
+            val folder: Folder,
+            @SerializedName("like")
+            val like: Int,
+            @SerializedName("member")
+            val member: Member,
+            @SerializedName("mid")
+            val mid: Int,
+            @SerializedName("oid")
+            val oid: Int,
+            @SerializedName("parent")
+            val parent: Int,
+            @SerializedName("parent_str")
+            val parentStr: String,
+            @SerializedName("rcount")
+            val rcount: Int,
+            @SerializedName("replies")
+            val replies: List<Any>,
+            @SerializedName("root")
+            val root: Int,
+            @SerializedName("root_str")
+            val rootStr: String,
+            @SerializedName("rpid")
+            val rpid: Int,
+            @SerializedName("rpid_str")
+            val rpidStr: String,
+            @SerializedName("state")
+            val state: Int,
+            @SerializedName("type")
+            val type: Int,
+            @SerializedName("up_action")
+            val upAction: UpAction
+        ) {
+            data class Member(
+                @SerializedName("DisplayRank")
+                val displayRank: String,
+                @SerializedName("avatar")
+                val avatar: String,
+                @SerializedName("fans_detail")
+                val fansDetail: Any,
+                @SerializedName("following")
+                val following: Int,
+                @SerializedName("level_info")
+                val levelInfo: LevelInfo,
+                @SerializedName("mid")
+                val mid: String,
+                @SerializedName("nameplate")
+                val nameplate: Nameplate,
+                @SerializedName("official_verify")
+                val officialVerify: OfficialVerify,
+                @SerializedName("pendant")
+                val pendant: Pendant,
+                @SerializedName("rank")
+                val rank: String,
+                @SerializedName("sex")
+                val sex: String,
+                @SerializedName("sign")
+                val sign: String,
+                @SerializedName("uname")
+                val uname: String,
+                @SerializedName("vip")
+                val vip: Vip
+            ) {
+                data class Nameplate(
+                    @SerializedName("condition")
+                    val condition: String,
+                    @SerializedName("image")
+                    val image: String,
+                    @SerializedName("image_small")
+                    val imageSmall: String,
+                    @SerializedName("level")
+                    val level: String,
+                    @SerializedName("name")
+                    val name: String,
+                    @SerializedName("nid")
+                    val nid: Int
+                )
+
+                data class OfficialVerify(
+                    @SerializedName("desc")
+                    val desc: String,
+                    @SerializedName("type")
+                    val type: Int
+                )
+
+                data class Pendant(
+                    @SerializedName("expire")
+                    val expire: Int,
+                    @SerializedName("image")
+                    val image: String,
+                    @SerializedName("name")
+                    val name: String,
+                    @SerializedName("pid")
+                    val pid: Int
+                )
+
+                data class LevelInfo(
+                    @SerializedName("current_exp")
+                    val currentExp: Int,
+                    @SerializedName("current_level")
+                    val currentLevel: Int,
+                    @SerializedName("current_min")
+                    val currentMin: Int,
+                    @SerializedName("next_exp")
+                    val nextExp: Int
+                )
+
+                data class Vip(
+                    @SerializedName("accessStatus")
+                    val accessStatus: Int,
+                    @SerializedName("dueRemark")
+                    val dueRemark: String,
+                    @SerializedName("themeType")
+                    val themeType: Int,
+                    @SerializedName("vipDueDate")
+                    val vipDueDate: Int,
+                    @SerializedName("vipStatus")
+                    val vipStatus: Int,
+                    @SerializedName("vipStatusWarn")
+                    val vipStatusWarn: String,
+                    @SerializedName("vipType")
+                    val vipType: Int
+                )
+            }
+
+            data class Folder(
+                @SerializedName("has_folded")
+                val hasFolded: Boolean,
+                @SerializedName("is_folded")
+                val isFolded: Boolean,
+                @SerializedName("rule")
+                val rule: String
+            )
+
+            data class Content(
+                @SerializedName("device")
+                val device: String,
+                @SerializedName("members")
+                val members: List<Member>,
+                @SerializedName("message")
+                val message: String,
+                @SerializedName("plat")
+                val plat: Int
+            ) {
+                data class Member(
+                    @SerializedName("DisplayRank")
+                    val displayRank: String,
+                    @SerializedName("avatar")
+                    val avatar: String,
+                    @SerializedName("level_info")
+                    val levelInfo: LevelInfo,
+                    @SerializedName("mid")
+                    val mid: String,
+                    @SerializedName("nameplate")
+                    val nameplate: Nameplate,
+                    @SerializedName("official_verify")
+                    val officialVerify: OfficialVerify,
+                    @SerializedName("pendant")
+                    val pendant: Pendant,
+                    @SerializedName("rank")
+                    val rank: String,
+                    @SerializedName("sex")
+                    val sex: String,
+                    @SerializedName("sign")
+                    val sign: String,
+                    @SerializedName("uname")
+                    val uname: String,
+                    @SerializedName("vip")
+                    val vip: Vip
+                ) {
+                    data class Nameplate(
+                        @SerializedName("condition")
+                        val condition: String,
+                        @SerializedName("image")
+                        val image: String,
+                        @SerializedName("image_small")
+                        val imageSmall: String,
+                        @SerializedName("level")
+                        val level: String,
+                        @SerializedName("name")
+                        val name: String,
+                        @SerializedName("nid")
+                        val nid: Int
+                    )
+
+                    data class OfficialVerify(
+                        @SerializedName("desc")
+                        val desc: String,
+                        @SerializedName("type")
+                        val type: Int
+                    )
+
+                    data class Pendant(
+                        @SerializedName("expire")
+                        val expire: Int,
+                        @SerializedName("image")
+                        val image: String,
+                        @SerializedName("name")
+                        val name: String,
+                        @SerializedName("pid")
+                        val pid: Int
+                    )
+
+                    data class LevelInfo(
+                        @SerializedName("current_exp")
+                        val currentExp: Int,
+                        @SerializedName("current_level")
+                        val currentLevel: Int,
+                        @SerializedName("current_min")
+                        val currentMin: Int,
+                        @SerializedName("next_exp")
+                        val nextExp: Int
+                    )
+
+                    data class Vip(
+                        @SerializedName("accessStatus")
+                        val accessStatus: Int,
+                        @SerializedName("dueRemark")
+                        val dueRemark: String,
+                        @SerializedName("themeType")
+                        val themeType: Int,
+                        @SerializedName("vipDueDate")
+                        val vipDueDate: Long,
+                        @SerializedName("vipStatus")
+                        val vipStatus: Int,
+                        @SerializedName("vipStatusWarn")
+                        val vipStatusWarn: String,
+                        @SerializedName("vipType")
+                        val vipType: Int
+                    )
+                }
+            }
+
+            data class UpAction(
+                @SerializedName("like")
+                val like: Boolean,
+                @SerializedName("reply")
+                val reply: Boolean
+            )
+        }
+
+        data class Content(
+            @SerializedName("device")
+            val device: String,
+            @SerializedName("members")
+            val members: List<Any>,
+            @SerializedName("message")
+            val message: String,
+            @SerializedName("plat")
+            val plat: Int
+        )
+
+        data class Member(
+            @SerializedName("DisplayRank")
+            val displayRank: String,
+            @SerializedName("avatar")
+            val avatar: String,
+            @SerializedName("fans_detail")
+            val fansDetail: Any,
+            @SerializedName("following")
+            val following: Int,
+            @SerializedName("level_info")
+            val levelInfo: LevelInfo,
+            @SerializedName("mid")
+            val mid: String,
+            @SerializedName("nameplate")
+            val nameplate: Nameplate,
+            @SerializedName("official_verify")
+            val officialVerify: OfficialVerify,
+            @SerializedName("pendant")
+            val pendant: Pendant,
+            @SerializedName("rank")
+            val rank: String,
+            @SerializedName("sex")
+            val sex: String,
+            @SerializedName("sign")
+            val sign: String,
+            @SerializedName("uname")
+            val uname: String,
+            @SerializedName("vip")
+            val vip: Vip
+        ) {
+            data class Nameplate(
+                @SerializedName("condition")
+                val condition: String,
+                @SerializedName("image")
+                val image: String,
+                @SerializedName("image_small")
+                val imageSmall: String,
+                @SerializedName("level")
+                val level: String,
+                @SerializedName("name")
+                val name: String,
+                @SerializedName("nid")
+                val nid: Int
+            )
+
+            data class OfficialVerify(
+                @SerializedName("desc")
+                val desc: String,
+                @SerializedName("type")
+                val type: Int
+            )
+
+            data class Pendant(
+                @SerializedName("expire")
+                val expire: Int,
+                @SerializedName("image")
+                val image: String,
+                @SerializedName("name")
+                val name: String,
+                @SerializedName("pid")
+                val pid: Int
+            )
+
+            data class LevelInfo(
+                @SerializedName("current_exp")
+                val currentExp: Int,
+                @SerializedName("current_level")
+                val currentLevel: Int,
+                @SerializedName("current_min")
+                val currentMin: Int,
+                @SerializedName("next_exp")
+                val nextExp: Int
+            )
+
+            data class Vip(
+                @SerializedName("accessStatus")
+                val accessStatus: Int,
+                @SerializedName("dueRemark")
+                val dueRemark: String,
+                @SerializedName("themeType")
+                val themeType: Int,
+                @SerializedName("vipDueDate")
+                val vipDueDate: Long,
+                @SerializedName("vipStatus")
+                val vipStatus: Int,
+                @SerializedName("vipStatusWarn")
+                val vipStatusWarn: String,
+                @SerializedName("vipType")
+                val vipType: Int
+            )
+        }
+
+        data class Folder(
+            @SerializedName("has_folded")
+            val hasFolded: Boolean,
+            @SerializedName("is_folded")
+            val isFolded: Boolean,
+            @SerializedName("rule")
+            val rule: String
+        )
+
+        data class UpAction(
+            @SerializedName("like")
+            val like: Boolean,
+            @SerializedName("reply")
+            val reply: Boolean
+        )
+    }
+
+    data class Folder(
+        @SerializedName("has_folded")
+        val hasFolded: Boolean,
+        @SerializedName("is_folded")
+        val isFolded: Boolean,
+        @SerializedName("rule")
+        val rule: String
     )
+
+    data class Upper(
+        @SerializedName("mid")
+        val mid: Int
+    )
+
+    data class Top(
+        @SerializedName("admin")
+        val admin: Any,
+        @SerializedName("upper")
+        val upper: Upper,
+        @SerializedName("vote")
+        val vote: Any
+    ) {
+        data class Upper(
+            @SerializedName("action")
+            val action: Int,
+            @SerializedName("assist")
+            val assist: Int,
+            @SerializedName("attr")
+            val attr: Int,
+            @SerializedName("content")
+            val content: Content,
+            @SerializedName("count")
+            val count: Int,
+            @SerializedName("ctime")
+            val ctime: Int,
+            @SerializedName("dialog")
+            val dialog: Int,
+            @SerializedName("fansgrade")
+            val fansgrade: Int,
+            @SerializedName("floor")
+            val floor: Int,
+            @SerializedName("folder")
+            val folder: Folder,
+            @SerializedName("like")
+            val like: Int,
+            @SerializedName("member")
+            val member: Member,
+            @SerializedName("mid")
+            val mid: Int,
+            @SerializedName("oid")
+            val oid: Int,
+            @SerializedName("parent")
+            val parent: Int,
+            @SerializedName("parent_str")
+            val parentStr: String,
+            @SerializedName("rcount")
+            val rcount: Int,
+            @SerializedName("replies")
+            val replies: List<Reply>,
+            @SerializedName("root")
+            val root: Int,
+            @SerializedName("root_str")
+            val rootStr: String,
+            @SerializedName("rpid")
+            val rpid: Int,
+            @SerializedName("rpid_str")
+            val rpidStr: String,
+            @SerializedName("state")
+            val state: Int,
+            @SerializedName("type")
+            val type: Int,
+            @SerializedName("up_action")
+            val upAction: UpAction
+        ) {
+            data class Reply(
+                @SerializedName("action")
+                val action: Int,
+                @SerializedName("assist")
+                val assist: Int,
+                @SerializedName("attr")
+                val attr: Int,
+                @SerializedName("content")
+                val content: Content,
+                @SerializedName("count")
+                val count: Int,
+                @SerializedName("ctime")
+                val ctime: Int,
+                @SerializedName("dialog")
+                val dialog: Int,
+                @SerializedName("fansgrade")
+                val fansgrade: Int,
+                @SerializedName("floor")
+                val floor: Int,
+                @SerializedName("folder")
+                val folder: Folder,
+                @SerializedName("like")
+                val like: Int,
+                @SerializedName("member")
+                val member: Member,
+                @SerializedName("mid")
+                val mid: Int,
+                @SerializedName("oid")
+                val oid: Int,
+                @SerializedName("parent")
+                val parent: Int,
+                @SerializedName("parent_str")
+                val parentStr: String,
+                @SerializedName("rcount")
+                val rcount: Int,
+                @SerializedName("replies")
+                val replies: List<Any>,
+                @SerializedName("root")
+                val root: Int,
+                @SerializedName("root_str")
+                val rootStr: String,
+                @SerializedName("rpid")
+                val rpid: Int,
+                @SerializedName("rpid_str")
+                val rpidStr: String,
+                @SerializedName("state")
+                val state: Int,
+                @SerializedName("type")
+                val type: Int,
+                @SerializedName("up_action")
+                val upAction: UpAction
+            ) {
+                data class Member(
+                    @SerializedName("DisplayRank")
+                    val displayRank: String,
+                    @SerializedName("avatar")
+                    val avatar: String,
+                    @SerializedName("fans_detail")
+                    val fansDetail: Any,
+                    @SerializedName("following")
+                    val following: Int,
+                    @SerializedName("level_info")
+                    val levelInfo: LevelInfo,
+                    @SerializedName("mid")
+                    val mid: String,
+                    @SerializedName("nameplate")
+                    val nameplate: Nameplate,
+                    @SerializedName("official_verify")
+                    val officialVerify: OfficialVerify,
+                    @SerializedName("pendant")
+                    val pendant: Pendant,
+                    @SerializedName("rank")
+                    val rank: String,
+                    @SerializedName("sex")
+                    val sex: String,
+                    @SerializedName("sign")
+                    val sign: String,
+                    @SerializedName("uname")
+                    val uname: String,
+                    @SerializedName("vip")
+                    val vip: Vip
+                ) {
+                    data class Nameplate(
+                        @SerializedName("condition")
+                        val condition: String,
+                        @SerializedName("image")
+                        val image: String,
+                        @SerializedName("image_small")
+                        val imageSmall: String,
+                        @SerializedName("level")
+                        val level: String,
+                        @SerializedName("name")
+                        val name: String,
+                        @SerializedName("nid")
+                        val nid: Int
+                    )
+
+                    data class OfficialVerify(
+                        @SerializedName("desc")
+                        val desc: String,
+                        @SerializedName("type")
+                        val type: Int
+                    )
+
+                    data class Pendant(
+                        @SerializedName("expire")
+                        val expire: Int,
+                        @SerializedName("image")
+                        val image: String,
+                        @SerializedName("name")
+                        val name: String,
+                        @SerializedName("pid")
+                        val pid: Int
+                    )
+
+                    data class LevelInfo(
+                        @SerializedName("current_exp")
+                        val currentExp: Int,
+                        @SerializedName("current_level")
+                        val currentLevel: Int,
+                        @SerializedName("current_min")
+                        val currentMin: Int,
+                        @SerializedName("next_exp")
+                        val nextExp: Int
+                    )
+
+                    data class Vip(
+                        @SerializedName("accessStatus")
+                        val accessStatus: Int,
+                        @SerializedName("dueRemark")
+                        val dueRemark: String,
+                        @SerializedName("themeType")
+                        val themeType: Int,
+                        @SerializedName("vipDueDate")
+                        val vipDueDate: Int,
+                        @SerializedName("vipStatus")
+                        val vipStatus: Int,
+                        @SerializedName("vipStatusWarn")
+                        val vipStatusWarn: String,
+                        @SerializedName("vipType")
+                        val vipType: Int
+                    )
+                }
+
+                data class Content(
+                    @SerializedName("device")
+                    val device: String,
+                    @SerializedName("members")
+                    val members: List<Any>,
+                    @SerializedName("message")
+                    val message: String,
+                    @SerializedName("plat")
+                    val plat: Int
+                )
+
+                data class Folder(
+                    @SerializedName("has_folded")
+                    val hasFolded: Boolean,
+                    @SerializedName("is_folded")
+                    val isFolded: Boolean,
+                    @SerializedName("rule")
+                    val rule: String
+                )
+
+                data class UpAction(
+                    @SerializedName("like")
+                    val like: Boolean,
+                    @SerializedName("reply")
+                    val reply: Boolean
+                )
+            }
+
+            data class Content(
+                @SerializedName("device")
+                val device: String,
+                @SerializedName("members")
+                val members: List<Any>,
+                @SerializedName("message")
+                val message: String,
+                @SerializedName("plat")
+                val plat: Int
+            )
+
+            data class Member(
+                @SerializedName("DisplayRank")
+                val displayRank: String,
+                @SerializedName("avatar")
+                val avatar: String,
+                @SerializedName("fans_detail")
+                val fansDetail: Any,
+                @SerializedName("following")
+                val following: Int,
+                @SerializedName("level_info")
+                val levelInfo: LevelInfo,
+                @SerializedName("mid")
+                val mid: String,
+                @SerializedName("nameplate")
+                val nameplate: Nameplate,
+                @SerializedName("official_verify")
+                val officialVerify: OfficialVerify,
+                @SerializedName("pendant")
+                val pendant: Pendant,
+                @SerializedName("rank")
+                val rank: String,
+                @SerializedName("sex")
+                val sex: String,
+                @SerializedName("sign")
+                val sign: String,
+                @SerializedName("uname")
+                val uname: String,
+                @SerializedName("vip")
+                val vip: Vip
+            ) {
+                data class Nameplate(
+                    @SerializedName("condition")
+                    val condition: String,
+                    @SerializedName("image")
+                    val image: String,
+                    @SerializedName("image_small")
+                    val imageSmall: String,
+                    @SerializedName("level")
+                    val level: String,
+                    @SerializedName("name")
+                    val name: String,
+                    @SerializedName("nid")
+                    val nid: Int
+                )
+
+                data class OfficialVerify(
+                    @SerializedName("desc")
+                    val desc: String,
+                    @SerializedName("type")
+                    val type: Int
+                )
+
+                data class Pendant(
+                    @SerializedName("expire")
+                    val expire: Int,
+                    @SerializedName("image")
+                    val image: String,
+                    @SerializedName("name")
+                    val name: String,
+                    @SerializedName("pid")
+                    val pid: Int
+                )
+
+                data class LevelInfo(
+                    @SerializedName("current_exp")
+                    val currentExp: Int,
+                    @SerializedName("current_level")
+                    val currentLevel: Int,
+                    @SerializedName("current_min")
+                    val currentMin: Int,
+                    @SerializedName("next_exp")
+                    val nextExp: Int
+                )
+
+                data class Vip(
+                    @SerializedName("accessStatus")
+                    val accessStatus: Int,
+                    @SerializedName("dueRemark")
+                    val dueRemark: String,
+                    @SerializedName("themeType")
+                    val themeType: Int,
+                    @SerializedName("vipDueDate")
+                    val vipDueDate: Long,
+                    @SerializedName("vipStatus")
+                    val vipStatus: Int,
+                    @SerializedName("vipStatusWarn")
+                    val vipStatusWarn: String,
+                    @SerializedName("vipType")
+                    val vipType: Int
+                )
+            }
+
+            data class Folder(
+                @SerializedName("has_folded")
+                val hasFolded: Boolean,
+                @SerializedName("is_folded")
+                val isFolded: Boolean,
+                @SerializedName("rule")
+                val rule: String
+            )
+
+            data class UpAction(
+                @SerializedName("like")
+                val like: Boolean,
+                @SerializedName("reply")
+                val reply: Boolean
+            )
+        }
+    }
 }

@@ -1,7 +1,12 @@
 package com.bilibili.lingxiao.home.live.ui
 
 import android.content.res.Configuration
+import android.net.Uri
+import android.view.Gravity
+import android.view.View
 import android.view.WindowManager
+import android.widget.ImageView
+import android.widget.TextView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
 import com.bilibili.lingxiao.home.live.DanMaKuTool
@@ -17,6 +22,8 @@ import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.utills.LogUtils
+import com.camera.lingxiao.common.utills.PopwindowUtil
+import com.facebook.drawee.view.SimpleDraweeView
 import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_live_play.*
 import org.greenrobot.eventbus.EventBus
@@ -38,6 +45,7 @@ class LivePlayActivity : BaseActivity() , LivePlayView {
     var  tabArray: Array<String> by Delegates.notNull()
 
     public var livePresenter = LivePlayPresenter(this, this)
+    private var ruid = 0
     override val contentLayoutId: Int
         get() = R.layout.activity_live_play
 
@@ -72,6 +80,11 @@ class LivePlayActivity : BaseActivity() , LivePlayView {
             PlayPagerAdapter(supportFragmentManager, tabArray, fragmentList)
         live_tablayout.setupWithViewPager(live_viewpager)
 
+    }
+
+    fun getUserInfo(uid:Int){
+        showProgressDialog("请稍后")
+        livePresenter.getUserInfo(ruid,uid)
     }
 
     override fun initBefore() {
@@ -118,6 +131,7 @@ class LivePlayActivity : BaseActivity() , LivePlayView {
     }
 
     override fun onGetUpInfo(liveUpData: LiveUpData) {
+        ruid = liveUpData.uid
         EventBus.getDefault().postSticky(liveUpData)
         LogUtils.d("获取到直播up主信息-->${liveUpData}")
     }
@@ -133,8 +147,27 @@ class LivePlayActivity : BaseActivity() , LivePlayView {
 
     }
 
-    override fun onGetUserInfo(liveUpData: LiveUserData) {
+    override fun onGetUserInfo(liveUserData: LiveUserData) {
+        cancleProgressDialog()
+        val popwindowUtil = PopwindowUtil.PopupWindowBuilder(this@LivePlayActivity)
+            .setView(R.layout.pop_user_info)
+            .setFocusable(true)
+            .setAnimationStyle(R.style.contextMenuAnim)
+            .setTouchable(true)
+            .setOutsideTouchable(true)
+            .create()
+        popwindowUtil.showAsLocation(live_viewpager, Gravity.CENTER,0,0)
+        popwindowUtil.getView<ImageView>(R.id.image_close)!!.setOnClickListener {
+            popwindowUtil.dissmiss()
+        }
+        popwindowUtil.getView<SimpleDraweeView>(R.id.image_header)!!.setImageURI(Uri.parse(liveUserData.face))
+        popwindowUtil.getView<TextView>(R.id.username)!!.text = liveUserData.uname
+        popwindowUtil.getView<TextView>(R.id.user_level)!!.text = "UL " + liveUserData.userLevel
+        popwindowUtil.getView<TextView>(R.id.follow_num)!!.text = "关注："+ liveUserData.attentionNum + "    粉丝：" + liveUserData.followNum
+        popwindowUtil.getView<TextView>(R.id.text_user_space)!!.setOnClickListener {  }
+        popwindowUtil.getView<TextView>(R.id.text_user_follow)!!.setOnClickListener {  }
     }
+
     override fun diamissDialog() {
 
     }

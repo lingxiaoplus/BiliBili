@@ -293,7 +293,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         request.put("uid",uid)
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
-                var modle = Gson().fromJson(element,LiveUpData::class.java)
+                var modle = Gson().fromJson(element,LiveUserData::class.java)
                 val obj = arrayOfNulls<Any>(1)
                 obj[0] = modle
                 return obj

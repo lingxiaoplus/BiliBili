@@ -113,7 +113,9 @@ class UpInfoFragment :BaseFragment() , LivePlayView {
         refresh.finishLoadMore()
     }
 
+    override fun onGetUserInfo(liveUpData: LiveUserData) {
 
+    }
     override fun onGetFleetList(fleetListData: FleetListData) {
     }
     override fun onGetUpInfo(liveUpData: LiveUpData) {

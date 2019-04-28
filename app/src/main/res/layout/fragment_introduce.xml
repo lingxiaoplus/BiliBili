@@ -103,7 +103,6 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="15dp"
                         android:ellipsize="end"
-                        android:text="biaoti"
                 />
                 <ImageButton
                         android:id="@id/expand_collapse"
@@ -177,7 +176,6 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="neirong"
             />
         </com.bilibili.lingxiao.widget.FoldableLayout>
 

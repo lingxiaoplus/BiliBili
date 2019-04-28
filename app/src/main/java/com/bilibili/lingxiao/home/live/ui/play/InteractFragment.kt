@@ -3,14 +3,17 @@ package com.bilibili.lingxiao.home.live.ui.play
 import android.net.Uri
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.model.*
 import com.bilibili.lingxiao.home.live.presenter.InteractPresenter
+import com.bilibili.lingxiao.home.live.ui.LivePlayActivity
 import com.bilibili.lingxiao.home.live.view.LivePlayView
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
+import com.camera.lingxiao.common.utills.PopwindowUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.fragment_interact.*
@@ -43,6 +46,12 @@ class InteractFragment :BaseFragment(),LivePlayView{
         root.refresh.setOnLoadMoreListener {
             presenter.getChatHistory(room_id)
         }
+        root.refresh.setHeaderHeight(0f)
+
+        chatAdapter.setOnItemClickListener { adapter, view, position ->
+            var act = activity as LivePlayActivity
+            act.getUserInfo(chatList[position].uid)
+        }
     }
 
     override fun isRegisterEventBus(): Boolean {
@@ -72,10 +81,18 @@ class InteractFragment :BaseFragment(),LivePlayView{
     }
 
     override fun onGetUpChatHistory(list: List<LiveChatData.Room>) {
-        chatAdapter.addData(list)
+        for (room in list){
+            if (chatList.contains(room)){
+                continue
+            }
+            chatAdapter.addData(room)
+        }
         refresh.finishLoadMore()
     }
 
+    override fun onGetUserInfo(liveUpData: LiveUserData) {
+
+    }
     override fun showDialog() {
     }
 

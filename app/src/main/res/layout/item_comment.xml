@@ -110,6 +110,46 @@
             />
         </RelativeLayout>
 
+        <LinearLayout
+                android:id="@+id/ll_comment_replie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/grey_200"
+                android:padding="5dp"
+                android:visibility="gone"
+        >
+            <TextView
+                    android:id="@+id/comment_hot1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/fen_si_text_size"
+                    android:visibility="gone"
+            />
+            <TextView
+                    android:id="@+id/comment_hot2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/fen_si_text_size"
+                    android:visibility="gone"
+            />
+            <TextView
+                    android:id="@+id/comment_hot3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/fen_si_text_size"
+                    android:visibility="gone"
+            />
+            <TextView
+                    android:id="@+id/comment_hot_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue300"
+                    android:textSize="@dimen/fen_si_text_size"
+                    android:text="共4条回复>"
+                    android:visibility="gone"
+            />
+        </LinearLayout>
     </LinearLayout>
 
     <ImageView

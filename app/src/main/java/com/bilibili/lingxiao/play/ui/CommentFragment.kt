@@ -116,7 +116,7 @@ class CommentFragment :BaseFragment(), RecommendView {
             mAdapter.addData(e)
             var tabView:TabLayout = (activity as PlayActivity).findViewById(R.id.skin_tabLayout)
             var tabLayout = tabView.getTabAt(1)
-            tabLayout?.text = "评论 " + commentData.page.count
+            tabLayout?.text = "评论 " + commentData.cursor.allCount
         }
         if (commentData.replies == null){
             refresh.finishRefresh()

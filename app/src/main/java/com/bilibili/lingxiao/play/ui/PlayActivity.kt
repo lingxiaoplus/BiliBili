@@ -69,8 +69,8 @@ class PlayActivity : BaseActivity() {
         play_viewpager.adapter =
             PlayPagerAdapter(supportFragmentManager, tabArray, fragmentList)
         skin_tabLayout.setupWithViewPager(play_viewpager)
-        setSupportActionBar(toolbar)
-        toolbar.title = ""
+        //setSupportActionBar(toolbar)
+        //toolbar.title = ""
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
