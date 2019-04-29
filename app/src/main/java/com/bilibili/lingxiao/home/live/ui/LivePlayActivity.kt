@@ -131,7 +131,7 @@ class LivePlayActivity : BaseActivity() , LivePlayView {
     }
 
     override fun onGetUpInfo(liveUpData: LiveUpData) {
-        ruid = liveUpData.uid
+        ruid = liveUpData.roomInfo.uid
         EventBus.getDefault().postSticky(liveUpData)
         LogUtils.d("获取到直播up主信息-->${liveUpData}")
     }

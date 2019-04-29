@@ -61,8 +61,8 @@ class FansFragment :BaseFragment(){
     }
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     fun onGetUpInfo(liveUpData: LiveUpData){
-        roomId = liveUpData.roomId
-        uid = liveUpData.uid
+        roomId = liveUpData.roomInfo.roomId
+        uid = liveUpData.roomInfo.uid
     }
 
     inner class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {

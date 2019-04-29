@@ -22,7 +22,8 @@ object GlobalProperties {
     val CATEGORY_RECOMMEND_HOST = "http://app.bilibili.com/x/v2/show/index?" //分区推荐
     var USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Mobile Safari/537.36"
 
-    var LIVE_UP_INFO = "https://api.live.bilibili.com/room/v1/Room/get_info" //获取up主的信息
+    //var LIVE_UP_INFO = "https://api.live.bilibili.com/room/v1/Room/get_info" //获取up主的信息
+    var LIVE_UP_INFO = "http://api.live.bilibili.com/xlive/app-room/v1/index/getInfoByRoom?"
     var LIVE_USER_INFO = "http://api.live.bilibili.com/live_user/v1/card/card_user?" //获取直播间用户的信息
     var LIVE_DANMAKU_URL = "wss://broadcastlv.chat.bilibili.com:2245/sub"  //直播弹幕 websocket
     var LIVE_UP_GOLD_LIST = "http://api.live.bilibili.com/rankdb/v1/RoomRank/tabRanks?"  //金瓜子榜  礼物榜
@@ -34,8 +35,8 @@ object GlobalProperties {
 
     private val SECRET_KEY = "ea85624dfcf12d7cc7b2b3a94fac1f2c"
     val PARAM_SIGN = "sign"
-    val APP_KEY = "c1b107428d337928"   //1d8b6e7d45233436
-    val BUILD = "51900"               //5400000
+    val APP_KEY = "c1b107428d337928"
+    val BUILD = "5400000"
     val MOBI_APP = "android"
     val PLATFORM = "android"
     val DEVICE = "android"
@@ -49,8 +50,11 @@ object GlobalProperties {
      * 将所有参数（包括变量名和值及=&符号）排序后加上appsecret（只有值）之后做md5，
      * 得到返回结果即为所求sign值
      */
-    fun getSign(url: HttpUrl): String {
-        //拼接参数(按顺序)+SecretKey
+    fun getSign(url: HttpUrl?): String {
+        if (url == null){
+            throw IllegalArgumentException("url不能为空")
+        }
+        //拼接参数(按顺序) + SecretKey
         val set = url.queryParameterNames()
         val queryParams = StringBuilder()
         val it = set.iterator()
@@ -60,9 +64,13 @@ object GlobalProperties {
             queryParams.append("=")
             queryParams.append(url.queryParameter(str))
             if (it.hasNext()) {
+                if (it.next().isNullOrEmpty()){
+                    break
+                }
                 queryParams.append("&")
             }
         }
+        //queryParams.append("secret_key=" + SECRET_KEY)
         queryParams.append(SECRET_KEY)
         val orignSign = queryParams.toString()
         //进行MD5加密

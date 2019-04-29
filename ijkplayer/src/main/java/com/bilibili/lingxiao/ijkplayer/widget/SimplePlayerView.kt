@@ -245,13 +245,13 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
                         pausePlay()
                     }
                     video_play.setImageResource(R.drawable.ic_img_pause)
-                    video_play_full.setImageResource(R.drawable.ic_img_pause)
+                    //video_play_full.setImageResource(R.drawable.ic_img_pause)
                     play_icon.setImageResource(R.drawable.ic_img_pause)
                     play_icon.visibility = View.VISIBLE
                 }else{
                     startPlay()
                     video_play.setImageResource(R.drawable.ic_img_play)
-                    video_play_full.setImageResource(R.drawable.ic_img_play)
+                    //video_play_full.setImageResource(R.drawable.ic_img_play)
                     play_icon.setImageResource(R.drawable.ic_img_play)
                     play_icon.visibility = View.INVISIBLE
                 }

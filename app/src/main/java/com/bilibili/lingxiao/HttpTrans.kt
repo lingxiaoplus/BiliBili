@@ -18,6 +18,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
 import com.trello.rxlifecycle2.LifecycleProvider
+import okhttp3.HttpUrl
 
 class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
     private var debug = true
@@ -265,7 +266,18 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
      */
     fun getLiveUpInfo(roomId:Int,callback: HttpRxCallback<Any>){
         request.clear()
-        request.put("id",roomId)
+        request.put("actionKey","appkey")
+        request.put("appkey",GlobalProperties.APP_KEY)
+        request.put("build",GlobalProperties.BUILD)
+        request.put("channel","bilibiil140")
+        request.put("device",GlobalProperties.DEVICE)
+        request.put("mobi_app",GlobalProperties.MOBI_APP)
+        request.put("platform",GlobalProperties.PLATFORM)
+        request.put("room_id",roomId)
+        request.put("ts",GlobalProperties.getSystemTime())
+        var url = GlobalProperties.LIVE_UP_INFO + GlobalProperties.getUrlParamsByMap(request)
+        var httpUrl = HttpUrl.parse(url)
+        request.put("sign",GlobalProperties.getSign(httpUrl))  //计算签名，然后作为参数  这里其实可以写一个拦截器，对所有请求进行签名
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
                 var modle = Gson().fromJson(element,LiveUpData::class.java)
@@ -275,8 +287,9 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             }
         })
         if (debug){
-            var url = GlobalProperties.LIVE_UP_INFO + GlobalProperties.getUrlParamsByMap(request)
-            Log.d(TAG,"获取直播up信息的url---->$url")
+           // var url = GlobalProperties.LIVE_UP_INFO + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取直播up信息的url---->"+
+                    GlobalProperties.LIVE_UP_INFO + GlobalProperties.getUrlParamsByMap(request))
         }
         getRequest().requestFullPath(HttpRequest.Method.POST, GlobalProperties.LIVE_UP_INFO, request,mLifecycle, callback)
     }

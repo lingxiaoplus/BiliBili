@@ -65,7 +65,7 @@ class FleetListFragment :BaseFragment(), LivePlayView {
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     fun onGetUpInfoEvent(liveUpData: LiveUpData){
         //roomId = liveUpData.roomId
-        uid = liveUpData.uid
+        uid = liveUpData.roomInfo.uid
     }
 
     override fun onFirstVisiblity() {

@@ -88,23 +88,23 @@ class UpInfoFragment :BaseFragment() , LivePlayView {
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     fun onGetUpInfoEvent(liveUpData: LiveUpData){
-        ruid = liveUpData.uid
-        people_num.text = "房间号：" + liveUpData.roomId
-        fensi_num.text = "粉丝：" + StringUtil.getBigDecimalNumber(liveUpData.attention)
+        ruid = liveUpData.roomInfo.uid
+        people_num.text = "房间号：" + liveUpData.roomInfo.roomId
+        fensi_num.text = "粉丝：" + StringUtil.getBigDecimalNumber(liveUpData.anchorInfo.relationInfo.attention)
         Log.d(TAG,"")
-        certification.text = liveUpData.newPendants.badge?.desc
-        text_broadcast.text = liveUpData.title
-        /*if (liveUpData.description != null){
+        certification.text = liveUpData.anchorInfo.baseInfo.officialInfo.title
+        text_broadcast.text = liveUpData.roomInfo.title
+        if (liveUpData.roomInfo.description != null){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 //FROM_HTML_MODE_COMPACT 块元素之间使用一个换行符分隔
-                text_broadcast.text = Html.fromHtml(liveUpData.description,Html.FROM_HTML_MODE_COMPACT)
+                text_broadcast.text = Html.fromHtml(liveUpData.roomInfo.description,Html.FROM_HTML_MODE_COMPACT)
             }else{
                 //Bug，解析后的文本，块元素之间换行默认为两行，而且无法更改。
-                text_broadcast.text = Html.fromHtml(liveUpData.description)
+                text_broadcast.text = Html.fromHtml(liveUpData.roomInfo.description)
             }
         }else{
             text_broadcast.text = "暂时没有"
-        }*/
+        }
     }
 
     override fun onGetUpVideoList(list: List<UpInfoData>) {
