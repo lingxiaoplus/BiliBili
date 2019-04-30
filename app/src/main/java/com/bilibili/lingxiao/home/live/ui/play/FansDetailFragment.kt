@@ -1,5 +1,7 @@
 package com.bilibili.lingxiao.home.live.ui.play
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -13,6 +15,7 @@ import com.bilibili.lingxiao.home.live.ui.LivePlayActivity
 import com.bilibili.lingxiao.home.live.view.FansDetailView
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.camera.lingxiao.common.app.BaseFragment
+import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_fans_detail.*
 import kotlinx.android.synthetic.main.fragment_fans_detail.view.*
 
@@ -41,6 +44,18 @@ class FansDetailFragment :BaseFragment(), FansDetailView {
     override fun initWidget(root: View) {
         super.initWidget(root)
         fansAdapter = FansAdapter(R.layout.item_fans_list, fansList)
+        fansAdapter.setDuration(800)
+        fansAdapter.openLoadAnimation({ view ->
+            arrayOf<Animator>(
+                ObjectAnimator.ofFloat(
+                    view,
+                    "scaleY",
+                    0f,
+                    1.05f,
+                    1f
+                ), ObjectAnimator.ofFloat(view, "scaleX", 0f, 1.05f, 1f)
+            )
+        })
         var manager = LinearLayoutManager(context)
 
         root.recycerView.layoutManager = manager
@@ -59,7 +74,6 @@ class FansDetailFragment :BaseFragment(), FansDetailView {
         var image = emptyView.findViewById<ImageView>(R.id.image_error)
         image.setImageDrawable(resources.getDrawable(R.drawable.ic_empty_cute_girl_box))
         fansAdapter.setEmptyView(emptyView)
-
         fansAdapter.setOnItemClickListener { adapter, view, position ->
             var act = activity as LivePlayActivity
             act.getUserInfo(fansList[position].uid)

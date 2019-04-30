@@ -36,10 +36,10 @@ class FansAdapter(layoutResId: Int, data: MutableList<FansGoldListData.FansInfo>
         image_header.setImageURI(Uri.parse(item.face))
         helper.setText(R.id.username,item.uname)
         helper.setText(R.id.text_gold_num,"" + item.score)
-        if (item.icon != null){
+        /*if (item.icon != null){
             var image_gold = helper.getView<SimpleDraweeView>(R.id.image_rank_gold)
             image_gold.setImageURI(Uri.parse(item.icon))
-        }
+        }*/
         if (item.medal_name != null){
             helper.setText(R.id.text_medal_name,item.medal_name)
             var text_medal = helper.getView<TextView>(R.id.text_medal_name)

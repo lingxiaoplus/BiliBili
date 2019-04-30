@@ -1,5 +1,6 @@
 package com.bilibili.lingxiao.home.recommend.ui
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
@@ -31,6 +32,9 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import com.bilibili.lingxiao.web.WebActivity
 import com.youth.banner.listener.OnBannerListener
+import android.animation.Animator
+
+
 
 class RecommendFragment :BaseFragment(), RecommendView {
 
@@ -74,6 +78,19 @@ class RecommendFragment :BaseFragment(), RecommendView {
             operationState = 3
             recommendPresenter.getRecommendList(operationState)
         }
+        mAdapter.setDuration(800)
+        mAdapter.openLoadAnimation({ view ->
+            arrayOf<Animator>(
+                ObjectAnimator.ofFloat(
+                    view,
+                    "scaleY",
+                    0f,
+                    1.05f,
+                    1f
+                ), ObjectAnimator.ofFloat(view, "scaleX", 0f, 1.05f, 1f)
+            )
+        })
+        mAdapter.isFirstOnly(false)
         mAdapter.setOnItemClickListener(object :BaseQuickAdapter.OnItemClickListener{
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
                 //val intent = Intent(context,PlayActivity::class.java)

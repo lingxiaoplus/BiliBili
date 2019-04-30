@@ -47,36 +47,33 @@ object GlobalProperties {
     var TAG = GlobalProperties::class.java.simpleName
 
     /**
-     * 将所有参数（包括变量名和值及=&符号）排序后加上appsecret（只有值）之后做md5，
+     * 将所有参数（包括变量名和值及=&符号）排序后加上appsecret（只有值）之后做md5，md5 按照32位小写加密
      * 得到返回结果即为所求sign值
      */
-    fun getSign(url: HttpUrl?): String {
-        if (url == null){
-            throw IllegalArgumentException("url不能为空")
-        }
+    fun getSign(map: Map<String, Any>): String {
         //拼接参数(按顺序) + SecretKey
-        val set = url.queryParameterNames()
-        val queryParams = StringBuilder()
-        val it = set.iterator()
+        /*val queryParams = StringBuilder()
+        val it = map.iterator()
         while (it.hasNext()) {
             val str = it.next()
-            queryParams.append(str)
+            *//*if (str.isNullOrEmpty()){
+                break
+            }*//*
+            queryParams.append(str.key)
             queryParams.append("=")
-            queryParams.append(url.queryParameter(str))
+            queryParams.append(str.value)
             if (it.hasNext()) {
-                if (it.next().isNullOrEmpty()){
-                    break
-                }
                 queryParams.append("&")
             }
         }
-        //queryParams.append("secret_key=" + SECRET_KEY)
-        queryParams.append(SECRET_KEY)
-        val orignSign = queryParams.toString()
+        queryParams.append(SECRET_KEY)*/
+        val orignSign = getUrlParamsByMap(map) + SECRET_KEY //queryParams.toString()
         //进行MD5加密
         var sign = ""
+        Log.i(TAG, "加密前的sign: " + orignSign)
         try {
             sign = MD5Util.getMD5(orignSign).trim()
+            Log.i(TAG, "加密后的sign: " + sign)
         } catch (e: NoSuchAlgorithmException) {
             Log.e(TAG, "sign encryption failed : " + e.message)
         }
@@ -103,23 +100,23 @@ object GlobalProperties {
     }
 
     /**
-     * 将map转换成url
-     *
+     * 将map转换成url参数
      * @param map
      * @return
      */
     fun getUrlParamsByMap(map: Map<String, Any>): String {
-        var sb =  StringBuffer()
-        for ((key,value)in map){
-            sb.append(key + "=")
-            if (StringUtils.isEmpty(value.toString())) {
-                sb.append("&")
-            } else {
-                var va = URLEncoder.encode(value.toString(), "UTF-8");
-                sb.append(va + "&");
+        var params =  StringBuffer()
+        val it = map.iterator()
+        while (it.hasNext()) {
+            val str = it.next()
+            params.append(str.key)
+            params.append("=")
+            params.append(str.value)
+            if (it.hasNext()) {
+                params.append("&")
             }
         }
-        return sb.toString()
+        return params.toString()
     }
 
 }

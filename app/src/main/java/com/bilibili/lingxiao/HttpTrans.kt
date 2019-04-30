@@ -18,7 +18,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
 import com.trello.rxlifecycle2.LifecycleProvider
-import okhttp3.HttpUrl
 
 class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
     private var debug = true
@@ -37,7 +36,6 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         request.put("trace_id",GlobalProperties.getTraceId())
         request.put("ts",GlobalProperties.getSystemTime())
         request.put("version",GlobalProperties.VERSION)
-
 
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
@@ -263,6 +261,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
 
     /**
      * 获取直播间up的信息，主要是uid的获取
+     * 这个接口必须要使用sign签名
      */
     fun getLiveUpInfo(roomId:Int,callback: HttpRxCallback<Any>){
         request.clear()
@@ -275,9 +274,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         request.put("platform",GlobalProperties.PLATFORM)
         request.put("room_id",roomId)
         request.put("ts",GlobalProperties.getSystemTime())
-        var url = GlobalProperties.LIVE_UP_INFO + GlobalProperties.getUrlParamsByMap(request)
-        var httpUrl = HttpUrl.parse(url)
-        request.put("sign",GlobalProperties.getSign(httpUrl))  //计算签名，然后作为参数  这里其实可以写一个拦截器，对所有请求进行签名
+        request.put("sign",GlobalProperties.getSign(request))  //计算签名，然后作为参数  这里其实可以写一个拦截器，对所有请求进行签名
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
                 var modle = Gson().fromJson(element,LiveUpData::class.java)
@@ -287,11 +284,10 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             }
         })
         if (debug){
-           // var url = GlobalProperties.LIVE_UP_INFO + GlobalProperties.getUrlParamsByMap(request)
             Log.d(TAG,"获取直播up信息的url---->"+
                     GlobalProperties.LIVE_UP_INFO + GlobalProperties.getUrlParamsByMap(request))
         }
-        getRequest().requestFullPath(HttpRequest.Method.POST, GlobalProperties.LIVE_UP_INFO, request,mLifecycle, callback)
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_UP_INFO, request,mLifecycle, callback)
     }
 
 
@@ -316,7 +312,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             var url = GlobalProperties.LIVE_USER_INFO + GlobalProperties.getUrlParamsByMap(request)
             Log.d(TAG,"获取直播用户信息的url---->$url")
         }
-        getRequest().requestFullPath(HttpRequest.Method.POST, GlobalProperties.LIVE_USER_INFO, request,mLifecycle, callback)
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_USER_INFO, request,mLifecycle, callback)
     }
 
     /**

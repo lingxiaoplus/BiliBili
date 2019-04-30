@@ -11,6 +11,7 @@ import com.bilibili.lingxiao.home.live.model.LiveUpData
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
 import com.flyco.tablayout.listener.OnTabSelectListener
+import kotlinx.android.synthetic.main.fragment_fans.*
 import kotlinx.android.synthetic.main.fragment_fans.view.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -28,12 +29,16 @@ class FansFragment :BaseFragment(){
         UIUtil.getUiComponent().inject(this)
     }
 
+    override fun onFirstVisiblity() {
+        super.onFirstVisiblity()
+        viewpager.adapter = PagerAdapter(childFragmentManager)
+        viewpager.offscreenPageLimit = tabArray.size
+        //root.fans_tablayout.setViewPager(root.viewpager)
+        fans_tablayout.setTabData(tabArray)
+    }
     override fun initWidget(root: View) {
         super.initWidget(root)
-        root.viewpager.adapter = PagerAdapter(childFragmentManager)
-        root.viewpager.offscreenPageLimit = tabArray.size
-        //root.fans_tablayout.setViewPager(root.viewpager)
-        root.fans_tablayout.setTabData(tabArray)
+
         root.viewpager.addOnPageChangeListener(object :ViewPager.OnPageChangeListener{
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 

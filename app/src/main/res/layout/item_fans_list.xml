@@ -94,7 +94,8 @@
                 android:id="@+id/image_rank_gold"
                 style="@style/image_small"
                 app:progressBarImageScaleType="centerInside"
-                app:progressBarImage="@drawable/ic_live_rank_gold_seeds"
+                app:progressBarImage="@drawable/ic_rank_seeds"
+                app:overlayImage="@drawable/ic_rank_seeds"
                 android:layout_marginRight="5dp"
         />
         <TextView

@@ -131,6 +131,8 @@ class UpInfoFragment :BaseFragment() , LivePlayView {
 
     override fun showToast(text: String?) {
         ToastUtil.show(text)
+        refresh.finishRefresh()
+        refresh.finishLoadMore()
     }
 
     inner class VideoRecyAdapter(layoutResId: Int, data: List<UpInfoData>?) :
