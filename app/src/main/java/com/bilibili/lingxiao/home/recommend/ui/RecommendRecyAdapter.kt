@@ -2,6 +2,8 @@ package com.bilibili.lingxiao.home.recommend.ui
 
 import android.graphics.Color
 import android.net.Uri
+import android.view.View
+import android.widget.ImageView
 
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.recommend.model.RecommendData
@@ -24,6 +26,7 @@ class RecommendRecyAdapter(layoutResId: Int, data: List<RecommendData>?) :
             helper.setBackgroundColor(R.id.category_name,
                 mContext.resources.getColor(R.color.yellow_300))
                 .setTextColor(R.id.category_name,Color.WHITE)
+            helper.getView<ImageView>(R.id.image_more).visibility = View.INVISIBLE
         }
         helper.setText(R.id.category_name,"" + category_name)
 

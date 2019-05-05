@@ -86,7 +86,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         })
         if (debug){
             var url = GlobalProperties.DETAIL_HOST + GlobalProperties.getUrlParamsByMap(request)
-            Log.d(TAG,"拼接的url---->$url")
+            Log.d(TAG,"拼接的获取视频详情的url---->$url")
         }
         getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET,GlobalProperties.DETAIL_HOST,request, mLifecycle,callback)
     }
@@ -104,6 +104,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         request.put("page",page)
         request.put("pagesize",pagesize)
         request.put("order",order)
+
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
                 LogUtils.d("获取到的数据" + element)
@@ -122,16 +123,19 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
 
     /**
      * @param oid av号
-     * @param page 第几页
+     * @param ps 每次请求获取多少个
+     * @param next 获取对应的评论楼层  根据all_count获取，如果为0就是带热评的
+     * 比如all_count为80 ps为20， 那么next为0 则获取到 60-80之间的楼层 next为80 一样是60-80之间的楼层，但是没有热评
      */
-    fun getComment(oid:String,page:Int,callback: HttpRxCallback<Any>){
+    fun getComment(oid:String,next:Int,callback: HttpRxCallback<Any>){
         request.clear()
         request.put("appkey",GlobalProperties.APP_KEY)
         request.put("build",GlobalProperties.BUILD)
         request.put("device",GlobalProperties.DEVICE)
         request.put("mobi_app",GlobalProperties.MOBI_APP)
         request.put("platform",GlobalProperties.PLATFORM)
-        request.put("pn",page)
+        //request.put("pn",page)
+        request.put("next",next)
         request.put("ps",20)
         request.put("sort",0)
         request.put("type",1)

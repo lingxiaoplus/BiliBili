@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.dagger.DaggerUiComponent
@@ -21,12 +22,13 @@ import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.utills.PopwindowUtil
 import kotlinx.android.synthetic.main.fragment_introduce.*
 import kotlinx.android.synthetic.main.fragment_introduce.view.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
 class IntroduceFragment :BaseFragment(), RecommendView {
-
+    val TAG = IntroduceFragment::class.java.simpleName
     var mEndPageList = arrayListOf<EndPageData>()
     var mRecommendList = arrayListOf<VideoRecoData.VideoInfo>()
     lateinit var endPageAdapter: EndPageAdapter
@@ -89,6 +91,13 @@ class IntroduceFragment :BaseFragment(), RecommendView {
      */
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public fun onGetVideoDetail(data: RecommendData) {
+        //针对sticky事件  eventBus会缓存在事件发射队列，
+        // 若是订阅关系已经存在则发射出去，但不会销毁。下次再次订阅，会继续接收上一次事件。所以这里接收到了需要移除
+        if (endPageAdapter.itemCount >= 5){
+            EventBus.getDefault().removeStickyEvent(data)
+            return
+        }
+
         var recommend = EndPageData(
             resources.getDrawable(R.drawable.ic_recommend),
             "" + data.like
@@ -117,9 +126,14 @@ class IntroduceFragment :BaseFragment(), RecommendView {
         img_head.setImageURI(Uri.parse(data.face))
         username.setText(data.name)
         //var tNames  = data.tname.split("·")
-        type_name.setText(data.tname)
+        data.tname?.let {
+            type_name.setTitleText(it)
+        }
         fensi.text = StringUtil.getBigDecimalNumber(data.reply) + "个粉丝"
-        fold_layout.setTitleText(data.title)
+        data.title?.let {
+            fold_layout.setTitleText(data.title)
+        }
+
         damku_num.text = StringUtil.getBigDecimalNumber(data.danmaku)
         var avNum = StringBuilder()
         avNum.append("   av")
@@ -137,9 +151,10 @@ class IntroduceFragment :BaseFragment(), RecommendView {
     }
 
     override fun onGetVideoDetail(data: VideoDetailData) {
-        if (data.description != null){
-            fold_layout.setMessageText(data.description)
+        data.description?.let {
+            fold_layout.setMessageText(it)
         }
+        Log.d(TAG,"设置描述信息${data}")
         play_num.text = StringUtil.getBigDecimalNumber(data.play)
         data.created_at?.let {
             var dataArray = it.split("\\s+")

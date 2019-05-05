@@ -16,7 +16,6 @@
             app:viewAspectRatio="1"
             app:placeholderImageScaleType="centerInside"
             app:actualImageScaleType="centerInside"
-            app:placeholderImage="@drawable/live_home_follow_anchor"
     />
     <TextView
             android:id="@+id/live_category_name"

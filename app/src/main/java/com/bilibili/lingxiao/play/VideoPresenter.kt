@@ -55,8 +55,8 @@ class VideoPresenter : BasePresenter<RecommendView, BaseFragment>{
     /**
      * @param oid  视频av号
      */
-    fun getComment(oid:String,page: Int){
-        httpTrans.getComment(oid,page,object :HttpRxCallback<Any>(){
+    fun getComment(oid:String,next: Int){
+        httpTrans.getComment(oid,next,object :HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {
                 var lists = res as Array<*>
                 mView?.onGetVideoComment(lists[0] as CommentData)

@@ -108,7 +108,7 @@ class ColorTextView @JvmOverloads constructor(context: Context, attrs: Attribute
         this.ctvBackgroundColor = ctvBackgroundColor
     }
 
-    fun setText(text: String) {
+    fun setTitleText(text: String) {
         this.mTitleText = text
     }
 

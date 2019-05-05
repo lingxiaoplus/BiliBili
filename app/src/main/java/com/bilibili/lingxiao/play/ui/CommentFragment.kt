@@ -27,7 +27,8 @@ class CommentFragment :BaseFragment(), RecommendView {
     private lateinit var mAdapter: CommentAdapter
     private var mCommentList = arrayListOf<CommentData.Reply>()
 
-    private var page = 1 //评论页数
+    private var next = 0 //评论游标
+    //private var allCount = 0 //评论的总共楼层
     private var avNum = ""
 
     override val contentLayoutId: Int
@@ -47,11 +48,10 @@ class CommentFragment :BaseFragment(), RecommendView {
 
         root.refresh.setOnRefreshListener({
             mCommentList.clear()
-            videoPresenter.getComment(avNum,1)
+            videoPresenter.getComment(avNum,0)
         })
         root.refresh.setOnLoadMoreListener({
-            page++
-            videoPresenter.getComment(avNum,page)
+            videoPresenter.getComment(avNum,next)
         })
         var emptyView = View.inflate(context,R.layout.layout_empty,null)
         var image = emptyView.findViewById<ImageView>(R.id.image_error)
@@ -90,7 +90,7 @@ class CommentFragment :BaseFragment(), RecommendView {
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public fun onGetVideoDetail(data: RecommendData) {
         avNum = data.param
-        videoPresenter.getComment(avNum,page)
+        videoPresenter.getComment(avNum,next)
     }
 
     override fun onGetRecommendData(recommendData: List<RecommendData>) {
@@ -107,17 +107,23 @@ class CommentFragment :BaseFragment(), RecommendView {
     //var hotView = View.inflate(context,R.layout.item_hot_segment,null)
     override fun onGetVideoComment(commentData: CommentData) {
         LogUtils.d("获取到评论："+commentData.toString())
-        if (commentData.hots.size > 0 && page == 1){
-            for (hot in commentData.hots){
+        next = commentData.cursor.next
+        if (next == 1){
+            refresh.finishLoadMoreWithNoMoreData()
+            mAdapter.loadMoreEnd()
+        }
+        commentData.hots?.let {
+            for (hot in it){
                 mAdapter.addData(hot)
             }
-            var empty = commentData.hots.get(0)
+            var empty = it.get(0)
             var e = empty.copy(viewType = CommentData.Reply.SEGMENT)
             mAdapter.addData(e)
             var tabView:TabLayout = (activity as PlayActivity).findViewById(R.id.skin_tabLayout)
             var tabLayout = tabView.getTabAt(1)
             tabLayout?.text = "评论 " + commentData.cursor.allCount
         }
+
         if (commentData.replies == null){
             refresh.finishRefresh()
             refresh.finishLoadMore()

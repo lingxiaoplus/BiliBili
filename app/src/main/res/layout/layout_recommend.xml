@@ -10,7 +10,6 @@
         <ImageView
                 android:id="@+id/image_recommend"
                 style="@style/image_normal"
-                android:src="@drawable/live_home_follow_anchor"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/recycerView"

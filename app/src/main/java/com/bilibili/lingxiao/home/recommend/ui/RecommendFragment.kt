@@ -94,14 +94,16 @@ class RecommendFragment :BaseFragment(), RecommendView {
         mAdapter.setOnItemClickListener(object :BaseQuickAdapter.OnItemClickListener{
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
                 //val intent = Intent(context,PlayActivity::class.java)
-                var recommendData: RecommendData = mRecommendList.get(position)
-                EventBus.getDefault().postSticky(recommendData)
-                val intent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(mRecommendList.get(position).uri)
-                )
-                intent.putExtra("play_url",mRecommendList.get(position).uri)
-                startActivity(intent)
+                mRecommendList.get(position).let {
+                    EventBus.getDefault().postSticky(it)
+                    val intent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(it.uri)
+                    )
+                    intent.putExtra("play_url",it.uri)
+                    startActivity(intent)
+                }
+
             }
         })
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
@@ -136,7 +138,9 @@ class RecommendFragment :BaseFragment(), RecommendView {
             mAdapter.setNewData(recommendData)
         }else{
             for (data in recommendData){
-                mAdapter.addData(data)
+                if (data.title != null){
+                    mAdapter.addData(data)
+                }
             }
         }
         refresh.finishRefresh()

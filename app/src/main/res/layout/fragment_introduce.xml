@@ -203,7 +203,6 @@
                 android:padding="5dp"
                 app:ctvBackground="@color/black_alpha_32"
                 app:ctvCornerSize="40"
-                app:ctvText="我是原文本"
                 app:ctvMargin="3dp"
                 app:ctvTextColor="@color/black_alpha_144"
                 app:ctvTextSize="14sp"

@@ -15,11 +15,11 @@ data class CommentData(
     @SerializedName("folder")
     val folder: Folder,
     @SerializedName("hots")
-    val hots: List<Reply>,
+    val hots: List<Reply>?,
     @SerializedName("notice")
     val notice: Any,
     @SerializedName("replies")
-    val replies: List<Reply>,
+    val replies: List<Reply>?,
     @SerializedName("top")
     val top: Top,
     @SerializedName("upper")

@@ -27,9 +27,9 @@ data class RecommendData(
     val share: Int,
     val tag: Tag,
     val tid: Int,
-    val title: String,
+    val title: String?,
     val tname: String?,
-    val uri: String
+    val uri: String?
 ) {
     data class BannerItem(
         val ad_cb: String,
