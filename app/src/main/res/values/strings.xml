@@ -19,10 +19,22 @@
     <string name="scroll_behavior">com.bilibili.lingxiao.widget.behavior.ScrollAwareFabBehaviorDefault</string>
     <string name="player_behavior">com.bilibili.lingxiao.widget.behavior.PlayerBehavior</string>
 
-
     <string-array name="live_fans">
         <item>金瓜子榜</item>
         <item>礼物榜</item>
         <item>粉丝榜</item>
+    </string-array>
+
+    <!--comment-->
+    <string name="comment_detail">评论详情</string>
+
+    <string-array name="level_drawable">
+        <item>@drawable/mall_mine_vip_level_0</item>
+        <item>@drawable/mall_mine_vip_level_1</item>
+        <item>@drawable/mall_mine_vip_level_2</item>
+        <item>@drawable/mall_mine_vip_level_3</item>
+        <item>@drawable/mall_mine_vip_level_4</item>
+        <item>@drawable/mall_mine_vip_level_5</item>
+        <item>@drawable/mall_mine_vip_level_6</item>
     </string-array>
 </resources>

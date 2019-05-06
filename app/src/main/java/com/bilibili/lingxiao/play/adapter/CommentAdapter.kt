@@ -62,6 +62,7 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
                     segment.visibility = View.GONE
                 }
                 helper.addOnClickListener(R.id.more)
+                    .addOnClickListener(R.id.ll_comment_replie)
 
                 item.replies?.let {
                     helper.getView<LinearLayout>(R.id.ll_comment_replie).visibility = View.VISIBLE

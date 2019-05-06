@@ -25,6 +25,7 @@ class PlayActivity : BaseActivity() {
     @Inject
     lateinit var  commentFragment: CommentFragment
 
+
     val TAG = PlayActivity::class.java.simpleName
     override val contentLayoutId: Int
         get() = R.layout.activity_play
@@ -72,6 +73,28 @@ class PlayActivity : BaseActivity() {
         //setSupportActionBar(toolbar)
         //toolbar.title = ""
     }
+
+    /*fun showCommentDetail(fragmentTag:String){
+        var transaction = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(R.anim.pop_show,R.anim.pop_hide)
+        if (commentDetailFragment.isAdded){
+            transaction.show(commentDetailFragment).commitAllowingStateLoss()
+        }else{
+            transaction
+                .add(R.id.comment_detail,commentDetailFragment,fragmentTag)
+                .addToBackStack(fragmentTag)
+                .commitAllowingStateLoss()
+        }
+
+    }
+
+    fun hideCommentDetail(){
+        supportFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(R.anim.pop_hide,R.anim.pop_show)
+            .remove(commentDetailFragment)
+            .commitAllowingStateLoss()
+    }*/
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
         super.onConfigurationChanged(newConfig)

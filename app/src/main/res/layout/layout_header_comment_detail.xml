@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto">
+    <include
+            android:id="@+id/main_comment"
+            layout="@layout/item_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/top_bar"
+            app:layout_constraintBottom_toTopOf="@id/text_count"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+    />
+    <TextView
+            android:id="@+id/text_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="相关回复共100条"
+            style="@style/TextMessage"
+            app:layout_constraintTop_toBottomOf="@id/main_comment"
+            app:layout_constraintBottom_toTopOf="@id/replay"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.03"
+            android:layout_margin="3dp"
+    />
+</android.support.constraint.ConstraintLayout>

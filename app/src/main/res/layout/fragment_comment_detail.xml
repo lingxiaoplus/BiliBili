@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    <RelativeLayout
+            android:id="@+id/top_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="@dimen/dp_4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/main_comment"
+    >
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/comment_detail"
+                style="@style/TextTitle"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+        />
+        <ImageView
+                android:id="@+id/image_close"
+                android:src="@drawable/ic_light_browser_comment_close"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                style="@style/image_normal"
+        />
+    </RelativeLayout>
+    <include
+            android:id="@+id/replay"
+            layout="@layout/fragment_fans_detail"
+            app:layout_constraintTop_toBottomOf="@id/top_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+    />
+</android.support.constraint.ConstraintLayout>

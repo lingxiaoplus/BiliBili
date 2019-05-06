@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content" xmlns:tools="http://schemas.android.com/tools"
 >
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -59,6 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="这是评论内容"
+                style="@style/TextTitle"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
         />
@@ -118,6 +119,7 @@
                 android:background="@color/grey_200"
                 android:padding="5dp"
                 android:visibility="gone"
+                tools:visibility="visible"
         >
             <TextView
                     android:id="@+id/comment_hot1"

@@ -11,6 +11,7 @@ import com.bilibili.lingxiao.home.live.ui.play.FleetListFragment
 import com.bilibili.lingxiao.home.live.ui.play.InteractFragment
 import com.bilibili.lingxiao.home.live.ui.play.UpInfoFragment
 import com.bilibili.lingxiao.home.live.ui.LivePlayActivity
+import com.bilibili.lingxiao.play.ui.CommentDetailFragment
 import com.bilibili.lingxiao.play.ui.CommentFragment
 import com.bilibili.lingxiao.play.ui.IntroduceFragment
 import com.bilibili.lingxiao.play.ui.PlayActivity
@@ -25,11 +26,13 @@ interface UiComponent {
     fun inject(mikanFragment: MikanFragment)
     fun inject(introduceFragment: IntroduceFragment)
     fun inject(commentFragment: CommentFragment)
+    fun inject(commentDetailFragment: CommentDetailFragment)
 
     fun inject(interactFragment: InteractFragment)
     fun inject(upInfoFragment: UpInfoFragment)
     fun inject(fansFragment: FansFragment)
     fun inject(fleetListFragment: FleetListFragment)
+
 
     fun inject(mainActivity: MainActivity)
     fun inject(playActivity: PlayActivity)

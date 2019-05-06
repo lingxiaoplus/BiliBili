@@ -140,10 +140,6 @@ class IntroduceFragment :BaseFragment(), RecommendView {
         avNum.append(data.param)
         av_num.text = avNum.toString()
         videoPresenter.getDetailInfo(1,data.param)
-        val random = Random()
-        val ret = random.nextInt(100)
-        videoPresenter.getRecommendList(data.tid,ret)
-
     }
 
     override fun onGetRecommendData(recommendData: List<RecommendData>) {
@@ -164,7 +160,10 @@ class IntroduceFragment :BaseFragment(), RecommendView {
                 av_num.text = "  " + it + av_num.text.toString()
             }
         }
-
+        //先获取到视频信息，之后再获取推荐列表
+        val random = Random()
+        val ret = random.nextInt(100)
+        videoPresenter.getRecommendList(data.tid,ret)
     }
 
     override fun onGetVideoRecommend(videoRecoData: VideoRecoData) {

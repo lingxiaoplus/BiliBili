@@ -115,7 +115,7 @@ public class BiliDanmukuParser extends BaseDanmakuParser {
                         item.textColor = color;
                         item.textShadowColor = color <= Color.BLACK ? Color.WHITE : Color.BLACK;
                         item.flags = flag;
-                        Log.i(TAG,"字体大小："+item.textSize);
+                        //Log.i(TAG,"字体大小："+item.textSize);
                     }
                 }
             }

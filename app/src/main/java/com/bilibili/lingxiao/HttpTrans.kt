@@ -59,7 +59,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
      * @param id 用户的av号
      * fav 是否读取会员收藏状态 (默认 false)
      */
-    fun getDetailInfo(page:Int,id:String,callback : HttpRxCallback<Any>){
+    fun getDetailInfo(page:Int,id:String,callback : HttpRxCallback<Any>) {
         request.clear()
         request.put("_device",GlobalProperties.DEVICE)
         request.put("appkey",GlobalProperties.APP_KEY)
@@ -159,6 +159,36 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         getRequest().requestFullPath(HttpRequest.Method.GET,GlobalProperties.COMMENT_HOST,request, mLifecycle,callback)
     }
 
+    /**
+     * 楼中楼评论
+     * http://api.bilibili.com/x/v2/reply/reply/cursor?oid=46996647&plat=2&root=1473740845&size=20&sort=0&type=1
+     */
+    fun getDoubleComment(oid:Int,root:Int,size:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("oid",oid)
+        request.put("plat",2)
+        request.put("root",root)
+        request.put("size",size)
+        request.put("sort",0)
+        request.put("type",1)
+        request.put("ts",GlobalProperties.getSystemTime())
+
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var jsonData = element.asJsonObject
+                var jsonRoot = jsonData.getAsJsonObject("root")
+                var modle = Gson().fromJson(jsonRoot, CommentData.Reply::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.COMMENT_DOUBLE_HOST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"拼接的楼中楼评论url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET,GlobalProperties.COMMENT_DOUBLE_HOST,request, mLifecycle,callback)
+    }
     /**
      * 获取国内，日本推荐的番剧
      * https://bangumi.bilibili.com/appindex/follow_index_page?appkey=1d8b6e7d45233436&build=502000&mobi_app=android&platform=android&ts=1493967208000&sign=3eff79d895af9cf800016%20fe8f6bc6ce0

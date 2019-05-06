@@ -4,6 +4,7 @@ import android.support.design.widget.TabLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.dagger.DaggerUiComponent
 import com.bilibili.lingxiao.home.recommend.model.RecommendData
@@ -19,14 +20,18 @@ import com.camera.lingxiao.common.utills.LogUtils
 import com.camera.lingxiao.common.utills.PopwindowUtil
 import kotlinx.android.synthetic.main.fragment_comment.*
 import kotlinx.android.synthetic.main.fragment_comment.view.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import javax.inject.Inject
 
 class CommentFragment :BaseFragment(), RecommendView {
     private var videoPresenter = VideoPresenter(this, this)
     private lateinit var mAdapter: CommentAdapter
     private var mCommentList = arrayListOf<CommentData.Reply>()
 
+    @Inject
+    lateinit var  commentDetailFragment: CommentDetailFragment
     private var next = 0 //评论游标
     //private var allCount = 0 //评论的总共楼层
     private var avNum = ""
@@ -75,6 +80,13 @@ class CommentFragment :BaseFragment(), RecommendView {
                             v -> popwindowUtil.dissmiss()
                     }
                 }
+                R.id.ll_comment_replie ->{
+                    var act = activity as PlayActivity
+                    //act.showCommentDetail("" + mCommentList[position].oid)
+                    EventBus.getDefault().postSticky(mCommentList[position])
+                    commentDetailFragment.height = act.findViewById<RelativeLayout>(R.id.rl_video_detail).height
+                    commentDetailFragment.show(childFragmentManager,"" + mCommentList[position].oid)
+                }
             }
         }
        
@@ -90,7 +102,8 @@ class CommentFragment :BaseFragment(), RecommendView {
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public fun onGetVideoDetail(data: RecommendData) {
         avNum = data.param
-        videoPresenter.getComment(avNum,next)
+        refresh.autoRefresh(500)  //延迟获取评论数据
+        //videoPresenter.getComment(avNum,next)
     }
 
     override fun onGetRecommendData(recommendData: List<RecommendData>) {
@@ -108,7 +121,7 @@ class CommentFragment :BaseFragment(), RecommendView {
     override fun onGetVideoComment(commentData: CommentData) {
         LogUtils.d("获取到评论："+commentData.toString())
         next = commentData.cursor.next
-        if (next == 1){
+        if (next == 1){ //说明评论已经到底了
             refresh.finishLoadMoreWithNoMoreData()
             mAdapter.loadMoreEnd()
         }

@@ -99,7 +99,7 @@ data class CommentData(
         @SerializedName("rcount")
         val rcount: Int,
         @SerializedName("replies")
-        val replies: List<Hot.Reply>?,
+        val replies: List<Reply>?,
         @SerializedName("root")
         val root: Int,
         @SerializedName("root_str")
