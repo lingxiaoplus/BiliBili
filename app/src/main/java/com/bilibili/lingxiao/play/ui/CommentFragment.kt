@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_comment.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.w3c.dom.Comment
 import javax.inject.Inject
 
 class CommentFragment :BaseFragment(), RecommendView {
@@ -30,7 +31,7 @@ class CommentFragment :BaseFragment(), RecommendView {
     private lateinit var mAdapter: CommentAdapter
     private var mCommentList = arrayListOf<CommentData.Reply>()
 
-    @Inject
+    //@Inject
     lateinit var  commentDetailFragment: CommentDetailFragment
     private var next = 0 //评论游标
     //private var allCount = 0 //评论的总共楼层
@@ -83,6 +84,7 @@ class CommentFragment :BaseFragment(), RecommendView {
                 R.id.ll_comment_replie ->{
                     var act = activity as PlayActivity
                     //act.showCommentDetail("" + mCommentList[position].oid)
+                    commentDetailFragment = CommentDetailFragment()
                     EventBus.getDefault().postSticky(mCommentList[position])
                     commentDetailFragment.height = act.findViewById<RelativeLayout>(R.id.rl_video_detail).height
                     commentDetailFragment.show(childFragmentManager,"" + mCommentList[position].oid)

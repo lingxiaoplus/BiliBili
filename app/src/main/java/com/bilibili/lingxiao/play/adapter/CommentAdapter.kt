@@ -63,10 +63,14 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
                 }
                 helper.addOnClickListener(R.id.more)
                     .addOnClickListener(R.id.ll_comment_replie)
-
+                var more = helper.getView<TextView>(R.id.comment_hot_more)
+                var ll_replie = helper.getView<LinearLayout>(R.id.ll_comment_replie)
+                more.text = "共${item.rcount}条回复 >"
+                if (item.rcount > 0){
+                    ll_replie.visibility = View.VISIBLE
+                }
                 item.replies?.let {
-                    helper.getView<LinearLayout>(R.id.ll_comment_replie).visibility = View.VISIBLE
-                    var more = helper.getView<TextView>(R.id.comment_hot_more)
+
                     if (it.size > 3){
                         for ((index,id) in replies.withIndex()){
                             var name = it[index].member.uname + ": "
@@ -76,7 +80,6 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
                                 .setVisible(id,true)
                         }
                         more.visibility = View.VISIBLE
-                        more.text = "共${it.size}条回复 >"
                     }else{
                         more.visibility = View.GONE
                         for ((index,reply) in it.withIndex()){

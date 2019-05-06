@@ -46,6 +46,7 @@ class LivePlayPresenter(view: LivePlayView, activity: LivePlayActivity) :
             }
 
             override fun onCancel() {
+
             }
 
         })

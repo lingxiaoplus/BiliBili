@@ -119,7 +119,6 @@
                 android:background="@color/grey_200"
                 android:padding="5dp"
                 android:visibility="gone"
-                tools:visibility="visible"
         >
             <TextView
                     android:id="@+id/comment_hot1"

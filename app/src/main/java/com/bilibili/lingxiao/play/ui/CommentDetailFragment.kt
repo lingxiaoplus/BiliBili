@@ -43,9 +43,7 @@ class CommentDetailFragment : DialogFragment(){
     )
     private lateinit var mAdapter: CommentAdapter
     private var mCommentList = arrayListOf<CommentData.Reply>()
-    private val headerRootView by lazy {
-        View.inflate(context,R.layout.layout_header_comment_detail,null)
-    }
+    private lateinit var headerRootView:View
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +65,7 @@ class CommentDetailFragment : DialogFragment(){
         var recommendManager = LinearLayoutManager(context)
         recycerView.layoutManager = recommendManager
         mAdapter = CommentAdapter(mCommentList)
+        headerRootView = View.inflate(context,R.layout.layout_header_comment_detail,null)
         mAdapter.addHeaderView(headerRootView)
         recycerView.adapter = mAdapter
     }
