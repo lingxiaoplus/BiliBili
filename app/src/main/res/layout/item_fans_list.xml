@@ -42,7 +42,7 @@
                 android:id="@+id/image_header"
                 style="@style/image_normal"
                 app:progressBarImageScaleType="centerInside"
-                app:progressBarImage="@drawable/ic_img_user_head_default"
+                app:progressBarImage="@drawable/ic_im_avator_default"
                 app:roundAsCircle="true"
                 app:roundingBorderWidth="1dp"
                 android:layout_marginLeft="5dp"

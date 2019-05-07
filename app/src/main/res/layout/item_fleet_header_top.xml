@@ -70,7 +70,7 @@
                     android:id="@+id/image_top1"
                     style="@style/image_live_top1"
                     app:progressBarImageScaleType="centerInside"
-                    app:progressBarImage="@drawable/ic_img_user_head_default"
+                    app:progressBarImage="@drawable/ic_im_avator_default"
                     app:roundAsCircle="true"
                     app:roundingBorderWidth="1dp"
                     android:layout_gravity="center"

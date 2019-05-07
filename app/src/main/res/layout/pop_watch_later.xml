@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/popup_right_down"
+        android:id="@+id/watch_later"
+>
+    <ImageView
+            style="@style/image_normal"
+            android:src="@drawable/ic_following_watch_later"
+    />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pop_watch_later"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+    />
+</LinearLayout>

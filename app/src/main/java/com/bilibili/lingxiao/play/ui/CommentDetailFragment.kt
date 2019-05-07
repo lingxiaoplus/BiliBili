@@ -44,7 +44,8 @@ class CommentDetailFragment : DialogFragment(){
     private lateinit var mAdapter: CommentAdapter
     private var mCommentList = arrayListOf<CommentData.Reply>()
     private lateinit var headerRootView:View
-
+    private var oid = 0
+    private var rootId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,15 +60,18 @@ class CommentDetailFragment : DialogFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        image_close.setOnClickListener {
-            dismiss()
-        }
         var recommendManager = LinearLayoutManager(context)
         recycerView.layoutManager = recommendManager
         mAdapter = CommentAdapter(mCommentList)
         headerRootView = View.inflate(context,R.layout.layout_header_comment_detail,null)
         mAdapter.addHeaderView(headerRootView)
         recycerView.adapter = mAdapter
+        image_close.setOnClickListener {
+            dismiss()
+        }
+        refresh.setOnRefreshListener {
+            getDoubleComment()
+        }
     }
 
     override fun onStart() {
@@ -84,8 +88,6 @@ class CommentDetailFragment : DialogFragment(){
         params.width =  ViewGroup.LayoutParams.MATCH_PARENT
         params.height = height
         win.setAttributes(params)
-
-
     }
 
     override fun onStop() {
@@ -96,14 +98,23 @@ class CommentDetailFragment : DialogFragment(){
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     fun onGetCommentEvent(reply : CommentData.Reply){
         EventBus.getDefault().removeStickyEvent(reply)
-        var httpTrans:HttpTrans = HttpTrans(parentFragment!! as CommentFragment)
-        httpTrans.getDoubleComment(reply.oid,reply.rpid,20,object :HttpRxCallback<Any>(){
+        this.oid = reply.oid
+        this.rootId = reply.rpid
+        refresh.autoRefresh()
+    }
+
+    fun getDoubleComment(){
+        if (oid == 0 || rootId == 0){
+            refresh.finishRefresh()
+            refresh.finishLoadMoreWithNoMoreData()
+            return
+        }
+        var httpTrans :HttpTrans = HttpTrans(parentFragment!! as CommentFragment)
+        httpTrans.getDoubleComment(oid,rootId,20,object :HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {
                 var lists = res as Array<*>
                 var reply = lists[0] as CommentData.Reply
-
-                LogUtils.d("获取到的楼中楼回复${reply}")
-
+                //LogUtils.d("获取到的楼中楼回复${reply}")
                 headerRootView.header.setImageURI(Uri.parse(reply.member.avatar))
                 headerRootView.username.setText(reply.member.uname)
                 headerRootView.comment_desc.setText(reply.content.message)
@@ -117,6 +128,8 @@ class CommentDetailFragment : DialogFragment(){
                 reply.replies?.let {
                     mAdapter.addData(it)
                 }
+                refresh.finishRefresh()
+                refresh.finishLoadMoreWithNoMoreData()
             }
 
             override fun onError(code: Int, desc: String?) {
@@ -127,25 +140,6 @@ class CommentDetailFragment : DialogFragment(){
 
             }
         })
-
-        /*header.setImageURI(Uri.parse(reply.member.avatar))
-        username.setText(reply.member.uname)
-
-        comment_desc.setText(reply.content.message)
-        recommend_num.setText(StringUtil.getBigDecimalNumber(reply.like))
-
-        var level = reply.member.levelInfo.currentLevel
-        if (level > 6 || level < 0) level = 0
-        image_level.setImageResource(levelImages[level])
-
-        var floor = "#" +reply.floor + "  " + DateUtil.convertTimeToFormat(reply.ctime)
-        build_num.setText(floor)
-        text_count.setText("相关回复共${reply.rcount}条")
-        reply.replies?.let {
-            mAdapter.addData(it)
-        }*/
-        /*helper.addOnClickListener(R.id.more)
-            .addOnClickListener(R.id.ll_comment_replie)*/
     }
 
 }

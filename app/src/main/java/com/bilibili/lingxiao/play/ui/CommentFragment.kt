@@ -121,7 +121,7 @@ class CommentFragment :BaseFragment(), RecommendView {
     }
     //var hotView = View.inflate(context,R.layout.item_hot_segment,null)
     override fun onGetVideoComment(commentData: CommentData) {
-        LogUtils.d("获取到评论："+commentData.toString())
+        //LogUtils.d("获取到评论："+commentData.toString())
         next = commentData.cursor.next
         if (next == 1){ //说明评论已经到底了
             refresh.finishLoadMoreWithNoMoreData()
@@ -136,7 +136,7 @@ class CommentFragment :BaseFragment(), RecommendView {
             mAdapter.addData(e)
             var tabView:TabLayout = (activity as PlayActivity).findViewById(R.id.skin_tabLayout)
             var tabLayout = tabView.getTabAt(1)
-            tabLayout?.text = "评论 " + commentData.cursor.allCount
+            tabLayout?.text = "评论 ${commentData.cursor.allCount}"
         }
 
         if (commentData.replies == null){

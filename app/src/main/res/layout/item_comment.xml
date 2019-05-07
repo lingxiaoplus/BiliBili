@@ -9,8 +9,7 @@
     <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="@dimen/user_header_size"
             android:layout_height="@dimen/user_header_size"
-            app:progressBarImageScaleType="centerInside"
-            app:progressBarImage="@drawable/ic_img_user_head_default"
+            app:placeholderImage="@drawable/ic_im_avator_default"
             app:roundAsCircle="true"
             app:roundingBorderWidth="1dp"
             android:layout_margin="10dp"
@@ -34,7 +33,7 @@
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="名字哈哈"
+                    tools:text="名字哈哈"
                     style="@style/TextMessage"
             />
             <com.facebook.drawee.view.SimpleDraweeView
@@ -49,7 +48,7 @@
                 android:id="@+id/build_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="楼层数 #66  昨天"
+                tools:text="楼层数 #66  昨天"
                 style="@style/TextMessage"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
@@ -58,7 +57,7 @@
                 android:id="@+id/comment_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="这是评论内容"
+                tools:text="这是评论内容"
                 style="@style/TextTitle"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
@@ -80,7 +79,7 @@
                     android:layout_toRightOf="@id/recommend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="获赞数"
+                    tools:text="获赞数"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
             />
@@ -147,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue300"
                     android:textSize="@dimen/fen_si_text_size"
-                    android:text="共4条回复>"
+                    tools:text="共4条回复>"
                     android:visibility="gone"
             />
         </LinearLayout>

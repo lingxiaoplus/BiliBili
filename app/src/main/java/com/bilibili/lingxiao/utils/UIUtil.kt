@@ -14,15 +14,15 @@ object UIUtil {
     fun getContext() :Context{
         return mContext!!
     }
-    fun getScreenWidth(context: Context): Int {
-        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    fun getScreenWidth(context: Context?): Int {
+        val wm = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val outMetrics = DisplayMetrics()
         wm.defaultDisplay.getMetrics(outMetrics)
         return outMetrics.widthPixels
     }
 
-    fun getScreenHeight(context: Context): Int {
-        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    fun getScreenHeight(context: Context?): Int {
+        val wm = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val outMetrics = DisplayMetrics()
         wm.defaultDisplay.getMetrics(outMetrics)
         return outMetrics.heightPixels
@@ -64,5 +64,41 @@ object UIUtil {
         val dimenId = context.getResources().getIdentifier(dimenName, "dimen",
             context.getPackageName())
         return dimenId
+    }
+
+
+    //dip和px转换
+    fun dip2px(dip: Float): Float {
+        val density = getContext().resources.displayMetrics.density
+        return (dip * density + 0.5f)
+    }
+    fun px2dip(px: Int): Float {
+        val denstty = getContext().resources.displayMetrics.density
+        return px / denstty
+    }
+
+    /**
+     * 将px值转换为sp值，保证文字大小不变
+     */
+    fun px2sp(pxValue: Float): Int {
+        val fontScale = getContext().resources.displayMetrics.scaledDensity
+        return (pxValue / fontScale + 0.5f).toInt()
+    }
+
+    /**
+     * 将sp值转换为px值，保证文字大小不变
+     *
+     * @param spValue
+     * （DisplayMetrics类中属性scaledDensity）
+     * @return
+     */
+    fun sp2px(spValue: Float): Int {
+        val fontScale = getContext().resources.displayMetrics.scaledDensity
+        return (spValue * fontScale + 0.5f).toInt()
+    }
+
+    //获取尺寸
+    fun getDimen(id: Int): Int {
+        return getContext().resources.getDimensionPixelSize(id)
     }
 }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_margin="10dp"
 >
     <com.facebook.drawee.view.SimpleDraweeView
@@ -41,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/user_name_text_size"
-                android:text="ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大"
+                tools:text="ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大ha哈哈大"
                 android:maxLines="2"
                 android:ellipsize="end"
         />
@@ -91,7 +92,7 @@
                 <TextView
                         android:id="@+id/play_num"
                         style="@style/TextMessage"
-                        android:text="14.1万"
+                        tools:text="14.1万"
                 />
             </LinearLayout>
 
@@ -116,7 +117,7 @@
                 <TextView
                         android:id="@+id/damku_num"
                         style="@style/TextMessage"
-                        android:text="14.1万"
+                        tools:text="14.1万"
                 />
                 <TextView
                         android:id="@+id/av_num"

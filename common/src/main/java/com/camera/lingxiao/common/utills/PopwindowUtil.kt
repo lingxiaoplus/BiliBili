@@ -1,12 +1,18 @@
 package com.camera.lingxiao.common.utills
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.support.v4.app.Fragment
 import android.util.Log
 import android.util.SparseArray
 import android.view.Gravity
@@ -18,12 +24,12 @@ import android.widget.PopupWindow
 import android.widget.TextView
 
 class PopwindowUtil private constructor(private val mContext: Context) {
-    private var mWidth = 0
-    private var mHeight = 0
+    var mWidth = 0f
+    var mHeight = 0f
     private var mIsFocusable = true
     private var mIsOutside = true
     private var mResLayoutId = -1
-    private var mContentView: View? = null
+    var mContentView: View? = null
     private var mPopupWindow: PopupWindow? = null
     private var mAnimationStyle = -1
 
@@ -46,24 +52,18 @@ class PopwindowUtil private constructor(private val mContext: Context) {
      * @return
      */
     fun showAsDropDown(anchor: View, x: Int, y: Int): PopwindowUtil {
-        if (mPopupWindow != null) {
-            mPopupWindow!!.showAsDropDown(anchor, x, y)
-        }
+        mPopupWindow?.showAsDropDown(anchor, x, y)
         return this
     }
 
     fun showAsDropDown(anchor: View): PopwindowUtil {
-        if (mPopupWindow != null) {
-            mPopupWindow!!.showAsDropDown(anchor)
-        }
+        mPopupWindow?.showAsDropDown(anchor)
         return this
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     fun showAsDropDown(anchor: View, xOff: Int, yOff: Int, gravity: Int): PopwindowUtil {
-        if (mPopupWindow != null) {
-            mPopupWindow!!.showAsDropDown(anchor, xOff, yOff, gravity)
-        }
+        mPopupWindow?.showAsDropDown(anchor, xOff, yOff, gravity)
         return this
     }
 
@@ -75,23 +75,33 @@ class PopwindowUtil private constructor(private val mContext: Context) {
      * @param y
      * @return
      */
-    fun showAsLocation(parent: View, gravity: Int, x: Int, y: Int): PopwindowUtil {
-        if (mPopupWindow != null) {
-            mPopupWindow!!.showAtLocation(parent, gravity, x, y)
+    fun showAtLocation(parent: View, x: Int, y: Int ,gravity: Int): PopwindowUtil {
+        mPopupWindow?.showAtLocation(parent, gravity, x, y)
+        return this
+    }
+
+    /**
+     * 设置有阴影背景
+     */
+    fun showAtLocation(parent: View, x: Int, y: Int ,gravity: Int,bgAlpha: Float): PopwindowUtil {
+        backgroundAlpha(bgAlpha,true)
+        mPopupWindow?.let {
+            it.showAtLocation(parent, gravity, x, y)
+            it.setOnDismissListener {
+                backgroundAlpha(bgAlpha,false)
+            }
         }
         return this
     }
 
     fun showAtLocation(root: View): PopwindowUtil {
-        if (mPopupWindow != null) {
-            val windowPos = calculatePopWindowPos(root, mContentView!!)
-            val xOff = 10// 可以自己调整偏移
-            windowPos[0] -= xOff
-            mPopupWindow!!.showAtLocation(
-                root, Gravity.TOP or Gravity.START,
-                windowPos[0], windowPos[1]
-            )
-        }
+        val windowPos = calculatePopWindowPos(root, mContentView!!)
+        val xOff = 10// 可以自己调整偏移
+        windowPos[0] -= xOff
+        mPopupWindow?.showAtLocation(
+            root, Gravity.TOP or Gravity.START,
+            windowPos[0], windowPos[1]
+        )
         return this
     }
 
@@ -125,8 +135,8 @@ class PopwindowUtil private constructor(private val mContext: Context) {
             mContentView = LayoutInflater.from(mContext).inflate(mResLayoutId, null)
         }
 
-        if (mWidth != 0 && mHeight != 0) {
-            mPopupWindow = PopupWindow(mContentView, mWidth, mHeight)
+        if (mWidth != 0f && mHeight != 0f) {
+            mPopupWindow = PopupWindow(mContentView, mWidth.toInt(), mHeight.toInt())
         } else {
             mPopupWindow =
                 PopupWindow(mContentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -143,11 +153,11 @@ class PopwindowUtil private constructor(private val mContext: Context) {
         }
         mPopupWindow!!.isOutsideTouchable = mIsOutside
 
-        if (mWidth == 0 || mHeight == 0) {
+        if (mWidth == 0f || mHeight == 0f) {
             mPopupWindow!!.contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
             //如果外面没有设置宽高的情况下，计算宽高并赋值
-            mWidth = mPopupWindow!!.contentView.measuredWidth
-            mHeight = mPopupWindow!!.contentView.measuredHeight
+            mWidth = mPopupWindow!!.contentView.measuredWidth.toFloat()
+            mHeight = mPopupWindow!!.contentView.measuredHeight.toFloat()
         }
 
         mPopupWindow!!.update()
@@ -179,22 +189,6 @@ class PopwindowUtil private constructor(private val mContext: Context) {
         }
     }
 
-    fun getmWidth(): Int {
-        return mWidth
-    }
-
-    fun setmWidth(mWidth: Int) {
-        this.mWidth = mWidth
-    }
-
-    fun getmHeight(): Int {
-        return mHeight
-    }
-
-    fun setmHeight(mHeight: Int) {
-        this.mHeight = mHeight
-    }
-
     class PopupWindowBuilder(context: Context) {
         private val mCustomPopWindow: PopwindowUtil
 
@@ -202,7 +196,7 @@ class PopwindowUtil private constructor(private val mContext: Context) {
             mCustomPopWindow = PopwindowUtil(context)
         }
 
-        fun size(width: Int, height: Int): PopupWindowBuilder {
+        fun size(width: Float, height: Float): PopupWindowBuilder {
             mCustomPopWindow.mWidth = width
             mCustomPopWindow.mHeight = height
             return this
@@ -281,7 +275,7 @@ class PopwindowUtil private constructor(private val mContext: Context) {
             return this
         }
 
-        fun setBackgroundDrawable(drawable: BitmapDrawable): PopupWindowBuilder {
+        fun setBackgroundDrawable(drawable: Drawable): PopupWindowBuilder {
             mCustomPopWindow.mBackgroundDrawable = drawable
             return this
         }
@@ -344,4 +338,49 @@ class PopwindowUtil private constructor(private val mContext: Context) {
         }
     }
 
+    var isStarted = false
+    fun backgroundAlpha(bgAlpha:Float,show:Boolean) {
+        if (isStarted){
+            return
+        }
+        isStarted = true
+        var animator:ValueAnimator
+        if (show)
+            animator = ValueAnimator.ofFloat(1f, bgAlpha).setDuration(500)
+        else
+            animator = ValueAnimator.ofFloat(bgAlpha, 1f).setDuration(500)
+        getActivityFromContext(mContext)?.let {
+            var updateListener = ValueAnimator.AnimatorUpdateListener { animation ->
+                var mCurrentAlpha = (animation.animatedValue as Float)
+                val lp = it.getWindow().getAttributes()
+                LogUtils.d("阴影动画修改值${mCurrentAlpha}, 是否是显示的${show}")
+                lp.alpha = mCurrentAlpha
+                it.getWindow().setAttributes(lp)
+            }
+            var animatorListener = object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+                    //动画播放完毕
+                    isStarted = false
+                }
+            }
+            animator.addUpdateListener(updateListener)
+            animator.addListener(animatorListener)
+            animator.start()
+        }
+    }
+    private fun getActivityFromContext(context: Context?): Activity? {
+        var context = context
+        if (null != context) {
+            while (context is ContextWrapper) {
+                if (context is Activity) {
+                    return context
+                }else if (context is Fragment){
+                    return context.activity
+                }
+                context = context.baseContext
+            }
+        }
+        return null
+    }
 }

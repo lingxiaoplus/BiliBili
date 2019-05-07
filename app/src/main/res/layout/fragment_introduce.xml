@@ -2,6 +2,7 @@
 <android.support.v4.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -23,8 +24,7 @@
                     android:id="@+id/img_head"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    app:progressBarImageScaleType="centerInside"
-                    app:progressBarImage="@drawable/ic_img_header"
+                    app:placeholderImage="@drawable/ic_im_avator_default"
                     app:roundAsCircle="true"
                     app:roundingBorderWidth="1dp"
                     android:layout_centerVertical="true"
@@ -41,12 +41,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/user_name_text_size"
-                        android:text="没有如果"
+                        tools:text="没有如果"
                 />
                 <TextView
                         android:id="@+id/fensi"
                         style="@style/TextMessage"
-                        android:text="213个粉丝"
+                        tools:text="213个粉丝"
                 />
             </LinearLayout>
 
@@ -137,7 +137,7 @@
                     <TextView
                             android:id="@+id/play_num"
                             style="@style/TextMessage"
-                            android:text="14.1万"
+                            tools:text="14.1万"
                     />
                 </LinearLayout>
 
@@ -158,7 +158,7 @@
                     <TextView
                             android:id="@+id/damku_num"
                             style="@style/TextMessage"
-                            android:text="14.1万"
+                            tools:text="14.1万"
                     />
                     <TextView
                             android:id="@+id/av_num"

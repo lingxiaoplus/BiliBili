@@ -33,7 +33,7 @@ import android.widget.PopupWindow
 import com.bilibili.lingxiao.web.WebActivity
 import com.youth.banner.listener.OnBannerListener
 import android.animation.Animator
-
+import com.camera.lingxiao.common.utills.PopwindowUtil
 
 
 class RecommendFragment :BaseFragment(), RecommendView {
@@ -201,39 +201,23 @@ class RecommendFragment :BaseFragment(), RecommendView {
 
         })
     }
-
-    val contentView by lazy {
-        LayoutInflater.from(activity).inflate(R.layout.pop_detail_menu, null)
-    }
-    val mPopWindow by lazy {
-        PopupWindow(
-            contentView,
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT, true
-        )
-    }
+    
     private fun showPopupWindow(data : RecommendData) {
-        if (mPopWindow.isShowing){
-            return
-        }
-        //设置contentView
-        backgroundAlpha(0.5f)
-        mPopWindow.setAnimationStyle(R.style.contextMenuAnim);
-        mPopWindow.setContentView(contentView)
-        //设置各个控件的点击响应
-        val text_cancel = contentView.findViewById<TextView>(R.id.pop_cancel)
-        text_cancel.setOnClickListener({
-            mPopWindow.dismiss()
-        })
-        contentView.findViewById<TextView>(R.id.pop_up_name).text = data.dislike_reasons[0].reason_name
-        //显示PopupWindow
-        mPopWindow.setBackgroundDrawable(BitmapDrawable())
+        val popwindowUtil = PopwindowUtil.PopupWindowBuilder(activity!!)
+            .setView(R.layout.pop_detail_menu)
+            .size(LinearLayout.LayoutParams.MATCH_PARENT.toFloat(), LinearLayout.LayoutParams.WRAP_CONTENT.toFloat())
+            .setAnimationStyle(R.style.contextMenuAnim)
+            .setFocusable(true)
+            .setTouchable(true)
+            .setOutsideTouchable(true)
+            .create()
         val rootview = LayoutInflater.from(activity)
             .inflate(R.layout.fragment_recommend, null)
-        mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0)
-        mPopWindow.setOnDismissListener {
-            backgroundAlpha(1f)
-        }
+        popwindowUtil.showAtLocation(rootview,0,0,Gravity.BOTTOM,0.6f)
+        popwindowUtil.getView<TextView>(R.id.pop_up_name)!!.text = data.dislike_reasons[0].reason_name
+        popwindowUtil.getView<TextView>(R.id.pop_cancel)!!.setOnClickListener({
+            popwindowUtil.dissmiss()
+        })
     }
 
     fun backgroundAlpha(bgAlpha: Float) {

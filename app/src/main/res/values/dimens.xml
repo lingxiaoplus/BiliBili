@@ -17,4 +17,7 @@
 
     <dimen name="web_image_background_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="pop_watch_later_xoffset">15dp</dimen>
+    <dimen name="pop_watch_later_yoffset">-10dp</dimen>
 </resources>

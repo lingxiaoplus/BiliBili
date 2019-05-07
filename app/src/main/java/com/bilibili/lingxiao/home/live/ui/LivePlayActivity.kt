@@ -156,7 +156,7 @@ class LivePlayActivity : BaseActivity() , LivePlayView {
             .setTouchable(true)
             .setOutsideTouchable(true)
             .create()
-        popwindowUtil.showAsLocation(live_viewpager, Gravity.CENTER,0,0)
+        popwindowUtil.showAtLocation(live_viewpager, 0,0,Gravity.CENTER)
         popwindowUtil.getView<ImageView>(R.id.image_close)!!.setOnClickListener {
             popwindowUtil.dissmiss()
         }

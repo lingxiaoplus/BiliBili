@@ -9,9 +9,9 @@
             android:interpolator="@android:anim/linear_interpolator"
             android:toXDelta="0"
             android:toYDelta="100%p" />
-
     <alpha
             android:fromAlpha="1"
             android:toAlpha="0"
     />
+
 </set>

@@ -28,6 +28,8 @@
     <!--comment-->
     <string name="comment_detail">评论详情</string>
 
+    <string name="pop_watch_later">添加至稍后再看</string>
+
     <string-array name="level_drawable">
         <item>@drawable/mall_mine_vip_level_0</item>
         <item>@drawable/mall_mine_vip_level_1</item>
