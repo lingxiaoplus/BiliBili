@@ -29,7 +29,7 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
     //文字显示的最大行数
     private val MAX_COLLAPSED_LINES = 1
     //默认动画播放时长
-    private val DEFAULT_ANIM_DURATION = 300
+    private val DEFAULT_ANIM_DURATION = 500
 
     //开关样式 默认为imagebutton
     private val EXPAND_INDICATOR_IMAGE_BUTTON = 0
@@ -115,14 +115,13 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
 
         if (mCollapsed){
             mTextView!!.maxLines = mMaxCollapsedLines
-
             mMessageTextView?.maxLines = 0
         }
         mToggleView?.setVisibility(View.VISIBLE)
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         if (mCollapsed){
             mTextView?.post({
-                //获取一个差值，动画范围在这个差值里
+                //标题和底部的距离，动画范围在这个差值里
                 mMarginBetweenTxtAndBottom = height - mTextView!!.height
             })
             mCollapsedHeight = measuredHeight
@@ -152,8 +151,9 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
     private fun initListener(){
         mUpdateListener = ValueAnimator.AnimatorUpdateListener { animation ->
             var interpolatedTime = animation.animatedValue as Float
+            //从startHeight->endHeight
             val newHeight = (endHeight - startHeight) * interpolatedTime + startHeight
-            mTextView?.setMaxHeight((newHeight - mMarginBetweenTxtAndBottom - mMessageTextHeight).toInt())
+            mTextView?.maxHeight = (newHeight - mMarginBetweenTxtAndBottom).toInt()
             mMessageTextView?.maxHeight = (newHeight - height + mMessageTextHeight).toInt()
             this@FoldableLayout.getLayoutParams().height = newHeight.toInt()
             this@FoldableLayout.requestLayout()
@@ -189,6 +189,7 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
         if (mCollapsed){
             endHeight = mCollapsedHeight
         }else{
+            //真正的高度 + 被折叠的高度 + message的高度
             endHeight = height + mTextHeightWithMaxLines - mTextView!!.getHeight() + mMessageTextHeight
         }
         startAnimation()

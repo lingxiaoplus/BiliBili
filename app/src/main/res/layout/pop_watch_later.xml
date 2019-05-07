@@ -11,12 +11,13 @@
     <ImageView
             style="@style/image_normal"
             android:src="@drawable/ic_following_watch_later"
+            android:padding="3dp"
     />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pop_watch_later"
             android:layout_marginLeft="10dp"
-            android:padding="5dp"
+            android:padding="10dp"
     />
 </LinearLayout>

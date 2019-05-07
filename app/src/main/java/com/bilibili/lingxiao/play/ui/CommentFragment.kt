@@ -104,7 +104,7 @@ class CommentFragment :BaseFragment(), RecommendView {
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public fun onGetVideoDetail(data: RecommendData) {
         avNum = data.param
-        refresh.autoRefresh(500)  //延迟获取评论数据
+        refresh.autoRefresh(50)  //延迟获取评论数据
         //videoPresenter.getComment(avNum,next)
     }
 

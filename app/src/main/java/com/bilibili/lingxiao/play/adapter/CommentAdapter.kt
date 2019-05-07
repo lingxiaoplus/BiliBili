@@ -68,6 +68,8 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
                 more.text = "共${item.rcount}条回复 >"
                 if (item.rcount > 0){
                     ll_replie.visibility = View.VISIBLE
+                }else{
+                    ll_replie.visibility = View.GONE
                 }
                 item.replies?.let {
 

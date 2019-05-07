@@ -112,6 +112,7 @@ class CommentDetailFragment : DialogFragment(){
         var httpTrans :HttpTrans = HttpTrans(parentFragment!! as CommentFragment)
         httpTrans.getDoubleComment(oid,rootId,20,object :HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {
+                mCommentList.clear()
                 var lists = res as Array<*>
                 var reply = lists[0] as CommentData.Reply
                 //LogUtils.d("获取到的楼中楼回复${reply}")
