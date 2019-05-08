@@ -59,7 +59,7 @@ class PlayActivity : BaseActivity() {
         play_view
             .setLive(true)
             .setVideoUrl(videoData.url)
-            .initDanMaKu(videoData.cid)
+            .initDanMaKu(videoData.cid,2000)
             .startPlay()
 
         for (name in tabArray){

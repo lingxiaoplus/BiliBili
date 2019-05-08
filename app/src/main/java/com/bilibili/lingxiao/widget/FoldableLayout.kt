@@ -29,7 +29,7 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
     //文字显示的最大行数
     private val MAX_COLLAPSED_LINES = 1
     //默认动画播放时长
-    private val DEFAULT_ANIM_DURATION = 500
+    private val DEFAULT_ANIM_DURATION = 300
 
     //开关样式 默认为imagebutton
     private val EXPAND_INDICATOR_IMAGE_BUTTON = 0
@@ -53,6 +53,7 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
     var mMessageTextView:TextView? = null
 
     private var mCollapsed = true // 默认是被折叠了的
+    private var mRelayout: Boolean = false
     private var mMarginBetweenTxtAndBottom: Int = 0
     private var mCollapsedHeight: Int = 0
     private var mUpdateListener: ValueAnimator.AnimatorUpdateListener? = null
@@ -91,31 +92,32 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
         mMessageTextView = findViewById(mMessageViewId)
 
         mTextView?.setOnClickListener(this)
-        mToggleView?.setOnClickListener(this)
+        mToggleView?.let {
+            it.setOnClickListener(this)
+            mExpandIndicatorController?.setView(it)
+        }
 
-        mExpandIndicatorController?.setView(mToggleView!!)
         mExpandIndicatorController?.changeState(mCollapsed)
     }
 
     private var mMessageTextHeight = 0
     private var mMarginMessageTextAndBottom = 0
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        if (!mRelayout){
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+            return
+        }
+        mRelayout = false
         mToggleView?.visibility = GONE
         mTextView?.maxLines = Int.MAX_VALUE
-        mMessageTextView?.maxLines = Int.MAX_VALUE
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         //单行不显示
         /*if (mTextView!!.lineCount <= mMaxCollapsedLines){
             return
         }*/
         mTextHeightWithMaxLines = getRealTextViewHeight(mTextView!!)
-        if(mMessageTextView != null){
-            mMessageTextHeight = getRealTextViewHeight(mMessageTextView!!)
-        }
-
         if (mCollapsed){
             mTextView!!.maxLines = mMaxCollapsedLines
-            mMessageTextView?.maxLines = 0
         }
         mToggleView?.setVisibility(View.VISIBLE)
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -154,10 +156,12 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
             //从startHeight->endHeight
             val newHeight = (endHeight - startHeight) * interpolatedTime + startHeight
             mTextView?.maxHeight = (newHeight - mMarginBetweenTxtAndBottom).toInt()
-            mMessageTextView?.maxHeight = (newHeight - height + mMessageTextHeight).toInt()
+            //val titleHeight = (mTextHeightWithMaxLines - mMarginBetweenTxtAndBottom) * interpolatedTime + mMarginBetweenTxtAndBottom
+            //mTextView?.maxHeight = titleHeight.toInt()
+            //mMessageTextView?.maxHeight = (newHeight - height + mMessageTextHeight).toInt()
             this@FoldableLayout.getLayoutParams().height = newHeight.toInt()
             this@FoldableLayout.requestLayout()
-            LogUtils.d("Foldable变化：" + interpolatedTime)
+            LogUtils.d("Foldable变化：${mMarginBetweenTxtAndBottom}")
         }
 
         mAnimatorListener = object : AnimatorListenerAdapter() {
@@ -170,6 +174,7 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     fun setTitleText(title: CharSequence){
+        mRelayout = true
         mTextView?.text = title
         layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
         requestLayout()
@@ -180,17 +185,24 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
         requestLayout()
     }
     override fun onClick(v: View?) {
-        if (mToggleView?.visibility != visibility){
-            return
+        changeStatus()
+    }
+
+    fun changeStatus(){
+        mToggleView?.let {
+            if (it.visibility != visibility){
+                return
+            }
         }
         mCollapsed = !mCollapsed
+        mCollapseListener?.onCollapseChanged(mCollapsed)
         mExpandIndicatorController?.changeState(mCollapsed)
         startHeight = height
         if (mCollapsed){
             endHeight = mCollapsedHeight
         }else{
             //真正的高度 + 被折叠的高度 + message的高度
-            endHeight = height + mTextHeightWithMaxLines - mTextView!!.getHeight() + mMessageTextHeight
+            endHeight = height + mTextHeightWithMaxLines - mTextView!!.height
         }
         startAnimation()
     }
@@ -257,5 +269,13 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
         override fun setView(toggleView: View) {
             textView = toggleView as TextView
         }
+    }
+
+    private var mCollapseListener:CollapseListener? = null
+    fun setCollapseListener(collapseListener:CollapseListener) {
+        mCollapseListener = collapseListener
+    }
+    interface CollapseListener{
+        fun onCollapseChanged(collapsed :Boolean)
     }
 }

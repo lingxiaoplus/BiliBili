@@ -22,7 +22,9 @@ import com.bilibili.lingxiao.play.model.VideoRecoData
 import com.bilibili.lingxiao.utils.StringUtil
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
+import com.bilibili.lingxiao.widget.FoldableLayout
 import com.camera.lingxiao.common.app.BaseFragment
+import com.camera.lingxiao.common.utills.LogUtils
 import com.camera.lingxiao.common.utills.PopwindowUtil
 import kotlinx.android.synthetic.main.fragment_introduce.*
 import kotlinx.android.synthetic.main.fragment_introduce.view.*
@@ -60,7 +62,11 @@ class IntroduceFragment :BaseFragment(), RecommendView {
         root.recommend_recycler.adapter = videoDetailAdapter
         root.recommend_recycler.isNestedScrollingEnabled = false
 
-
+        root.fold_layout.setCollapseListener(object :FoldableLayout.CollapseListener{
+            override fun onCollapseChanged(collapsed: Boolean) {
+                root.fold_message.changeStatus()
+            }
+        })
         videoDetailAdapter.setOnItemChildClickListener { adapter, view, position ->
             when(view.id){
                 R.id.more ->{
@@ -72,7 +78,6 @@ class IntroduceFragment :BaseFragment(), RecommendView {
                         .setTouchable(true)
                         .setOutsideTouchable(true)
                         .create()
-
                     var intArray = IntArray(2)
                     view.getLocationInWindow(intArray)
                     popwindowUtil.mContentView?.let {
@@ -83,10 +88,10 @@ class IntroduceFragment :BaseFragment(), RecommendView {
                         //popwindowUtil.showAsDropDown(view,0,-view.height,Gravity.LEFT or Gravity.TOP)
                         popwindowUtil.showAtLocation(view,intArray[0],intArray[1],Gravity.NO_GRAVITY,0.6f)
                         popwindowUtil.getView<View>(R.id.watch_later)!!.setOnClickListener {
+                            ToastUtil.show("已添加到稍后再看列表")
                             popwindowUtil.dissmiss()
                         }
                     }
-
                 }
             }
         }
@@ -157,7 +162,7 @@ class IntroduceFragment :BaseFragment(), RecommendView {
 
     override fun onGetVideoDetail(data: VideoDetailData) {
         data.description?.let {
-            fold_layout.setMessageText(it)
+            fold_message.setTitleText(it)
         }
         //Log.d(TAG,"设置描述信息${data}")
         play_num.text = StringUtil.getBigDecimalNumber(data.play)

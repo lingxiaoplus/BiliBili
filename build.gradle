@@ -30,7 +30,7 @@ task clean(type: Delete) {
 ext {
     //版本号相关
     versionCode = 1
-    versionName = '1.0'
+    versionName = '0.0.1'
     minSdkVersion = 21
     targetSdkVersion = 28
     compileSdkVersion = 28

@@ -443,6 +443,19 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
     }
 
     /**
+     * 初始化弹幕库
+     * @param cid 根据cid获取弹幕
+     * @param delay 延迟获取，同时初始化视频和弹幕部分手机可能会卡顿
+     */
+    fun initDanMaKu(cid:Int,delay:Long): SimplePlayerView{
+        this.postDelayed({
+            BiliDanmuku.initDanmaku(danmaku)
+            getDanmakuFromCid(cid)
+        },delay)
+        return this
+    }
+
+    /**
      * 是否显示网络状态提示
      */
     fun showNetWorkHint(show: Boolean): SimplePlayerView{
@@ -901,7 +914,6 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             override fun onFailure(call: Call, e: IOException) {
                 Log.e(TAG,"播放弹幕失败" + e)
             }
-
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful()) {
                     var response = response.body()

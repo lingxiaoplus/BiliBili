@@ -78,6 +78,11 @@
             </LinearLayout>
         </RelativeLayout>
 
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+        >
         <com.bilibili.lingxiao.widget.FoldableLayout
                 android:id="@+id/fold_layout"
                 android:layout_width="match_parent"
@@ -85,7 +90,6 @@
                 app:maxCollapsedLines="1"
                 android:orientation="vertical"
         >
-
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -113,7 +117,7 @@
                         android:layout_marginRight="10dp"
                 />
             </LinearLayout>
-
+        </com.bilibili.lingxiao.widget.FoldableLayout>
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -168,16 +172,24 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <TextView
-                    android:id="@id/expand_message_textview"
+            <com.bilibili.lingxiao.widget.FoldableLayout
+                    android:id="@+id/fold_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-            />
-        </com.bilibili.lingxiao.widget.FoldableLayout>
+                    app:maxCollapsedLines="0"
+                    android:orientation="vertical"
+            >
+                <TextView
+                        android:id="@id/expand_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                />
+            </com.bilibili.lingxiao.widget.FoldableLayout>
+
+        </LinearLayout>
 
 
 

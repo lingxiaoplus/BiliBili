@@ -36,6 +36,7 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
             R.id.comment_hot3
         )
     }
+    var hotSegmentPosition:Int = 0  //需要隐藏分割线的位置
     constructor(data: List<CommentData.Reply>):super(data){
         addItemType(CommentData.Reply.REPLIE,R.layout.item_comment)
         addItemType(CommentData.Reply.SEGMENT,R.layout.item_hot_segment)
@@ -57,7 +58,7 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
                 var floor = "#" +item.floor + "  " + DateUtil.convertTimeToFormat(item.ctime)
                 helper.setText(R.id.build_num,floor)
 
-                if (data.size > 4 && helper.position == 4){
+                if (helper.position == hotSegmentPosition){
                     var segment:ImageView = helper.getView(R.id.segment)
                     segment.visibility = View.GONE
                 }
@@ -99,6 +100,7 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
             }
         }
     }
+
 
     fun getColorText(name:String,message:String) :SpannableString{
         var spannableString = SpannableString(name + message)

@@ -94,11 +94,13 @@
             <ImageView
                     android:id="@+id/share"
                     app:srcCompat="@drawable/ic_following_repost"
+                    android:tint="@color/grey_400"
                     android:layout_centerVertical="true"
                     style="@style/image_small"
                     android:layout_toRightOf="@id/dislike"
                     android:layout_marginLeft="20dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
+                    android:padding="2dp"
             />
             <ImageView
                     android:id="@+id/more"

@@ -201,7 +201,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
 
         })
     }
-    
+
     private fun showPopupWindow(data : RecommendData) {
         val popwindowUtil = PopwindowUtil.PopupWindowBuilder(activity!!)
             .setView(R.layout.pop_detail_menu)

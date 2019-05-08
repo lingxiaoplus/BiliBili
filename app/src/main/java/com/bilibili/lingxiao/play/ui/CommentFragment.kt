@@ -131,12 +131,15 @@ class CommentFragment :BaseFragment(), RecommendView {
             for (hot in it){
                 mAdapter.addData(hot)
             }
+            //随便放一条数据，用于显示热门评论
             var empty = it.get(0)
             var e = empty.copy(viewType = CommentData.Reply.SEGMENT)
+            mAdapter.hotSegmentPosition = it.size -1
             mAdapter.addData(e)
             var tabView:TabLayout = (activity as PlayActivity).findViewById(R.id.skin_tabLayout)
             var tabLayout = tabView.getTabAt(1)
             tabLayout?.text = "评论 ${commentData.cursor.allCount}"
+
         }
 
         if (commentData.replies == null){
