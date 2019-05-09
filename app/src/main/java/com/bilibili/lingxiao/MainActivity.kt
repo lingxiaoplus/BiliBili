@@ -5,12 +5,14 @@ import android.Manifest
 import android.support.design.internal.NavigationMenuView
 import android.view.Gravity
 import android.view.View
+import android.widget.LinearLayout
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
 import com.bilibili.lingxiao.home.category.ui.CategoryFragment
 import com.bilibili.lingxiao.home.live.ui.LiveFragment
 import com.bilibili.lingxiao.home.mikan.ui.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.user.LoginActivity
+import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
@@ -88,6 +90,10 @@ class MainActivity : BaseActivity() {
         header_view.setOnClickListener({
             StartActivity(LoginActivity::class.java,false)
         })
+        findViewById<LinearLayout>(R.id.ll_nav_setting)
+            .setOnClickListener {
+            ToastUtil.show("设置")
+        }
         //隐藏NavigationView右侧滚动条
         var navigationMenuView = main_navigation.getChildAt(0) as NavigationMenuView
         navigationMenuView.isVerticalScrollBarEnabled = false
