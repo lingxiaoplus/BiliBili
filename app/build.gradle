@@ -80,7 +80,6 @@ dependencies {
     implementation "com.github.zackratos.ultimatebar:ultimatebar2:$rootProject.ext.ultimatebarVersion"
     implementation "org.greenrobot:eventbus:$rootProject.ext.eventBusVersion"
 
-
     //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
 
     //烈焰弹幕

@@ -53,30 +53,14 @@ object GlobalProperties {
      */
     fun getSign(map: Map<String, Any>): String {
         //拼接参数(按顺序) + SecretKey
-        /*val queryParams = StringBuilder()
-        val it = map.iterator()
-        while (it.hasNext()) {
-            val str = it.next()
-            *//*if (str.isNullOrEmpty()){
-                break
-            }*//*
-            queryParams.append(str.key)
-            queryParams.append("=")
-            queryParams.append(str.value)
-            if (it.hasNext()) {
-                queryParams.append("&")
-            }
-        }
-        queryParams.append(SECRET_KEY)*/
-        val orignSign = getUrlParamsByMap(map) + SECRET_KEY //queryParams.toString()
+        val orignSign = getUrlParamsByMap(map) + SECRET_KEY
         //进行MD5加密
         var sign = ""
-        Log.i(TAG, "加密前的sign: " + orignSign)
         try {
             sign = MD5Util.getMD5(orignSign).trim()
-            Log.i(TAG, "加密后的sign: " + sign)
+            Log.i(TAG, "加密后的sign: $sign")
         } catch (e: NoSuchAlgorithmException) {
-            Log.e(TAG, "sign encryption failed : " + e.message)
+            Log.e(TAG, "sign encryption failed: ${e.printStackTrace()}")
         }
         return sign
     }

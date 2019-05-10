@@ -23,46 +23,48 @@ object DanMaKuTool {
             override fun onOpen(webSocket: okhttp3.WebSocket, response: Response) {
                 super.onOpen(webSocket, response)
                 var inRoomMessage = JSONObject()
-                inRoomMessage.put("clientver","1.5.10.1")
+                inRoomMessage.put("clientver","1.6.3")
                 inRoomMessage.put("platform","web")
-                inRoomMessage.put("protover",1)
-                inRoomMessage.put("uid",0)
+                inRoomMessage.put("protover",2)
                 inRoomMessage.put("roomid",roomId)  //必填
+                inRoomMessage.put("type",2)
                 var bytes = inRoomMessage.toString().toByteArray(Charsets.UTF_8)
                 sendCmd(7, bytes, webSocket)
                 startTask(webSocket)
-                Log.i(TAG,"websocket连接成功，发送进房消息" + inRoomMessage.toString())
+                Log.d(TAG,"websocket连接成功，发送进房消息$inRoomMessage")
             }
 
             override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
                 super.onMessage(webSocket, bytes)
-                Log.i(TAG,"websocket接收消息" + bytes)
+                Log.d(TAG,"websocket接收消息$bytes")
             }
             override fun onClosed(webSocket: okhttp3.WebSocket, code: Int, reason: String) {
                 super.onClosed(webSocket, code, reason)
-                Log.i(TAG,"websocket断开连接")
+                Log.d(TAG,"websocket断开连接")
                 exitRoom()
             }
 
             override fun onFailure(webSocket: okhttp3.WebSocket, t: Throwable, response: Response?) {
                 super.onFailure(webSocket, t, response)
-                Log.i(TAG,"websocket连接失败" + response.toString(),t)
+                Log.d(TAG,"websocket连接失败: $response , throw: $t")
                 exitRoom()
             }
         })
-
     }
 
-    private fun sendCmd(cmd: Int, bytes: ByteArray, webSocket: WebSocket){
-        var buffer = ByteBuffer.allocate(16 + bytes.size)
+    /**
+     * @param cmd 命令
+     * @param data 数据包
+     */
+    private fun sendCmd(cmd: Int, data: ByteArray, webSocket: WebSocket){
+        var buffer = ByteBuffer.allocate(16 + data.size)
         buffer.order(ByteOrder.BIG_ENDIAN)  //字节序为大端模式
-        buffer.putInt(16 + bytes.size)
+        buffer.putInt(16 + data.size)
         buffer.putShort(16)  //头部长度
         buffer.putShort(1)  //协议版本，目前是1
         buffer.putInt(cmd)  //操作码（封包类型）
         buffer.putInt(1)  //sequence，可以取常数1
-        Log.i(TAG,"发送消息的头部长度" + buffer.position())
-        buffer.put(bytes)
+        buffer.put(data)
         webSocket.send(ByteString.of(buffer))
     }
 

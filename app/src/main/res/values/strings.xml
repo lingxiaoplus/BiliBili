@@ -39,4 +39,24 @@
         <item>@drawable/mall_mine_vip_level_5</item>
         <item>@drawable/mall_mine_vip_level_6</item>
     </string-array>
+
+
+    <string-array name="theme_name">
+        <item>少女粉</item>
+        <item>夜间模式</item>
+        <item>姨妈红</item>
+        <item>咸蛋黄</item>
+        <item>早苗绿</item>
+        <item>胖次蓝</item>
+        <item>基佬紫</item>
+    </string-array>
+    <string-array name="theme_color">
+        <item>@color/pink_400</item>
+        <item>@color/pink_400</item>
+        <item>@color/red_400</item>
+        <item>@color/yellow_400</item>
+        <item>@color/green_400</item>
+        <item>@color/blue400</item>
+        <item>@color/purple400</item>
+    </string-array>
 </resources>

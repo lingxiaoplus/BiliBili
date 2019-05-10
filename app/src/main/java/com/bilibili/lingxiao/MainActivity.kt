@@ -10,6 +10,7 @@ import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
 import com.bilibili.lingxiao.home.category.ui.CategoryFragment
 import com.bilibili.lingxiao.home.live.ui.LiveFragment
 import com.bilibili.lingxiao.home.mikan.ui.MikanFragment
+import com.bilibili.lingxiao.home.navigation.ThemeActivity
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.user.LoginActivity
 import com.bilibili.lingxiao.utils.ToastUtil
@@ -92,8 +93,12 @@ class MainActivity : BaseActivity() {
         })
         findViewById<LinearLayout>(R.id.ll_nav_setting)
             .setOnClickListener {
-            ToastUtil.show("设置")
+            StartActivity(ThemeActivity::class.java,false)
         }
+        findViewById<LinearLayout>(R.id.ll_nav_theme)
+            .setOnClickListener {
+                StartActivity(ThemeActivity::class.java,false)
+            }
         //隐藏NavigationView右侧滚动条
         var navigationMenuView = main_navigation.getChildAt(0) as NavigationMenuView
         navigationMenuView.isVerticalScrollBarEnabled = false
