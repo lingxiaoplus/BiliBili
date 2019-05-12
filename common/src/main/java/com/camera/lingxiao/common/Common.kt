@@ -11,6 +11,11 @@ import com.tencent.bugly.crashreport.CrashReport
 
 object Common {
     private val TAG = Common::class.java.simpleName
+    /**
+     * 当前皮肤的id
+     */
+    val SKIN_ID = "skin_id"
+
     private fun showSelect(urls: Array<String>, context: Context) {
         val builder = AlertDialog.Builder(context)
         val alertDialog = builder.create()

@@ -57,7 +57,7 @@
     <color name="blue700">#1976D2</color>
 
     <!--toolbar颜色-->
-    <color name="colorPrimary_default">#4CAF50</color>
+    <color name="colorPrimary_default">#F06292</color>
     <color name="colorPrimary_red300">@color/red_300</color>
     <color name="colorPrimary_blue300">@color/blue300</color>
     <color name="colorPrimary_lightBlue300">@color/light_blue_300</color>
@@ -67,7 +67,7 @@
     <color name="colorPrimary_pink300">@color/pink_300</color>
     <color name="colorPrimary_orange300">@color/orange_300</color>
     <color name="colorPrimary_teal300">@color/teal_300</color>
-
+    <color name="colorPrimary_black">@color/black</color>
     <!--状态栏和开关颜色-->
     <color name="colorPrimaryDark_default">#388E3C</color>
     <color name="colorPrimaryDark_red300">@color/red_500</color>

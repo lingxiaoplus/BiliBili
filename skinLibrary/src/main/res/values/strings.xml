@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">SkinLibrary</string>
+    <string-array name="theme_name">
+        <item>少女粉</item>
+        <item>夜间模式</item>
+        <item>姨妈红</item>
+        <item>咸蛋黄</item>
+        <item>早苗绿</item>
+        <item>胖次蓝</item>
+        <item>基佬紫</item>
+    </string-array>
+    <string-array name="theme_tag">
+        <item>pink300</item>
+        <item>black</item>
+        <item>red300</item>
+        <item>orange300</item>
+        <item>teal300</item>
+        <item>lightBlue300</item>
+        <item>deepPurple300</item>
+    </string-array>
+    <string-array name="theme_color">
+        <item>@color/colorPrimary_default</item>
+        <item>@color/black</item>
+        <item>@color/colorPrimary_red300</item>
+        <item>@color/colorPrimary_teal300</item>
+        <item>@color/colorPrimary_teal300</item>
+        <item>@color/colorPrimary_lightBlue300</item>
+        <item>@color/colorPrimary_deepPurple300</item>
+    </string-array>
 </resources>

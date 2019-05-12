@@ -12,7 +12,9 @@
     <ImageView
             android:id="@+id/image_color"
             style="@style/image_normal"
-            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
     />
     <LinearLayout
             android:layout_width="wrap_content"

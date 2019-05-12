@@ -4,11 +4,17 @@ import android.graphics.Color
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.bilibili.lingxiao.R
+import com.bilibili.lingxiao.widget.RippleAnimation
+import com.camera.lingxiao.common.Common
 import com.camera.lingxiao.common.app.BaseActivity
+import com.camera.lingxiao.common.rxbus.SkinChangedEvent
+import com.camera.lingxiao.common.utills.SpUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lingxiao.skinlibrary.SkinLib
 import kotlinx.android.synthetic.main.activity_theme.*
 import kotlinx.android.synthetic.main.title_bar.*
+import org.greenrobot.eventbus.EventBus
 
 class ThemeActivity : BaseActivity() {
     private var themeList = arrayListOf<ThemeData>()
@@ -19,11 +25,12 @@ class ThemeActivity : BaseActivity() {
         super.initWidget()
         var names = resources.getStringArray(R.array.theme_name)
         var colors = resources.getIntArray(R.array.theme_color)
+        var tags = resources.getStringArray(R.array.theme_tag)
         for ((index,name) in names.withIndex()){
             if (index < 3){
-                themeList.add(ThemeData(colors[index],name,false,false))
+                themeList.add(ThemeData(colors[index],name,tags[index],false,false))
             }else{
-                themeList.add(ThemeData(colors[index],name,true,false))
+                themeList.add(ThemeData(colors[index],name,tags[index],true,false))
             }
         }
         themeList[0].choose = true
@@ -32,9 +39,29 @@ class ThemeActivity : BaseActivity() {
         recycerView.layoutManager = LinearLayoutManager(this)
         setToolbarBack(title_bar)
         title_bar.title = "主题颜色"
+
+        adapter.setOnItemClickListener { adapter, view, position ->
+            RippleAnimation.create(view).setDuration(1000).start()
+            for ((index,item) in themeList.withIndex()){
+                item.choose = false
+                if (index == position)
+                    item.choose = true
+            }
+            adapter.notifyDataSetChanged()
+            if (position == 0) {
+                SkinLib.resetSkin()
+            } else {
+                SkinLib.loadSkin(tags.get(position))
+            }
+            //SpUtils.putInt(this@ThemeActivity, Common.SKIN_ID,themeList[position].color)
+            EventBus.getDefault().post(SkinChangedEvent(R.color.colorPrimaryDark_indigo300))
+        }
     }
 
-    data class ThemeData(var color:Int,var name:String,var pay:Boolean,var choose:Boolean){
+    override fun isSkinChanged(): Boolean {
+        return true
+    }
+    data class ThemeData(var color:Int,var name:String,var tag:String,var pay:Boolean,var choose:Boolean){
 
     }
 

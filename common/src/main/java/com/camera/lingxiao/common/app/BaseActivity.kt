@@ -20,6 +20,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.Toolbar
+import com.camera.lingxiao.common.Common
 
 import com.camera.lingxiao.common.R
 import com.camera.lingxiao.common.rxbus.RxBus
@@ -35,6 +36,8 @@ import java.io.File
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -85,17 +88,15 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
      * 初始化控件调用之前
      */
     protected open fun initBefore() {
-        mBarcolor = SpUtils.getInt(this, ContentValue.SKIN_ID, R.color.colorPrimary)
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            //半透明
-            UltimateBar.newColorBuilder()
-                .statusColor(ContextCompat.getColor(this, mBarcolor))   // 状态栏颜色
-                .applyNav(true)             // 是否应用到导航栏
-                .navColor(ContextCompat.getColor(this, mBarcolor))         // 导航栏颜色
-                .navDepth(0)            // 导航栏颜色深度
-                .build(this)
-                .apply()
-        }
+        mBarcolor = SpUtils.getInt(this, Common.SKIN_ID, R.color.colorPrimary)
+        //半透明
+        UltimateBar.newColorBuilder()
+            .statusColor(ContextCompat.getColor(this, mBarcolor))   // 状态栏颜色
+            .applyNav(true)             // 是否应用到导航栏
+            .navColor(ContextCompat.getColor(this, mBarcolor))         // 导航栏颜色
+            .navDepth(0)            // 导航栏颜色深度
+            .build(this)
+            .apply()
         ActivityController.addActivity(this)
     }
 
@@ -119,7 +120,7 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
      */
     protected open fun initWidget() {
         //unBinder = ButterKnife.bind(this)
-        initSubscription()
+        //initSubscription()
     }
 
     /**
@@ -132,8 +133,8 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
     /**
      * 皮肤改变调用
      */
-    protected fun onSkinChanged(color: Int) {
-
+    protected open fun isSkinChanged() :Boolean{
+        return true
     }
 
     fun StartActivity(clzz: Class<*>, isFinish: Boolean) {
@@ -148,19 +149,25 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
      */
     private fun initSubscription() {
         val regist = RxBus.getInstance().register(SkinChangedEvent::class.java) { skinChangedEvent ->
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                UltimateBar.newColorBuilder()
-                    .statusColor(ContextCompat.getColor(applicationContext, skinChangedEvent.color))   // 状态栏颜色
-                    .applyNav(true)             // 是否应用到导航栏
-                    .navColor(ContextCompat.getColor(applicationContext, skinChangedEvent.color))         // 导航栏颜色
-                    .build(this@BaseActivity)
-                    .apply()
-            }
-            onSkinChanged(skinChangedEvent.color)
+            UltimateBar.newColorBuilder()
+                .statusColor(ContextCompat.getColor(applicationContext, skinChangedEvent.color))   // 状态栏颜色
+                .applyNav(true)             // 是否应用到导航栏
+                .navColor(ContextCompat.getColor(applicationContext, skinChangedEvent.color))         // 导航栏颜色
+                .build(this@BaseActivity)
+                .apply()
         }
         RxBus.getInstance().addSubscription(this, regist)
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public fun onSkinChanged(event:SkinChangedEvent){
+        UltimateBar.newColorBuilder()
+            .statusColor(ContextCompat.getColor(applicationContext, event.color))   // 状态栏颜色
+            .applyNav(true)             // 是否应用到导航栏
+            .navColor(ContextCompat.getColor(applicationContext, event.color))         // 导航栏颜色
+            .build(this@BaseActivity)
+            .apply()
+    }
     /**
      * 检查更新
      */
@@ -282,7 +289,7 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
     override fun onStart() {
         super.onStart()
         mListener?.onStart()
-        if (isRegisterEventBus()){
+        if (isRegisterEventBus() || isSkinChanged()){
             EventBus.getDefault().register(this)
         }
     }
@@ -306,7 +313,7 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
     override fun onStop() {
         super.onStop()
         mListener?.onStop()
-        if (isRegisterEventBus()){
+        if (isRegisterEventBus() || isSkinChanged()){
             EventBus.getDefault().unregister(this)
         }
     }
