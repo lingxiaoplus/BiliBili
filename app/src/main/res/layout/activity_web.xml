@@ -41,12 +41,24 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
-        <com.tencent.smtt.sdk.WebView
-                android:id="@+id/webview"
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
         >
-        </com.tencent.smtt.sdk.WebView>
+            <skin.support.widget.SkinCompatProgressBar
+                    android:id="@+id/progressBar"
+                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"/>
+            <com.tencent.smtt.sdk.WebView
+                    android:id="@+id/webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+            >
+            </com.tencent.smtt.sdk.WebView>
+        </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout

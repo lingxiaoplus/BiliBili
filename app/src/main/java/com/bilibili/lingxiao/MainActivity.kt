@@ -3,6 +3,7 @@ package com.bilibili.lingxiao
 
 import android.Manifest
 import android.support.design.internal.NavigationMenuView
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -17,7 +18,12 @@ import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
+import com.camera.lingxiao.common.rxbus.SkinChangedEvent
+import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
@@ -33,7 +39,7 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var recommendFragment: RecommendFragment
     @Inject
-    lateinit var hotFragment: CategoryFragment
+    lateinit var categoryFragment: CategoryFragment
     @Inject
     lateinit var mikanFragment: MikanFragment
 
@@ -46,8 +52,25 @@ class MainActivity : BaseActivity() {
         super.initInject()
         UIUtil.getUiComponent().inject(this)
     }
+
+    override fun isRegisterEventBus(): Boolean {
+        return true
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    fun onSkinChanged(event : SkinChangedEvent){
+        UltimateBar.newColorBuilder()
+            .statusColor(event.color)   // 状态栏颜色
+            .applyNav(true)             // 是否应用到导航栏
+            .navColor(event.color)         // 导航栏颜色
+            .build(this)
+            .apply()
+
+    }
+
     override fun initWidget() {
         super.initWidget()
+
         //权限检测
         if (!EasyPermissions.hasPermissions(this, *mPermessions)){
             //没有权限就申请
@@ -105,7 +128,7 @@ class MainActivity : BaseActivity() {
 
         fragmentList.add(liveFragment)
         fragmentList.add(recommendFragment)
-        fragmentList.add(hotFragment)
+        fragmentList.add(categoryFragment)
         fragmentList.add(mikanFragment)
         main_viewPager.adapter =
             PlayPagerAdapter(supportFragmentManager, tabArray, fragmentList)

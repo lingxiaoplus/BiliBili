@@ -81,42 +81,6 @@
     <color name="blue600">#1E88E5</color>
     <color name="blue700">#1976D2</color>
 
-    <!--toolbar颜色-->
-    <color name="colorPrimary_default">#4CAF50</color>
-    <color name="colorPrimary_red300">@color/red_300</color>
-    <color name="colorPrimary_blue300">@color/blue300</color>
-    <color name="colorPrimary_lightBlue300">@color/light_blue_300</color>
-    <color name="colorPrimary_cyan300">@color/cyan_300</color>
-    <color name="colorPrimary_indigo300">@color/indigo300</color>
-    <color name="colorPrimary_deepPurple300">@color/deepPurple300</color>
-    <color name="colorPrimary_pink300">@color/pink_300</color>
-    <color name="colorPrimary_orange300">@color/orange_300</color>
-    <color name="colorPrimary_teal300">@color/teal_300</color>
-
-    <!--状态栏和开关颜色-->
-    <color name="colorPrimaryDark_default">#388E3C</color>
-    <color name="colorPrimaryDark_red300">@color/red_500</color>
-    <color name="colorPrimaryDark_blue300">@color/blue500</color>
-    <color name="colorPrimaryDark_lightBlue300">@color/light_blue_500</color>
-    <color name="colorPrimaryDark_cyan300">@color/cyan_500</color>
-    <color name="colorPrimaryDark_indigo300">@color/indigo500</color>
-    <color name="colorPrimaryDark_deepPurple300">@color/deepPurple500</color>
-    <color name="colorPrimaryDark_pink300">@color/pink_500</color>
-    <color name="colorPrimaryDark_orange300">@color/orange_300</color>
-    <color name="colorPrimaryDark_teal300">@color/teal_300</color>
-
-    <!--skinact背景颜色-->
-    <color name="skinBackground_default">#ffffffff</color>
-    <color name="skinBackground_red300">@color/red_300</color>
-    <color name="skinBackground_blue300">@color/blue300</color>
-    <color name="skinBackground_lightBlue300">@color/light_blue_300</color>
-    <color name="skinBackground_cyan300">@color/cyan_300</color>
-    <color name="skinBackground_indigo300">@color/indigo300</color>
-    <color name="skinBackground_deepPurple300">@color/deepPurple300</color>
-    <color name="skinBackground_pink300">@color/pink_300</color>
-    <color name="skinBackground_orange300">@color/orange_300</color>
-    <color name="skinBackground_teal300">@color/teal_300</color>
-
     <color name="amber_100">#ffecb3</color>
     <color name="amber_200">#ffe082</color>
     <color name="amber_300">#ffd54f</color>

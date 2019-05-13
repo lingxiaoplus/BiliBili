@@ -14,7 +14,7 @@
         <item>black</item>
         <item>red300</item>
         <item>orange300</item>
-        <item>teal300</item>
+        <item>green300</item>
         <item>lightBlue300</item>
         <item>deepPurple300</item>
     </string-array>
@@ -22,8 +22,8 @@
         <item>@color/colorPrimary_default</item>
         <item>@color/black</item>
         <item>@color/colorPrimary_red300</item>
-        <item>@color/colorPrimary_teal300</item>
-        <item>@color/colorPrimary_teal300</item>
+        <item>@color/colorPrimary_orange300</item>
+        <item>@color/colorPrimary_green300</item>
         <item>@color/colorPrimary_lightBlue300</item>
         <item>@color/colorPrimary_deepPurple300</item>
     </string-array>

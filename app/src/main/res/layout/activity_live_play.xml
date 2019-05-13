@@ -10,17 +10,18 @@
             android:id="@+id/live_play"
             android:layout_width="match_parent"
             android:layout_height="200dp"/>
-    <com.bilibili.lingxiao.widget.skin.SkinTabLayout
+    <android.support.design.widget.TabLayout
             android:id="@+id/live_tablayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             app:tabTextColor="@color/black_alpha_224"
             android:elevation="2dp"
-            android:background="@color/white"
+            app:tabBackground="@color/white"
+            app:tabIndicatorColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
     >
-    </com.bilibili.lingxiao.widget.skin.SkinTabLayout>
+    </android.support.design.widget.TabLayout>
     <android.support.v4.view.ViewPager
             android:id="@+id/live_viewpager"
             android:layout_width="match_parent"

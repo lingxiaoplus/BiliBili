@@ -11,10 +11,13 @@ import com.camera.lingxiao.common.rxbus.SkinChangedEvent
 import com.camera.lingxiao.common.utills.SpUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.github.zackratos.ultimatebar.UltimateBar
 import com.lingxiao.skinlibrary.SkinLib
 import kotlinx.android.synthetic.main.activity_theme.*
 import kotlinx.android.synthetic.main.title_bar.*
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class ThemeActivity : BaseActivity() {
     private var themeList = arrayListOf<ThemeData>()
@@ -53,14 +56,25 @@ class ThemeActivity : BaseActivity() {
             } else {
                 SkinLib.loadSkin(tags.get(position))
             }
-            //SpUtils.putInt(this@ThemeActivity, Common.SKIN_ID,themeList[position].color)
-            EventBus.getDefault().post(SkinChangedEvent(R.color.colorPrimaryDark_indigo300))
+            SpUtils.putInt(this@ThemeActivity, Common.SKIN_ID,themeList[position].color)
+            EventBus.getDefault().postSticky(SkinChangedEvent(themeList[position].color))
         }
     }
-
-    override fun isSkinChanged(): Boolean {
+    override fun isRegisterEventBus(): Boolean {
         return true
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    fun onSkinChanged(event : SkinChangedEvent){
+        UltimateBar.newColorBuilder()
+            .statusColor(event.color)   // 状态栏颜色
+            .applyNav(true)             // 是否应用到导航栏
+            .navColor(event.color)         // 导航栏颜色
+            .build(this)
+            .apply()
+
+    }
+
     data class ThemeData(var color:Int,var name:String,var tag:String,var pay:Boolean,var choose:Boolean){
 
     }

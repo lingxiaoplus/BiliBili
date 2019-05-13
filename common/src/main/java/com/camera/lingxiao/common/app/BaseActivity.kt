@@ -20,6 +20,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import com.camera.lingxiao.common.Common
 
 import com.camera.lingxiao.common.R
@@ -88,12 +89,12 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
      * 初始化控件调用之前
      */
     protected open fun initBefore() {
-        mBarcolor = SpUtils.getInt(this, Common.SKIN_ID, R.color.colorPrimary)
+        mBarcolor = SpUtils.getInt(this, Common.SKIN_ID, ContextCompat.getColor(this,R.color.colorPrimary))
         //半透明
         UltimateBar.newColorBuilder()
-            .statusColor(ContextCompat.getColor(this, mBarcolor))   // 状态栏颜色
+            .statusColor(mBarcolor)   // 状态栏颜色
             .applyNav(true)             // 是否应用到导航栏
-            .navColor(ContextCompat.getColor(this, mBarcolor))         // 导航栏颜色
+            .navColor(mBarcolor)         // 导航栏颜色
             .navDepth(0)            // 导航栏颜色深度
             .build(this)
             .apply()
@@ -159,15 +160,7 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
         RxBus.getInstance().addSubscription(this, regist)
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public fun onSkinChanged(event:SkinChangedEvent){
-        UltimateBar.newColorBuilder()
-            .statusColor(ContextCompat.getColor(applicationContext, event.color))   // 状态栏颜色
-            .applyNav(true)             // 是否应用到导航栏
-            .navColor(ContextCompat.getColor(applicationContext, event.color))         // 导航栏颜色
-            .build(this@BaseActivity)
-            .apply()
-    }
+
     /**
      * 检查更新
      */
@@ -289,7 +282,7 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
     override fun onStart() {
         super.onStart()
         mListener?.onStart()
-        if (isRegisterEventBus() || isSkinChanged()){
+        if (isRegisterEventBus()){
             EventBus.getDefault().register(this)
         }
     }
@@ -313,7 +306,7 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
     override fun onStop() {
         super.onStop()
         mListener?.onStop()
-        if (isRegisterEventBus() || isSkinChanged()){
+        if (isRegisterEventBus()){
             EventBus.getDefault().unregister(this)
         }
     }
@@ -323,7 +316,7 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
      *
      * @return true绑定EventBus事件分发，默认不绑定，子类需要绑定的话复写此方法返回true.
      */
-    protected fun isRegisterEventBus() :Boolean{
+    protected open fun isRegisterEventBus() :Boolean{
         return false
     }
     /**

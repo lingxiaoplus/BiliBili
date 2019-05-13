@@ -10,11 +10,16 @@ import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_web.*
 import android.content.Intent
 import android.graphics.Bitmap
+import android.opengl.Visibility
 import android.util.Log
+import android.view.View
+import com.camera.lingxiao.common.rxbus.SkinChangedEvent
 import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebSettings
 import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class WebActivity : BaseActivity() {
@@ -31,6 +36,20 @@ class WebActivity : BaseActivity() {
             .applyNav(false)                // 是否应用到导航栏
             .build(this)
             .apply();
+    }
+    override fun isRegisterEventBus(): Boolean {
+        return true
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    fun onSkinChanged(event : SkinChangedEvent){
+        UltimateBar.newColorBuilder()
+            .statusColor(event.color)   // 状态栏颜色
+            .applyNav(true)             // 是否应用到导航栏
+            .navColor(event.color)         // 导航栏颜色
+            .build(this)
+            .apply()
+
     }
     override fun initWidget() {
         super.initWidget()
@@ -66,17 +85,18 @@ class WebActivity : BaseActivity() {
 
             override fun onPageStarted(p0: WebView?, p1: String?, p2: Bitmap?) {
                 super.onPageStarted(p0, p1, p2)
-                showProgressDialog("加载中...")
+                progressBar.visibility = View.VISIBLE
             }
             override fun onPageFinished(p0: WebView?, p1: String?) {
                 super.onPageFinished(p0, p1)
-                cancleProgressDialog()
+                progressBar.visibility = View.GONE
             }
         }
 
         webview.webChromeClient = object :WebChromeClient(){
-            override fun onProgressChanged(p0: WebView?, p1: Int) {
-                super.onProgressChanged(p0, p1)
+            override fun onProgressChanged(webview: WebView?, progress: Int) {
+                super.onProgressChanged(webview, progress)
+                progressBar.progress = progress
             }
         }
     }
