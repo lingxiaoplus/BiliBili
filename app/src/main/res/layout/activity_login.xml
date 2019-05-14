@@ -15,12 +15,13 @@
             android:id="@+id/login_toolbar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="@string/login_title"
     >
         <TextView
                 android:id="@+id/login_forget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="忘记密码？"
+                android:text="@string/forget_password"
                 android:textColor="@color/white"
                 android:gravity="right"
                 android:layout_marginLeft="200dp"
@@ -87,7 +88,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_height="wrap_content"
-                android:hint="请输入用户名"
+                android:hint="@string/input_username"
                 android:background="@null"
                 android:padding="6dp"
         />
@@ -144,7 +145,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:hint="请输入密码"
+                android:hint="@string/input_password"
                 android:background="@null"
                 android:padding="6dp"
         />
@@ -193,7 +194,7 @@
         <Button
                 android:layout_width="120dp"
                 android:layout_height="40dp"
-                android:text="注册"
+                android:text="@string/register_text"
                 android:textColor="@color/pink_400"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/register_button_background"
@@ -201,7 +202,7 @@
         <Button
                 android:layout_width="120dp"
                 android:layout_height="40dp"
-                android:text="登录"
+                android:text="@string/login_title"
                 android:textColor="@color/white"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/login_button_background"

@@ -3,6 +3,20 @@
     <string name="open">open</string>
     <string name="close">close</string>
 
+    <!--login-->
+    <string name="login_title">登录</string>
+    <string name="register_text">注册</string>
+    <string name="forget_password">忘记密码？</string>
+    <string name="input_username">请输入用户名</string>
+    <string name="input_password">请输入密码</string>
+
+
+    <string-array name="main_tab">
+        <item>直播</item>
+        <item>推荐</item>
+        <item>分区</item>
+        <item>追番</item>
+    </string-array>
 
     <!--live-->
     <string-array name="live_tab">
@@ -24,6 +38,11 @@
         <item>礼物榜</item>
         <item>粉丝榜</item>
     </string-array>
+    <string-array name="live_all">
+        <item>最热直播</item>
+        <item>最新开播</item>
+    </string-array>
+    <string name="live_all_title">全部直播</string>
 
     <!--comment-->
     <string name="comment_detail">评论详情</string>

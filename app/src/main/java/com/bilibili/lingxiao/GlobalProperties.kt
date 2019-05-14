@@ -32,6 +32,7 @@ object GlobalProperties {
     var LIVE_FLEET_LIST = "http://api.live.bilibili.com/live_user/v1/Guard/topList?"  //大航海
     var LIVE_UP_VIDEO_LIST = "http://api.live.bilibili.com/bili-api/x/internal/v2/archive/up/passed?" //直播up主的视频投稿
     var LIVE_UP_CHAT_HISTORY = "http://api.live.bilibili.com/xlive/app-room/v1/dM/gethistory?" //直播评论
+    var LIVE_ALL_URL = "http://api.live.bilibili.com/room/v3/Area/getRoomList"  //获取全部直播列表
 
 
     private val SECRET_KEY = "ea85624dfcf12d7cc7b2b3a94fac1f2c"

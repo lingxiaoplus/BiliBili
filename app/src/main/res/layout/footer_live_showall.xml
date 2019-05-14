@@ -4,6 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <Button
+            android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:background="@drawable/button_white_line_background"

@@ -226,7 +226,7 @@ abstract class BaseActivity : RxAppCompatActivity() ,EasyPermissions.PermissionC
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setDisplayShowTitleEnabled(false)
         }
-        toolbar.title = ""
+        //toolbar.title = ""
     }
 
     //跳转到网页

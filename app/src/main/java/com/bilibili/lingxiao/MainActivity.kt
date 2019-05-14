@@ -30,7 +30,9 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
-    var tabArray = arrayOf("直播","推荐","分区","追番")
+    val tabArray by lazy {
+     resources.getStringArray(R.array.main_tab)
+    }
     var drawerOpened = false
     private val mPermessions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
 

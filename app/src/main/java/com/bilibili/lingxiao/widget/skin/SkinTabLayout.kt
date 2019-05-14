@@ -78,6 +78,7 @@ class SkinTabLayout @JvmOverloads constructor(context: Context, attrs: Attribute
         if (mTabSelectedTextColorResId != INVALID_ID) {
             val selected = SkinCompatResources.getColor(context, mTabSelectedTextColorResId)
             if (tabTextColors != null) {
+                //不改变文字颜色
                 setTabTextColors(tabTextColors!!.defaultColor, selected)
             }
         }

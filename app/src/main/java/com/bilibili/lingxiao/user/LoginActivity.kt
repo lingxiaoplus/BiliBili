@@ -12,7 +12,7 @@ class LoginActivity : BaseActivity() {
     override fun initWidget() {
         super.initWidget()
         setToolbarBack(login_toolbar)
-        login_toolbar.title = "登录"
+        login_toolbar.title = resources.getString(R.string.login_title)
         login_et_password.setOnFocusChangeListener(object : View.OnFocusChangeListener{
             override fun onFocusChange(v: View?, hasFocus: Boolean) {
                 if (hasFocus){

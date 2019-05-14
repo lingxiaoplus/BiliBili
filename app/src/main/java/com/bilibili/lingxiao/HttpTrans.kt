@@ -502,4 +502,30 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         }
         getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_UP_CHAT_HISTORY, request,mLifecycle, callback)
     }
+
+    /**
+     * 获取所有的直播列表
+     * @param page 从1开始
+     * @param pageSize 30
+     * @param type 类型  live_time 最新   online 热门
+     */
+    fun getLiveAllList(page:Int,pageSize:Int,type:String,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("page",page)
+        request.put("page_size",pageSize)
+        request.put("sort_type",type)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, LiveAllData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.LIVE_ALL_URL + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取直播up聊天的历史记录的url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_ALL_URL, request,mLifecycle, callback)
+    }
 }

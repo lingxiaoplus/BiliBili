@@ -33,6 +33,7 @@ class FansFragment :BaseFragment(){
         super.onFirstVisiblity()
         viewpager.adapter = PagerAdapter(childFragmentManager)
         viewpager.offscreenPageLimit = tabArray.size
+        //tablayout和ViewPager的联动需要自己做
         //root.fans_tablayout.setViewPager(root.viewpager)
         fans_tablayout.setTabData(tabArray)
     }

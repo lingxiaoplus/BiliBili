@@ -78,6 +78,8 @@
                 android:theme="@android:style/Theme.Translucent"/>
         <activity android:name=".home.navigation.ThemeActivity">
         </activity>
+        <activity android:name=".home.live.ui.LiveAllActivity">
+        </activity>
     </application>
 
 </manifest>

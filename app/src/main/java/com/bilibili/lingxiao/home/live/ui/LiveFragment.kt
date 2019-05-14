@@ -12,6 +12,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import kotlinx.android.synthetic.main.fragment_live.view.*
 import kotlin.properties.Delegates
 import android.support.v7.widget.RecyclerView
+import android.widget.Button
 import android.widget.ImageView
 import com.bilibili.lingxiao.home.live.BannerImageLoader
 import com.bilibili.lingxiao.home.live.presenter.LivePresenter
@@ -29,6 +30,9 @@ import kotlinx.android.synthetic.main.fragment_live.*
 import kotlinx.android.synthetic.main.layout_banner.view.*
 import org.greenrobot.eventbus.EventBus
 
+/**
+ * 主页的main fragment
+ */
 class LiveFragment :BaseFragment() , LiveView {
     var livePresenter: LivePresenter =
         LivePresenter(this, this)
@@ -109,6 +113,10 @@ class LiveFragment :BaseFragment() , LiveView {
         image.setImageDrawable(resources.getDrawable(R.drawable.img_holder_error_style3))
         liveAdapter.setEmptyView(emptyView)
         floatingBtnToogle(root.live_recy,root.fab_live)
+
+        footerShowAllView.findViewById<Button>(R.id.button).setOnClickListener {
+            startActivity(Intent(context,LiveAllActivity::class.java))
+        }
     }
 
     override fun onFirstVisiblity() {
