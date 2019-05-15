@@ -45,7 +45,7 @@ object UIUtil {
             DisplayMetrics.DENSITY_XXXHIGH -> return "xxxhdpi"
             DisplayMetrics.DENSITY_TV -> return "tvdpi"
             //else -> return displayMetrics.densityDpi.toString()
-            else -> return "xxxhdpi"
+            else -> return "xxhdpi"
         }
     }
 

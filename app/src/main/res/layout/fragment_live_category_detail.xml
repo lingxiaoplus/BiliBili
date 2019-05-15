@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="match_parent"
         android:orientation="vertical"
 >
     <include layout="@layout/title_bar"/>
     <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="@color/colorPrimary"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp"
-            app:tl_indicator_gravity="TOP"
-            app:tl_textBold="SELECT"
-            app:tl_underline_color="#1A000000"
-            app:tl_underline_gravity="TOP"
-            app:tl_underline_height="1dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            app:tl_indicator_margin_left="2dp"
+            app:tl_indicator_margin_right="2dp"
+            app:tl_indicator_style="BLOCK"
+            app:tl_indicator_color="@color/colorPrimaryDark"
+            app:tl_indicator_width_equal_title="true"
+
     >
     </com.flyco.tablayout.SlidingTabLayout>
     <include
