@@ -53,7 +53,7 @@ class CommentDetailFragment : DialogFragment(){
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog.window.setWindowAnimations(R.style.contextMenuAnim)
-        UIUtil.getUiComponent().inject(this)
+        //UIUtil.getUiComponent().inject(this)
         val root = inflater.inflate(R.layout.fragment_comment_detail, container, false)
         return root
     }

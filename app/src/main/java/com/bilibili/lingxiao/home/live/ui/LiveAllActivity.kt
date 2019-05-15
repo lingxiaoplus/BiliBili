@@ -21,6 +21,7 @@ class LiveAllActivity : BaseActivity() {
     override fun isRegisterEventBus(): Boolean {
         return true
     }
+    val searchDialogFragment = SearchDialogFragment()
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     fun onSkinChanged(event : SkinChangedEvent){
@@ -35,12 +36,16 @@ class LiveAllActivity : BaseActivity() {
     override fun initWidget() {
         super.initWidget()
         setToolbarBack(toolbar)
+        toolbar.title = resources.getString(R.string.live_all_title)
         for (name in tabArray){
             tabLayout.addTab(tabLayout.newTab().setText(name))
         }
         viewPager.adapter = PagerAdapter(supportFragmentManager)
         viewPager.offscreenPageLimit = tabArray.size
         tabLayout.setupWithViewPager(viewPager)
+        image_search.setOnClickListener {
+            searchDialogFragment.show(supportFragmentManager,LiveAllActivity::class.java.simpleName)
+        }
     }
 
     inner class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {

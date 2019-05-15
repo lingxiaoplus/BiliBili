@@ -60,8 +60,22 @@ data class LiveAllData(
         @SerializedName("user_cover_flag")
         val userCoverFlag: Int,
         @SerializedName("web_pendent")
-        val webPendent: String
-    )
+        val webPendent: String,
+        @SerializedName("play_url")
+        val playUrl:String,
+        @SerializedName("play_url_h265")
+        val playUrlH265:String,
+        @SerializedName("play_url_card")
+        val playUrlCard:String,
+        @SerializedName("quality_description")
+        val qualitys:List<QualityDescription>,
+        @SerializedName("current_quality")
+        val currentQuality:Int
+    ){
+        data class QualityDescription(@SerializedName("qn")
+                                      val qn:Int,@SerializedName("desc")
+        val desc:String)
+    }
 
     data class NewTag(
         @SerializedName("hero_list")

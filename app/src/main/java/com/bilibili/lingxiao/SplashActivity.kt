@@ -23,7 +23,7 @@ class SplashActivity : BaseActivity() {
             0.98f, 1.0f, 0.98f, 1.0f,
             Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
         )
-        scaleAnimation.duration = 1500
+        scaleAnimation.duration = 1000
         //将AlphaAnimation这个已经设置好的动画添加到 AnimationSet中
         animationSet.addAnimation(scaleAnimation)
         animationSet.fillAfter = true

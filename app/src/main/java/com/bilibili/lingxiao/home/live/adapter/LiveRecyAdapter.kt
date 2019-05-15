@@ -36,8 +36,8 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
         multiTypeDelegate
             //.registerItemType(LiveData.BANNER,R.layout.layout_banner)
             //.registerItemType(LiveData.CATEGORY,R.layout.item_live_category)
-            .registerItemType(LiveData.RECOMMEND,R.layout.layout_recommend)
-            .registerItemType(LiveData.PARTITION,R.layout.layout_partition)
+            .registerItemType(LiveData.RECOMMEND,R.layout.layout_recommend) //推荐的
+            .registerItemType(LiveData.PARTITION,R.layout.layout_partition) //分类的
     }
     override fun convert(helper: BaseViewHolder, item: MultiItemLiveData) {
         when(helper.itemViewType){
@@ -62,6 +62,7 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
                 helper.setText(R.id.live_category_name,item.partitionsBean.partition.name)
                 LogUtils.d("LiveRecyAdapter 获取到Partition name 的值-》》" + item.partitionsBean.partition.name)
                 initPartition(helper,item.partitionsBean.lives)
+                helper.addOnClickListener(R.id.live_look_more)
                 //initPartition(helper,item.partitions)
             }
         }

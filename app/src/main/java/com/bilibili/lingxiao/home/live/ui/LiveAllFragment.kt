@@ -1,12 +1,14 @@
 package com.bilibili.lingxiao.home.live.ui
 
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.model.LiveAllData
+import com.bilibili.lingxiao.home.live.model.LiveData
 import com.bilibili.lingxiao.home.live.presenter.LiveAllPresenter
 import com.bilibili.lingxiao.home.live.view.LiveAllView
 import com.bilibili.lingxiao.utils.StringUtil
@@ -15,8 +17,9 @@ import com.camera.lingxiao.common.app.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
-import kotlinx.android.synthetic.main.fragment_fans_detail.*
-import kotlinx.android.synthetic.main.fragment_fans_detail.view.*
+import kotlinx.android.synthetic.main.normal_refresh_view.*
+import kotlinx.android.synthetic.main.normal_refresh_view.view.*
+import org.greenrobot.eventbus.EventBus
 
 class LiveAllFragment :BaseFragment(),LiveAllView{
     private var liveList = arrayListOf<LiveAllData.LiveInfo>()
@@ -25,7 +28,7 @@ class LiveAllFragment :BaseFragment(),LiveAllView{
     var hot = false
     var page = 1
     override val contentLayoutId: Int
-        get() = R.layout.fragment_fans_detail
+        get() = R.layout.normal_refresh_view
 
     override fun initArgs(bundle: Bundle?) {
         super.initArgs(bundle)
@@ -56,6 +59,20 @@ class LiveAllFragment :BaseFragment(),LiveAllView{
             }else{
                 presenter.getLiveNewList(page)
             }
+        }
+        videoAdapter.setOnItemClickListener { adapter, view, position ->
+            val intent = Intent(context, LivePlayActivity::class.java)
+            intent.putExtra("play_url",liveList[position].playUrl)
+            intent.putExtra("room_id",liveList[position].roomid)
+            startActivity(intent)
+            var live = LiveData.RecommendDataBean.LivesBean()
+            live.owner = LiveData.RecommendDataBean.LivesBean.OwnerBean()
+            live.owner.face = liveList[position].face
+            live.owner.name = liveList[position].uname
+            live.online = liveList[position].online
+            live.area = liveList[position].areaName
+            live.room_id = liveList[position].roomid
+            EventBus.getDefault().postSticky(live)
         }
     }
 

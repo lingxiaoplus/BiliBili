@@ -20,7 +20,7 @@
                 fresco:layout_constraintBottom_toBottomOf="parent"
                 fresco:layout_constraintTop_toTopOf="parent"
                 fresco:layout_constraintHorizontal_bias="0.1"
-                fresco:layout_constraintVertical_bias="0.8"
+                fresco:layout_constraintVertical_bias="0.9"
         >
             <com.facebook.drawee.view.SimpleDraweeView
                     android:layout_width="45dp"

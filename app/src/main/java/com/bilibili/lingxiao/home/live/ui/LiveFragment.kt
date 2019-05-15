@@ -108,6 +108,15 @@ class LiveFragment :BaseFragment() , LiveView {
                 EventBus.getDefault().postSticky(live)
             }
         })
+        liveAdapter.setOnItemChildClickListener { adapter, view, position ->
+            when(view.id){
+                R.id.live_look_more ->{
+                    var intent = Intent(context,LiveCategoryDetailActivity::class.java)
+                    intent.putExtra("parentId",liveList[position].partitionsBean.partition.id)
+                    startActivity(intent)
+                }
+            }
+        }
         var emptyView = View.inflate(context,R.layout.layout_empty,null)
         var image = emptyView.findViewById<ImageView>(R.id.image_error)
         image.setImageDrawable(resources.getDrawable(R.drawable.img_holder_error_style3))

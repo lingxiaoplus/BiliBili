@@ -33,7 +33,7 @@ object GlobalProperties {
     var LIVE_UP_VIDEO_LIST = "http://api.live.bilibili.com/bili-api/x/internal/v2/archive/up/passed?" //直播up主的视频投稿
     var LIVE_UP_CHAT_HISTORY = "http://api.live.bilibili.com/xlive/app-room/v1/dM/gethistory?" //直播评论
     var LIVE_ALL_URL = "http://api.live.bilibili.com/room/v3/Area/getRoomList"  //获取全部直播列表
-
+    var LIVE_TAB_LIST_URL = "http://api.live.bilibili.com/room/v1/Area/getList"  //直播分类所有tab
 
     private val SECRET_KEY = "ea85624dfcf12d7cc7b2b3a94fac1f2c"
     val PARAM_SIGN = "sign"

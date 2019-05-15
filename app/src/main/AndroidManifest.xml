@@ -80,6 +80,7 @@
         </activity>
         <activity android:name=".home.live.ui.LiveAllActivity">
         </activity>
+        <activity android:name=".home.live.ui.LiveCategoryDetailActivity"/>
     </application>
 
 </manifest>

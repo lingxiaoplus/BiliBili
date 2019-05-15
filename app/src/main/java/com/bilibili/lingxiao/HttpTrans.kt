@@ -514,6 +514,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         request.put("page",page)
         request.put("page_size",pageSize)
         request.put("sort_type",type)
+        request.put("platform",GlobalProperties.PLATFORM)
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
                 var modle = Gson().fromJson(element, LiveAllData::class.java)
@@ -522,10 +523,26 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
                 return obj
             }
         })
-        if (debug){
-            var url = GlobalProperties.LIVE_ALL_URL + GlobalProperties.getUrlParamsByMap(request)
-            Log.d(TAG,"获取直播up聊天的历史记录的url---->$url")
-        }
         getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_ALL_URL, request,mLifecycle, callback)
+    }
+
+    /**
+     * 获取所有的直播分类tab
+     * @param parent_id  最外层的分类
+     */
+    fun getLiveTabList(parent_id:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("parent_id",parent_id)
+        request.put("platform",GlobalProperties.PLATFORM)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                val type = object : TypeToken<List<LiveTabData.Tab>>() {}.getType()
+                var modle:List<LiveTabData.Tab> = Gson().fromJson<List<LiveTabData.Tab>>(element, type)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_TAB_LIST_URL, request,mLifecycle, callback)
     }
 }

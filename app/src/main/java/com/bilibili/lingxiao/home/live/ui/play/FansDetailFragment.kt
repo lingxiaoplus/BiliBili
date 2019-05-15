@@ -15,9 +15,8 @@ import com.bilibili.lingxiao.home.live.ui.LivePlayActivity
 import com.bilibili.lingxiao.home.live.view.FansDetailView
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.camera.lingxiao.common.app.BaseFragment
-import com.chad.library.adapter.base.BaseQuickAdapter
-import kotlinx.android.synthetic.main.fragment_fans_detail.*
-import kotlinx.android.synthetic.main.fragment_fans_detail.view.*
+import kotlinx.android.synthetic.main.normal_refresh_view.*
+import kotlinx.android.synthetic.main.normal_refresh_view.view.*
 
 class FansDetailFragment :BaseFragment(), FansDetailView {
     var position = 0
@@ -29,7 +28,7 @@ class FansDetailFragment :BaseFragment(), FansDetailView {
     private lateinit var fansAdapter : FansAdapter
     private var fansList = arrayListOf<FansGoldListData.FansInfo>()
     override val contentLayoutId: Int
-        get() = R.layout.fragment_fans_detail
+        get() = R.layout.normal_refresh_view
 
 
     override fun initArgs(bundle: Bundle?) {
