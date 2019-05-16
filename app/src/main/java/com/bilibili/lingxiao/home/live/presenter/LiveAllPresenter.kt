@@ -14,27 +14,11 @@ class LiveAllPresenter(view: LiveAllView, fragment: LiveAllFragment) :
         httpTrans = HttpTrans(fragment)
     }
 
-    fun getLiveHotList(page:Int){
-        httpTrans.getLiveAllList(page,30,"online",object :HttpRxCallback<Any>(){
+    fun getLiveAllList(page:Int,type:String,areaId:Int,parentAreaId:Int){
+        httpTrans.getLiveAllList(page,30,type,areaId,parentAreaId, object :HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {
                 var lists = res as Array<*>
                 mView?.onGetHotList(lists[0] as LiveAllData)
-            }
-
-            override fun onError(code: Int, desc: String?) {
-                mView?.showToast(desc)
-            }
-
-            override fun onCancel() {
-            }
-        })
-    }
-
-    fun getLiveNewList(page:Int){
-        httpTrans.getLiveAllList(page,30,"live_time",object :HttpRxCallback<Any>(){
-            override fun onSuccess(res: Any?) {
-                var lists = res as Array<*>
-                mView?.onGetNewList(lists[0] as LiveAllData)
             }
 
             override fun onError(code: Int, desc: String?) {

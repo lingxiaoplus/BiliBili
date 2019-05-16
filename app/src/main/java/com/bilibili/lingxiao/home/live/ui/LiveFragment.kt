@@ -113,7 +113,9 @@ class LiveFragment :BaseFragment() , LiveView {
                 R.id.live_look_more ->{
                     var intent = Intent(context,LiveCategoryDetailActivity::class.java)
                     intent.putExtra("parentId",liveList[position].partitionsBean.partition.id)
+                    intent.putExtra("parentName",liveList[position].partitionsBean.partition.name)
                     startActivity(intent)
+
                 }
             }
         }

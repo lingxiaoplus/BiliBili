@@ -1,5 +1,9 @@
 package com.bilibili.lingxiao.home.live.ui
 
+import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.PagerAdapter
 import android.view.View
 import android.view.ViewGroup
@@ -17,17 +21,21 @@ class LiveCategoryDetailActivity :BaseActivity(),LiveTabView{
 
     private var presenter = LiveTabPresenter(this,this)
     private var tabList = arrayListOf<LiveTabData.Tab>()
-    private lateinit var mAdapter:TabPagerAdapter
+    private lateinit var mAdapter:PagerAdapter
     override val contentLayoutId: Int
         get() = R.layout.fragment_live_category_detail
 
     override fun initWidget() {
         super.initWidget()
+        var intent = getIntent()
+        var parentId = intent.getIntExtra("parentId",1)
+        var parentName = intent.getStringExtra("parentName")
         setToolbarBack(title_bar)
-        mAdapter = TabPagerAdapter()
+        title_bar.title = parentName
+        mAdapter = PagerAdapter(supportFragmentManager)
         viewpager.setAdapter(mAdapter)
         tablayout.setViewPager(viewpager)
-        presenter.getTabList(1)
+        presenter.getTabList(parentId)
     }
 
     override fun onGetTabList(tabs: List<LiveTabData.Tab>) {
@@ -47,30 +55,24 @@ class LiveCategoryDetailActivity :BaseActivity(),LiveTabView{
         ToastUtil.show(text)
     }
 
-    inner class TabPagerAdapter :PagerAdapter(){
-        override fun isViewFromObject(p0: View, p1: Any): Boolean {
-            return p0 == p1
-        }
+    inner class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getCount(): Int {
             return tabList.size
         }
 
+        override fun getItem(position: Int): Fragment {
+            val fragment = LiveAllFragment()
+            val bundle = Bundle()
+            bundle.putString("type","online")  //其他的分类暂时就不展示了
+            tabList[position].id?.toIntOrNull()?.let { bundle.putInt("areaId", it) }
+            tabList[position].parentId?.toIntOrNull()?.let { bundle.putInt("parentAreaId", it) }
+            fragment.setArguments(bundle)
+            return fragment
+        }
+
         override fun getPageTitle(position: Int): CharSequence? {
             return tabList[position].name
-        }
-
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            var text = TextView(this@LiveCategoryDetailActivity)
-            text.width = ViewGroup.LayoutParams.MATCH_PARENT
-            text.setText(tabList[position].name)
-            container.addView(text)
-            return text
-        }
-
-        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            //super.destroyItem(container, position, `object`)
-            container.removeView(`object` as View?)
         }
     }
 }

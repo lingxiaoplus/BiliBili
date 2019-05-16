@@ -7,7 +7,7 @@
         android:layout_height="wrap_content">
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="180dp"
             android:background="@color/colorPrimary"
     >
         <LinearLayout

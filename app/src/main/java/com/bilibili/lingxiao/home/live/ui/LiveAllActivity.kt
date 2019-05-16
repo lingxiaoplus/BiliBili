@@ -58,9 +58,9 @@ class LiveAllActivity : BaseActivity() {
             val fragment = LiveAllFragment()
             val bundle = Bundle()
             if (position == 0){
-                bundle.putBoolean("hot", true)
+                bundle.putString("type", "online")
             }else{
-                bundle.putBoolean("hot", false)
+                bundle.putString("type", "live_time")
             }
             fragment.setArguments(bundle)
             return fragment

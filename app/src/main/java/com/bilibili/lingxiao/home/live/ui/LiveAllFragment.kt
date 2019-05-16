@@ -20,12 +20,18 @@ import com.facebook.drawee.view.SimpleDraweeView
 import kotlinx.android.synthetic.main.normal_refresh_view.*
 import kotlinx.android.synthetic.main.normal_refresh_view.view.*
 import org.greenrobot.eventbus.EventBus
+import com.flyco.tablayout.listener.CustomTabEntity
+
+
 
 class LiveAllFragment :BaseFragment(),LiveAllView{
     private var liveList = arrayListOf<LiveAllData.LiveInfo>()
     lateinit var videoAdapter:VideoAdapter
     private var presenter = LiveAllPresenter(this,this)
-    var hot = false
+    private val mTabEntities = arrayListOf<CustomTabEntity>()
+    var type = "online"
+    var areaId = 0
+    var parentAreaId = 0
     var page = 1
     override val contentLayoutId: Int
         get() = R.layout.normal_refresh_view
@@ -33,7 +39,9 @@ class LiveAllFragment :BaseFragment(),LiveAllView{
     override fun initArgs(bundle: Bundle?) {
         super.initArgs(bundle)
         bundle?.let {
-            hot = it.getBoolean("hot")
+            type = it.getString("type")
+            areaId = it.getInt("areaId")
+            parentAreaId = it.getInt("parentAreaId")
         }
     }
     override fun initWidget(root: View) {
@@ -46,19 +54,11 @@ class LiveAllFragment :BaseFragment(),LiveAllView{
         root.refresh.setOnRefreshListener {
             page = 1
             liveList.clear()
-            if (hot){
-                presenter.getLiveHotList(1)
-            }else{
-                presenter.getLiveNewList(1)
-            }
+            presenter.getLiveAllList(1,type,areaId,parentAreaId)
         }
         root.refresh.setOnLoadMoreListener {
             page++
-            if (hot){
-                presenter.getLiveHotList(page)
-            }else{
-                presenter.getLiveNewList(page)
-            }
+            presenter.getLiveAllList(page,type,areaId,parentAreaId)
         }
         videoAdapter.setOnItemClickListener { adapter, view, position ->
             val intent = Intent(context, LivePlayActivity::class.java)
@@ -84,6 +84,14 @@ class LiveAllFragment :BaseFragment(),LiveAllView{
         videoAdapter.addData(data.list)
         refresh.finishRefresh()
         refresh.finishLoadMore()
+        if (data.newTags.size > 0 && areaId != 0 && parentAreaId != 0){
+            mTabEntities.clear()
+            tablayout.visibility = View.VISIBLE
+            for (tag in data.newTags){
+                mTabEntities.add(TabEntity(tag.name))
+            }
+            tablayout.setTabData(mTabEntities)
+        }
     }
 
     override fun onGetNewList(data: LiveAllData) {
@@ -114,5 +122,19 @@ class LiveAllFragment :BaseFragment(),LiveAllView{
             helper.setText(R.id.live_username,item.uname)
             helper.setText(R.id.live_people_number, StringUtil.getBigDecimalNumber(item.online))
         }
+    }
+    inner class TabEntity(var title:String): CustomTabEntity{
+        override fun getTabUnselectedIcon(): Int {
+            return R.mipmap.ic_launcher
+        }
+
+        override fun getTabSelectedIcon(): Int {
+            return R.mipmap.ic_launcher
+        }
+
+        override fun getTabTitle(): String {
+            return title
+        }
+
     }
 }

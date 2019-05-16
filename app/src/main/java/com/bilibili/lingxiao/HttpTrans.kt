@@ -507,13 +507,17 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
      * 获取所有的直播列表
      * @param page 从1开始
      * @param pageSize 30
-     * @param type 类型  live_time 最新   online 热门
+     * @param areaId  分区的id
+     * @param parentAreaId 大分区的id   这两个为0 就是获取所有的tab
+     * @param type 类型  live_time 最新   online 热门 还有其他类型
      */
-    fun getLiveAllList(page:Int,pageSize:Int,type:String,callback: HttpRxCallback<Any>){
+    fun getLiveAllList(page:Int,pageSize:Int,type:String,areaId:Int,parentAreaId:Int,callback: HttpRxCallback<Any>){
         request.clear()
         request.put("page",page)
         request.put("page_size",pageSize)
         request.put("sort_type",type)
+        request.put("area_id",areaId)
+        request.put("parent_area_id",parentAreaId)
         request.put("platform",GlobalProperties.PLATFORM)
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
