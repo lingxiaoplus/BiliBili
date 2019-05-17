@@ -9,10 +9,7 @@
 >
     <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/item_live_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:placeholderImageScaleType="centerInside"
-            app:placeholderImage="@drawable/bangumi_follow_home_ic_bangumi"
+            style="@style/image_normal"
     />
     <TextView
             android:id="@+id/item_live_title"

@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.model.FansGoldListData
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -33,7 +34,8 @@ class FansAdapter(layoutResId: Int, data: MutableList<FansGoldListData.FansInfo>
         }
 
         var image_header = helper.getView<SimpleDraweeView>(R.id.image_header)
-        image_header.setImageURI(Uri.parse(item.face))
+        image_header.setImageURI(Uri.parse(item.face + GlobalProperties.IMAGE_RULE_60_60))
+
         helper.setText(R.id.username,item.uname)
         helper.setText(R.id.text_gold_num,"" + item.score)
         /*if (item.icon != null){

@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.model.LiveAllData
 import com.bilibili.lingxiao.home.live.model.LiveData
@@ -116,7 +117,7 @@ class LiveAllFragment :BaseFragment(),LiveAllView{
         BaseQuickAdapter<LiveAllData.LiveInfo, BaseViewHolder>(layoutResId, data) {
         override fun convert(helper: BaseViewHolder, item: LiveAllData.LiveInfo) {
             var image : SimpleDraweeView = helper.getView(R.id.live_user_image)
-            image.setImageURI(Uri.parse(item.systemCover))
+            image.setImageURI(Uri.parse(item.systemCover + GlobalProperties.IMAGE_RULE_240_150))
             helper.setText(R.id.live_title,item.title)
             helper.setText(R.id.live_category_name,item.areaName)
             helper.setText(R.id.live_username,item.uname)

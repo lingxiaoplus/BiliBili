@@ -3,13 +3,13 @@ package com.bilibili.lingxiao.home.category.presenter
 import com.bilibili.lingxiao.HttpTrans
 import com.bilibili.lingxiao.home.category.model.RegionData
 import com.bilibili.lingxiao.home.category.model.RegionRecommendData
-import com.bilibili.lingxiao.home.category.ui.CategoryFragment
+import com.bilibili.lingxiao.home.category.ui.RegionFragment
 import com.bilibili.lingxiao.home.category.view.RegionView
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.observer.HttpRxCallback
 
-class RegionPresenter(view: RegionView, fragment: CategoryFragment) :
-    BasePresenter<RegionView, CategoryFragment>(view, fragment) {
+class RegionPresenter(view: RegionView, fragment: RegionFragment) :
+    BasePresenter<RegionView, RegionFragment>(view, fragment) {
     private val httpTrans:HttpTrans by lazy {
         HttpTrans(fragment)
     }

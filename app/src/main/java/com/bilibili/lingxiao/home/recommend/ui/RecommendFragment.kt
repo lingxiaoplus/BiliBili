@@ -78,7 +78,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
             operationState = 3
             recommendPresenter.getRecommendList(operationState)
         }
-        mAdapter.setDuration(800)
+        mAdapter.setDuration(1000)
         mAdapter.openLoadAnimation({ view ->
             arrayOf<Animator>(
                 ObjectAnimator.ofFloat(
@@ -111,6 +111,11 @@ class RecommendFragment :BaseFragment(), RecommendView {
                 R.id.image_more-> showPopupWindow(mRecommendList.get(position))
             }
         }
+        mAdapter.setOnItemLongClickListener { adapter, view, position ->
+            showPopupWindow(mRecommendList.get(position))
+            true
+        }
+
         mAdapter.setEmptyView(View.inflate(context,R.layout.layout_empty,null))
     }
 

@@ -80,7 +80,10 @@
         </activity>
         <activity android:name=".home.live.ui.LiveAllActivity">
         </activity>
-        <activity android:name=".home.live.ui.LiveCategoryDetailActivity"/>
+        <activity android:name=".home.live.ui.LiveMoreActivity"/>
+        <activity android:name=".home.category.ui.RegionTabActivity">
+        </activity>
+        <service android:name=".InitIalizeService"/>
     </application>
 
 </manifest>

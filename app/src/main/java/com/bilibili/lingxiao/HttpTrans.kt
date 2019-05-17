@@ -2,6 +2,7 @@ package com.bilibili.lingxiao
 
 import android.util.Log
 import com.bilibili.lingxiao.home.category.model.RegionData
+import com.bilibili.lingxiao.home.category.model.RegionDetailData
 import com.bilibili.lingxiao.home.category.model.RegionRecommendData
 import com.bilibili.lingxiao.home.live.model.*
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
@@ -548,5 +549,26 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             }
         })
         getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.LIVE_TAB_LIST_URL, request,mLifecycle, callback)
+    }
+
+    /**
+     * 获取分区详情
+     * https://app.bilibili.com/x/v2/region/dynamic?build=5410000&mobi_app=android&platform=android&rid=167
+     */
+    fun getRegionList(tid:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("build",GlobalProperties.BUILD)
+        request.put("mobi_app",GlobalProperties.MOBI_APP)
+        request.put("platform",GlobalProperties.PLATFORM)
+        request.put("rid",tid)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, RegionDetailData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.REGION_DETAIL_URL, request,mLifecycle, callback)
     }
 }

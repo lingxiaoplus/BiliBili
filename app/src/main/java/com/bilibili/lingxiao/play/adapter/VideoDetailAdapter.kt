@@ -1,6 +1,7 @@
 package com.bilibili.lingxiao.play.adapter
 
 import android.net.Uri
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.play.model.VideoRecoData
 import com.bilibili.lingxiao.utils.StringUtil
@@ -17,7 +18,7 @@ class VideoDetailAdapter : BaseQuickAdapter<VideoRecoData.VideoInfo, BaseViewHol
         helper.setText(R.id.play_num,StringUtil.getBigDecimalNumber(item.play))
         helper.setText(R.id.damku_num,StringUtil.getBigDecimalNumber(item.videoReview))
         var image : SimpleDraweeView = helper.getView(R.id.cover_image)
-        image.setImageURI(Uri.parse(item.pic))
+        image.setImageURI(Uri.parse(item.pic + GlobalProperties.IMAGE_RULE_240_150))
         helper.addOnClickListener(R.id.more)
     }
 }

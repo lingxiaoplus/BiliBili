@@ -17,9 +17,7 @@ class App : Application() {
         super.onCreate()
         Fresco.initialize(this)
         UIUtil.init(this)
-        SkinLib.init(this)
-        QbSdk.initX5Environment(this,null)
-        Common.initCrash(this,true)
+        InitIalizeService.initialize(this);
     }
 
 }

@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.play.model.CommentData
 import com.bilibili.lingxiao.utils.DateUtil
@@ -45,7 +46,7 @@ class CommentAdapter : BaseMultiItemQuickAdapter<CommentData.Reply, BaseViewHold
         when(helper.itemViewType){
             CommentData.Reply.REPLIE ->{
                 var header:SimpleDraweeView = helper.getView(R.id.header)
-                header.setImageURI(Uri.parse(item.member.avatar))
+                header.setImageURI(Uri.parse(item.member.avatar + GlobalProperties.IMAGE_RULE_60_60))
                 helper.setText(R.id.username,item.member.uname)
 
                 helper.setText(R.id.comment_desc,item.content.message)

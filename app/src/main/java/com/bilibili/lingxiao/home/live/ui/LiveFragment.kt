@@ -111,7 +111,7 @@ class LiveFragment :BaseFragment() , LiveView {
         liveAdapter.setOnItemChildClickListener { adapter, view, position ->
             when(view.id){
                 R.id.live_look_more ->{
-                    var intent = Intent(context,LiveCategoryDetailActivity::class.java)
+                    var intent = Intent(context,LiveMoreActivity::class.java)
                     intent.putExtra("parentId",liveList[position].partitionsBean.partition.id)
                     intent.putExtra("parentName",liveList[position].partitionsBean.partition.name)
                     startActivity(intent)

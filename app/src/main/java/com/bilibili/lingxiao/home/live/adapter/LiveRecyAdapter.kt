@@ -4,6 +4,7 @@ import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.BannerImageLoader
 import com.bilibili.lingxiao.home.live.model.LiveData
@@ -57,7 +58,7 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
             }
             LiveData.PARTITION->{
                 var image : SimpleDraweeView = helper.getView(R.id.image_part)
-                image.setImageURI(Uri.parse(item.partitionsBean.partition.sub_icon.src))
+                image.setImageURI(Uri.parse(item.partitionsBean.partition.sub_icon.src + GlobalProperties.IMAGE_RULE_240_150))
 
                 helper.setText(R.id.live_category_name,item.partitionsBean.partition.name)
                 LogUtils.d("LiveRecyAdapter 获取到Partition name 的值-》》" + item.partitionsBean.partition.name)
@@ -118,35 +119,11 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
             }
         })
     }
-
-
-    private fun initBanner(banner :Banner,bannerData: List<LiveData.BannerBean>) {
-        var images = ArrayList<String>()
-        for (image in bannerData){
-            images?.add(image.img)
-        }
-        banner.setImageLoader(BannerImageLoader())
-        //设置图片集合
-        banner.setImages(images)
-        //设置banner动画效果
-        banner.setBannerAnimation(Transformer.DepthPage)
-        //设置标题集合（当banner样式有显示title时）
-        //live_banner.setBannerTitles(banner.get(0).title);
-        //设置自动轮播，默认为true
-        banner.isAutoPlay(true)
-        //设置轮播时间
-        banner.setDelayTime(3000)
-        //设置指示器位置（当banner模式中有指示器时）
-        banner.setIndicatorGravity(BannerConfig.CENTER)
-        //banner设置方法全部调用完毕时最后调用
-        banner.start()
-    }
-
     private  var listener: OnMultiItemClickListener? = null
-    public fun setMultiItemClickListener(listener: OnMultiItemClickListener){
+    fun setMultiItemClickListener(listener: OnMultiItemClickListener){
         this.listener = listener
     }
-    public interface OnMultiItemClickListener{
+    interface OnMultiItemClickListener{
         fun onRecommendClick(live: LiveData.RecommendDataBean.LivesBean, position:Int)
         fun onPartitionClick(live: LiveData.RecommendDataBean.LivesBean, position:Int)
     }

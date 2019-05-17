@@ -3,25 +3,22 @@ package com.bilibili.lingxiao
 
 import android.Manifest
 import android.support.design.internal.NavigationMenuView
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
-import com.bilibili.lingxiao.home.category.ui.CategoryFragment
+import com.bilibili.lingxiao.home.category.ui.RegionFragment
 import com.bilibili.lingxiao.home.live.ui.LiveFragment
 import com.bilibili.lingxiao.home.mikan.ui.MikanFragment
 import com.bilibili.lingxiao.home.navigation.ThemeActivity
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.user.LoginActivity
-import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.rxbus.SkinChangedEvent
 import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_main.*
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -41,7 +38,7 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var recommendFragment: RecommendFragment
     @Inject
-    lateinit var categoryFragment: CategoryFragment
+    lateinit var categoryFragment: RegionFragment
     @Inject
     lateinit var mikanFragment: MikanFragment
 

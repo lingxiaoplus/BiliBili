@@ -1,5 +1,6 @@
 package com.bilibili.lingxiao.home.category.ui
 
+import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -16,13 +17,14 @@ import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
 import kotlinx.android.synthetic.main.fragment_hot.*
 import kotlinx.android.synthetic.main.fragment_hot.view.*
+import org.greenrobot.eventbus.EventBus
 
-class CategoryFragment :BaseFragment() , RegionView {
+class RegionFragment :BaseFragment() , RegionView {
     private var regionPresenter: RegionPresenter =
         RegionPresenter(this, this)
     private var regionList = arrayListOf<MultiRegionData>()
     private lateinit var regionAdapter: RegionAdapter
-    private val TAG = CategoryFragment::class.java.simpleName
+    private val TAG = RegionFragment::class.java.simpleName
     override val contentLayoutId: Int
         get() = R.layout.fragment_hot
     override fun initInject() {
@@ -59,6 +61,17 @@ class CategoryFragment :BaseFragment() , RegionView {
         var image = emptyView.findViewById<ImageView>(R.id.image_error)
         image.setImageDrawable(resources.getDrawable(R.drawable.bilipay_common_error_tip))
         regionAdapter.setEmptyView(emptyView)
+        regionAdapter.setOnItemChildClickListener { adapter, view, position ->
+            when(view.id){
+                R.id.item_live_image ->{
+                    var intent = Intent(context,RegionTabActivity::class.java)
+                    intent.putExtra("title",regionList[position].regionData?.name)
+                    startActivity(intent)
+                    EventBus.getDefault().postSticky(regionList[position].regionData)
+                }
+            }
+        }
+
     }
 
     override fun onFirstVisiblity() {

@@ -18,8 +18,7 @@
     >
         <ImageView
                 android:id="@+id/image_logo"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                style="@style/image_normal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
         />

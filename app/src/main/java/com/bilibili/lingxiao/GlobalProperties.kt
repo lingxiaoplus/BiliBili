@@ -35,6 +35,13 @@ object GlobalProperties {
     var LIVE_ALL_URL = "http://api.live.bilibili.com/room/v3/Area/getRoomList"  //获取全部直播列表
     var LIVE_TAB_LIST_URL = "http://api.live.bilibili.com/room/v1/Area/getList"  //直播分类所有tab
 
+    var REGION_DETAIL_URL = "https://app.bilibili.com/x/v2/region/dynamic?"  //分区详情
+
+    val IMAGE_RULE_480_300 = "@480w_300h_1e_1c.webp"  //图片尺寸
+    val IMAGE_RULE_240_150 = "@240w_150h_1e_1c.webp"
+    val IMAGE_RULE_160_100 = "@160w_100h_1e_1c.webp"
+    val IMAGE_RULE_90_90 = "@90w_90h_1e_1c.webp"
+    var IMAGE_RULE_60_60 = "@60w_60h_1e_1c.webp"
     private val SECRET_KEY = "ea85624dfcf12d7cc7b2b3a94fac1f2c"
     val PARAM_SIGN = "sign"
     val APP_KEY = "c1b107428d337928"

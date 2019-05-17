@@ -4,26 +4,22 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.PagerAdapter
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.model.LiveTabData
 import com.bilibili.lingxiao.home.live.presenter.LiveTabPresenter
 import com.bilibili.lingxiao.home.live.view.LiveTabView
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.camera.lingxiao.common.app.BaseActivity
-import kotlinx.android.synthetic.main.fragment_live_category_detail.*
+import kotlinx.android.synthetic.main.activity_live_more.*
 import kotlinx.android.synthetic.main.title_bar.*
 
-class LiveCategoryDetailActivity :BaseActivity(),LiveTabView{
+class LiveMoreActivity :BaseActivity(),LiveTabView{
 
     private var presenter = LiveTabPresenter(this,this)
     private var tabList = arrayListOf<LiveTabData.Tab>()
     private lateinit var mAdapter:PagerAdapter
     override val contentLayoutId: Int
-        get() = R.layout.fragment_live_category_detail
+        get() = R.layout.activity_live_more
 
     override fun initWidget() {
         super.initWidget()
@@ -42,7 +38,6 @@ class LiveCategoryDetailActivity :BaseActivity(),LiveTabView{
         tabList.addAll(tabs)
         mAdapter.notifyDataSetChanged()
         tablayout.notifyDataSetChanged()
-
     }
 
     override fun showDialog() {

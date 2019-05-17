@@ -1,6 +1,7 @@
 package com.bilibili.lingxiao.home.live.adapter
 
 import android.net.Uri
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.model.LiveData
 import com.bilibili.lingxiao.utils.StringUtil
@@ -14,7 +15,7 @@ class LiveRecommendAdapter(layout:Int,data:List<LiveData.RecommendDataBean.Lives
     val TAG = LiveRecommendAdapter::class.java.simpleName
     override fun convert(helper: BaseViewHolder, item: LiveData.RecommendDataBean.LivesBean) {
         var image:SimpleDraweeView = helper.getView(R.id.live_user_image)
-        image.setImageURI(Uri.parse(item.cover?.src))
+        image.setImageURI(Uri.parse(item.cover?.src  + GlobalProperties.IMAGE_RULE_240_150))
         helper.setText(R.id.live_title,item.title)
         helper.setText(R.id.live_category_name,item.area_v2_name)
         helper.setText(R.id.live_username,item.owner?.name)

@@ -181,7 +181,7 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
     /**
      * 初始化数据
      */
-    protected fun initData() {
+    protected open fun initData() {
 
     }
 

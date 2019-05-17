@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
+import com.bilibili.lingxiao.GlobalProperties
 
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.recommend.model.RecommendData
@@ -33,7 +34,7 @@ class RecommendRecyAdapter(layoutResId: Int, data: List<RecommendData>?) :
         helper.addOnClickListener(R.id.image_more)
         var image : SimpleDraweeView = helper.getView(R.id.play_image)
         try {
-            image.setImageURI(Uri.parse(item.cover))
+            image.setImageURI(Uri.parse(item.cover + GlobalProperties.IMAGE_RULE_240_150))
         }catch (ex:Exception){
             ex.printStackTrace()
         }

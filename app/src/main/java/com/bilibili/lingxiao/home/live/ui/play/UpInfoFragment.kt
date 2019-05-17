@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.text.Html
 import android.util.Log
 import android.view.View
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.model.*
 import com.bilibili.lingxiao.home.live.presenter.UpVideoPresenter
@@ -146,7 +147,7 @@ class UpInfoFragment :BaseFragment() , LivePlayView {
             helper.addOnClickListener(R.id.image_more)
             var image : SimpleDraweeView = helper.getView(R.id.play_image)
             try {
-                image.setImageURI(Uri.parse(item.pic))
+                image.setImageURI(Uri.parse(item.pic + GlobalProperties.IMAGE_RULE_240_150))
             }catch (ex:Exception){
                 ex.printStackTrace()
             }

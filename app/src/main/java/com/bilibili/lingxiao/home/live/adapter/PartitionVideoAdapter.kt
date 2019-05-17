@@ -2,6 +2,7 @@ package com.bilibili.lingxiao.home.live.adapter
 
 import android.net.Uri
 import android.util.Log
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.model.LiveData
 import com.bilibili.lingxiao.utils.StringUtil
@@ -16,7 +17,7 @@ class PartitionVideoAdapter(layoutResId: Int, data: MutableList<LiveData.Recomme
     override fun convert(helper: BaseViewHolder, item: LiveData.RecommendDataBean.LivesBean) {
         if (!isScroller){
             var image :SimpleDraweeView = helper.getView(R.id.live_user_image)
-            image.setImageURI(Uri.parse(item.cover.src))
+            image.setImageURI(Uri.parse(item.cover.src  + GlobalProperties.IMAGE_RULE_240_150))
         }
 
         helper.setText(R.id.live_title,item.title)

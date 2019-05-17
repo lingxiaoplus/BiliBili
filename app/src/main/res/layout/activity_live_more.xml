@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+>
+    <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+        <include layout="@layout/title_bar"/>
+        <com.bilibili.lingxiao.widget.skin.SlidTabLayout
+                android:id="@+id/tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                app:tl_indicator_margin_left="2dp"
+                app:tl_indicator_margin_right="2dp"
+                app:tl_indicator_style="BLOCK"
+                app:tl_indicator_color="@color/black_alpha_32"
+                app:tl_indicator_width_equal_title="true"
+
+        >
+        </com.bilibili.lingxiao.widget.skin.SlidTabLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+
+    </android.support.v4.view.ViewPager>
+</android.support.design.widget.CoordinatorLayout>
