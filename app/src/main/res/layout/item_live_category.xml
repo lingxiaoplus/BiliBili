@@ -6,6 +6,7 @@
               android:layout_height="wrap_content"
               android:gravity="center"
               android:layout_margin="5dp"
+              android:background="@drawable/ripple_background"
 >
     <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/item_live_image"

@@ -1,8 +1,6 @@
 package com.bilibili.lingxiao.home.navigation
 
-import android.graphics.Color
 import android.support.v7.widget.LinearLayoutManager
-import android.view.View
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.widget.RippleAnimation
 import com.camera.lingxiao.common.Common

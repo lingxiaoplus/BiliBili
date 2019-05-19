@@ -34,7 +34,7 @@ class RegionDetailFragment :BaseFragment(),RegionDetailView{
     private var tid = 1
     private lateinit var videoAdapter:VideoAdapter
     override val contentLayoutId: Int
-        get() = R.layout.fragment_region_detail
+        get() = R.layout.normal_refresh_view    //fragment_region_detail
 
     override fun initArgs(bundle: Bundle?) {
         super.initArgs(bundle)
@@ -55,16 +55,16 @@ class RegionDetailFragment :BaseFragment(),RegionDetailView{
         }
     }
 
-    override fun initData() {
-        super.initData()
+    override fun onFirstVisiblity() {
+        super.onFirstVisiblity()
         refresh.autoRefresh()
     }
 
     override fun onGetRegionDetail(data: RegionDetailData) {
-        data.banner?.top?.let {
+        /*data.banner?.top?.let {
             root_banner.visibility = View.VISIBLE
             initBanner(live_banner,it)
-        }
+        }*/
         videoAdapter.addData(data.recommend)
         videoAdapter.addData(data.new)
         refresh.finishRefresh()

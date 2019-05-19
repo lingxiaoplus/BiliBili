@@ -85,6 +85,7 @@
                     android:minHeight="20dp"
                     app:tabIndicatorHeight="2dp"
                     app:tabGravity="fill"
+                    app:tabMaxWidth="0dp"
                     app:tabPaddingStart="40dp"
                     app:tabPaddingEnd="40dp"
                     app:tabIndicatorFullWidth="false"

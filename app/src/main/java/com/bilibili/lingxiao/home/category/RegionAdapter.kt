@@ -42,7 +42,10 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
                 helper.setText(R.id.item_live_title,item.regionData?.name)
                 var image :SimpleDraweeView = helper.getView(R.id.item_live_image)
                 image.setImageURI(Uri.parse(item.regionData?.logo + GlobalProperties.IMAGE_RULE_90_90))
-                helper.addOnClickListener(R.id.item_live_image)
+                //helper.addOnClickListener(R.id.item_live_image)
+                setOnItemClickListener { adapter, view, position ->
+                    listener?.onGridClick(item.regionData,position)
+                }
             }
             MultiRegionData.REGION_RECOMMEND ->{
                 helper.setText(R.id.region_name,item.recommendData?.title)
@@ -75,5 +78,13 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
             helper.setText(R.id.comment_number,StringUtil.getBigDecimalNumber(item.danmaku))
             helper.getView<ConstraintLayout>(R.id.cons_category).visibility = View.GONE
         }
+    }
+
+    private  var listener: OnMultiItemClickListener? = null
+    fun setMultiItemClickListener(listener: OnMultiItemClickListener){
+        this.listener = listener
+    }
+    interface OnMultiItemClickListener{
+        fun onGridClick(data: RegionData.Data?, position:Int)
     }
 }

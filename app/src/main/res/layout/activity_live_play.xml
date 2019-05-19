@@ -16,6 +16,8 @@
             android:layout_height="@dimen/button_height"
             app:tabTextColor="@color/black_alpha_224"
             android:elevation="2dp"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
             app:tabBackground="@color/white"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/colorPrimary"

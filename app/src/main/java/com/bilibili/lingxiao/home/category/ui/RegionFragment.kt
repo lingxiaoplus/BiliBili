@@ -61,6 +61,15 @@ class RegionFragment :BaseFragment() , RegionView {
         var image = emptyView.findViewById<ImageView>(R.id.image_error)
         image.setImageDrawable(resources.getDrawable(R.drawable.bilipay_common_error_tip))
         regionAdapter.setEmptyView(emptyView)
+        regionAdapter.setMultiItemClickListener(object :RegionAdapter.OnMultiItemClickListener{
+            override fun onGridClick(data: RegionData.Data?, position: Int) {
+                var intent = Intent(context,RegionTabActivity::class.java)
+                intent.putExtra("title",regionList[position].regionData?.name)
+                startActivity(intent)
+                EventBus.getDefault().postSticky(regionList[position].regionData)
+            }
+
+        })
         regionAdapter.setOnItemChildClickListener { adapter, view, position ->
             when(view.id){
                 R.id.item_live_image ->{

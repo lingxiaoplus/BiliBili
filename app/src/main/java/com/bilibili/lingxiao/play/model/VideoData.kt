@@ -29,12 +29,12 @@ data class VideoData(
         val x_80: List<X80>
     ) {
         data class X32(
-            val filesize: Int,
+            val filesize: Long,
             val timelength: Int
         )
 
         data class X16(
-            val filesize: Int,
+            val filesize: Long,
             val timelength: Int
         )
 
@@ -44,12 +44,12 @@ data class VideoData(
         )
 
         data class X64(
-            val filesize: Int,
+            val filesize: Long,
             val timelength: Int
         )
 
         data class X80(
-            val filesize: Int,
+            val filesize: Long,
             val timelength: Int
         )
     }
