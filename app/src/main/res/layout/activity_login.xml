@@ -80,6 +80,7 @@
                 app:srcCompat="@drawable/ic_img_header"
                 android:layout_margin="5dp"
                 android:padding="6dp"
+                android:tint="@color/colorPrimary"
         />
         <EditText
                 android:id="@+id/login_et_username"
@@ -110,7 +111,9 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:visibility="invisible"
-                    tools:visibility="visible"/>
+                    tools:visibility="visible"
+                    android:backgroundTint="@color/colorPrimary"
+            />
         </FrameLayout>
     </LinearLayout>
 
@@ -136,6 +139,7 @@
                 app:srcCompat="@drawable/ic_img_password"
                 android:layout_margin="5dp"
                 android:padding="5dp"
+                android:tint="@color/colorPrimary"
         />
 
         <EditText
@@ -168,7 +172,9 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:visibility="invisible"
-                    tools:visibility="visible"/>
+                    tools:visibility="visible"
+                    android:backgroundTint="@color/colorPrimary"
+            />
         </FrameLayout>
 
     </LinearLayout>

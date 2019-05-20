@@ -5,6 +5,8 @@ import android.Manifest
 import android.support.design.internal.NavigationMenuView
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
 import com.bilibili.lingxiao.home.category.ui.RegionFragment
@@ -14,9 +16,11 @@ import com.bilibili.lingxiao.home.navigation.ThemeActivity
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.user.LoginActivity
 import com.bilibili.lingxiao.utils.UIUtil
+import com.bilibili.lingxiao.widget.RippleAnimation
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.rxbus.SkinChangedEvent
+import com.camera.lingxiao.common.utills.PopwindowUtil
 import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
@@ -104,7 +108,19 @@ class MainActivity : BaseActivity() {
         }
         image_download.setOnClickListener {  }
         image_game.setOnClickListener {  }
-        image_search.setOnClickListener {  }
+        image_search.setOnClickListener {
+            val popwindowUtil = PopwindowUtil.PopupWindowBuilder(this@MainActivity)
+                .setView(R.layout.fragment_dialog_search)
+                .size(ViewGroup.LayoutParams.MATCH_PARENT.toFloat(),ViewGroup.LayoutParams.WRAP_CONTENT.toFloat())
+                .setFocusable(true)
+                .setTouchable(true)
+                .setOutsideTouchable(true)
+                .create()
+            popwindowUtil.showAtLocation(it,0,-it.getHeight(),Gravity.TOP,0.5f)
+            popwindowUtil.getView<ImageView>(R.id.image_exit)!!.setOnClickListener {
+                popwindowUtil.dissmiss()
+            }
+        }
         for (name in tabArray){
             main_tabLayout.addTab(main_tabLayout.newTab().setText(name))
         }

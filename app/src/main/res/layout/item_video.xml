@@ -10,16 +10,18 @@
 >
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
         <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/play_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:viewAspectRatio="1.43"
-                app:placeholderImageScaleType="fitCenter"
-                app:placeholderImage="@drawable/ic_live_no_face"
+                app:viewAspectRatio="1.6"
+                app:placeholderImageScaleType="fitXY"
+                app:placeholderImage="@drawable/ic_upper_video_default"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/play_title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintVertical_bias="0.0"
         />
         <LinearLayout
@@ -89,6 +91,8 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="0.9"
+                app:layout_goneMarginBottom="0dp"
+                app:layout_goneMarginTop="0dp"
         >
             <TextView
                     android:id="@+id/category_name"

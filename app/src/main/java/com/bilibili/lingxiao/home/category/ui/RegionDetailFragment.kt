@@ -3,6 +3,7 @@ package com.bilibili.lingxiao.home.category.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.bilibili.lingxiao.GlobalProperties
@@ -32,6 +33,7 @@ class RegionDetailFragment :BaseFragment(),RegionDetailView{
     private var presenter = RegionDetailPresenter(this,this)
     private var regionList = arrayListOf<RegionDetailData.Info>()
     private var tid = 1
+    private var rid = 1
     private lateinit var videoAdapter:VideoAdapter
     override val contentLayoutId: Int
         get() = R.layout.normal_refresh_view    //fragment_region_detail
@@ -53,6 +55,9 @@ class RegionDetailFragment :BaseFragment(),RegionDetailView{
             regionList.clear()
             presenter.getRegionDetail(tid)
         }
+        root.refresh.setOnLoadMoreListener {
+            presenter.getRegionMore(rid)
+        }
     }
 
     override fun onFirstVisiblity() {
@@ -67,7 +72,15 @@ class RegionDetailFragment :BaseFragment(),RegionDetailView{
         }*/
         videoAdapter.addData(data.recommend)
         videoAdapter.addData(data.new)
+        if (data.recommend.size > 0){
+            rid = data.recommend[0].rid
+        }
         refresh.finishRefresh()
+
+    }
+
+    override fun onGetRegionMore(data: RegionDetailData) {
+        videoAdapter.addData(data.new)
         refresh.finishLoadMore()
     }
 
@@ -91,8 +104,9 @@ class RegionDetailFragment :BaseFragment(),RegionDetailView{
             helper.setText(R.id.play_title,item.title)
             helper.setText(R.id.play_number,StringUtil.getBigDecimalNumber(item.play))
             helper.setText(R.id.comment_number,StringUtil.getBigDecimalNumber(item.reply))
-            helper.setText(R.id.category_name,item.rname)
+            //helper.setText(R.id.category_name,item.rname)
             helper.addOnClickListener(R.id.image_more)
+            helper.getView<ConstraintLayout>(R.id.cons_category).visibility = View.GONE
         }
     }
 

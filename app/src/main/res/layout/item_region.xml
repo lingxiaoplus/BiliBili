@@ -35,6 +35,7 @@
                 app:layout_constraintVertical_bias="0.5"
         />
         <Button
+                android:id="@+id/button_goto"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/button_height"
                 android:background="@drawable/button_more_background"
@@ -77,6 +78,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintRight_toRightOf="parent"
                 android:src="@drawable/ic_bangumi_refresh_pink"
+                android:tint="@color/colorPrimary"
         />
     </android.support.constraint.ConstraintLayout>
 

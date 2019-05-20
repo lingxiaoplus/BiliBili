@@ -109,7 +109,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
                 LogUtils.d("获取到的数据" + element)
-                var modle = Gson().fromJson(element, VideoRecoData::class.java)
+                val modle = Gson().fromJson(element, VideoRecoData::class.java)
                 val obj = arrayOfNulls<Any>(1)
                 obj[0] = modle
                 return obj
@@ -570,5 +570,26 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             }
         })
         getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.REGION_DETAIL_URL, request,mLifecycle, callback)
+    }
+
+    /**
+     * 分区加载更多
+     */
+    fun getRegionMoreList(rid:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("build",GlobalProperties.BUILD)
+        request.put("pull",false)
+        request.put("platform",GlobalProperties.PLATFORM)
+        request.put("rid",rid)
+        request.put("ctime",GlobalProperties.getSystemTime())
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, RegionDetailData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.REGION_DETAIL_LOADMORE_URL, request,mLifecycle, callback)
     }
 }

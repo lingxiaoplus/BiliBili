@@ -20,6 +20,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
+import android.content.ContextWrapper
+
+
 
 class RippleAnimation(
     context: Context,
@@ -50,7 +53,7 @@ class RippleAnimation(
 
     init {
         //获取activity的根视图，用来添加本view
-        mRootView = (getContext() as Activity).window.decorView as ViewGroup
+        mRootView = unwrap(getContext()).window.decorView as ViewGroup
         mPaint = Paint()
         mPaint.isAntiAlias = true
         //设置成擦除模式
@@ -59,6 +62,14 @@ class RippleAnimation(
         initListener()
     }
 
+    private fun unwrap(context: Context): Activity {
+        var context = context
+        while (context !is Activity && context is ContextWrapper) {
+            context = context.baseContext
+        }
+
+        return context as Activity
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)

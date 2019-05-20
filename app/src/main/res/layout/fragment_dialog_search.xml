@@ -6,22 +6,22 @@
         android:background="@color/white"
         android:elevation="@dimen/dp_4"
         android:orientation="vertical"
-        android:padding="@dimen/dp_4"
         android:layout_marginLeft="@dimen/dp_4"
         android:layout_marginRight="@dimen/dp_4"
 >
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:padding="@dimen/dp_4"
     >
         <ImageView
                 android:id="@+id/image_exit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_image_left"
-                android:padding="@dimen/dp_4"
+                android:layout_margin="@dimen/dp_4"
                 android:layout_marginRight="@dimen/dp_10"
         />
         <EditText
@@ -35,15 +35,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_light_browser_comment_close"
-                android:padding="@dimen/dp_4"
+                android:layout_margin="@dimen/dp_4"
                 android:layout_marginLeft="@dimen/dp_4"
                 android:layout_marginRight="@dimen/dp_4"
         />
         <ImageView
+                android:id="@+id/image_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_search_query"
-                android:padding="@dimen/dp_4"
+                android:layout_margin="@dimen/dp_4"
                 android:layout_marginRight="@dimen/dp_4"
         />
     </LinearLayout>

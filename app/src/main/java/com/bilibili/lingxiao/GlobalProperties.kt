@@ -36,6 +36,7 @@ object GlobalProperties {
     var LIVE_TAB_LIST_URL = "http://api.live.bilibili.com/room/v1/Area/getList"  //直播分类所有tab
 
     var REGION_DETAIL_URL = "https://app.bilibili.com/x/v2/region/dynamic?"  //分区详情
+    var REGION_DETAIL_LOADMORE_URL = "https://app.bilibili.com/x/v2/region/dynamic/list?"  //分区加载更多
 
     val IMAGE_RULE_480_300 = "@480w_300h_1e_1c.webp"  //图片尺寸
     val IMAGE_RULE_240_150 = "@240w_150h_1e_1c.webp"

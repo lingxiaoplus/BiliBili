@@ -43,7 +43,7 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
                 var image :SimpleDraweeView = helper.getView(R.id.item_live_image)
                 image.setImageURI(Uri.parse(item.regionData?.logo + GlobalProperties.IMAGE_RULE_90_90))
                 //helper.addOnClickListener(R.id.item_live_image)
-                setOnItemClickListener { adapter, view, position ->
+                this.setOnItemClickListener { adapter, view, position ->
                     listener?.onGridClick(item.regionData,position)
                 }
             }
@@ -56,13 +56,19 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
                 if (logo > 0){
                     image_region.setImageResource(logo)
                 }
-
                 var recycler:RecyclerView = helper.getView(R.id.recyclerview)
                 recycler.isNestedScrollingEnabled = false
                 recycler.setRecycledViewPool(recycledViewPool)
                 var manager = GridLayoutManager(mContext, 2)
                 recycler.layoutManager = manager
-                recycler.adapter = RegionRecommendAdapter(R.layout.item_video,item.recommendData?.body)
+                var regionRecommend = RegionRecommendAdapter(R.layout.item_video,item.recommendData?.body)
+                recycler.adapter = regionRecommend
+                helper.addOnClickListener(R.id.button_goto)
+                regionRecommend.setOnItemClickListener { adapter, view, position ->
+                    item.recommendData?.let {
+                        listener?.onVideoClick(it.body[position],position)
+                    }
+                }
             }
         }
     }
@@ -77,6 +83,7 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
             helper.setText(R.id.play_number,StringUtil.getBigDecimalNumber(item.play))
             helper.setText(R.id.comment_number,StringUtil.getBigDecimalNumber(item.danmaku))
             helper.getView<ConstraintLayout>(R.id.cons_category).visibility = View.GONE
+
         }
     }
 
@@ -86,5 +93,6 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
     }
     interface OnMultiItemClickListener{
         fun onGridClick(data: RegionData.Data?, position:Int)
+        fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int)
     }
 }

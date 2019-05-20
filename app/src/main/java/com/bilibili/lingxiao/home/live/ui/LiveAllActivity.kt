@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.bilibili.lingxiao.R
+import com.bilibili.lingxiao.widget.RippleAnimation
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.rxbus.SkinChangedEvent
 import com.github.zackratos.ultimatebar.UltimateBar

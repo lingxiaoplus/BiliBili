@@ -15,6 +15,7 @@ import com.bilibili.lingxiao.home.category.model.RegionRecommendData
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
+import com.camera.lingxiao.common.utills.LogUtils
 import kotlinx.android.synthetic.main.fragment_hot.*
 import kotlinx.android.synthetic.main.fragment_hot.view.*
 import org.greenrobot.eventbus.EventBus
@@ -62,11 +63,17 @@ class RegionFragment :BaseFragment() , RegionView {
         image.setImageDrawable(resources.getDrawable(R.drawable.bilipay_common_error_tip))
         regionAdapter.setEmptyView(emptyView)
         regionAdapter.setMultiItemClickListener(object :RegionAdapter.OnMultiItemClickListener{
+            override fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int) {
+                ToastUtil.show(data?.title)
+            }
+
             override fun onGridClick(data: RegionData.Data?, position: Int) {
-                var intent = Intent(context,RegionTabActivity::class.java)
-                intent.putExtra("title",regionList[position].regionData?.name)
-                startActivity(intent)
-                EventBus.getDefault().postSticky(regionList[position].regionData)
+                regionList[position].regionData?.let {
+                    var intent = Intent(context,RegionTabActivity::class.java)
+                    intent.putExtra("title",it.name)
+                    startActivity(intent)
+                    EventBus.getDefault().postSticky(it)
+                }
             }
 
         })
@@ -78,9 +85,16 @@ class RegionFragment :BaseFragment() , RegionView {
                     startActivity(intent)
                     EventBus.getDefault().postSticky(regionList[position].regionData)
                 }
+                R.id.button_goto -> {
+                    regionList[position].recommendData?.let {
+                        var intent = Intent(context,RegionTabActivity::class.java)
+                        intent.putExtra("title",it.title)
+                        startActivity(intent)
+                        EventBus.getDefault().postSticky(it)
+                    }
+                }
             }
         }
-
     }
 
     override fun onFirstVisiblity() {

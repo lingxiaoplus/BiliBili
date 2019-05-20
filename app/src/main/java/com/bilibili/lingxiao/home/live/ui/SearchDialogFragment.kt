@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.support.v4.app.FragmentManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.DisplayMetrics
 import android.view.Gravity
@@ -14,6 +15,7 @@ import android.view.ViewGroup
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.play.adapter.CommentAdapter
 import com.bilibili.lingxiao.utils.UIUtil
+import com.bilibili.lingxiao.widget.RippleAnimation
 import kotlinx.android.synthetic.main.fragment_comment_detail.*
 import kotlinx.android.synthetic.main.fragment_dialog_search.*
 import kotlinx.android.synthetic.main.fragment_fans_detail.*
@@ -59,4 +61,5 @@ class SearchDialogFragment :DialogFragment(){
         super.onStop()
         //EventBus.getDefault().unregister(this)
     }
+
 }

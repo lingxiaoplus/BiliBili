@@ -30,4 +30,22 @@ class RegionDetailPresenter(view: RegionDetailView, fragment: RegionDetailFragme
 
         })
     }
+
+    fun getRegionMore(rid:Int){
+        httpTrans.getRegionMoreList(rid,object : HttpRxCallback<Any>(){
+            override fun onSuccess(res: Any?) {
+                var lists = res as Array<*>
+                mView?.onGetRegionMore(lists[0] as RegionDetailData)
+            }
+
+            override fun onError(code: Int, desc: String?) {
+                mView?.showToast(desc)
+            }
+
+            override fun onCancel() {
+
+            }
+
+        })
+    }
 }
