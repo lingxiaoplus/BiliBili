@@ -9,7 +9,7 @@
     <string name="forget_password">忘记密码？</string>
     <string name="input_username">请输入用户名</string>
     <string name="input_password">请输入密码</string>
-
+    <string name="un_login">未登陆</string>
 
     <string-array name="main_tab">
         <item>直播</item>
@@ -48,6 +48,7 @@
     <string name="comment_detail">评论详情</string>
 
     <string name="pop_watch_later">添加至稍后再看</string>
+
 
     <string-array name="level_drawable">
         <item>@drawable/mall_mine_vip_level_0</item>

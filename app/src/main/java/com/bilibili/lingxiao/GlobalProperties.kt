@@ -21,6 +21,10 @@ object GlobalProperties {
     val BANGUMI_FALL_HOST = "http://bangumi.bilibili.com/appindex/follow_index_fall?" //编辑推荐番剧
     val CATEGORY_HOST = "http://app.bilibili.com/x/v2/region?" //分区
     val CATEGORY_RECOMMEND_HOST = "http://app.bilibili.com/x/v2/show/index?" //分区推荐
+    var REGION_DETAIL_URL = "https://app.bilibili.com/x/v2/region/dynamic?"  //分区详情
+    var REGION_DETAIL_LOADMORE_URL = "https://app.bilibili.com/x/v2/region/dynamic/list?"  //分区加载更多
+    var REGION_LOCALITY_URL = "http://app.bilibili.com/x/v2/show/change/region?platform=android&rand=1&rid=1" //分区局部更新
+
     var USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Mobile Safari/537.36"
 
     //var LIVE_UP_INFO = "https://api.live.bilibili.com/room/v1/Room/get_info" //获取up主的信息
@@ -35,8 +39,7 @@ object GlobalProperties {
     var LIVE_ALL_URL = "http://api.live.bilibili.com/room/v3/Area/getRoomList"  //获取全部直播列表
     var LIVE_TAB_LIST_URL = "http://api.live.bilibili.com/room/v1/Area/getList"  //直播分类所有tab
 
-    var REGION_DETAIL_URL = "https://app.bilibili.com/x/v2/region/dynamic?"  //分区详情
-    var REGION_DETAIL_LOADMORE_URL = "https://app.bilibili.com/x/v2/region/dynamic/list?"  //分区加载更多
+
 
     val IMAGE_RULE_480_300 = "@480w_300h_1e_1c.webp"  //图片尺寸
     val IMAGE_RULE_240_150 = "@240w_150h_1e_1c.webp"

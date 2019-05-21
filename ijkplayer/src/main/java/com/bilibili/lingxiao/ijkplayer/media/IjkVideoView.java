@@ -158,7 +158,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         mSettings = new Settings(mAppContext);
 
         initBackground();
-        initRenders();
+        initRenders();  //初始化渲染器
 
         mVideoWidth = 0;
         mVideoHeight = 0;
@@ -227,6 +227,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                 break;
             case RENDER_SURFACE_VIEW:
             case RENDER_TEXTURE_VIEW: {
+                //初始化一个textureview，并且添加到视图容器中
                 TextureRenderView renderView = new TextureRenderView(getContext());
                 if (mMediaPlayer != null) {
                     renderView.getSurfaceHolder().bindToMediaPlayer(mMediaPlayer);
@@ -958,7 +959,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         if (mAllRenders.isEmpty())
             mAllRenders.add(RENDER_SURFACE_VIEW);
         mCurrentRender = mAllRenders.get(mCurrentRenderIndex);
-        setRender(mCurrentRender);
+        setRender(mCurrentRender); //根据渲染器类型初始化渲染器
     }
 
     public int toggleRender() {

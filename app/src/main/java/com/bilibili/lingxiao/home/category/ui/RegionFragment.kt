@@ -85,7 +85,7 @@ class RegionFragment :BaseFragment() , RegionView {
                     startActivity(intent)
                     EventBus.getDefault().postSticky(regionList[position].regionData)
                 }
-                R.id.button_goto -> {
+                R.id.button_goto, R.id.button_more -> {
                     regionList[position].recommendData?.let {
                         var intent = Intent(context,RegionTabActivity::class.java)
                         intent.putExtra("title",it.title)

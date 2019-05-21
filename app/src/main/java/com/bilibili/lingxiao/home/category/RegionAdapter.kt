@@ -59,11 +59,13 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
                 var recycler:RecyclerView = helper.getView(R.id.recyclerview)
                 recycler.isNestedScrollingEnabled = false
                 recycler.setRecycledViewPool(recycledViewPool)
+                //recycler.setHasFixedSize(true) //避免每次绘制Item时重新计算Item高度
                 var manager = GridLayoutManager(mContext, 2)
                 recycler.layoutManager = manager
                 var regionRecommend = RegionRecommendAdapter(R.layout.item_video,item.recommendData?.body)
                 recycler.adapter = regionRecommend
                 helper.addOnClickListener(R.id.button_goto)
+                helper.addOnClickListener(R.id.button_more)
                 regionRecommend.setOnItemClickListener { adapter, view, position ->
                     item.recommendData?.let {
                         listener?.onVideoClick(it.body[position],position)

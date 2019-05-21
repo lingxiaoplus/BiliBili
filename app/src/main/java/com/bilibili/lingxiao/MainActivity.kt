@@ -35,7 +35,8 @@ class MainActivity : BaseActivity() {
      resources.getStringArray(R.array.main_tab)
     }
     var drawerOpened = false
-    private val mPermessions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+    private val mPermessions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE)
 
     @Inject
     lateinit var liveFragment: LiveFragment
@@ -105,6 +106,9 @@ class MainActivity : BaseActivity() {
             }else{
                 main_drawer_layout.openDrawer(Gravity.START)
             }
+        }
+        image_header.setOnClickListener {
+            StartActivity(LoginActivity::class.java,false)
         }
         image_download.setOnClickListener {  }
         image_game.setOnClickListener {  }

@@ -55,15 +55,17 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
             LiveData.RECOMMEND->{
                 initRecommend(helper,item.liveList)
                 helper.setText(R.id.live_recommend_more,"更多"+item.partitionsBean.partition.count+"个推荐直播 >")
+                helper.addOnClickListener(R.id.live_recommend_more)
             }
             LiveData.PARTITION->{
                 var image : SimpleDraweeView = helper.getView(R.id.image_part)
                 image.setImageURI(Uri.parse(item.partitionsBean.partition.sub_icon.src + GlobalProperties.IMAGE_RULE_240_150))
 
                 helper.setText(R.id.live_category_name,item.partitionsBean.partition.name)
-                LogUtils.d("LiveRecyAdapter 获取到Partition name 的值-》》" + item.partitionsBean.partition.name)
+
                 initPartition(helper,item.partitionsBean.lives)
                 helper.addOnClickListener(R.id.live_look_more)
+                helper.setText(R.id.live_look_more,"当前${item.partitionsBean.partition.count}个直播")
                 //initPartition(helper,item.partitions)
             }
         }

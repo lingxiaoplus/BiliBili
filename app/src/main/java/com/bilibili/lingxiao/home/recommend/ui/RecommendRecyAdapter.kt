@@ -24,10 +24,11 @@ class RecommendRecyAdapter(layoutResId: Int, data: List<RecommendData>?) :
         var category_name = item.tname
         if (category_name == null){
             category_name = "广告"
-            helper.setBackgroundColor(R.id.category_name,
-                mContext.resources.getColor(R.color.yellow_300))
-                .setTextColor(R.id.category_name,Color.WHITE)
+            helper.setTextColor(R.id.category_name,mContext.resources.getColor(R.color.yellow_300))
             helper.getView<ImageView>(R.id.image_more).visibility = View.INVISIBLE
+        }else{
+            helper.setTextColor(R.id.category_name,mContext.resources.getColor(R.color.black_alpha_112))
+            helper.getView<ImageView>(R.id.image_more).visibility = View.VISIBLE
         }
         helper.setText(R.id.category_name,"" + category_name)
 

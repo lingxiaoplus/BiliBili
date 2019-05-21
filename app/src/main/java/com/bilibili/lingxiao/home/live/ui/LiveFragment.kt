@@ -117,6 +117,7 @@ class LiveFragment :BaseFragment() , LiveView {
                     startActivity(intent)
 
                 }
+                R.id.live_recommend_more -> startActivity(Intent(context,LiveAllActivity::class.java))
             }
         }
         var emptyView = View.inflate(context,R.layout.layout_empty,null)

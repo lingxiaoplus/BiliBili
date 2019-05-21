@@ -72,6 +72,8 @@
                 android:text="更多番剧"
                 android:textColor="@color/black_alpha_112"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:elevation="@dimen/dp_4"
+                android:padding="2dp"
         />
         <ImageView
                 android:layout_width="wrap_content"

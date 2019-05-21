@@ -35,15 +35,24 @@
                         android:background="@drawable/ripple_background"
                 />
                 <com.facebook.drawee.view.SimpleDraweeView
-                        android:layout_width="@dimen/normal_icon_size"
-                        android:layout_height="@dimen/normal_icon_size"
+                        android:id="@+id/image_header"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         app:progressBarImageScaleType="centerInside"
                         app:progressBarImage="@drawable/ic_img_user_head_default"
                         app:overlayImage="@drawable/ic_img_user_head_default"
                         app:roundAsCircle="true"
                         app:roundingBorderWidth="1dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginLeft="@dimen/dp_10"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextTitle"
+                        android:textColor="@color/white"
+                        android:text="@string/un_login"
+                        android:layout_marginLeft="@dimen/dp_4"
                 />
                 <RelativeLayout android:layout_width="wrap_content"
                                 android:layout_height="match_parent">
