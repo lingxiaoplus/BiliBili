@@ -1,4 +1,4 @@
-package com.bilibili.lingxiao.home.category.ui
+package com.bilibili.lingxiao.home.region.ui
 
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
@@ -6,16 +6,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import com.bilibili.lingxiao.R
-import com.bilibili.lingxiao.home.category.RegionAdapter
-import com.bilibili.lingxiao.home.category.presenter.RegionPresenter
-import com.bilibili.lingxiao.home.category.view.RegionView
-import com.bilibili.lingxiao.home.category.model.MultiRegionData
-import com.bilibili.lingxiao.home.category.model.RegionData
-import com.bilibili.lingxiao.home.category.model.RegionRecommendData
+import com.bilibili.lingxiao.home.region.RegionAdapter
+import com.bilibili.lingxiao.home.region.presenter.RegionPresenter
+import com.bilibili.lingxiao.home.region.view.RegionView
+import com.bilibili.lingxiao.home.region.model.MultiRegionData
+import com.bilibili.lingxiao.home.region.model.RegionData
+import com.bilibili.lingxiao.home.region.model.RegionRecommendData
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
-import com.camera.lingxiao.common.utills.LogUtils
 import kotlinx.android.synthetic.main.fragment_hot.*
 import kotlinx.android.synthetic.main.fragment_hot.view.*
 import org.greenrobot.eventbus.EventBus

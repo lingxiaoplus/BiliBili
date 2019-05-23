@@ -73,6 +73,7 @@
                 android:layout_height="wrap_content"
                 style="@style/TextMessage"
                 android:text="category name"
+                android:textColor="@color/grey_400"
                 android:layout_margin="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/live_title"

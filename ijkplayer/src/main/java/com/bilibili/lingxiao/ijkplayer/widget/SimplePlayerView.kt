@@ -397,6 +397,19 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         return this
     }
 
+    /**
+     * IRenderView
+     */
+    fun setSize(width :Int,height :Int): SimplePlayerView{
+        var scale = width / (height * 1.0f)
+        when(scale){
+            16.0f/9.0f -> video_view.setAspectRatio(IRenderView.AR_16_9_FIT_PARENT)
+            4.0f/3.0f -> video_view.setAspectRatio(IRenderView.AR_4_3_FIT_PARENT)
+            else -> video_view.setAspectRatio(IRenderView.AR_16_9_FIT_PARENT)
+        }
+        return this
+    }
+
     fun startPlay(){
         if (isLive){
             video_view.setVideoPath(mVideoUrl)

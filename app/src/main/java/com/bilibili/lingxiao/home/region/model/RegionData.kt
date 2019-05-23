@@ -1,4 +1,4 @@
-package com.bilibili.lingxiao.home.category.model
+package com.bilibili.lingxiao.home.region.model
 
 import com.google.gson.annotations.SerializedName
 

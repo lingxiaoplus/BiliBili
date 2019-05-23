@@ -1,11 +1,13 @@
 package com.bilibili.lingxiao.play.ui
 
 import android.content.res.Configuration
+import android.view.ViewGroup
 import android.view.WindowManager
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
 import com.bilibili.lingxiao.dagger.DaggerUiComponent
 import com.bilibili.lingxiao.play.model.VideoData
+import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.utills.LogUtils
@@ -43,22 +45,29 @@ class PlayActivity : BaseActivity() {
             .build(this)
             .apply();
     }
-
+    @Throws(NumberFormatException::class)
     override fun initWidget() {
         super.initWidget()
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         var uri = intent.data
-        //uri.getQueryParameter("player_width")
-        //uri.getQueryParameter("player_height")
-        //uri.getQueryParameter("player_rotate")
         var player_preload = URLDecoder.decode(uri.getQueryParameter("player_preload"),"UTF-8")
-        var videoData = Gson().fromJson(player_preload, VideoData::class.java)
-        LogUtils.d("需要播放的video信息：" + videoData.url)
+        var player_width = URLDecoder.decode(uri.getQueryParameter("player_width"),"UTF-8").toInt()
+        var player_height = URLDecoder.decode(uri.getQueryParameter("player_height"),"UTF-8").toInt()
+        var player_rotate = URLDecoder.decode(uri.getQueryParameter("player_rotate"),"UTF-8") //0为不旋转
 
+
+        var videoData = Gson().fromJson(player_preload, VideoData::class.java)
+
+        UIUtil.getDensityString()
+        var layoutParams = ViewGroup.LayoutParams(play_view.width,
+            (player_width / (player_height+1.0f) * play_view.width).toInt())
+        LogUtils.d("需要播放的video信息：width: ${layoutParams.width}, heigth: ${layoutParams.height}")
+        //play_view.layoutParams = layoutParams
         play_view
             .setLive(true)
             .setVideoUrl(videoData.url)
+            .setSize(player_width,player_height)
             .initDanMaKu(videoData.cid,2000)
             .startPlay()
 

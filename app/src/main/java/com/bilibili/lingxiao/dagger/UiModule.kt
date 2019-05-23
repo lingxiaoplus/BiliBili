@@ -1,7 +1,7 @@
 package com.bilibili.lingxiao.dagger
 
 import android.content.Context
-import com.bilibili.lingxiao.home.category.ui.RegionFragment
+import com.bilibili.lingxiao.home.region.ui.RegionFragment
 import com.bilibili.lingxiao.home.live.ui.LiveFragment
 import com.bilibili.lingxiao.home.mikan.ui.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment

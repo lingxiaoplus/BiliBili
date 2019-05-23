@@ -1,7 +1,7 @@
-package com.bilibili.lingxiao.home.category.view
+package com.bilibili.lingxiao.home.region.view
 
-import com.bilibili.lingxiao.home.category.model.RegionData
-import com.bilibili.lingxiao.home.category.model.RegionRecommendData
+import com.bilibili.lingxiao.home.region.model.RegionData
+import com.bilibili.lingxiao.home.region.model.RegionRecommendData
 import com.camera.lingxiao.common.app.BaseView
 
 interface RegionView :BaseView{

@@ -9,14 +9,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
-import com.bilibili.lingxiao.home.category.ui.RegionFragment
+import com.bilibili.lingxiao.home.region.ui.RegionFragment
 import com.bilibili.lingxiao.home.live.ui.LiveFragment
 import com.bilibili.lingxiao.home.mikan.ui.MikanFragment
 import com.bilibili.lingxiao.home.navigation.ThemeActivity
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.user.LoginActivity
 import com.bilibili.lingxiao.utils.UIUtil
-import com.bilibili.lingxiao.widget.RippleAnimation
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.rxbus.SkinChangedEvent

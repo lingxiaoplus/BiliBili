@@ -1,9 +1,9 @@
 package com.bilibili.lingxiao
 
 import android.util.Log
-import com.bilibili.lingxiao.home.category.model.RegionData
-import com.bilibili.lingxiao.home.category.model.RegionDetailData
-import com.bilibili.lingxiao.home.category.model.RegionRecommendData
+import com.bilibili.lingxiao.home.region.model.RegionData
+import com.bilibili.lingxiao.home.region.model.RegionDetailData
+import com.bilibili.lingxiao.home.region.model.RegionRecommendData
 import com.bilibili.lingxiao.home.live.model.*
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
@@ -569,6 +569,10 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
                 return obj
             }
         })
+        if (debug){
+            var url = GlobalProperties.REGION_DETAIL_URL + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取分区详情的url---->$url")
+        }
         getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.REGION_DETAIL_URL, request,mLifecycle, callback)
     }
 

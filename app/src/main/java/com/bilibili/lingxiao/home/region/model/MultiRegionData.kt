@@ -1,4 +1,4 @@
-package com.bilibili.lingxiao.home.category.model
+package com.bilibili.lingxiao.home.region.model
 
 data class MultiRegionData(val itemType:Int) {
     companion object {

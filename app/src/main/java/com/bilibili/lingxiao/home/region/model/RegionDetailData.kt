@@ -1,4 +1,4 @@
-package com.bilibili.lingxiao.home.category.model
+package com.bilibili.lingxiao.home.region.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -10,9 +10,9 @@ data class RegionDetailData(
     @SerializedName("ctop")
     val ctop: Int,
     @SerializedName("new")
-    val new: List<Info>,
+    val new: List<Info>?,
     @SerializedName("recommend")
-    val recommend: List<Info>
+    val recommend: List<Info>?
 ) {
     data class Info(
         @SerializedName("cover")

@@ -1,16 +1,13 @@
-package com.bilibili.lingxiao.home.category.ui
+package com.bilibili.lingxiao.home.region.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.view.View
 import com.bilibili.lingxiao.R
-import com.bilibili.lingxiao.home.category.model.RegionData
-import com.bilibili.lingxiao.home.category.model.RegionRecommendData
-import com.bilibili.lingxiao.home.live.model.LiveTabData
-import com.bilibili.lingxiao.home.live.ui.LiveAllFragment
+import com.bilibili.lingxiao.home.region.model.RegionData
+import com.bilibili.lingxiao.home.region.model.RegionRecommendData
 import com.camera.lingxiao.common.app.BaseActivity
 import kotlinx.android.synthetic.main.activity_live_more.*
 import kotlinx.android.synthetic.main.title_bar.*

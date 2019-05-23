@@ -79,7 +79,8 @@ class RecommendFragment :BaseFragment(), RecommendView {
             recommendPresenter.getRecommendList(operationState)
         }
         mAdapter.setDuration(1000)
-        mAdapter.openLoadAnimation({ view ->
+        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN)
+        /*mAdapter.openLoadAnimation({ view ->
             arrayOf<Animator>(
                 ObjectAnimator.ofFloat(
                     view,
@@ -89,7 +90,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
                     1f
                 ), ObjectAnimator.ofFloat(view, "scaleX", 0f, 1.05f, 1f)
             )
-        })
+        })*/
         mAdapter.isFirstOnly(false)
         mAdapter.setOnItemClickListener(object :BaseQuickAdapter.OnItemClickListener{
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {

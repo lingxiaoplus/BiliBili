@@ -14,6 +14,7 @@ import kotlin.properties.Delegates
 import android.support.v7.widget.RecyclerView
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import com.bilibili.lingxiao.home.live.BannerImageLoader
 import com.bilibili.lingxiao.home.live.presenter.LivePresenter
 import com.bilibili.lingxiao.home.live.view.LiveView
@@ -115,7 +116,6 @@ class LiveFragment :BaseFragment() , LiveView {
                     intent.putExtra("parentId",liveList[position].partitionsBean.partition.id)
                     intent.putExtra("parentName",liveList[position].partitionsBean.partition.name)
                     startActivity(intent)
-
                 }
                 R.id.live_recommend_more -> startActivity(Intent(context,LiveAllActivity::class.java))
             }
@@ -128,6 +128,37 @@ class LiveFragment :BaseFragment() , LiveView {
 
         footerShowAllView.findViewById<Button>(R.id.button).setOnClickListener {
             startActivity(Intent(context,LiveAllActivity::class.java))
+        }
+
+        topView.findViewById<TextView>(R.id.tv_live_follow).setOnClickListener {
+            var intent = Intent(context,LiveMoreActivity::class.java)
+            intent.putExtra("parentId",2)
+            intent.putExtra("parentName","关注")
+            startActivity(intent)
+        }
+        topView.findViewById<TextView>(R.id.tv_live_happy).setOnClickListener {
+            var intent = Intent(context,LiveMoreActivity::class.java)
+            intent.putExtra("parentId",1)
+            intent.putExtra("parentName","视频唱见")
+            startActivity(intent)
+        }
+        topView.findViewById<TextView>(R.id.tv_live_video).setOnClickListener {
+            var intent = Intent(context,LiveMoreActivity::class.java)
+            intent.putExtra("parentId",3)
+            intent.putExtra("parentName","游戏")
+            startActivity(intent)
+        }
+        topView.findViewById<TextView>(R.id.tv_live_game).setOnClickListener {
+            var intent = Intent(context,LiveMoreActivity::class.java)
+            intent.putExtra("parentId",5)
+            intent.putExtra("parentName","单机")
+            startActivity(intent)
+        }
+        topView.findViewById<TextView>(R.id.tv_live_draw).setOnClickListener {
+            var intent = Intent(context,LiveMoreActivity::class.java)
+            intent.putExtra("parentId",4)
+            intent.putExtra("parentName","绘画")
+            startActivity(intent)
         }
     }
 

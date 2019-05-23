@@ -1,4 +1,4 @@
-package com.bilibili.lingxiao.home.category
+package com.bilibili.lingxiao.home.region
 
 import android.net.Uri
 import android.support.constraint.ConstraintLayout
@@ -9,9 +9,9 @@ import android.widget.Button
 import android.widget.ImageView
 import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
-import com.bilibili.lingxiao.home.category.model.MultiRegionData
-import com.bilibili.lingxiao.home.category.model.RegionData
-import com.bilibili.lingxiao.home.category.model.RegionRecommendData
+import com.bilibili.lingxiao.home.region.model.MultiRegionData
+import com.bilibili.lingxiao.home.region.model.RegionData
+import com.bilibili.lingxiao.home.region.model.RegionRecommendData
 import com.bilibili.lingxiao.utils.StringUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.chad.library.adapter.base.BaseQuickAdapter

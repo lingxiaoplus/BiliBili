@@ -27,7 +27,7 @@
                     android:text="@string/nav_follow" />
 
             <TextView
-                    android:id="@+id/tv_live_center"
+                    android:id="@+id/tv_live_happy"
                     style="@style/text_style_navigation"
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_live_home_entertainment"
@@ -41,14 +41,14 @@
                     android:text="@string/nav_game" />
 
             <TextView
-                    android:id="@+id/tv_live_search"
+                    android:id="@+id/tv_live_game"
                     style="@style/text_style_navigation"
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_live_home_mobile_game"
                     android:text="@string/nav_mobile_game" />
 
             <TextView
-                    android:id="@+id/tv_live_category"
+                    android:id="@+id/tv_live_draw"
                     style="@style/text_style_navigation"
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_live_home_painting"

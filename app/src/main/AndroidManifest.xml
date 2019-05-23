@@ -82,7 +82,7 @@
         <activity android:name=".home.live.ui.LiveAllActivity">
         </activity>
         <activity android:name=".home.live.ui.LiveMoreActivity"/>
-        <activity android:name=".home.category.ui.RegionTabActivity">
+        <activity android:name=".home.region.ui.RegionTabActivity">
         </activity>
         <service android:name=".InitIalizeService"/>
     </application>

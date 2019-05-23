@@ -1,10 +1,10 @@
-package com.bilibili.lingxiao.home.category.presenter
+package com.bilibili.lingxiao.home.region.presenter
 
 import com.bilibili.lingxiao.HttpTrans
-import com.bilibili.lingxiao.home.category.model.RegionData
-import com.bilibili.lingxiao.home.category.model.RegionRecommendData
-import com.bilibili.lingxiao.home.category.ui.RegionFragment
-import com.bilibili.lingxiao.home.category.view.RegionView
+import com.bilibili.lingxiao.home.region.model.RegionData
+import com.bilibili.lingxiao.home.region.model.RegionRecommendData
+import com.bilibili.lingxiao.home.region.ui.RegionFragment
+import com.bilibili.lingxiao.home.region.view.RegionView
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.observer.HttpRxCallback
 
