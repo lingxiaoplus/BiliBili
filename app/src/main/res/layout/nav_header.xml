@@ -102,8 +102,7 @@
 
 
         <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                style="@style/image_normal"
                 fresco:srcCompat="@drawable/ic_img_scan_qr_code"
                 android:layout_marginEnd="8dp"
                 fresco:layout_constraintEnd_toEndOf="parent"

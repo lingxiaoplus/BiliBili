@@ -35,14 +35,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
+                app:maxImageSize="@dimen/fab_image_size"
                 android:layout_margin="@dimen/fab_margin"
                 android:visibility="visible"
                 app:backgroundTint="@color/colorPrimary"
                 app:fabSize="normal"
+                android:scaleType="center"
                 app:layout_behavior="@string/scroll_behavior"
                 app:rippleColor="#33728dff"
                 app:srcCompat="@drawable/ic_live_entrance"
-                android:scaleType="center"
+
         />
     </LinearLayout>
+
 </android.support.design.widget.CoordinatorLayout>

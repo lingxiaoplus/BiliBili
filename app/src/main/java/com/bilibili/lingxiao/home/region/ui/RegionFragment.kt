@@ -1,6 +1,7 @@
 package com.bilibili.lingxiao.home.region.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -64,6 +65,12 @@ class RegionFragment :BaseFragment() , RegionView {
         regionAdapter.setMultiItemClickListener(object :RegionAdapter.OnMultiItemClickListener{
             override fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int) {
                 ToastUtil.show(data?.title)
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(data?.uri)
+                )
+                intent.putExtra("play_url",data?.uri)
+                startActivity(intent)
             }
 
             override fun onGridClick(data: RegionData.Data?, position: Int) {

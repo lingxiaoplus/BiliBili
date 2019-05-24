@@ -1,6 +1,8 @@
 package com.bilibili.lingxiao.home.navigation
 
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import android.widget.TextView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.widget.RippleAnimation
 import com.camera.lingxiao.common.Common
@@ -9,6 +11,7 @@ import com.camera.lingxiao.common.rxbus.SkinChangedEvent
 import com.camera.lingxiao.common.utills.SpUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.facebook.drawee.view.SimpleDraweeView
 import com.github.zackratos.ultimatebar.UltimateBar
 import com.lingxiao.skinlibrary.SkinLib
 import kotlinx.android.synthetic.main.activity_theme.*
@@ -27,14 +30,18 @@ class ThemeActivity : BaseActivity() {
         var names = resources.getStringArray(R.array.theme_name)
         var colors = resources.getIntArray(R.array.theme_color)
         var tags = resources.getStringArray(R.array.theme_tag)
+        var checkedColor = SpUtils.getInt(this@ThemeActivity, Common.SKIN_ID,0)
         for ((index,name) in names.withIndex()){
             if (index < 3){
                 themeList.add(ThemeData(colors[index],name,tags[index],false,false))
             }else{
                 themeList.add(ThemeData(colors[index],name,tags[index],true,false))
             }
+            if (checkedColor == colors[index])
+                checkedColor = index
         }
-        themeList[0].choose = true
+
+        themeList[checkedColor].choose = true
         var adapter = ThemeAdapter(R.layout.item_theme,themeList)
         recycerView.adapter = adapter
         recycerView.layoutManager = LinearLayoutManager(this)
@@ -86,7 +93,9 @@ class ThemeActivity : BaseActivity() {
                 helper.setVisible(R.id.text_theme_price,true)
                 helper.setVisible(R.id.button_pay,true)
             }else{
-                helper.setVisible(R.id.text_theme_price,false)
+                //需要GONE而不是INVISIBLE
+                //helper.setVisible(R.id.text_theme_price,false)
+                helper.getView<TextView>(R.id.text_theme_price).visibility = View.GONE
                 helper.setVisible(R.id.button_pay,false)
             }
             if (item.choose){

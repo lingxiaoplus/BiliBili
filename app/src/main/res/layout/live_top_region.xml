@@ -24,35 +24,45 @@
                     style="@style/text_style_navigation"
                     android:clickable="true"
                     android:drawableTop="@drawable/live_home_follow_anchor"
-                    android:text="@string/nav_follow" />
+                    android:text="@string/nav_follow"
+                    android:background="@drawable/ripple_background"
+            />
 
             <TextView
                     android:id="@+id/tv_live_happy"
                     style="@style/text_style_navigation"
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_live_home_entertainment"
-                    android:text="@string/nav_entertainment" />
+                    android:text="@string/nav_entertainment"
+                    android:background="@drawable/ripple_background"
+            />
 
             <TextView
                     android:id="@+id/tv_live_video"
                     style="@style/text_style_navigation"
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_live_home_game"
-                    android:text="@string/nav_game" />
+                    android:text="@string/nav_game"
+                    android:background="@drawable/ripple_background"
+            />
 
             <TextView
                     android:id="@+id/tv_live_game"
                     style="@style/text_style_navigation"
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_live_home_mobile_game"
-                    android:text="@string/nav_mobile_game" />
+                    android:text="@string/nav_mobile_game"
+                    android:background="@drawable/ripple_background"
+            />
 
             <TextView
                     android:id="@+id/tv_live_draw"
                     style="@style/text_style_navigation"
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_live_home_painting"
-                    android:text="@string/nav_painting" />
+                    android:text="@string/nav_painting"
+                    android:background="@drawable/ripple_background"
+            />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

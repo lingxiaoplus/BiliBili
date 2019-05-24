@@ -3,6 +3,7 @@ package com.bilibili.lingxiao
 
 import android.Manifest
 import android.support.design.internal.NavigationMenuView
+import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -86,7 +87,7 @@ class MainActivity : BaseActivity() {
         //supportActionBar?.setDisplayHomeAsUpEnabled(true);
 
         supportActionBar?.setDisplayShowTitleEnabled(false);
-        /*var drawerToggle = object : ActionBarDrawerToggle(this,main_drawer_layout,main_toolbar,R.string.open,R.string.close){
+        var drawerToggle = object : ActionBarDrawerToggle(this,main_drawer_layout,main_toolbar,R.string.open,R.string.close){
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
                 drawerOpened = true
@@ -96,9 +97,9 @@ class MainActivity : BaseActivity() {
                 super.onDrawerClosed(drawerView)
                 drawerOpened = false
             }
-        }*/
+        }
+        main_drawer_layout.addDrawerListener(drawerToggle)//设置侧滑监听
         //drawerToggle.syncState()//设置左箭头与Home图标的切换与侧滑同步
-        //main_drawer_layout.addDrawerListener(drawerToggle)//设置侧滑监听
         image_drawer_home.setOnClickListener {
             if (drawerOpened){
                 main_drawer_layout.closeDrawer(Gravity.START)

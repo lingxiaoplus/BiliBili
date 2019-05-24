@@ -17,7 +17,7 @@
     >
         <ImageView
                 android:id="@+id/image_color"
-                style="@style/image_normal"
+                style="@style/image_small"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -33,6 +33,7 @@
                 android:gravity="center_vertical"
                 app:layout_constraintHorizontal_bias="0.02"
                 app:layout_constraintVertical_bias="0.5"
+                android:layout_marginLeft="@dimen/dp_10"
         >
             <TextView
                     android:id="@+id/text_theme_name"
@@ -78,6 +79,7 @@
                 android:layout_marginRight="8dp"
                 android:visibility="gone"
                 tools:visibility="visible"
+                android:backgroundTint="@color/colorPrimary"
         />
     </android.support.constraint.ConstraintLayout>
     <ImageView

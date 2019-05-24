@@ -132,7 +132,7 @@ class LiveFragment :BaseFragment() , LiveView {
 
         topView.findViewById<TextView>(R.id.tv_live_follow).setOnClickListener {
             var intent = Intent(context,LiveMoreActivity::class.java)
-            intent.putExtra("parentId",2)
+            intent.putExtra("parentId",5)
             intent.putExtra("parentName","关注")
             startActivity(intent)
         }
@@ -144,14 +144,14 @@ class LiveFragment :BaseFragment() , LiveView {
         }
         topView.findViewById<TextView>(R.id.tv_live_video).setOnClickListener {
             var intent = Intent(context,LiveMoreActivity::class.java)
-            intent.putExtra("parentId",3)
+            intent.putExtra("parentId",2)
             intent.putExtra("parentName","游戏")
             startActivity(intent)
         }
         topView.findViewById<TextView>(R.id.tv_live_game).setOnClickListener {
             var intent = Intent(context,LiveMoreActivity::class.java)
-            intent.putExtra("parentId",5)
-            intent.putExtra("parentName","单机")
+            intent.putExtra("parentId",3)
+            intent.putExtra("parentName","手游")
             startActivity(intent)
         }
         topView.findViewById<TextView>(R.id.tv_live_draw).setOnClickListener {

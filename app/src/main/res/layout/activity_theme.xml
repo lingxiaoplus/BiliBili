@@ -84,6 +84,7 @@
                 android:layout_marginRight="@dimen/dp_4"
                 android:visibility="visible"
                 tools:visibility="visible"
+                android:backgroundTint="@color/colorPrimary"
         />
     </LinearLayout>
 
