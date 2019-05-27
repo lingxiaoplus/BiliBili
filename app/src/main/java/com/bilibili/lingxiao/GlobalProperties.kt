@@ -46,6 +46,8 @@ object GlobalProperties {
     val IMAGE_RULE_160_100 = "@160w_100h_1e_1c.webp"
     val IMAGE_RULE_90_90 = "@90w_90h_1e_1c.webp"
     var IMAGE_RULE_60_60 = "@60w_60h_1e_1c.webp"
+
+    var IMAGE_RULE_200_266 = "@200w_266h_1e_1c.webp"  //4:3
     private val SECRET_KEY = "ea85624dfcf12d7cc7b2b3a94fac1f2c"
     val PARAM_SIGN = "sign"
     val APP_KEY = "c1b107428d337928"

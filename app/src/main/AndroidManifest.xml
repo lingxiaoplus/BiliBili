@@ -84,7 +84,11 @@
         <activity android:name=".home.live.ui.LiveMoreActivity"/>
         <activity android:name=".home.region.ui.RegionTabActivity">
         </activity>
+
         <service android:name=".InitIalizeService"/>
+
+        <activity android:name=".home.region.ui.BangumiDetailActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -64,12 +64,17 @@ class RegionFragment :BaseFragment() , RegionView {
         regionAdapter.setEmptyView(emptyView)
         regionAdapter.setMultiItemClickListener(object :RegionAdapter.OnMultiItemClickListener{
             override fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int) {
-                ToastUtil.show(data?.title)
+                /*ToastUtil.show(data?.title)
                 val intent = Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(data?.uri)
                 )
                 intent.putExtra("play_url",data?.uri)
+                startActivity(intent)*/
+                val intent = Intent(
+                    context,
+                    BangumiDetailActivity::class.java
+                )
                 startActivity(intent)
             }
 
