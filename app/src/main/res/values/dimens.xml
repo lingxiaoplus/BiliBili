@@ -24,4 +24,7 @@
     <dimen name="pop_watch_later_yoffset">-10dp</dimen>
 
     <dimen name="banner_height">120dp</dimen>
+
+    <dimen name="bangumi_tv_width">140dp</dimen>
+    <dimen name="bangumi_tv_height">100dp</dimen>
 </resources>

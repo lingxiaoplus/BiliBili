@@ -7,6 +7,7 @@ import com.bilibili.lingxiao.home.region.model.RegionRecommendData
 import com.bilibili.lingxiao.home.live.model.*
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
+import com.bilibili.lingxiao.home.region.model.BangumiDetailData
 import com.bilibili.lingxiao.play.model.CommentData
 import com.bilibili.lingxiao.play.model.VideoDetailData
 import com.bilibili.lingxiao.play.model.VideoRecoData
@@ -595,5 +596,34 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             }
         })
         getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.REGION_DETAIL_LOADMORE_URL, request,mLifecycle, callback)
+    }
+
+
+    /**
+     * 番剧详情
+     */
+    fun getBangumiDetail(season_id:String,type:String,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("appkey",GlobalProperties.APP_KEY)
+        request.put("build",GlobalProperties.BUILD)
+        request.put("mobi_app",GlobalProperties.MOBI_APP)
+        request.put("platform",GlobalProperties.PLATFORM)
+        request.put("season_id",season_id)
+        request.put("ts",GlobalProperties.getSystemTime())
+        request.put("type",type)
+        request.put("sign",GlobalProperties.getSign(request))  //计算签名，然后作为参数  这里其实可以写一个拦截器，对所有请求进行签名
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, BangumiDetailData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.BANGUMI_DETAIL + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取番剧详情的url---->$url")
+        }
+        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET, GlobalProperties.BANGUMI_DETAIL, request,mLifecycle, callback)
     }
 }

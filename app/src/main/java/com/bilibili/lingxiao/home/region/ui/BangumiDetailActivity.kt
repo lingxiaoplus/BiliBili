@@ -1,22 +1,30 @@
 package com.bilibili.lingxiao.home.region.ui
 
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import com.bilibili.lingxiao.R
 import com.camera.lingxiao.common.app.BaseActivity
 import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.drawee.view.SimpleDraweeView
 import com.facebook.imagepipeline.postprocessors.IterativeBoxBlurPostProcessor
 import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_bangumi_detail.*
 import android.graphics.drawable.AnimationDrawable
+import android.support.v7.widget.LinearLayoutManager
+import com.bilibili.lingxiao.GlobalProperties
+import com.bilibili.lingxiao.home.region.model.BangumiDetailData
+import com.bilibili.lingxiao.home.region.presenter.BangumiDetailPresenter
+import com.bilibili.lingxiao.home.region.view.BangumiView
+import com.bilibili.lingxiao.utils.StringUtil
+import com.bilibili.lingxiao.utils.ToastUtil
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
+import kotlinx.android.synthetic.main.content_bangumi_detail.*
+import java.util.*
 
 
-
-class BangumiDetailActivity : BaseActivity() {
+class BangumiDetailActivity : BaseActivity(), BangumiView{
+    private var presenter = BangumiDetailPresenter(this,this)
     override val contentLayoutId: Int
         get() = R.layout.activity_bangumi_detail
 
@@ -29,17 +37,54 @@ class BangumiDetailActivity : BaseActivity() {
             .build(this)
             .apply();
         setToolbarBack(toolbar)
-        showUrlBlur(image_bar,"http://i0.hdslb.com/bfs/archive/8d9c4f94c42ab92e477c8cfdb2d5c02eff65ef3d.jpg",
-            6,10)
-        image_cover.setImageURI(Uri.parse("http://i0.hdslb.com/bfs/bangumi/2fa3b4a2dbad3d307876cec4fa458fb2cbb50681.jpg@200w_266h_1e_1c.webp"))
+        var id = intent.getStringExtra("id")
+        var type = intent.getStringExtra("type")
+        presenter.getBangumiDetail(id,type)
     }
 
 
+
+    override fun showDialog() {
+        showProgressDialog("获取数据中...")
+    }
+
+    @Throws(Exception::class)
+    override fun onGetBangumiDetail(data: BangumiDetailData) {
+        if (data.result == null){
+            return
+        }
+        data.result.episodes?.let {
+            showUrlBlur(image_bar,it[0].cover,
+                6,10)
+            Collections.reverse(it)
+            var tvAdapter = BangumiTvAdapter(R.layout.item_bangumi_tv,it)
+            recycler_select_set.layoutManager = LinearLayoutManager(this@BangumiDetailActivity
+                ,LinearLayoutManager.HORIZONTAL,false)
+            recycler_select_set.adapter = tvAdapter
+        }
+        image_cover.setImageURI(Uri.parse(data.result.cover + GlobalProperties.IMAGE_RULE_200_266))
+        toolbar.title = data.result.bangumiTitle
+        text_count.text = "${data.result.totalCount}话全"
+        text_status.text = data.result.media.episodeIndex.indexShow
+        text_play_count.text = "播放：${StringUtil.getBigDecimalNumber(data.result.playCount.toInt())}"
+        text_favorites.text = "追番：${StringUtil.getBigDecimalNumber(data.result.favorites.toInt())}"
+        text_evaluate.text = data.result.evaluate
+    }
+
+    override fun diamissDialog() {
+        cancleProgressDialog()
+    }
+
+    override fun showToast(text: String?) {
+        ToastUtil.show(text)
+    }
+
+    @Throws(ClassCastException::class)
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        //image_follow.set(R.drawable.bangumi_follow_animlist)
-        //val animationDrawable = imageView.getDrawable() as AnimationDrawable
-        //animationDrawable.start()
+        var animationDrawables = tv_chasing.compoundDrawables
+        var drawable = animationDrawables[1] as AnimationDrawable
+        drawable.start()
     }
     /**
      * @param iterations 迭代次数，越大越魔化。
@@ -58,6 +103,14 @@ class BangumiDetailActivity : BaseActivity() {
             draweeView.setController(controller);
         } catch (e:Exception) {
             e.printStackTrace();
+        }
+    }
+
+    inner class BangumiTvAdapter(layout:Int,data: List<BangumiDetailData.Result.Episode>?) :
+        BaseQuickAdapter<BangumiDetailData.Result.Episode, BaseViewHolder>(layout,data) {
+        override fun convert(helper: BaseViewHolder, item: BangumiDetailData.Result.Episode?) {
+            helper.setText(R.id.text_title,"第${item?.index}话")
+            helper.setText(R.id.text_message,item?.indexTitle)
         }
     }
 }

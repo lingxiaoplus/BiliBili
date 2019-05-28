@@ -19,6 +19,7 @@ object GlobalProperties {
     val COMMENT_DOUBLE_HOST = "http://api.bilibili.com/x/v2/reply/reply/cursor?" //楼中楼评论
     val BANGUMI_CN_AND_JP_HOST = "http://bangumi.bilibili.com/appindex/follow_index_page?" //国内外推荐番剧
     val BANGUMI_FALL_HOST = "http://bangumi.bilibili.com/appindex/follow_index_fall?" //编辑推荐番剧
+    val BANGUMI_DETAIL = "https://bangumi.bilibili.com/api/season_v5?"  //番剧详情
     val CATEGORY_HOST = "http://app.bilibili.com/x/v2/region?" //分区
     val CATEGORY_RECOMMEND_HOST = "http://app.bilibili.com/x/v2/show/index?" //分区推荐
     var REGION_DETAIL_URL = "https://app.bilibili.com/x/v2/region/dynamic?"  //分区详情

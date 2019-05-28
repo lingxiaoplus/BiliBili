@@ -63,7 +63,7 @@ class RegionFragment :BaseFragment() , RegionView {
         image.setImageDrawable(resources.getDrawable(R.drawable.bilipay_common_error_tip))
         regionAdapter.setEmptyView(emptyView)
         regionAdapter.setMultiItemClickListener(object :RegionAdapter.OnMultiItemClickListener{
-            override fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int) {
+            override fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int, type:String) {
                 /*ToastUtil.show(data?.title)
                 val intent = Intent(
                     Intent.ACTION_VIEW,
@@ -75,6 +75,9 @@ class RegionFragment :BaseFragment() , RegionView {
                     context,
                     BangumiDetailActivity::class.java
                 )
+                intent.putExtra("id",data?.param)
+                //regionList[position].recommendData?.type
+                intent.putExtra("type",type)
                 startActivity(intent)
             }
 

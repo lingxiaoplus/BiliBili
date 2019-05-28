@@ -68,7 +68,7 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
                 helper.addOnClickListener(R.id.button_more)
                 regionRecommend.setOnItemClickListener { adapter, view, position ->
                     item.recommendData?.let {
-                        listener?.onVideoClick(it.body[position],position)
+                        listener?.onVideoClick(it.body[position],position,it.type)
                     }
                 }
             }
@@ -95,6 +95,6 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
     }
     interface OnMultiItemClickListener{
         fun onGridClick(data: RegionData.Data?, position:Int)
-        fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int)
+        fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int,type:String)
     }
 }
