@@ -1,5 +1,6 @@
 package com.bilibili.lingxiao.home.mikan.ui
 
+import android.content.Intent
 import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import com.bilibili.lingxiao.home.mikan.adapter.MikanAdapter
 import com.bilibili.lingxiao.home.mikan.MikanView
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
+import com.bilibili.lingxiao.home.region.ui.BangumiDetailActivity
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
@@ -46,6 +48,16 @@ class MikanFragment :BaseFragment(), MikanView {
         var manager:LinearLayoutManager = GridLayoutManager(activity,3)
         mCNAdapter = MikanAdapter(R.layout.item_mikan_video, mCNVideoList)
         mJPAdapter = MikanAdapter(R.layout.item_mikan_video, mJPVideoList)
+
+        mCNAdapter.setOnItemClickListener { adapter, view, position ->
+            val intent = Intent(
+                context,
+                BangumiDetailActivity::class.java
+            )
+            intent.putExtra("id",mCNVideoList[position].seasonId.toString())
+            intent.putExtra("type","bangumi")
+            startActivity(intent)
+        }
 
         root.recycerView.layoutManager = manager
         root.recycerView.adapter = mJPAdapter

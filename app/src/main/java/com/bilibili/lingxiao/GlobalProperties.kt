@@ -20,11 +20,13 @@ object GlobalProperties {
     val BANGUMI_CN_AND_JP_HOST = "http://bangumi.bilibili.com/appindex/follow_index_page?" //国内外推荐番剧
     val BANGUMI_FALL_HOST = "http://bangumi.bilibili.com/appindex/follow_index_fall?" //编辑推荐番剧
     val BANGUMI_DETAIL = "https://bangumi.bilibili.com/api/season_v5?"  //番剧详情
+    var BANGUMI_RECOMMEND = "https://bangumi.bilibili.com/api/season/recommend/rnd/"  //番剧详情下面的推荐
+
     val CATEGORY_HOST = "http://app.bilibili.com/x/v2/region?" //分区
     val CATEGORY_RECOMMEND_HOST = "http://app.bilibili.com/x/v2/show/index?" //分区推荐
     var REGION_DETAIL_URL = "https://app.bilibili.com/x/v2/region/dynamic?"  //分区详情
     var REGION_DETAIL_LOADMORE_URL = "https://app.bilibili.com/x/v2/region/dynamic/list?"  //分区加载更多
-    var REGION_LOCALITY_URL = "http://app.bilibili.com/x/v2/show/change/region?platform=android&rand=1&rid=1" //分区局部更新
+    var REGION_LOCALITY_URL = "http://app.bilibili.com/x/v2/show/change/" //分区局部更新
 
     var USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Mobile Safari/537.36"
 

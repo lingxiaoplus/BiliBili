@@ -1,13 +1,10 @@
 package com.bilibili.lingxiao
 
 import android.util.Log
-import com.bilibili.lingxiao.home.region.model.RegionData
-import com.bilibili.lingxiao.home.region.model.RegionDetailData
-import com.bilibili.lingxiao.home.region.model.RegionRecommendData
 import com.bilibili.lingxiao.home.live.model.*
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
-import com.bilibili.lingxiao.home.region.model.BangumiDetailData
+import com.bilibili.lingxiao.home.region.model.*
 import com.bilibili.lingxiao.play.model.CommentData
 import com.bilibili.lingxiao.play.model.VideoDetailData
 import com.bilibili.lingxiao.play.model.VideoRecoData
@@ -598,6 +595,26 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.REGION_DETAIL_LOADMORE_URL, request,mLifecycle, callback)
     }
 
+    /**
+     * 分区局部刷新
+     */
+    fun refreshRegionLocality(type:String,rand:Int,rid:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("rand",rand)
+        request.put("rid",rid)
+        request.put("platform",GlobalProperties.PLATFORM)
+        var url = "${GlobalProperties.REGION_LOCALITY_URL}$type?"
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                val type = object : TypeToken<List<RegionRecommendData.Data.Body>>() {}.getType()
+                var modle:List<RegionRecommendData.Data.Body> = Gson().fromJson<List<RegionRecommendData.Data.Body>>(element, type)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        getRequest().requestFullPath(HttpRequest.Method.GET, url, request,mLifecycle, callback)
+    }
 
     /**
      * 番剧详情
@@ -625,5 +642,27 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             Log.d(TAG,"获取番剧详情的url---->$url")
         }
         getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET, GlobalProperties.BANGUMI_DETAIL, request,mLifecycle, callback)
+    }
+
+
+    /**
+     * 番剧详情下面的推荐
+     * https://bangumi.bilibili.com/api/season/recommend/rnd/24618.json
+     */
+    fun getBangumiDetailRecommend(season_id:String,callback: HttpRxCallback<Any>){
+        request.clear()
+        var url = GlobalProperties.BANGUMI_RECOMMEND + "$season_id.json"
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, BangumiRecommendData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            Log.d(TAG,"获取番剧详情下面的推荐的url---->$url")
+        }
+        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET, url, request,mLifecycle, callback)
     }
 }

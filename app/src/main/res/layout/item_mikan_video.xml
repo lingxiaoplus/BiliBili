@@ -4,11 +4,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="2dp"
+        android:background="@color/white"
+        android:elevation="@dimen/dp_4"
 >
     <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/image_cover"
-            android:layout_width="100dp"
+            android:layout_width="@dimen/banner_height"
             android:layout_height="wrap_content"
             app:viewAspectRatio="0.8"
     />

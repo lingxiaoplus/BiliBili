@@ -19,6 +19,7 @@ import com.camera.lingxiao.common.app.BaseFragment
 import kotlinx.android.synthetic.main.fragment_hot.*
 import kotlinx.android.synthetic.main.fragment_hot.view.*
 import org.greenrobot.eventbus.EventBus
+import java.util.*
 
 class RegionFragment :BaseFragment() , RegionView {
     private var regionPresenter: RegionPresenter =
@@ -64,21 +65,19 @@ class RegionFragment :BaseFragment() , RegionView {
         regionAdapter.setEmptyView(emptyView)
         regionAdapter.setMultiItemClickListener(object :RegionAdapter.OnMultiItemClickListener{
             override fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int, type:String) {
-                /*ToastUtil.show(data?.title)
-                val intent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(data?.uri)
-                )
-                intent.putExtra("play_url",data?.uri)
-                startActivity(intent)*/
-                val intent = Intent(
-                    context,
-                    BangumiDetailActivity::class.java
-                )
-                intent.putExtra("id",data?.param)
-                //regionList[position].recommendData?.type
-                intent.putExtra("type",type)
-                startActivity(intent)
+                if ("bangumi".equals(type)){
+                    //分区是番剧
+                    val intent = Intent(
+                        context,
+                        BangumiDetailActivity::class.java
+                    )
+                    intent.putExtra("id",data?.param)
+                    //regionList[position].recommendData?.type
+                    intent.putExtra("type",type)
+                    startActivity(intent)
+                }else{
+
+                }
             }
 
             override fun onGridClick(data: RegionData.Data?, position: Int) {
@@ -106,6 +105,12 @@ class RegionFragment :BaseFragment() , RegionView {
                         startActivity(intent)
                         EventBus.getDefault().postSticky(it)
                     }
+                }
+                R.id.ll_refresh ->{
+                    regionList[position].recommendData?.let {
+                        regionPresenter.refreshRegion(it.type,Random().nextInt(10),it.param.toInt())
+                    }
+
                 }
             }
         }
@@ -152,6 +157,10 @@ class RegionFragment :BaseFragment() , RegionView {
         refresh.finishLoadMore()
         regionAdapter.loadMoreEnd()
         category_recyclerview.smoothScrollToPosition(0)
+    }
+
+    override fun onRefreshRegion(list: List<RegionRecommendData.Data.Body>) {
+        regionAdapter.notifyRecommendDataChanged(list)
     }
 
     override fun showDialog() {

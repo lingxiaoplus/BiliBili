@@ -47,4 +47,21 @@ class RegionPresenter(view: RegionView, fragment: RegionFragment) :
             }
         })
     }
+
+    fun refreshRegion(type:String,rand:Int,rid:Int){
+        httpTrans.refreshRegionLocality(type,rand,rid,object :HttpRxCallback<Any>(){
+            override fun onSuccess(res: Any?) {
+                var lists = res as Array<*>
+                mView?.onRefreshRegion(lists[0] as List<RegionRecommendData.Data.Body>)
+            }
+
+            override fun onError(code: Int, desc: String?) {
+                mView?.showToast(desc)
+            }
+
+            override fun onCancel() {
+
+            }
+        })
+    }
 }

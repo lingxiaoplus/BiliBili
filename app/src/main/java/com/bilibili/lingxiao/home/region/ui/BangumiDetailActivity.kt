@@ -1,5 +1,6 @@
 package com.bilibili.lingxiao.home.region.ui
 
+import android.content.Intent
 import android.net.Uri
 import com.bilibili.lingxiao.R
 import com.camera.lingxiao.common.app.BaseActivity
@@ -10,9 +11,13 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_bangumi_detail.*
 import android.graphics.drawable.AnimationDrawable
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import android.widget.TextView
 import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.home.region.model.BangumiDetailData
+import com.bilibili.lingxiao.home.region.model.BangumiRecommendData
 import com.bilibili.lingxiao.home.region.presenter.BangumiDetailPresenter
 import com.bilibili.lingxiao.home.region.view.BangumiView
 import com.bilibili.lingxiao.utils.StringUtil
@@ -21,6 +26,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.content_bangumi_detail.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class BangumiDetailActivity : BaseActivity(), BangumiView{
@@ -54,13 +60,20 @@ class BangumiDetailActivity : BaseActivity(), BangumiView{
             return
         }
         data.result.episodes?.let {
-            showUrlBlur(image_bar,it[0].cover,
-                6,10)
-            Collections.reverse(it)
-            var tvAdapter = BangumiTvAdapter(R.layout.item_bangumi_tv,it)
-            recycler_select_set.layoutManager = LinearLayoutManager(this@BangumiDetailActivity
-                ,LinearLayoutManager.HORIZONTAL,false)
+            showUrlBlur(
+                image_bar, it[0].cover,
+                6, 10
+            )
+            //Collections.reverse(it)
+            var tvAdapter = BangumiTvAdapter(R.layout.item_bangumi_tv, it)
+            recycler_select_set.layoutManager = LinearLayoutManager(
+                this@BangumiDetailActivity
+                , LinearLayoutManager.HORIZONTAL, true
+            )  //最后一个参数 ，逆序排列
+            recycler_select_set.smoothScrollToPosition(0)
             recycler_select_set.adapter = tvAdapter
+            recycler_select_set.isNestedScrollingEnabled = false
+            recycler_select_set.isVerticalScrollBarEnabled = false
         }
         image_cover.setImageURI(Uri.parse(data.result.cover + GlobalProperties.IMAGE_RULE_200_266))
         toolbar.title = data.result.bangumiTitle
@@ -69,6 +82,51 @@ class BangumiDetailActivity : BaseActivity(), BangumiView{
         text_play_count.text = "播放：${StringUtil.getBigDecimalNumber(data.result.playCount.toInt())}"
         text_favorites.text = "追番：${StringUtil.getBigDecimalNumber(data.result.favorites.toInt())}"
         text_evaluate.text = data.result.evaluate
+
+        presenter.getBangumiRecommend(data.result.seasonId)
+    }
+
+    var recommendAdapter:BangumiRecommendAdapter? = null
+    var recommendList = arrayListOf<BangumiRecommendData.Result.BangumiInfo>()
+    var random = 0
+    override fun onGetBangumiRecommend(data: BangumiRecommendData) {
+        if (data.result == null){
+            return
+        }
+        data.result.list?.let {
+            if (it.size > 6){
+                recommendList.addAll(it.subList(0,6))
+
+            }else{
+                recommendList.addAll(it)
+            }
+        }
+        recommendAdapter = BangumiRecommendAdapter(R.layout.item_mikan_video, recommendList)
+        recycler_recommend.layoutManager = GridLayoutManager(
+            this@BangumiDetailActivity,3)
+        recycler_recommend.adapter = recommendAdapter
+        recycler_recommend.isNestedScrollingEnabled = false
+        recycler_recommend.isVerticalScrollBarEnabled = false
+        text_refresh_recommend.setOnClickListener {
+            data.result.list?.let {
+                if (it.size > 6){
+                    if (random + 6 > it.size) random = 0
+                    recommendList.clear()
+                    recommendList.addAll(it.subList(random, random+6))
+                    random = random + 6
+                    recommendAdapter?.notifyDataSetChanged()
+                }
+            }
+        }
+        recommendAdapter?.setOnItemClickListener { adapter, view, position ->
+            val intent = Intent(
+                this@BangumiDetailActivity,
+                BangumiDetailActivity::class.java
+            )
+            intent.putExtra("id",recommendList[position].seasonId)
+            intent.putExtra("type","bangumi")
+            startActivity(intent)
+        }
     }
 
     override fun diamissDialog() {
@@ -111,6 +169,18 @@ class BangumiDetailActivity : BaseActivity(), BangumiView{
         override fun convert(helper: BaseViewHolder, item: BangumiDetailData.Result.Episode?) {
             helper.setText(R.id.text_title,"第${item?.index}话")
             helper.setText(R.id.text_message,item?.indexTitle)
+        }
+    }
+
+    inner class BangumiRecommendAdapter(layout:Int,data: List<BangumiRecommendData.Result.BangumiInfo>?) :
+        BaseQuickAdapter<BangumiRecommendData.Result.BangumiInfo, BaseViewHolder>(layout,data) {
+        override fun convert(helper: BaseViewHolder, item: BangumiRecommendData.Result.BangumiInfo) {
+            var image:SimpleDraweeView = helper.getView(R.id.image_cover)
+            image.setImageURI(Uri.parse(item.cover + GlobalProperties.IMAGE_RULE_200_266))
+            helper.setText(R.id.text_num,StringUtil.getBigDecimalNumber(item.follow.toInt())+"人追番")
+            helper.setText(R.id.text_title,item.title)
+            helper.getView<TextView>(R.id.text_cover).visibility = View.GONE
+            //helper.setText(R.id.text_cover,"更新至第" + item.totalCount +"话")
         }
     }
 }

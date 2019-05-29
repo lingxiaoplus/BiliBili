@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.region.model.MultiRegionData
@@ -62,20 +63,29 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
                 //recycler.setHasFixedSize(true) //避免每次绘制Item时重新计算Item高度
                 var manager = GridLayoutManager(mContext, 2)
                 recycler.layoutManager = manager
-                var regionRecommend = RegionRecommendAdapter(R.layout.item_video,item.recommendData?.body)
-                recycler.adapter = regionRecommend
+                var recommendAdapter = RegionRecommendAdapter(R.layout.item_video,item.recommendData?.body)
+                recycler.adapter = recommendAdapter
                 helper.addOnClickListener(R.id.button_goto)
                 helper.addOnClickListener(R.id.button_more)
-                regionRecommend.setOnItemClickListener { adapter, view, position ->
+                helper.addOnClickListener(R.id.ll_refresh)
+                recommendAdapter.setOnItemClickListener { adapter, view, position ->
                     item.recommendData?.let {
                         listener?.onVideoClick(it.body[position],position,it.type)
                     }
                 }
+                //notifyRecommendDataChanged(item.recommendData?.body)
             }
         }
     }
 
 
+    private var recommendList = arrayListOf<RegionRecommendData.Data.Body>()
+    private val recommendAdapter:RegionRecommendAdapter by lazy {
+        RegionRecommendAdapter(R.layout.item_video,recommendList)
+    }
+    fun notifyRecommendDataChanged(data: List<RegionRecommendData.Data.Body>?){
+        recommendAdapter.setNewData(data)
+    }
     inner class RegionRecommendAdapter(layout:Int,data: List<RegionRecommendData.Data.Body>?) :
         BaseQuickAdapter<RegionRecommendData.Data.Body, BaseViewHolder>(layout,data) {
         override fun convert(helper: BaseViewHolder, item: RegionRecommendData.Data.Body) {
@@ -85,7 +95,7 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
             helper.setText(R.id.play_number,StringUtil.getBigDecimalNumber(item.play))
             helper.setText(R.id.comment_number,StringUtil.getBigDecimalNumber(item.danmaku))
             helper.getView<ConstraintLayout>(R.id.cons_category).visibility = View.GONE
-
+            helper.getView<LinearLayout>(R.id.ll_info).visibility = View.GONE
         }
     }
 

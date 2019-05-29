@@ -6,16 +6,19 @@
               android:layout_height="wrap_content"
               android:gravity="center"
               android:layout_margin="5dp"
-              android:padding="@dimen/dp_10"
+              android:padding="15dp"
               android:background="@drawable/ripple_background"
 >
     <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/item_live_image"
-            style="@style/image_normal"
+            style="@style/image_live_top"
+            android:padding="@dimen/dp_4"
     />
     <TextView
             android:id="@+id/item_live_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="标题"/>
+            android:text="标题"
+            android:padding="@dimen/dp_4"
+    />
 </LinearLayout>
