@@ -52,6 +52,7 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
     var mToggleView:View? = null
     var mMessageTextView:TextView? = null
 
+    private var foldClickable = true //是否点击可折叠
     private var mCollapsed = true // 默认是被折叠了的
     private var mRelayout: Boolean = false
     private var mMarginBetweenTxtAndBottom: Int = 0
@@ -68,6 +69,7 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
         mFirstViewId = typedArray.getResourceId(R.styleable.FoldableLayout_textViewId,R.id.expand_textview)
         mExpandCollapseToggleId = typedArray.getResourceId(R.styleable.FoldableLayout_expandCollapseToggleId,R.id.expand_collapse)
         mMessageViewId = typedArray.getResourceId(R.styleable.FoldableLayout_messageViewId,R.id.expand_message_textview)
+        foldClickable = typedArray.getBoolean(R.styleable.FoldableLayout_foldClickable,true)
 
         mExpandIndicatorController = setupExpandController(context,typedArray)
         typedArray.recycle()
@@ -91,10 +93,12 @@ class FoldableLayout @JvmOverloads constructor(context: Context, attrs: Attribut
         mToggleView = findViewById(mExpandCollapseToggleId)
         mMessageTextView = findViewById(mMessageViewId)
 
-        mTextView?.setOnClickListener(this)
-        mToggleView?.let {
-            it.setOnClickListener(this)
-            mExpandIndicatorController?.setView(it)
+        if (foldClickable){
+            mTextView?.setOnClickListener(this)
+            mToggleView?.let {
+                it.setOnClickListener(this)
+                mExpandIndicatorController?.setView(it)
+            }
         }
 
         mExpandIndicatorController?.changeState(mCollapsed)

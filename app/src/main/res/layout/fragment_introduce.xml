@@ -178,6 +178,7 @@
                     android:layout_height="wrap_content"
                     app:maxCollapsedLines="0"
                     android:orientation="vertical"
+                    app:foldClickable="false"
             >
                 <TextView
                         android:id="@id/expand_textview"

@@ -15,6 +15,7 @@
         <attr name="textViewId" format="reference"/>
         <attr name="messageViewId" format="reference"/>
         <attr name="expandCollapseToggleId" format="reference"/>
+        <attr name="foldClickable" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="ColorTextView">

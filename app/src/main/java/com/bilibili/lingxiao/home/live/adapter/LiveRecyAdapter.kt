@@ -19,7 +19,7 @@ import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlin.properties.Delegates
 
-class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
+class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, LiveRecyAdapter.LiveViewHolde> {
     var recycledViewPool:RecyclerView.RecycledViewPool by Delegates.notNull()
     constructor(data:MutableList<MultiItemLiveData>, recycledViewPool:RecyclerView.RecycledViewPool) :super(data){
         this.recycledViewPool = recycledViewPool
@@ -40,7 +40,7 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
             .registerItemType(LiveData.RECOMMEND,R.layout.layout_recommend) //推荐的
             .registerItemType(LiveData.PARTITION,R.layout.layout_partition) //分类的
     }
-    override fun convert(helper: BaseViewHolder, item: MultiItemLiveData) {
+    override fun convert(helper: LiveViewHolde, item: MultiItemLiveData) {
         when(helper.itemViewType){
             LiveData.BANNER-> {
                 //var banner :Banner = helper.getView(R.id.live_banner)
@@ -71,13 +71,25 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
         }
     }
 
-    private fun initPartition(helper: BaseViewHolder, data: MutableList<LiveData.RecommendDataBean.LivesBean>) {
+
+    inner class LiveViewHolde : BaseViewHolder {
+        //adapter复用
+        var liveRecommendAdapter:LiveRecommendAdapter? = null
+        var partitionAdapter:PartitionVideoAdapter? = null
+        constructor(view: View?):super(view){
+        }
+
+    }
+
+    private fun initPartition(helper: LiveViewHolde, data: MutableList<LiveData.RecommendDataBean.LivesBean>) {
+        if (helper.partitionAdapter != null) return
         var list = data
         if (list.size > 4){
             list = list.subList(0,4)
         }
         var categoryAdapter =
             PartitionVideoAdapter(R.layout.item_live_video, list)
+        helper.partitionAdapter = categoryAdapter
         var manager = GridLayoutManager(mContext,2)
         val recyclerView:RecyclerView = helper.getView(R.id.live_partition_recy)
         recyclerView.adapter = categoryAdapter
@@ -105,12 +117,14 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, BaseViewHolder> {
         })
     }
 
-    private fun initRecommend(helper: BaseViewHolder, lives: MutableList<LiveData.RecommendDataBean.LivesBean>) {
+    private fun initRecommend(helper: LiveViewHolde, lives: MutableList<LiveData.RecommendDataBean.LivesBean>) {
+        if (helper.liveRecommendAdapter != null) return
         val recyclerView:RecyclerView = helper.getView(R.id.recycerView)
         recyclerView.setHasFixedSize(true)      //设置固定大小
         recyclerView.setLayoutManager(GridLayoutManager(mContext, 2,GridLayoutManager.VERTICAL,false))
         var liveRecommendAdapter =
             LiveRecommendAdapter(R.layout.item_live_video, lives)
+        helper.liveRecommendAdapter = liveRecommendAdapter
         recyclerView.adapter = liveRecommendAdapter
         recyclerView.isNestedScrollingEnabled = false
         recyclerView.setRecycledViewPool(recycledViewPool)

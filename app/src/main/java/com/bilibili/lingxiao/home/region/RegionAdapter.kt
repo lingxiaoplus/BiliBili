@@ -4,6 +4,7 @@ import android.net.Uri
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -21,7 +22,7 @@ import com.chad.library.adapter.base.util.MultiTypeDelegate
 import com.facebook.drawee.view.SimpleDraweeView
 import kotlin.properties.Delegates
 
-class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
+class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewHolde> {
     var recycledViewPool: RecyclerView.RecycledViewPool by Delegates.notNull()
 
     constructor(data:MutableList<MultiRegionData>, recycledViewPool:RecyclerView.RecycledViewPool) :super(data){
@@ -37,7 +38,7 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
             .registerItemType(MultiRegionData.REGION_RECOMMEND,R.layout.item_region)
     }
 
-    override fun convert(helper: BaseViewHolder, item: MultiRegionData) {
+    override fun convert(helper: RegionAdapter.RegionViewHolde, item: MultiRegionData) {
         when(helper.itemViewType){
             MultiRegionData.REGION_ITEM ->{
                 helper.setText(R.id.item_live_title,item.regionData?.name)
@@ -51,41 +52,53 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
             MultiRegionData.REGION_RECOMMEND ->{
                 helper.setText(R.id.region_name,item.recommendData?.title)
                 var button_more:Button = helper.getView(R.id.button_more)
-                button_more.setText("更多" + item.recommendData?.title)
+                button_more.setText("更多${item.recommendData?.title}")
                 var image_region:ImageView = helper.getView(R.id.image_logo)
-                var logo = UIUtil.getMipMapId(mContext,"ic_category_t" + item.recommendData?.param)
+                var logo = UIUtil.getMipMapId(mContext,"ic_category_t${item.recommendData?.param}")
                 if (logo > 0){
                     image_region.setImageResource(logo)
                 }
-                var recycler:RecyclerView = helper.getView(R.id.recyclerview)
-                recycler.isNestedScrollingEnabled = false
-                recycler.setRecycledViewPool(recycledViewPool)
-                //recycler.setHasFixedSize(true) //避免每次绘制Item时重新计算Item高度
-                var manager = GridLayoutManager(mContext, 2)
-                recycler.layoutManager = manager
-                var recommendAdapter = RegionRecommendAdapter(R.layout.item_video,item.recommendData?.body)
-                recycler.adapter = recommendAdapter
-                helper.addOnClickListener(R.id.button_goto)
-                helper.addOnClickListener(R.id.button_more)
-                helper.addOnClickListener(R.id.ll_refresh)
-                recommendAdapter.setOnItemClickListener { adapter, view, position ->
-                    item.recommendData?.let {
-                        listener?.onVideoClick(it.body[position],position,it.type)
+                if (helper.recommendAdapter == null){
+                    var recycler:RecyclerView = helper.getView(R.id.recyclerview)
+                    recycler.isNestedScrollingEnabled = false
+                    recycler.setRecycledViewPool(recycledViewPool)
+                    //recycler.setHasFixedSize(true) //避免每次绘制Item时重新计算Item高度
+                    Log.d(RegionAdapter::class.java.simpleName,"空的，new RegionRecommendAdapter")
+                    var manager = GridLayoutManager(mContext, 2)
+                    recycler.layoutManager = manager
+                    var recommendAdapter = RegionRecommendAdapter(R.layout.item_video,item.recommendData?.body)
+                    helper.recommendAdapter = recommendAdapter
+                    recycler.adapter = recommendAdapter
+                    helper.addOnClickListener(R.id.button_goto)
+                    helper.addOnClickListener(R.id.button_more)
+                    helper.addOnClickListener(R.id.ll_refresh)
+                    recommendAdapter.setOnItemClickListener { adapter, view, position ->
+                        item.recommendData?.let {
+                            listener?.onVideoClick(it.body[position],position,it.type)
+                        }
                     }
                 }
-                //notifyRecommendDataChanged(item.recommendData?.body)
             }
         }
     }
 
 
+    inner class RegionViewHolde : BaseViewHolder {
+        //adapter复用
+        var recommendAdapter:RegionRecommendAdapter? = null
+        constructor(view: View?):super(view){
+        }
+    }
+
     private var recommendList = arrayListOf<RegionRecommendData.Data.Body>()
     private val recommendAdapter:RegionRecommendAdapter by lazy {
         RegionRecommendAdapter(R.layout.item_video,recommendList)
     }
+
     fun notifyRecommendDataChanged(data: List<RegionRecommendData.Data.Body>?){
         recommendAdapter.setNewData(data)
     }
+
     inner class RegionRecommendAdapter(layout:Int,data: List<RegionRecommendData.Data.Body>?) :
         BaseQuickAdapter<RegionRecommendData.Data.Body, BaseViewHolder>(layout,data) {
         override fun convert(helper: BaseViewHolder, item: RegionRecommendData.Data.Body) {
