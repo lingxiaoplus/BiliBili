@@ -16,6 +16,7 @@ import com.bilibili.lingxiao.home.mikan.ui.MikanFragment
 import com.bilibili.lingxiao.home.navigation.ThemeActivity
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.user.LoginActivity
+import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
@@ -28,6 +29,9 @@ import org.greenrobot.eventbus.ThreadMode
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
+import com.camera.lingxiao.common.app.ActivityController
+
+
 
 class MainActivity : BaseActivity() {
 
@@ -157,11 +161,19 @@ class MainActivity : BaseActivity() {
         main_viewPager.setOffscreenPageLimit(4)
     }
 
+    private var preTime: Long = 0
     override fun onBackPressed() {
         if (drawerOpened){
             main_drawer_layout.closeDrawers()
         }else{
-            super.onBackPressed()
+            val nowTime = System.currentTimeMillis()
+            if (nowTime - preTime > 2000) {
+                ToastUtil.show("再按一次退出")
+                preTime = nowTime
+            } else {
+                ActivityController.finishAll()
+            }
+            //super.onBackPressed()
         }
     }
 

@@ -16,6 +16,7 @@ import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
 import com.bilibili.lingxiao.home.region.ui.BangumiDetailActivity
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
+import com.bilibili.lingxiao.web.WebActivity
 import com.camera.lingxiao.common.app.BaseFragment
 import kotlinx.android.synthetic.main.fragment_mikan.*
 import kotlinx.android.synthetic.main.fragment_mikan.view.*
@@ -32,8 +33,8 @@ class MikanFragment :BaseFragment(), MikanView {
     private var mJPAdapter: MikanAdapter by Delegates.notNull()
     private var mFallAdapter: MiKanFallAdapter by Delegates.notNull()
 
-    private var mCNVideoList = arrayListOf<MiKanRecommendData.Result.RecommendCn.Recommend>()
-    private var mJPVideoList = arrayListOf<MiKanRecommendData.Result.RecommendCn.Recommend>()
+    private var mCNVideoList = arrayListOf<MiKanRecommendData.Result.Recommend.Info>()
+    private var mJPVideoList = arrayListOf<MiKanRecommendData.Result.Recommend.Info>()
     private var mEditList = arrayListOf<MiKanFallData.Result>()
     override val contentLayoutId: Int
         get() = R.layout.fragment_mikan
@@ -48,16 +49,6 @@ class MikanFragment :BaseFragment(), MikanView {
         var manager:LinearLayoutManager = GridLayoutManager(activity,3)
         mCNAdapter = MikanAdapter(R.layout.item_mikan_video, mCNVideoList)
         mJPAdapter = MikanAdapter(R.layout.item_mikan_video, mJPVideoList)
-
-        mCNAdapter.setOnItemClickListener { adapter, view, position ->
-            val intent = Intent(
-                context,
-                BangumiDetailActivity::class.java
-            )
-            intent.putExtra("id",mCNVideoList[position].seasonId.toString())
-            intent.putExtra("type","bangumi")
-            startActivity(intent)
-        }
 
         root.recycerView.layoutManager = manager
         root.recycerView.adapter = mJPAdapter
@@ -81,6 +72,32 @@ class MikanFragment :BaseFragment(), MikanView {
             var cursor:Long? = mFallAdapter.data.get(mFallAdapter.itemCount -1).cursor
             if (cursor != null && cursor != 0L)
             miKanPresenter.getBanGuMiFall(cursor)
+        }
+
+        mJPAdapter.setOnItemClickListener { adapter, view, position ->
+            val intent = Intent(
+                context,
+                BangumiDetailActivity::class.java
+            )
+            intent.putExtra("id",mJPVideoList[position].seasonId.toString())
+            intent.putExtra("type","bangumi")
+            startActivity(intent)
+        }
+        mCNAdapter.setOnItemClickListener { adapter, view, position ->
+            val intent = Intent(
+                context,
+                BangumiDetailActivity::class.java
+            )
+            intent.putExtra("id",mCNVideoList[position].seasonId.toString())
+            intent.putExtra("type","bangumi")
+            startActivity(intent)
+        }
+        mFallAdapter.setOnItemClickListener { adapter, view, position ->
+            var intent = Intent(context, WebActivity::class.java)
+            intent.putExtra("uri",mEditList[position].link)
+            intent.putExtra("title",mEditList[position].title)
+            intent.putExtra("image",mEditList[position].cover)
+            startActivity(intent)
         }
         root.refresh.setEnableNestedScroll(true)
         var emptyView = View.inflate(context,R.layout.layout_empty,null)

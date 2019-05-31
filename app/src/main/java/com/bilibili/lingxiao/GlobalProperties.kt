@@ -62,7 +62,10 @@ object GlobalProperties {
     val SCALE = UIUtil.getDensityString()
     val SRC = "bili"
     val VERSION = "5.19.0.519000"
+
+    val HOME_COLUMNS = "home_columns"
     var TAG = GlobalProperties::class.java.simpleName
+
 
     /**
      * 将所有参数（包括变量名和值及=&符号）排序后加上appsecret（只有值）之后做md5，md5 按照32位小写加密

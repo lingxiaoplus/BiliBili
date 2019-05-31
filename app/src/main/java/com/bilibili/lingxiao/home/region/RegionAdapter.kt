@@ -63,19 +63,24 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
                     recycler.isNestedScrollingEnabled = false
                     recycler.setRecycledViewPool(recycledViewPool)
                     //recycler.setHasFixedSize(true) //避免每次绘制Item时重新计算Item高度
-                    Log.d(RegionAdapter::class.java.simpleName,"空的，new RegionRecommendAdapter")
                     var manager = GridLayoutManager(mContext, 2)
                     recycler.layoutManager = manager
-                    var recommendAdapter = RegionRecommendAdapter(R.layout.item_video,item.recommendData?.body)
-                    helper.recommendAdapter = recommendAdapter
+                    var recommendAdapter = RegionRecommendAdapter(R.layout.item_video,helper.recommendList)
                     recycler.adapter = recommendAdapter
                     helper.addOnClickListener(R.id.button_goto)
                     helper.addOnClickListener(R.id.button_more)
-                    helper.addOnClickListener(R.id.ll_refresh)
+                    //helper.addOnClickListener(R.id.ll_refresh)
+                    helper.getView<View>(R.id.ll_refresh).setOnClickListener {
+                        listener?.onRefreshClick(helper,item.recommendData,helper.position)
+                    }
                     recommendAdapter.setOnItemClickListener { adapter, view, position ->
                         item.recommendData?.let {
                             listener?.onVideoClick(it.body[position],position,it.type)
                         }
+                    }
+                    helper.recommendAdapter = recommendAdapter
+                    item.recommendData?.let {
+                        helper.recommendAdapter!!.addData(it.body)
                     }
                 }
             }
@@ -86,17 +91,15 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
     inner class RegionViewHolde : BaseViewHolder {
         //adapter复用
         var recommendAdapter:RegionRecommendAdapter? = null
+        var recommendList:List<RegionRecommendData.Data.Body> = arrayListOf();
         constructor(view: View?):super(view){
+            //recommendList = arrayListOf();
         }
     }
 
-    private var recommendList = arrayListOf<RegionRecommendData.Data.Body>()
-    private val recommendAdapter:RegionRecommendAdapter by lazy {
-        RegionRecommendAdapter(R.layout.item_video,recommendList)
-    }
-
     fun notifyRecommendDataChanged(data: List<RegionRecommendData.Data.Body>?){
-        recommendAdapter.setNewData(data)
+
+        //recommendAdapter.setNewData(data)
     }
 
     inner class RegionRecommendAdapter(layout:Int,data: List<RegionRecommendData.Data.Body>?) :
@@ -119,5 +122,6 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
     interface OnMultiItemClickListener{
         fun onGridClick(data: RegionData.Data?, position:Int)
         fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int,type:String)
+        fun onRefreshClick(data: RegionViewHolde, recommendData: RegionRecommendData.Data?,position:Int)
     }
 }

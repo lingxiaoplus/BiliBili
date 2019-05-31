@@ -14,19 +14,19 @@ data class MiKanRecommendData(
         @SerializedName("ad")
         val ad: List<Any>,
         @SerializedName("recommend_cn")
-        val recommendCn: RecommendCn,
+        val recommendCn: Recommend,
         @SerializedName("recommend_jp")
-        val recommendJp: RecommendJp,
+        val recommendJp: Recommend,
         @SerializedName("recommend_review")
         val recommendReview: List<Any>,
         @SerializedName("timeline")
         val timeline: List<Timeline>
     ) {
-        data class RecommendCn(
+        data class Recommend(
             @SerializedName("foot")
             val foot: List<Foot>,
             @SerializedName("recommend")
-            val recommend: List<Recommend>
+            val recommend: List<Info>
         ) {
             data class Foot(
                 @SerializedName("cover")
@@ -45,7 +45,7 @@ data class MiKanRecommendData(
                 val wid: Int
             )
 
-            data class Recommend(
+            data class Info(
                 @SerializedName("cover")
                 val cover: String,
                 @SerializedName("favourites")
@@ -111,14 +111,5 @@ data class MiKanRecommendData(
             @SerializedName("title")
             val title: String
         )
-
-        data class RecommendJp(
-            @SerializedName("foot")
-            val foot: List<RecommendCn.Foot>,
-            @SerializedName("recommend")
-            val recommend: List<RecommendCn.Recommend>
-        ) {
-
-        }
     }
 }

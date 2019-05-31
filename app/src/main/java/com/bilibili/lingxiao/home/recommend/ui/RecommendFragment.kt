@@ -79,8 +79,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
             recommendPresenter.getRecommendList(operationState)
         }
         mAdapter.setDuration(1000)
-        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN)
-        /*mAdapter.openLoadAnimation({ view ->
+        mAdapter.openLoadAnimation({ view ->
             arrayOf<Animator>(
                 ObjectAnimator.ofFloat(
                     view,
@@ -90,7 +89,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
                     1f
                 ), ObjectAnimator.ofFloat(view, "scaleX", 0f, 1.05f, 1f)
             )
-        })*/
+        })
         mAdapter.isFirstOnly(false)
         mAdapter.setOnItemClickListener(object :BaseQuickAdapter.OnItemClickListener{
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
@@ -116,7 +115,6 @@ class RecommendFragment :BaseFragment(), RecommendView {
             showPopupWindow(mRecommendList.get(position))
             true
         }
-
         mAdapter.setEmptyView(View.inflate(context,R.layout.layout_empty,null))
     }
 
@@ -226,11 +224,4 @@ class RecommendFragment :BaseFragment(), RecommendView {
         })
     }
 
-    fun backgroundAlpha(bgAlpha: Float) {
-        activity?.let {
-            val lp = it.getWindow().getAttributes()
-            lp.alpha = bgAlpha //0.0-1.0
-            it.getWindow().setAttributes(lp)
-        }
-    }
 }

@@ -1,9 +1,9 @@
 package com.bilibili.lingxiao.home.region.ui
 
 import android.content.Intent
-import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.bilibili.lingxiao.R
@@ -65,6 +65,17 @@ class RegionFragment :BaseFragment() , RegionView {
         image.setImageDrawable(resources.getDrawable(R.drawable.bilipay_common_error_tip))
         regionAdapter.setEmptyView(emptyView)
         regionAdapter.setMultiItemClickListener(object :RegionAdapter.OnMultiItemClickListener{
+            override fun onRefreshClick(
+                holde: RegionAdapter.RegionViewHolde,
+                data: RegionRecommendData.Data?,
+                position:Int
+            ) {
+                data?.let {
+                    regionPresenter.refreshRegion(it.type,Random().nextInt(10),it.param.toInt())
+                    regionPosition = position
+                }
+            }
+
             override fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int, type:String) {
                 if ("bangumi".equals(type)){
                     //分区是番剧
@@ -160,8 +171,12 @@ class RegionFragment :BaseFragment() , RegionView {
         category_recyclerview.smoothScrollToPosition(0)
     }
 
+    var regionViewHolde: RegionAdapter.RegionViewHolde? = null
+    var regionPosition = 0
     override fun onRefreshRegion(list: List<RegionRecommendData.Data.Body>) {
-        regionAdapter.notifyRecommendDataChanged(list)
+        regionViewHolde?.recommendAdapter?.setNewData(list)
+        //regionAdapter.notifyRecommendDataChanged(list)
+        regionAdapter.notifyItemChanged(regionPosition)
     }
 
     override fun showDialog() {

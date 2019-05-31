@@ -8,10 +8,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
 
-class MikanAdapter(layoutResId: Int, data: MutableList<MiKanRecommendData.Result.RecommendCn.Recommend>?) :
-    BaseQuickAdapter<MiKanRecommendData.Result.RecommendCn.Recommend, BaseViewHolder>(layoutResId, data) {
+class MikanAdapter(layoutResId: Int, data: MutableList<MiKanRecommendData.Result.Recommend.Info>?) :
+    BaseQuickAdapter<MiKanRecommendData.Result.Recommend.Info, BaseViewHolder>(layoutResId, data) {
 
-    override fun convert(helper: BaseViewHolder, item: MiKanRecommendData.Result.RecommendCn.Recommend) {
+    override fun convert(helper: BaseViewHolder, item: MiKanRecommendData.Result.Recommend.Info) {
         var image:SimpleDraweeView = helper.getView(R.id.image_cover)
         image.setImageURI(Uri.parse(item.cover))
         helper.setText(R.id.text_num,StringUtil.getBigDecimalNumber(item.favourites.toInt())+"人追番")
