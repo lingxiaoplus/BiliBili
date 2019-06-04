@@ -2,6 +2,7 @@ package com.bilibili.lingxiao.home.navigation
 
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -20,6 +21,7 @@ import com.github.zackratos.ultimatebar.UltimateBar
 import com.lingxiao.skinlibrary.SkinLib
 import kotlinx.android.synthetic.main.activity_theme.*
 import kotlinx.android.synthetic.main.title_bar.*
+
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -31,8 +33,10 @@ class ThemeActivity : BaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        setToolbarBack(title_bar)
-        title_bar.title = "主题颜色"
+        //toolbar是include进来的，include标签的id会覆盖toolbar的原来标签导致空指针
+        var toolbar = bar as Toolbar
+        setToolbarBack(toolbar)
+        toolbar.title = "主题颜色"
         initThemeData()
         var colums = SpUtils.getInt(this,GlobalProperties.HOME_COLUMNS,2)
         changeColum(colums)

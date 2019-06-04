@@ -12,7 +12,6 @@
             android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar">
         <include
                 layout="@layout/title_bar"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
         />
         <com.bilibili.lingxiao.widget.skin.SlidTabLayout
                 android:id="@+id/tablayout"
