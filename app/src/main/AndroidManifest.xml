@@ -89,6 +89,8 @@
 
         <activity android:name=".home.region.ui.BangumiDetailActivity">
         </activity>
+        <activity android:name=".home.navigation.SettingActivity">
+        </activity>
     </application>
 
 </manifest>

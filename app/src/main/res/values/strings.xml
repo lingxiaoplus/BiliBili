@@ -56,7 +56,8 @@
     <string name="bangumi_contract_me">请承包我吧！</string>
     <string name="bangumi_contract_message">快来抢占七日榜！！！(≧∇≦)ﾉ</string>
     <string name="bangumi_evaluate_default">古枪vs现代枪，绝望之战—— \n 全世界因核战争而荒废，在那之后的时代——。在世界帝府的绝对统治之下，
-        人们全都受到管制，在被夺走了自由的世界中生存。 但，在一切武力均被禁止之时，还存在着为了打破世界帝的独...</string>
+        人们全都受到管制，在被夺走了自由的世界中生存。 但，在一切武力均被禁止之时，还存在着为了打破世界帝的独...
+    </string>
     <string-array name="level_drawable">
         <item>@drawable/mall_mine_vip_level_0</item>
         <item>@drawable/mall_mine_vip_level_1</item>
@@ -66,5 +67,36 @@
         <item>@drawable/mall_mine_vip_level_5</item>
         <item>@drawable/mall_mine_vip_level_6</item>
     </string-array>
+
+
+    <!--setting-->
+    <string name="account_info">账号资料</string>
+    <string name="security_private">安全隐私</string>
+    <string name="take_goods_info">收货信息</string>
+
+    <string name="play_setting">播放设置</string>
+    <string name="decode_setting">解码设置</string>
+    <string name="danmaku_setting">弹幕设置</string>
+    <string name="offline_setting">离线设置</string>
+    <string name="bangumi_setting">追番设置</string>
+    <string name="dynamic_setting">动态设置</string>
+    <string name="push_message">推送与消息</string>
+    <string name="clean_sdcard">清理存储空间</string>
+    <string name="other_setting">其他设置</string>
+
+    <string name="my_service">我的客服</string>
+    <string name="help">帮助</string>
+    <string name="exit_account">退出登录</string>
+
+
+
+
+
+
+
+
+
+
+
 
 </resources>

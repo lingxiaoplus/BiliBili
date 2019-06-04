@@ -89,6 +89,7 @@
                 android:background="@drawable/ripple_background"
         >
             <TextView
+                    android:id="@+id/text_new_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0条新动态，点击刷新！"

@@ -1,165 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.design.card.MaterialCardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardBackgroundColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        app:cardCornerRadius="@dimen/dp_4"
+        app:cardElevation="@dimen/dp_4"
+        app:cardUseCompatPadding="true"
 >
-    <ImageView
-            android:id="@+id/image_bg"
+    <android.support.constraint.ConstraintLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/mall_order_evaluate_dialog_bg"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/ll_info"
-    />
-    <TextView
-            android:id="@+id/image_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="更多"
-            android:textSize="@dimen/description_text_size"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_margin="10dp"
-    />
-    <ImageView
-            android:id="@+id/image_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/live_ic_player_close"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="10dp"
-
-    />
-
-    <FrameLayout
-            android:id="@+id/frame_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/ll_info"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            android:layout_marginBottom="5dp"
     >
-        <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/image_header"
-                style="@style/image_large"
-                app:progressBarImageScaleType="centerInside"
-                app:progressBarImage="@drawable/ic_img_user_head_default"
-                app:roundAsCircle="true"
-                app:roundingBorderWidth="1dp"
-                android:padding="5dp"
-                android:layout_gravity="center"
+        <ImageView
+                android:id="@+id/image_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/mall_order_evaluate_dialog_bg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/ll_info"
+        />
+        <TextView
+                android:id="@+id/image_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="更多"
+                android:textSize="@dimen/description_text_size"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="10dp"
         />
         <ImageView
-                style="@style/image_large"
-                android:src="@drawable/ic_live_guard_governor_border_v2"
-                android:layout_gravity="center"
-        />
-    </FrameLayout>
-    <LinearLayout
-            android:id="@+id/ll_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/image_bg"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-    >
-        <TextView
-                android:id="@+id/username"
+                android:id="@+id/image_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextTitle"
-                android:text="1212"
-                android:textSize="16sp"
+                android:src="@drawable/live_ic_player_close"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="10dp"
 
         />
-        <LinearLayout
+
+        <FrameLayout
+                android:id="@+id/frame_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_margin="5dp"
+                app:layout_constraintBottom_toTopOf="@id/ll_info"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_marginBottom="5dp"
         >
-            <ImageView
-                    style="@style/image_small"
-                    android:src="@drawable/widget_live_icon_guard_captain"
+            <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/image_header"
+                    style="@style/image_large"
+                    app:progressBarImageScaleType="centerInside"
+                    app:progressBarImage="@drawable/ic_img_user_head_default"
+                    app:roundAsCircle="true"
+                    app:roundingBorderWidth="1dp"
+                    android:padding="5dp"
+                    android:layout_gravity="center"
             />
+            <ImageView
+                    style="@style/image_large"
+                    android:src="@drawable/ic_live_guard_governor_border_v2"
+                    android:layout_gravity="center"
+            />
+        </FrameLayout>
+        <LinearLayout
+                android:id="@+id/ll_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/image_bg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+        >
             <TextView
-                    android:id="@+id/user_level"
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/text_live_background"
-                    android:text="UL 1"
-                    android:textSize="10sp"
-                    android:textColor="@color/colorPrimary"
-                    android:padding="3dp"
-                    android:layout_marginLeft="5dp"
+                    style="@style/TextTitle"
+                    android:text="1212"
+                    android:textSize="16sp"
+
+            />
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_margin="5dp"
+            >
+                <ImageView
+                        style="@style/image_small"
+                        android:src="@drawable/widget_live_icon_guard_captain"
+                />
+                <TextView
+                        android:id="@+id/user_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/text_live_background"
+                        android:text="UL 1"
+                        android:textSize="10sp"
+                        android:textColor="@color/colorPrimary"
+                        android:padding="3dp"
+                        android:layout_marginLeft="5dp"
+                />
+            </LinearLayout>
+
+            <TextView
+                    android:id="@+id/follow_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextTitle"
+                    android:text="关注：5     粉丝：6"
+                    android:textSize="14sp"
+
             />
         </LinearLayout>
-
-        <TextView
-                android:id="@+id/follow_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextTitle"
-                android:text="关注：5     粉丝：6"
-                android:textSize="14sp"
-
+        <ImageView
+                android:id="@+id/between_line"
+                style="@style/between_line"
+                app:layout_constraintTop_toBottomOf="@id/ll_info"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/ll_bottom"
+                android:layout_margin="5dp"
+                android:background="@color/black_alpha_112"
         />
-    </LinearLayout>
-    <ImageView
-            android:id="@+id/between_line"
-            style="@style/between_line"
-            app:layout_constraintTop_toBottomOf="@id/ll_info"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/ll_bottom"
-            android:layout_margin="5dp"
-            android:background="@color/black_alpha_112"
-    />
-    <LinearLayout
-            android:id="@+id/ll_bottom"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@id/between_line"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-    >
-        <TextView
-                android:id="@+id/text_user_space"
+        <LinearLayout
+                android:id="@+id/ll_bottom"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="个人空间"
-                android:gravity="center"
-                android:padding="10dp"
-                android:background="@drawable/pop_bottom_text"
-        />
-        <TextView
-                android:id="@+id/text_user_follow"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="+关注"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center"
-                android:padding="10dp"
-                android:background="@drawable/pop_bottom_text"
-        />
-    </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/between_line"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+        >
+            <TextView
+                    android:id="@+id/text_user_space"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="个人空间"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:background="@drawable/pop_bottom_text"
+            />
+            <TextView
+                    android:id="@+id/text_user_follow"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="+关注"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:background="@drawable/pop_bottom_text"
+            />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.design.card.MaterialCardView>

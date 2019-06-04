@@ -20,6 +20,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.util.MultiTypeDelegate
 import com.facebook.drawee.view.SimpleDraweeView
+import java.util.*
 import kotlin.properties.Delegates
 
 class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewHolde> {
@@ -51,6 +52,7 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
             }
             MultiRegionData.REGION_RECOMMEND ->{
                 helper.setText(R.id.region_name,item.recommendData?.title)
+                helper.setText(R.id.text_new_number,"${Random().nextInt(2000)}条新动态，点击刷新！")
                 var button_more:Button = helper.getView(R.id.button_more)
                 button_more.setText("更多${item.recommendData?.title}")
                 var image_region:ImageView = helper.getView(R.id.image_logo)
@@ -62,7 +64,7 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
                     var recycler:RecyclerView = helper.getView(R.id.recyclerview)
                     recycler.isNestedScrollingEnabled = false
                     recycler.setRecycledViewPool(recycledViewPool)
-                    //recycler.setHasFixedSize(true) //避免每次绘制Item时重新计算Item高度
+                    recycler.setHasFixedSize(true) //避免每次绘制Item时重新计算Item高度
                     var manager = GridLayoutManager(mContext, 2)
                     recycler.layoutManager = manager
                     var recommendAdapter = RegionRecommendAdapter(R.layout.item_video,helper.recommendList)
@@ -88,7 +90,7 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
     }
 
 
-    inner class RegionViewHolde : BaseViewHolder {
+    inner class RegionViewHolde :BaseViewHolder {
         //adapter复用
         var recommendAdapter:RegionRecommendAdapter? = null
         var recommendList:List<RegionRecommendData.Data.Body> = arrayListOf();

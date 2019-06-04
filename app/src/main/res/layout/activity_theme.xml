@@ -46,11 +46,21 @@
                 android:src="@drawable/ic_theme_single"
         />
         <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="单列"
                 style="@style/TextTitle"
                 android:layout_marginLeft="@dimen/dp_10"
+        />
+        <ImageView
+                android:id="@+id/image_choose_single"
+                style="@style/image_small"
+                android:src="@drawable/ic_upper_choose"
+                android:layout_marginRight="@dimen/dp_4"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:backgroundTint="@color/colorPrimary"
         />
     </LinearLayout>
     <LinearLayout

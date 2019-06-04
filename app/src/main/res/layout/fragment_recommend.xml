@@ -20,8 +20,10 @@
         <com.bilibili.lingxiao.widget.ScrollerloadRecyclerView
                 android:id="@+id/recycerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+        >
         </com.bilibili.lingxiao.widget.ScrollerloadRecyclerView>
+
         <include layout="@layout/footer_loadmore"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"/>

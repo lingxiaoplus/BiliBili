@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_bangumi_detail.*
 import android.graphics.drawable.AnimationDrawable
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import com.bilibili.lingxiao.GlobalProperties
@@ -25,8 +26,6 @@ import com.bilibili.lingxiao.utils.ToastUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.content_bangumi_detail.*
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class BangumiDetailActivity : BaseActivity(), BangumiView{
@@ -93,30 +92,31 @@ class BangumiDetailActivity : BaseActivity(), BangumiView{
         if (data.result == null){
             return
         }
-        data.result.list?.let {
-            if (it.size > 6){
-                recommendList.addAll(it.subList(0,6))
-
-            }else{
-                recommendList.addAll(it)
-            }
-        }
         recommendAdapter = BangumiRecommendAdapter(R.layout.item_mikan_video, recommendList)
         recycler_recommend.layoutManager = GridLayoutManager(
             this@BangumiDetailActivity,3)
         recycler_recommend.adapter = recommendAdapter
+        recycler_recommend.setHasFixedSize(true)
         recycler_recommend.isNestedScrollingEnabled = false
         recycler_recommend.isVerticalScrollBarEnabled = false
+        data.result.list?.let {
+            if (it.size > 6){
+                recommendAdapter?.addData(it.subList(0,6))
+            }else{
+                recommendAdapter?.addData(it)
+            }
+        }
         text_refresh_recommend.setOnClickListener {
             data.result.list?.let {
                 if (it.size > 6){
                     if (random + 6 > it.size) random = 0
                     recommendList.clear()
-                    recommendList.addAll(it.subList(random, random+6))
+                    recommendList.addAll(it.subList(random, random + 6))
                     random = random + 6
                     recommendAdapter?.notifyDataSetChanged()
                 }
             }
+            Log.d(BangumiDetailActivity::class.java.simpleName,"数据大小: ${recommendList.size}")
         }
         recommendAdapter?.setOnItemClickListener { adapter, view, position ->
             val intent = Intent(

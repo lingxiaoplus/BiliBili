@@ -1,9 +1,13 @@
 package com.bilibili.lingxiao.home.navigation
 
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
+import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.widget.RippleAnimation
 import com.camera.lingxiao.common.Common
 import com.camera.lingxiao.common.app.BaseActivity
@@ -27,6 +31,22 @@ class ThemeActivity : BaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
+        setToolbarBack(title_bar)
+        title_bar.title = "主题颜色"
+        initThemeData()
+        var colums = SpUtils.getInt(this,GlobalProperties.HOME_COLUMNS,2)
+        changeColum(colums)
+        ll_single.setOnClickListener {
+            changeColum(1)
+            Snackbar.make(it,"下次进入Bilibili生效",Snackbar.LENGTH_SHORT).show()
+        }
+        ll_double.setOnClickListener {
+            changeColum(2)
+            Snackbar.make(it,"下次进入Bilibili生效",Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun initThemeData() {
         var names = resources.getStringArray(R.array.theme_name)
         var colors = resources.getIntArray(R.array.theme_color)
         var tags = resources.getStringArray(R.array.theme_tag)
@@ -40,14 +60,10 @@ class ThemeActivity : BaseActivity() {
             if (checkedColor == colors[index])
                 checkedColor = index
         }
-
         themeList[checkedColor].choose = true
         var adapter = ThemeAdapter(R.layout.item_theme,themeList)
         recycerView.adapter = adapter
         recycerView.layoutManager = LinearLayoutManager(this)
-        setToolbarBack(title_bar)
-        title_bar.title = "主题颜色"
-
         adapter.setOnItemClickListener { adapter, view, position ->
             RippleAnimation.create(view).setDuration(1000).start()
             for ((index,item) in themeList.withIndex()){
@@ -65,6 +81,19 @@ class ThemeActivity : BaseActivity() {
             EventBus.getDefault().postSticky(SkinChangedEvent(themeList[position].color))
         }
     }
+
+    private fun changeColum(colum :Int){
+        if (colum == 1){
+            image_choose_single.visibility = View.VISIBLE
+            image_choose_double.visibility = View.GONE
+        }else{
+            image_choose_single.visibility = View.GONE
+            image_choose_double.visibility = View.VISIBLE
+        }
+        SpUtils.putInt(this,GlobalProperties.HOME_COLUMNS,colum)
+    }
+
+
     override fun isRegisterEventBus(): Boolean {
         return true
     }

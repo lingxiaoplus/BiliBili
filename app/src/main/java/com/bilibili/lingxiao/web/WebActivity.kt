@@ -53,14 +53,18 @@ class WebActivity : BaseActivity() {
     }
     override fun initWidget() {
         super.initWidget()
-        val uri = intent.getStringExtra("uri")
-        val title = intent.getStringExtra("title")
-        val image = intent.getStringExtra("image")
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbar.setTitle(title)
-        image_bar.setImageURI(Uri.parse(image))
+        val uri = intent.getStringExtra("uri")
+        if (intent.hasExtra("image")){
+            val image = intent.getStringExtra("image")
+            image_bar.setImageURI(Uri.parse(image))
+        }
+        if (intent.hasExtra("title")){
+            val title = intent.getStringExtra("title")
+            toolbar.setTitle(title)
+        }
         initWebView()
         var extHeader = HashMap<String, String>()
         extHeader.put(

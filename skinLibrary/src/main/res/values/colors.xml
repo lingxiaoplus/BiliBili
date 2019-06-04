@@ -67,7 +67,7 @@
     <color name="colorPrimary_pink300">@color/pink_300</color>
     <color name="colorPrimary_orange300">@color/orange_300</color>
     <color name="colorPrimary_teal300">@color/teal_300</color>
-    <color name="colorPrimary_green300">@color/green_300</color>
+    <color name="colorPrimary_green300">@color/light_green_300</color>
     <color name="colorPrimary_black">@color/black</color>
     <!--状态栏和开关颜色-->
     <color name="colorPrimaryDark_default">#388E3C</color>
@@ -80,7 +80,7 @@
     <color name="colorPrimaryDark_pink300">@color/pink_500</color>
     <color name="colorPrimaryDark_orange300">@color/orange_300</color>
     <color name="colorPrimaryDark_teal300">@color/teal_300</color>
-    <color name="colorPrimaryDark_green300">@color/green_500</color>
+    <color name="colorPrimaryDark_green300">@color/light_green_300</color>
 
     <!--skinact背景颜色-->
     <color name="skinBackground_default">#ffffffff</color>

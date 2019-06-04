@@ -26,4 +26,10 @@
         <attr name="ctvCornerSize" format="integer"/>
         <attr name="ctvMargin" format="dimension"></attr>
     </declare-styleable>
+
+    <declare-styleable name="LinearCardView">
+        <attr name="left_text" format="string"/>
+        <attr name="right_text" format="string"/>
+        <attr name="show_right_text" format="boolean"/>
+    </declare-styleable>
 </resources>

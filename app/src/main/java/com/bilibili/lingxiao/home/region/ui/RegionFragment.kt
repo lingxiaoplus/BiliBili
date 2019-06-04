@@ -55,7 +55,7 @@ class RegionFragment :BaseFragment() , RegionView {
         regionAdapter = RegionAdapter(regionList, recycledViewPool)
         root.category_recyclerview.adapter = regionAdapter
         root.category_recyclerview.layoutManager = manager
-        root.category_recyclerview.setItemViewCacheSize(20)
+        root.category_recyclerview.setItemViewCacheSize(200)
         root.refresh.setOnRefreshListener({
             regionPresenter.getRegion()
         })

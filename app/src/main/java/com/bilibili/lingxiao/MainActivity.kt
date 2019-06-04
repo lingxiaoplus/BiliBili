@@ -13,6 +13,7 @@ import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
 import com.bilibili.lingxiao.home.region.ui.RegionFragment
 import com.bilibili.lingxiao.home.live.ui.LiveFragment
 import com.bilibili.lingxiao.home.mikan.ui.MikanFragment
+import com.bilibili.lingxiao.home.navigation.SettingActivity
 import com.bilibili.lingxiao.home.navigation.ThemeActivity
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.user.LoginActivity
@@ -73,12 +74,10 @@ class MainActivity : BaseActivity() {
             .navColor(event.color)         // 导航栏颜色
             .build(this)
             .apply()
-
     }
 
     override fun initWidget() {
         super.initWidget()
-
         //权限检测
         if (!EasyPermissions.hasPermissions(this, *mPermessions)){
             //没有权限就申请
@@ -89,9 +88,32 @@ class MainActivity : BaseActivity() {
         //设置返回键可用
         //supportActionBar?.setHomeButtonEnabled(true);
         //supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        initNavigationView()
+        initTabLayout()
+        image_header.setOnClickListener {
+            StartActivity(LoginActivity::class.java,false)
+        }
+        image_download.setOnClickListener {  }
+        image_game.setOnClickListener {  }
+        image_search.setOnClickListener {
+            val popwindowUtil = PopwindowUtil.PopupWindowBuilder(this@MainActivity)
+                .setView(R.layout.fragment_dialog_search)
+                .size(ViewGroup.LayoutParams.MATCH_PARENT.toFloat(),ViewGroup.LayoutParams.WRAP_CONTENT.toFloat())
+                .setFocusable(true)
+                .setTouchable(true)
+                .setOutsideTouchable(true)
+                .create()
+            popwindowUtil.showAtLocation(it,0,-it.getHeight(),Gravity.TOP,0.5f)
+            popwindowUtil.getView<ImageView>(R.id.image_exit)!!.setOnClickListener {
+                popwindowUtil.dissmiss()
+            }
+        }
+    }
 
-        supportActionBar?.setDisplayShowTitleEnabled(false);
-        var drawerToggle = object : ActionBarDrawerToggle(this,main_drawer_layout,main_toolbar,R.string.open,R.string.close){
+    private fun initNavigationView() {
+        var drawerToggle = object : ActionBarDrawerToggle(this,main_drawer_layout,
+            main_toolbar,R.string.open,R.string.close){
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
                 drawerOpened = true
@@ -111,27 +133,6 @@ class MainActivity : BaseActivity() {
                 main_drawer_layout.openDrawer(Gravity.START)
             }
         }
-        image_header.setOnClickListener {
-            StartActivity(LoginActivity::class.java,false)
-        }
-        image_download.setOnClickListener {  }
-        image_game.setOnClickListener {  }
-        image_search.setOnClickListener {
-            val popwindowUtil = PopwindowUtil.PopupWindowBuilder(this@MainActivity)
-                .setView(R.layout.fragment_dialog_search)
-                .size(ViewGroup.LayoutParams.MATCH_PARENT.toFloat(),ViewGroup.LayoutParams.WRAP_CONTENT.toFloat())
-                .setFocusable(true)
-                .setTouchable(true)
-                .setOutsideTouchable(true)
-                .create()
-            popwindowUtil.showAtLocation(it,0,-it.getHeight(),Gravity.TOP,0.5f)
-            popwindowUtil.getView<ImageView>(R.id.image_exit)!!.setOnClickListener {
-                popwindowUtil.dissmiss()
-            }
-        }
-        for (name in tabArray){
-            main_tabLayout.addTab(main_tabLayout.newTab().setText(name))
-        }
         var navigationView = main_navigation.inflateHeaderView(R.layout.nav_header)
         var header_view = navigationView.findViewById<View>(R.id.nav_header)
         header_view.setOnClickListener({
@@ -139,8 +140,8 @@ class MainActivity : BaseActivity() {
         })
         findViewById<LinearLayout>(R.id.ll_nav_setting)
             .setOnClickListener {
-            StartActivity(ThemeActivity::class.java,false)
-        }
+                StartActivity(SettingActivity::class.java,false)
+            }
         findViewById<LinearLayout>(R.id.ll_nav_theme)
             .setOnClickListener {
                 StartActivity(ThemeActivity::class.java,false)
@@ -148,7 +149,12 @@ class MainActivity : BaseActivity() {
         //隐藏NavigationView右侧滚动条
         var navigationMenuView = main_navigation.getChildAt(0) as NavigationMenuView
         navigationMenuView.isVerticalScrollBarEnabled = false
+    }
 
+    private fun initTabLayout() {
+        for (name in tabArray){
+            main_tabLayout.addTab(main_tabLayout.newTab().setText(name))
+        }
         fragmentList.add(liveFragment)
         fragmentList.add(recommendFragment)
         fragmentList.add(categoryFragment)

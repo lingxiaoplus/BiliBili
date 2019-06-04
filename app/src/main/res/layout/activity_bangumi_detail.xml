@@ -45,8 +45,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_anchor="@id/detail"
-            app:layout_anchorGravity="top|start"
-            app:layout_behavior="com.bilibili.lingxiao.widget.behavior.TransferHeaderBehavior"
+            app:layout_anchorGravity="top|end"
+
     >
         <TextView
                 android:id="@+id/tv_share"

@@ -33,7 +33,10 @@ import android.widget.PopupWindow
 import com.bilibili.lingxiao.web.WebActivity
 import com.youth.banner.listener.OnBannerListener
 import android.animation.Animator
+import android.support.v7.widget.LinearLayoutManager
+import com.bilibili.lingxiao.GlobalProperties
 import com.camera.lingxiao.common.utills.PopwindowUtil
+import com.camera.lingxiao.common.utills.SpUtils
 
 
 class RecommendFragment :BaseFragment(), RecommendView {
@@ -57,18 +60,23 @@ class RecommendFragment :BaseFragment(), RecommendView {
         var view = View.inflate(context,R.layout.layout_banner,null)
         banner = view.findViewById(R.id.live_banner)
         mAdapter.addHeaderView(view)
-        var manager = GridLayoutManager(context,2)
-        manager.setSpanSizeLookup(object :GridLayoutManager.SpanSizeLookup(){
-            override fun getSpanSize(position: Int): Int {
-                if(position == 0){
-                    return 2
-                }else{
-                    return 1
+        var colum = SpUtils.getInt(activity, GlobalProperties.HOME_COLUMNS,2)
+        var manager = GridLayoutManager(context,colum)
+        if (colum == 2){
+            manager.setSpanSizeLookup(object :GridLayoutManager.SpanSizeLookup(){
+                override fun getSpanSize(position: Int): Int {
+                    if(position == 0){
+                        return 2
+                    }else{
+                        return 1
+                    }
                 }
-            }
-        })
+            })
+        }
+
         root.recycerView.adapter = mAdapter
         root.recycerView.layoutManager = manager
+        //root.recycerView.showShimmerAdapter()
         //root.recycerView.isNestedScrollingEnabled = false
 
         root.refresh.setOnRefreshListener {
@@ -149,6 +157,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
         }
         refresh.finishRefresh()
         refresh.finishLoadMore()
+        //recycerView.hideShimmerAdapter()
     }
     override fun onGetVideoDetail(videoDetailData: VideoDetailData) {
 

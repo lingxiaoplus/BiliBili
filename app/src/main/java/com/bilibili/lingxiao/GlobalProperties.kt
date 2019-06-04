@@ -42,6 +42,8 @@ object GlobalProperties {
     var LIVE_ALL_URL = "http://api.live.bilibili.com/room/v3/Area/getRoomList"  //获取全部直播列表
     var LIVE_TAB_LIST_URL = "http://api.live.bilibili.com/room/v1/Area/getList"  //直播分类所有tab
 
+    var MY_SERVICE_HELP = "https://www.bilibili.com/h5/faq"
+
 
 
     val IMAGE_RULE_480_300 = "@480w_300h_1e_1c.webp"  //图片尺寸
@@ -63,7 +65,7 @@ object GlobalProperties {
     val SRC = "bili"
     val VERSION = "5.19.0.519000"
 
-    val HOME_COLUMNS = "home_columns"
+    val HOME_COLUMNS = "home_columns"  //首页列数
     var TAG = GlobalProperties::class.java.simpleName
 
 
