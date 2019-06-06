@@ -18,6 +18,7 @@ import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.bilibili.lingxiao.web.WebActivity
 import com.camera.lingxiao.common.app.BaseFragment
+import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_mikan.*
 import kotlinx.android.synthetic.main.fragment_mikan.view.*
 import kotlinx.android.synthetic.main.item_mikan_fall.*

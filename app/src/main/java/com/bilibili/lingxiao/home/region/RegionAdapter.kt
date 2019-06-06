@@ -55,11 +55,13 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
                 helper.setText(R.id.text_new_number,"${Random().nextInt(2000)}条新动态，点击刷新！")
                 var button_more:Button = helper.getView(R.id.button_more)
                 button_more.setText("更多${item.recommendData?.title}")
+
                 var image_region:ImageView = helper.getView(R.id.image_logo)
                 var logo = UIUtil.getMipMapId(mContext,"ic_category_t${item.recommendData?.param}")
                 if (logo > 0){
                     image_region.setImageResource(logo)
                 }
+
                 if (helper.recommendAdapter == null){
                     var recycler:RecyclerView = helper.getView(R.id.recyclerview)
                     recycler.isNestedScrollingEnabled = false
@@ -69,6 +71,10 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
                     recycler.layoutManager = manager
                     var recommendAdapter = RegionRecommendAdapter(R.layout.item_video,helper.recommendList)
                     recycler.adapter = recommendAdapter
+                    helper.recommendAdapter = recommendAdapter
+                    item.recommendData?.let {
+                        helper.recommendAdapter!!.addData(it.body)
+                    }
                     helper.addOnClickListener(R.id.button_goto)
                     helper.addOnClickListener(R.id.button_more)
                     //helper.addOnClickListener(R.id.ll_refresh)
@@ -80,10 +86,6 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
                             listener?.onVideoClick(it.body[position],position,it.type)
                         }
                     }
-                    helper.recommendAdapter = recommendAdapter
-                    item.recommendData?.let {
-                        helper.recommendAdapter!!.addData(it.body)
-                    }
                 }
             }
         }
@@ -93,16 +95,12 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
     inner class RegionViewHolde :BaseViewHolder {
         //adapter复用
         var recommendAdapter:RegionRecommendAdapter? = null
-        var recommendList:List<RegionRecommendData.Data.Body> = arrayListOf();
+        var recommendList:List<RegionRecommendData.Data.Body>
         constructor(view: View?):super(view){
-            //recommendList = arrayListOf();
+            recommendList = arrayListOf()
         }
     }
 
-    fun notifyRecommendDataChanged(data: List<RegionRecommendData.Data.Body>?){
-
-        //recommendAdapter.setNewData(data)
-    }
 
     inner class RegionRecommendAdapter(layout:Int,data: List<RegionRecommendData.Data.Body>?) :
         BaseQuickAdapter<RegionRecommendData.Data.Body, BaseViewHolder>(layout,data) {

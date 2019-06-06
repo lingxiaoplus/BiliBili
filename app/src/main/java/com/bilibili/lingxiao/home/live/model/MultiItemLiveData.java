@@ -3,10 +3,8 @@ package com.bilibili.lingxiao.home.live.model;
 import java.util.List;
 
 public class MultiItemLiveData {
-    public static final int BANNER = 1;
-    public static final int CATEGORY = 2;
-    public static final int RECOMMEND = 3;
-    public static final int PARTITION = 4;
+    public static final int RECOMMEND = 1;
+    public static final int PARTITION = 2;
     public int itemType;
 
     public MultiItemLiveData(int type){

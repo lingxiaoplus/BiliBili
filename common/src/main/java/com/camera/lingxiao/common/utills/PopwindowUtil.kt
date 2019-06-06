@@ -32,6 +32,7 @@ class PopwindowUtil private constructor(private val mContext: Context) {
     var mContentView: View? = null
     private var mPopupWindow: PopupWindow? = null
     private var mAnimationStyle = -1
+    private var mElevation :Float = 0f
 
     private var mClippEnable = true//default is true
     private var mIgnoreCheekPress = false
@@ -144,6 +145,9 @@ class PopwindowUtil private constructor(private val mContext: Context) {
         if (mAnimationStyle != -1) {
             mPopupWindow!!.animationStyle = mAnimationStyle
         }
+        if (mElevation != 0f){
+            mPopupWindow!!.elevation = mElevation;
+        }
 
         apply(mPopupWindow!!)//设置一些属性
 
@@ -218,6 +222,11 @@ class PopwindowUtil private constructor(private val mContext: Context) {
         fun setView(view: View): PopupWindowBuilder {
             mCustomPopWindow.mContentView = view
             mCustomPopWindow.mResLayoutId = -1
+            return this
+        }
+
+        fun setElevation(elevation :Float): PopupWindowBuilder {
+            mCustomPopWindow.mElevation = elevation
             return this
         }
 

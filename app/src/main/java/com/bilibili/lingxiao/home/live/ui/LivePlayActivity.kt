@@ -151,6 +151,7 @@ class LivePlayActivity : BaseActivity() , LivePlayView {
         cancleProgressDialog()
         val popwindowUtil = PopwindowUtil.PopupWindowBuilder(this@LivePlayActivity)
             .setView(R.layout.pop_user_info)
+            .setElevation(10f)
             .setFocusable(true)
             .setAnimationStyle(R.style.contextMenuAnim)
             .setTouchable(true)

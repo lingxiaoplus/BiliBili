@@ -60,31 +60,11 @@ class LiveFragment :BaseFragment() , LiveView {
     }
     override fun initWidget(root: View) {
         super.initWidget(root)
-        /*var manager = GridLayoutManager(context,10,GridLayoutManager.VERTICAL,false)
-        manager.setSpanSizeLookup(object :GridLayoutManager.SpanSizeLookup(){
-            override fun getSpanSize(position: Int): Int {
-
-                //Log.e(TAG,"获取到的类型"+type)
-                if (position == 0){
-                    return 10
-                }
-                var type = liveAdapter.data.get(position).itemType
-                when(type){
-                    MultiItemLiveData.BANNER-> return 10
-                    MultiItemLiveData.CATEGORY-> return 2
-                    MultiItemLiveData.RECOMMEND-> return 10
-                    MultiItemLiveData.PARTITION-> return 10
-                    else-> return 0
-                }
-            }
-        })*/
         var manager = LinearLayoutManager(context)
-        //让互相嵌套的RecyclerView的item都进入同一个共享池
+        //让互相嵌套的RecyclerView的item都使用同一个共享池
         val recycledViewPool = RecyclerView.RecycledViewPool()
         root.live_recy.setRecycledViewPool(recycledViewPool)
         liveAdapter = LiveRecyAdapter(liveList, recycledViewPool)
-        liveAdapter.addHeaderView(topView)
-        liveAdapter.addFooterView(footerShowAllView)
         root.live_recy.adapter = liveAdapter
         root.live_recy.layoutManager = manager
         refresh = root.refresh
@@ -120,45 +100,55 @@ class LiveFragment :BaseFragment() , LiveView {
                 R.id.live_recommend_more -> startActivity(Intent(context,LiveAllActivity::class.java))
             }
         }
+        floatingBtnToogle(root.live_recy, root.fab_live)
+        initTopAndBottomView()
+    }
+
+    private fun initTopAndBottomView() {
+        liveAdapter.addHeaderView(topView)
+        liveAdapter.addFooterView(footerShowAllView)
         var emptyView = View.inflate(context,R.layout.layout_empty,null)
         var image = emptyView.findViewById<ImageView>(R.id.image_error)
         image.setImageDrawable(resources.getDrawable(R.drawable.img_holder_error_style3))
         liveAdapter.setEmptyView(emptyView)
-        floatingBtnToogle(root.live_recy,root.fab_live)
 
-        footerShowAllView.findViewById<Button>(R.id.button).setOnClickListener {
-            startActivity(Intent(context,LiveAllActivity::class.java))
-        }
-
-        topView.findViewById<TextView>(R.id.tv_live_follow).setOnClickListener {
+        var followText = topView.findViewById<TextView>(R.id.tv_live_follow)
+        followText.setOnClickListener {
             var intent = Intent(context,LiveMoreActivity::class.java)
             intent.putExtra("parentId",5)
-            intent.putExtra("parentName","关注")
+            intent.putExtra("parentName",followText.text)
             startActivity(intent)
         }
-        topView.findViewById<TextView>(R.id.tv_live_happy).setOnClickListener {
+        var videoText = topView.findViewById<TextView>(R.id.tv_live_happy)
+        videoText.setOnClickListener {
             var intent = Intent(context,LiveMoreActivity::class.java)
             intent.putExtra("parentId",1)
-            intent.putExtra("parentName","视频唱见")
+            intent.putExtra("parentName",videoText.text)
             startActivity(intent)
         }
-        topView.findViewById<TextView>(R.id.tv_live_video).setOnClickListener {
+        var gameText = topView.findViewById<TextView>(R.id.tv_live_video)
+        gameText.setOnClickListener {
             var intent = Intent(context,LiveMoreActivity::class.java)
             intent.putExtra("parentId",2)
-            intent.putExtra("parentName","游戏")
+            intent.putExtra("parentName",gameText.text)
             startActivity(intent)
         }
-        topView.findViewById<TextView>(R.id.tv_live_game).setOnClickListener {
+        var mobileGame = topView.findViewById<TextView>(R.id.tv_live_game)
+        mobileGame.setOnClickListener {
             var intent = Intent(context,LiveMoreActivity::class.java)
             intent.putExtra("parentId",3)
-            intent.putExtra("parentName","手游")
+            intent.putExtra("parentName",mobileGame.text)
             startActivity(intent)
         }
-        topView.findViewById<TextView>(R.id.tv_live_draw).setOnClickListener {
+        var drawText = topView.findViewById<TextView>(R.id.tv_live_draw)
+        drawText.setOnClickListener {
             var intent = Intent(context,LiveMoreActivity::class.java)
             intent.putExtra("parentId",4)
-            intent.putExtra("parentName","绘画")
+            intent.putExtra("parentName",drawText.text)
             startActivity(intent)
+        }
+        footerShowAllView.findViewById<Button>(R.id.button).setOnClickListener {
+            startActivity(Intent(context,LiveAllActivity::class.java))
         }
     }
 
@@ -180,15 +170,7 @@ class LiveFragment :BaseFragment() , LiveView {
     var recommendData = MultiItemLiveData(MultiItemLiveData.RECOMMEND)
     override fun onGetLiveList(data: LiveData) {
         liveList.clear()
-        //bannerData.bannerList = data.banner
-        //liveList.add(bannerData)
         initBanner(topView.live_banner,data.banner)
-        /*for (category in data.entranceIcons){
-            var categoryData = MultiItemLiveData(MultiItemLiveData.CATEGORY)
-            categoryData.entranceIconsBean = category
-            liveList.add(categoryData)
-        }*/
-
         recommendData.liveList = data.recommend_data.lives
         recommendData.partitionsBean = if (data.partitions.size > 0) data.partitions[0] else
             LiveData.PartitionsBean()
