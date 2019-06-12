@@ -70,4 +70,5 @@ ext {
     danmakuVersion = "0.9.25"
     danmakuNdk = "0.9.21"
     FlycoTabLayout = "2.1.2@aar"
+    bottomNavigationBar = "2.1.0"
 }

@@ -173,16 +173,17 @@
     <!-- 底部栏-->
 
     <FrameLayout
+            android:id="@+id/bottom_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
     >
-        <include
+        <!--<include
                 android:id="@+id/video_bottom"
                 layout="@layout/simple_player_controlbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                />-->
         <!--<include
                 android:id="@+id/video_bottom"
                 layout="@layout/simple_player_controlbar_fullscreen"

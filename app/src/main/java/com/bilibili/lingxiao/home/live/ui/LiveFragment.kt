@@ -163,7 +163,7 @@ class LiveFragment :BaseFragment() , LiveView {
             refresh.autoRefresh()
         }
         //TODO: 在fragment中，当可见的时候，会存在自己添加的头布局自动上拉
-        live_recy.smoothScrollToPosition(0)
+        //live_recy.smoothScrollToPosition(0)
     }
 
     //var bannerData = MultiItemLiveData(MultiItemLiveData.BANNER)

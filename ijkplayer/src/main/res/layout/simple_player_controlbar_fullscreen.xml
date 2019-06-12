@@ -5,7 +5,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="#11000000"
+              android:background="#60000000"
               tools:background="#666"
               android:padding="2dp"
               android:orientation="vertical"
@@ -95,16 +95,26 @@
 
         <ImageView
                 android:id="@+id/danmaku_switch_full"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/bili_player_danmaku_is_open"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintLeft_toRightOf="@id/app_video_process_panl"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
         />
+        <ImageView
+                android:id="@+id/danmaku_setting"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_player_danmaku_setting"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintLeft_toRightOf="@id/danmaku_switch_full"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+        />
         <TextView
-                android:id="@+id/video_full"
+                android:id="@+id/video_quility"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"

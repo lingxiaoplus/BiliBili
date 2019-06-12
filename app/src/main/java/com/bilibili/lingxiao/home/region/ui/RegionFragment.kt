@@ -3,7 +3,6 @@ package com.bilibili.lingxiao.home.region.ui
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.bilibili.lingxiao.R
@@ -16,8 +15,8 @@ import com.bilibili.lingxiao.home.region.model.RegionRecommendData
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
-import kotlinx.android.synthetic.main.fragment_hot.*
-import kotlinx.android.synthetic.main.fragment_hot.view.*
+import kotlinx.android.synthetic.main.fragment_region.*
+import kotlinx.android.synthetic.main.fragment_region.view.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
@@ -28,7 +27,7 @@ class RegionFragment :BaseFragment() , RegionView {
     private lateinit var regionAdapter: RegionAdapter
     private val TAG = RegionFragment::class.java.simpleName
     override val contentLayoutId: Int
-        get() = R.layout.fragment_hot
+        get() = R.layout.fragment_region
     override fun initInject() {
         super.initInject()
         UIUtil.getUiComponent().inject(this)
@@ -138,7 +137,7 @@ class RegionFragment :BaseFragment() , RegionView {
         if (visiblity && regionAdapter.itemCount - regionAdapter.headerLayoutCount - regionAdapter.footerLayoutCount < 1){
             refresh.autoRefresh()
         }
-        category_recyclerview.smoothScrollToPosition(0)
+        //category_recyclerview.smoothScrollToPosition(0)
     }
 
 

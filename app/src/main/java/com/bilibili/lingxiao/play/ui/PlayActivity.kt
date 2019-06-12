@@ -1,19 +1,32 @@
 package com.bilibili.lingxiao.play.ui
 
 import android.content.res.Configuration
+import android.graphics.drawable.BitmapDrawable
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.LinearLayout
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
 import com.bilibili.lingxiao.dagger.DaggerUiComponent
+import com.bilibili.lingxiao.ijkplayer.widget.SimplePlayerView
 import com.bilibili.lingxiao.play.model.VideoData
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.app.BaseFragment
 import com.camera.lingxiao.common.utills.LogUtils
+import com.camera.lingxiao.common.utills.PopwindowUtil
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
 import com.github.zackratos.ultimatebar.UltimateBar
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_play.*
+import kotlinx.android.synthetic.main.activity_setting.*
 import java.net.URLDecoder
 import java.util.*
 import javax.inject.Inject
@@ -27,7 +40,7 @@ class PlayActivity : BaseActivity() {
     @Inject
     lateinit var  commentFragment: CommentFragment
 
-
+    lateinit var videoInfo:VideoData
     val TAG = PlayActivity::class.java.simpleName
     override val contentLayoutId: Int
         get() = R.layout.activity_play
@@ -55,9 +68,7 @@ class PlayActivity : BaseActivity() {
         var player_width = URLDecoder.decode(uri.getQueryParameter("player_width"),"UTF-8").toInt()
         var player_height = URLDecoder.decode(uri.getQueryParameter("player_height"),"UTF-8").toInt()
         var player_rotate = URLDecoder.decode(uri.getQueryParameter("player_rotate"),"UTF-8") //0为不旋转
-
-
-        var videoData = Gson().fromJson(player_preload, VideoData::class.java)
+        videoInfo = Gson().fromJson(player_preload, VideoData::class.java)
 
         UIUtil.getDensityString()
         var layoutParams = ViewGroup.LayoutParams(play_view.width,
@@ -66,10 +77,16 @@ class PlayActivity : BaseActivity() {
         //play_view.layoutParams = layoutParams
         play_view
             .setLive(true)
-            .setVideoUrl(videoData.url)
+            .setVideoUrl(videoInfo.url)
             .setSize(player_width,player_height)
-            .initDanMaKu(videoData.cid,2000)
+            .initDanMaKu(videoInfo.cid,2000)
             .startPlay()
+
+        play_view.setPlayerItemClickListener(object :SimplePlayerView.OnPlayerItemClickListener{
+            override fun onQuilityTextClick() {
+                showSupportQuilityWindow()
+            }
+        })
 
         for (name in tabArray){
             skin_tabLayout.addTab(skin_tabLayout.newTab().setText(name))
@@ -127,5 +144,28 @@ class PlayActivity : BaseActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         play_view.onBackPressed()
+    }
+
+    private fun showSupportQuilityWindow(){
+        val popwindowUtil = PopwindowUtil.PopupWindowBuilder(this)
+            .setView(R.layout.popwindow_play_support_quality)
+            .size(LinearLayout.LayoutParams.WRAP_CONTENT.toFloat(), LinearLayout.LayoutParams.MATCH_PARENT.toFloat())
+            .setAnimationStyle(R.style.pop_player_support_quility)
+            .setFocusable(true)
+            .setTouchable(true)
+            .setOutsideTouchable(true)
+            .create()
+        popwindowUtil.showAtLocation(play_view,0,0, Gravity.RIGHT,0.6f)
+        var recycerView = popwindowUtil.getView<RecyclerView>(R.id.recyclerview)
+        recycerView?.layoutManager = GridLayoutManager(this,
+            videoInfo.support_description.size,GridLayoutManager.HORIZONTAL,false)
+        recycerView?.adapter = PlayQuilityAdapter(R.layout.item_play_support_quility,videoInfo.support_description)
+    }
+
+    inner class PlayQuilityAdapter(layoutId: Int,data: List<String>) :BaseQuickAdapter<String, BaseViewHolder>(layoutId,data) {
+        override fun convert(helper: BaseViewHolder, item: String) {
+            helper.setText(R.id.text_quility,item)
+            Log.d(TAG,"视频质量：$item")
+        }
     }
 }

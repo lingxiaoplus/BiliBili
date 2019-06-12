@@ -40,7 +40,8 @@ import java.lang.StringBuilder
 import kotlin.properties.Delegates
 
 
-class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr),View.OnTouchListener,View.OnClickListener {
+class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+    RelativeLayout(context, attrs, defStyleAttr),View.OnTouchListener,View.OnClickListener ,SeekBar.OnSeekBarChangeListener{
 
     private var mCurrentPosition = 0
     private var mVideoState = PlayState.STATE_IDLE
@@ -131,10 +132,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
                     mVideoUrl.startsWith("http://") && mVideoUrl.endsWith(".flv")
         }
 
-    companion object {
-        val TAG = SimplePlayerView::class.java.simpleName
-    }
-
+    private val TAG = SimplePlayerView::class.java.simpleName
     private val mHandler = object : Handler(Looper.getMainLooper()){
         override fun handleMessage(msg: Message?) {
             super.handleMessage(msg)
@@ -143,7 +141,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
                     if (!isDragging){
                         var position = updateProgress()
                         var msge = obtainMessage(MESSAGE_SHOW_PROGRESS)
-                        sendMessageDelayed(msge,1000L-(position % 1000))
+                        sendMessageDelayed(msge,1000L - (position % 1000))
                     }
 
                 }
@@ -162,29 +160,18 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         }
     }
 
+    private var itemClickListener:OnPlayerItemClickListener? = null
+    fun setPlayerItemClickListener(listener:OnPlayerItemClickListener){
+        itemClickListener = listener
+    }
+    interface OnPlayerItemClickListener{
+        fun onQuilityTextClick()
+    }
+
     init {
         initView(context)
     }
 
-    /*private lateinit var video_play:ImageView
-    private lateinit var video_seekBar:SeekBar
-    private lateinit var video_currentTime:TextView
-    private lateinit var video_fullscreen:ImageView
-    private lateinit var video_endTime:TextView
-    private lateinit var tv_sprit:TextView
-    private fun setBottomBarView(){
-        if (isPortrait){
-            video_play = bottomBarHalf.findViewById(R.id.video_play)
-            video_seekBar = bottomBarHalf.findViewById(R.id.video_seekBar)
-            video_currentTime = bottomBarHalf.findViewById(R.id.video_currentTime)
-            video_fullscreen = bottomBarHalf.findViewById(R.id.video_fullscreen)
-            video_endTime = bottomBarHalf.findViewById(R.id.video_endTime)
-            tv_sprit = bottomBarHalf.findViewById(R.id.tv_sprit)
-        }else{
-            video_play = bottomBarFullScreen.findViewById(R.id.video_play)
-            video_seekBar = bottomBarFullScreen.findViewById(R.id.video_seekBar)
-        }
-    }*/
     private fun initView(context: Context) {
         View.inflate(context, R.layout.simple_player_view_player, this)
         mActivity = getActivityFromContext(context)
@@ -194,37 +181,15 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         if (isShowNetworkHint){
             video_progress.visibility = INVISIBLE
         }
+        bottom_root.addView(bottomBarHalf)
         video_play.setOnClickListener(this)
         //video_play_full.setOnClickListener(this)
         play_icon.setOnClickListener(this)
         video_button_continue.setOnClickListener(this)
-        //video_fullscreen.setOnClickListener(this)
+        video_fullscreen.setOnClickListener(this)
         video_finish.setOnClickListener(this)
         //video_seekBar.setOnSeekBarChangeListener(mVideoProgressListener)
-        video_seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (!fromUser){
-                    return
-                }
-                val position = progress
-                val time = generateTime(position)
-                video_currentTime.text = time
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                //开始拖动
-                isDragging = true
-                mHandler.removeMessages(MESSAGE_SHOW_PROGRESS)
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                //停止拖动
-                isDragging = false
-                mHandler.removeMessages(MESSAGE_SHOW_PROGRESS)
-                video_view.seekTo(seekBar!!.progress)
-                mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_PROGRESS,1000)
-            }
-        })
+        video_seekBar.setOnSeekBarChangeListener(this)
         video_view.setOnInfoListener { mp, what, extra->
             statusChanged(what)
             return@setOnInfoListener true
@@ -232,26 +197,56 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         mGestureDector = GestureDetector(getContext(),object : PlayerGestureDetector(){})
         setClickable(true) //设置可点击
         setOnTouchListener(this)
+    }
 
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        var widthMode = MeasureSpec.getMode(widthMeasureSpec)
+        var widthSize = MeasureSpec.getSize(widthMeasureSpec)
+        var heightMode = MeasureSpec.getMode(heightMeasureSpec)
+        var heightSize = MeasureSpec.getSize(heightMeasureSpec)
+        if (heightMode == MeasureSpec.AT_MOST){
+            heightSize = Math.max(heightMeasureSpec,200)
+        }
+        setMeasuredDimension(widthSize, heightSize)
+    }
+
+
+    private fun addLandScapeOnClickListener(){
+        video_play_full.setOnClickListener(this)
+        video_fullscreen.setOnClickListener(this)
+        video_finish.setOnClickListener(this)
+        danmaku_switch_full.setOnClickListener(this)
+        video_seekBar_full.setOnSeekBarChangeListener(this)
+        video_quility.setOnClickListener {
+            itemClickListener?.onQuilityTextClick()
+        }
     }
 
     override fun onClick(v: View) {
         when(v.id){
             R.id.video_play,R.id.video_play_full->{
                 if (video_view.isPlaying){
-                    if (isLive){
+                    if (isLive)
                         video_view.stopPlayback()
-                    }else{
+                    else
                         pausePlay()
-                    }
-                    video_play.setImageResource(R.drawable.ic_img_pause)
-                    //video_play_full.setImageResource(R.drawable.ic_img_pause)
+
+                    if (isPortrait)
+                        video_play.setImageResource(R.drawable.ic_img_pause)
+                    else
+                        video_play_full.setImageResource(R.drawable.ic_img_pause)
+
                     play_icon.setImageResource(R.drawable.ic_img_pause)
                     play_icon.visibility = View.VISIBLE
                 }else{
                     startPlay()
-                    video_play.setImageResource(R.drawable.ic_img_play)
-                    //video_play_full.setImageResource(R.drawable.ic_img_play)
+                    if (isPortrait)
+                        video_play.setImageResource(R.drawable.ic_img_play)
+                    else
+                        video_play_full.setImageResource(R.drawable.ic_img_play)
+
                     play_icon.setImageResource(R.drawable.ic_img_play)
                     play_icon.visibility = View.INVISIBLE
                 }
@@ -283,8 +278,42 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
                     toggleFullScreen()
                 }
             }
+            R.id.danmaku_switch_full->{
+                if (danmaku.isShown){
+                    danmaku.hide()
+                    danmaku_switch_full.setImageResource(R.drawable.bili_player_danmaku_is_closed)
+                }else{
+                    danmaku.show()
+                    danmaku_switch_full.setImageResource(R.drawable.bili_player_danmaku_is_open)
+                }
+            }
         }
     }
+
+    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        if (!fromUser){
+            return
+        }
+        val position = progress
+        if (isPortrait) video_currentTime.text = generateTime(position)
+            else video_currentTime_full.text = generateTime(position)
+    }
+
+    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+        //开始拖动
+        isDragging = true
+        mHandler.removeMessages(MESSAGE_SHOW_PROGRESS)
+    }
+
+    override fun onStopTrackingTouch(seekBar: SeekBar) {
+        //停止拖动
+        isDragging = false
+        mHandler.removeMessages(MESSAGE_SHOW_PROGRESS)
+        video_view.seekTo(seekBar.progress)
+        mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_PROGRESS,1000)
+    }
+
+
 
     private fun statusChanged(what: Int) {
         this.mVideoState = what
@@ -370,13 +399,19 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         var duration = video_view.duration  //视频总长度
         var bufferPos = video_view.bufferPercentage //视频缓冲进度
 
-        video_currentTime.text = generateTime(position)
-        video_endTime.text = generateTime(duration)
-
-        video_seekBar.max = duration
-        video_seekBar.progress = position
-        video_seekBar.secondaryProgress = bufferPos * 1000
-        //Log.d(TAG,"视频时长：" + duration + "播放进度：" + position + "视频缓冲进度：" + bufferPos * 1000)
+        if (isPortrait){
+            video_currentTime.text = generateTime(position)
+            video_endTime.text = generateTime(duration)
+            video_seekBar.max = duration
+            video_seekBar.progress = position
+            video_seekBar.secondaryProgress = bufferPos * 1000
+        }else{
+            video_currentTime_full.text = generateTime(position)
+            video_endTime_full.text = generateTime(duration)
+            video_seekBar_full.max = duration
+            video_seekBar_full.progress = position
+            video_seekBar_full.secondaryProgress = bufferPos * 1000
+        }
         return position
     }
 
@@ -407,6 +442,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             4.0f/3.0f -> video_view.setAspectRatio(IRenderView.AR_4_3_FIT_PARENT)
             else -> video_view.setAspectRatio(IRenderView.AR_16_9_FIT_PARENT)
         }
+
         return this
     }
 
@@ -434,6 +470,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         danmaku.pause()
         mDanmukuPosition = danmaku.currentTime
     }
+
     fun stopPlay(){
         video_view.stopPlayback()
         video_view.release(true)
@@ -507,7 +544,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         layoutParams.setMargins(0,margin,0,0)
         video_top.layoutParams = layoutParams
         toggleAnim(video_top,-video_top.height.toFloat()-margin,0f)
-        toggleAnim(video_bottom, video_bottom.height.toFloat(),0f)
+        toggleAnim(bottom_root, bottom_root.height.toFloat(),0f)
         isHiddenBar = false
         /*//3秒之后隐藏状态栏
         mHandler.postDelayed({
@@ -528,7 +565,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         layoutParams.setMargins(0,margin,0,0)
         video_top.layoutParams = layoutParams
         toggleAnim(video_top,0f,-video_top.height.toFloat() - margin)
-        toggleAnim(video_bottom,0f, video_bottom.height.toFloat())
+        toggleAnim(bottom_root,0f, bottom_root.height.toFloat())
         isHiddenBar = true
     }
 
@@ -616,10 +653,15 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
     private fun toggleFullScreen(): SimplePlayerView {
         if (getScreenOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
             mActivity?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+            bottom_root.removeView(bottomBarFullScreen)
+            bottom_root.addView(bottomBarHalf)
         } else {
             //因为是延迟初始化，所以在这里需要使用initHeight
             Log.i(TAG,"记录竖屏状态下的hiehgt：" + initHeight)
             mActivity?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+            bottom_root.removeView(bottomBarHalf)
+            bottom_root.addView(bottomBarFullScreen)
+            addLandScapeOnClickListener()
         }
         return this
     }

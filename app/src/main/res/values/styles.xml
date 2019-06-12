@@ -113,6 +113,12 @@
         <item name="android:windowExitAnimation">@anim/pop_watch_later_hide</item>
     </style>
 
+
+    <style name="pop_player_support_quility" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/pop_right_show</item>
+        <item name="android:windowExitAnimation">@anim/pop_left_hide</item>
+    </style>
+
     <style name="text_style_normal">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
