@@ -5,7 +5,7 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
-        android:background="@color/black_alpha_128"
+        android:background="@color/black_alpha_160"
         android:padding="@dimen/dp_10"
 >
     <android.support.v7.widget.RecyclerView

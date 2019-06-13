@@ -32,6 +32,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bilibili.lingxiao.ijkplayer.NetworkUtil
 import com.bilibili.lingxiao.ijkplayer.danmuku.BiliDanmuku
+import com.camera.lingxiao.common.app.BaseFragment
 import kotlinx.android.synthetic.main.simple_player_controlbar_fullscreen.view.*
 import kotlinx.android.synthetic.main.simple_player_topbar.view.*
 import okhttp3.*
@@ -220,6 +221,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         danmaku_switch_full.setOnClickListener(this)
         video_seekBar_full.setOnSeekBarChangeListener(this)
         video_quility.setOnClickListener {
+            hideBarUI()
             itemClickListener?.onQuilityTextClick()
         }
     }
@@ -484,23 +486,23 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     /**
      * 初始化弹幕库
-     * @param cid 根据cid获取弹幕
+     * @param url 弹幕地址
      */
-    fun initDanMaKu(cid:Int): SimplePlayerView{
+    fun initDanMaKu(url:String): SimplePlayerView{
         BiliDanmuku.initDanmaku(danmaku)
-        getDanmakuFromCid(cid)
+        getDanmakuFromUrl(url)
         return this
     }
 
     /**
      * 初始化弹幕库
-     * @param cid 根据cid获取弹幕
+     * @param url 弹幕xml地址
      * @param delay 延迟获取，同时初始化视频和弹幕部分手机可能会卡顿
      */
-    fun initDanMaKu(cid:Int,delay:Long): SimplePlayerView{
+    fun initDanMaKu(url :String,delay:Long): SimplePlayerView{
         this.postDelayed({
             BiliDanmuku.initDanmaku(danmaku)
-            getDanmakuFromCid(cid)
+            getDanmakuFromUrl(url)
         },delay)
         return this
     }
@@ -512,6 +514,15 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         isShowNetworkHint = show
         return this
     }
+
+    /**
+     * 自定义底部状态栏
+     */
+    fun setBottomViewBar(view :View){
+        bottom_root.removeAllViews()
+        bottom_root.addView(view)
+    }
+
     /**
      * 获取当前播放位置
      */
@@ -578,9 +589,6 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         animatorSet.start()
     }
 
-
-
-
     /**
      * 全透状态栏
      */
@@ -608,6 +616,9 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         //这个地方横屏才响应
         if (!isPortrait){
             toggleFullScreen()
+        }else{
+            //TODO: 存在fragment栈的情况
+            mActivity?.finish()
         }
     }
     /**
@@ -647,6 +658,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
     fun dip2pixel(context: Context, n: Float): Int {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, n, context.resources.displayMetrics).toInt()
     }
+
     /**
      * 全屏切换
      */
@@ -955,19 +967,15 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
     /**
      * 获取弹幕并播放
      */
-    private fun getDanmakuFromCid(cid:Int){
-        var url = StringBuilder()
-        url.append("http://comment.bilibili.com/")
-        url.append(cid)
-        url.append(".xml")
+    private fun getDanmakuFromUrl(url :String){
         var client =  OkHttpClient();//创建OkHttpClient对象
         var request = Request.Builder()
-            .url(url.toString())//请求接口。如果需要传参拼接到接口后面。
+            .url(url)//请求接口。如果需要传参拼接到接口后面。
             .build();//创建Request 对象
         //var response = client.newCall(request).execute();//得到Response 对象
         client.newCall(request).enqueue(object :Callback{
             override fun onFailure(call: Call, e: IOException) {
-                Log.e(TAG,"播放弹幕失败" + e)
+                Log.e(TAG,"播放弹幕失败$e")
             }
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful()) {
@@ -977,7 +985,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
                         BiliDanmuku.playDanmaku(parser,danmaku)
                     }
                 }else{
-                    Log.e(TAG,"播放弹幕失败" + response)
+                    Log.e(TAG,"播放弹幕失败$response")
                 }
             }
 

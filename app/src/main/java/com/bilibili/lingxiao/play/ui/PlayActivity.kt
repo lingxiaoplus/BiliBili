@@ -6,10 +6,8 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
+import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
@@ -27,6 +25,7 @@ import com.github.zackratos.ultimatebar.UltimateBar
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_play.*
 import kotlinx.android.synthetic.main.activity_setting.*
+import java.lang.StringBuilder
 import java.net.URLDecoder
 import java.util.*
 import javax.inject.Inject
@@ -73,13 +72,15 @@ class PlayActivity : BaseActivity() {
         UIUtil.getDensityString()
         var layoutParams = ViewGroup.LayoutParams(play_view.width,
             (player_width / (player_height+1.0f) * play_view.width).toInt())
-        LogUtils.d("需要播放的video信息：width: ${layoutParams.width}, heigth: ${layoutParams.height}")
+        Log.d(TAG,"需要播放的video宽高：width: ${layoutParams.width}, heigth: ${layoutParams.height}, 信息：$videoInfo")
         //play_view.layoutParams = layoutParams
+
+        var danmakuUrl = "http://comment.bilibili.com/${videoInfo.cid}.xml"
         play_view
             .setLive(true)
             .setVideoUrl(videoInfo.url)
             .setSize(player_width,player_height)
-            .initDanMaKu(videoInfo.cid,2000)
+            .initDanMaKu(danmakuUrl,2000)
             .startPlay()
 
         play_view.setPlayerItemClickListener(object :SimplePlayerView.OnPlayerItemClickListener{
@@ -142,7 +143,7 @@ class PlayActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        //super.onBackPressed()
         play_view.onBackPressed()
     }
 
@@ -155,7 +156,7 @@ class PlayActivity : BaseActivity() {
             .setTouchable(true)
             .setOutsideTouchable(true)
             .create()
-        popwindowUtil.showAtLocation(play_view,0,0, Gravity.RIGHT,0.6f)
+        popwindowUtil.showAtLocation(play_view,0,0, Gravity.RIGHT)
         var recycerView = popwindowUtil.getView<RecyclerView>(R.id.recyclerview)
         recycerView?.layoutManager = GridLayoutManager(this,
             videoInfo.support_description.size,GridLayoutManager.HORIZONTAL,false)
@@ -164,6 +165,12 @@ class PlayActivity : BaseActivity() {
 
     inner class PlayQuilityAdapter(layoutId: Int,data: List<String>) :BaseQuickAdapter<String, BaseViewHolder>(layoutId,data) {
         override fun convert(helper: BaseViewHolder, item: String) {
+            var imageVip = helper.getView<ImageView>(R.id.image_vip)
+            if (item.contains("1080P")){
+                imageVip.visibility = View.VISIBLE
+            }else{
+                imageVip.visibility = View.GONE
+            }
             helper.setText(R.id.text_quility,item)
             Log.d(TAG,"视频质量：$item")
         }

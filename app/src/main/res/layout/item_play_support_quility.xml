@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
 >
+    <ImageView
+            android:id="@+id/image_vip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_badge_vip"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/text_quility"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            android:padding="@dimen/dp_4"
+    />
     <TextView
             android:id="@+id/text_quility"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="高清 1080P"
             android:textColor="@color/white"
+            tools:textColor="@color/black_alpha_208"
             android:textSize="@dimen/font_16"
+            app:layout_constraintTop_toBottomOf="@id/image_vip"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
     />
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
