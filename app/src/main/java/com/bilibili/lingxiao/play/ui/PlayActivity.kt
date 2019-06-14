@@ -76,16 +76,17 @@ class PlayActivity : BaseActivity() {
         //play_view.layoutParams = layoutParams
 
         var danmakuUrl = "http://comment.bilibili.com/${videoInfo.cid}.xml"
+        var quilityPosition = getQuilityIndex()
         play_view
             .setLive(true)
             .setVideoUrl(videoInfo.url)
             .setSize(player_width,player_height)
+            .setQuilityText(videoInfo.support_description[quilityPosition])
             .initDanMaKu(danmakuUrl,2000)
             .startPlay()
-
         play_view.setPlayerItemClickListener(object :SimplePlayerView.OnPlayerItemClickListener{
             override fun onQuilityTextClick() {
-                showSupportQuilityWindow()
+                showSupportQuilityWindow(quilityPosition)
             }
         })
 
@@ -123,6 +124,18 @@ class PlayActivity : BaseActivity() {
             .commitAllowingStateLoss()
     }*/
 
+
+    fun getQuilityIndex():Int{
+        var index = 0
+        for ((position,item) in videoInfo.support_quality.withIndex()){
+            if (item == videoInfo.quality){
+                index = position
+                break
+            }
+        }
+        return index
+    }
+
     override fun onConfigurationChanged(newConfig: Configuration?) {
         super.onConfigurationChanged(newConfig)
         play_view.onConfigurationChang(newConfig)
@@ -147,7 +160,7 @@ class PlayActivity : BaseActivity() {
         play_view.onBackPressed()
     }
 
-    private fun showSupportQuilityWindow(){
+    private fun showSupportQuilityWindow(index:Int){
         val popwindowUtil = PopwindowUtil.PopupWindowBuilder(this)
             .setView(R.layout.popwindow_play_support_quality)
             .size(LinearLayout.LayoutParams.WRAP_CONTENT.toFloat(), LinearLayout.LayoutParams.MATCH_PARENT.toFloat())
@@ -160,16 +173,24 @@ class PlayActivity : BaseActivity() {
         var recycerView = popwindowUtil.getView<RecyclerView>(R.id.recyclerview)
         recycerView?.layoutManager = GridLayoutManager(this,
             videoInfo.support_description.size,GridLayoutManager.HORIZONTAL,false)
-        recycerView?.adapter = PlayQuilityAdapter(R.layout.item_play_support_quility,videoInfo.support_description)
+        recycerView?.adapter = PlayQuilityAdapter(R.layout.item_play_support_quility,videoInfo.support_description,index)
     }
 
+    //data class QuilityData(var title:String,var choosed:Boolean)
     inner class PlayQuilityAdapter(layoutId: Int,data: List<String>) :BaseQuickAdapter<String, BaseViewHolder>(layoutId,data) {
+        var defaultPosition:Int = 0
+        constructor(layoutId: Int,data: List<String>,position:Int):this(layoutId,data){
+            defaultPosition = position
+        }
         override fun convert(helper: BaseViewHolder, item: String) {
             var imageVip = helper.getView<ImageView>(R.id.image_vip)
-            if (item.contains("1080P")){
+            if (item.contains("1080PP60")){
                 imageVip.visibility = View.VISIBLE
             }else{
                 imageVip.visibility = View.GONE
+            }
+            if (helper.position == defaultPosition){
+                helper.setTextColor(R.id.text_quility,mContext.resources.getColor(R.color.colorPrimary))
             }
             helper.setText(R.id.text_quility,item)
             Log.d(TAG,"视频质量：$item")

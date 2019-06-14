@@ -37,6 +37,10 @@ class MikanFragment :BaseFragment(), MikanView {
     private var mCNVideoList = arrayListOf<MiKanRecommendData.Result.Recommend.Info>()
     private var mJPVideoList = arrayListOf<MiKanRecommendData.Result.Recommend.Info>()
     private var mEditList = arrayListOf<MiKanFallData.Result>()
+
+    private val mikanHeaderView by lazy {
+        View.inflate(activity,R.layout.mikan_header,null)
+    }
     override val contentLayoutId: Int
         get() = R.layout.fragment_mikan
 
@@ -70,6 +74,8 @@ class MikanFragment :BaseFragment(), MikanView {
             miKanPresenter.getBanGuMiRecommend()
         })
         root.refresh.setOnLoadMoreListener {
+            it.finishLoadMore()
+            return@setOnLoadMoreListener  //TODO: 暂时不上拉加载更多，因为NestedScrollView和RecyclerView，RecyclerView不会复用
             var cursor:Long? = mFallAdapter.data.get(mFallAdapter.itemCount -1).cursor
             if (cursor != null && cursor != 0L)
             miKanPresenter.getBanGuMiFall(cursor)
@@ -105,6 +111,11 @@ class MikanFragment :BaseFragment(), MikanView {
         var image = emptyView.findViewById<ImageView>(R.id.image_error)
         image.setImageDrawable(resources.getDrawable(R.drawable.img_holder_error_style3))
         mFallAdapter.setEmptyView(emptyView)
+    }
+
+    data class MikanData(var type:Int){
+        var mikanRecommend:MiKanRecommendData.Result.Recommend.Info?= null
+        var mikanFall:MiKanFallData.Result?= null
     }
 
     override fun onFirstVisiblity() {

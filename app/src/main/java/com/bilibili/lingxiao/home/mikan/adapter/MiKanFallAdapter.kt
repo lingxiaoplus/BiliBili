@@ -15,5 +15,4 @@ class MiKanFallAdapter(layoutResId: Int, data: MutableList<MiKanFallData.Result>
         helper.setText(R.id.title,item.title)
         helper.setText(R.id.content,item.desc)
     }
-
 }

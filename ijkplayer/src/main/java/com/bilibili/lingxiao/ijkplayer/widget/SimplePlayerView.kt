@@ -214,7 +214,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
     }
 
 
-    private fun addLandScapeOnClickListener(){
+    private fun onChangeToLandScape(){
         video_play_full.setOnClickListener(this)
         video_fullscreen.setOnClickListener(this)
         video_finish.setOnClickListener(this)
@@ -224,6 +224,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             hideBarUI()
             itemClickListener?.onQuilityTextClick()
         }
+        video_quility.setText(mQuilityText)
     }
 
     override fun onClick(v: View) {
@@ -484,6 +485,12 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
         return this
     }
 
+    private var mQuilityText = "自动"
+    fun setQuilityText(text:String): SimplePlayerView{
+        mQuilityText = text
+        return this
+    }
+
     /**
      * 初始化弹幕库
      * @param url 弹幕地址
@@ -673,7 +680,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             mActivity?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
             bottom_root.removeView(bottomBarHalf)
             bottom_root.addView(bottomBarFullScreen)
-            addLandScapeOnClickListener()
+            onChangeToLandScape()
         }
         return this
     }

@@ -14,6 +14,7 @@ import com.trello.rxlifecycle2.android.FragmentEvent
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Action
+import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 
 /**
