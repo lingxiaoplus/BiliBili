@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.bilibili.lingxiao.R
@@ -13,6 +14,7 @@ import com.bilibili.lingxiao.home.mikan.adapter.MikanAdapter
 import com.bilibili.lingxiao.home.mikan.MikanView
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
+import com.bilibili.lingxiao.home.mikan.model.MikanData
 import com.bilibili.lingxiao.home.region.ui.BangumiDetailActivity
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
@@ -30,17 +32,9 @@ import kotlin.properties.Delegates
 class MikanFragment :BaseFragment(), MikanView {
     private var miKanPresenter: MiKanPresenter =
         MiKanPresenter(this, this)
-    private var mCNAdapter: MikanAdapter by Delegates.notNull()
-    private var mJPAdapter: MikanAdapter by Delegates.notNull()
-    private var mFallAdapter: MiKanFallAdapter by Delegates.notNull()
+    private var mMikanAdapter: MikanAdapter by Delegates.notNull()
+    private var mMikanList = arrayListOf<MikanData>()
 
-    private var mCNVideoList = arrayListOf<MiKanRecommendData.Result.Recommend.Info>()
-    private var mJPVideoList = arrayListOf<MiKanRecommendData.Result.Recommend.Info>()
-    private var mEditList = arrayListOf<MiKanFallData.Result>()
-
-    private val mikanHeaderView by lazy {
-        View.inflate(activity,R.layout.mikan_header,null)
-    }
     override val contentLayoutId: Int
         get() = R.layout.fragment_mikan
 
@@ -51,71 +45,53 @@ class MikanFragment :BaseFragment(), MikanView {
 
     override fun initWidget(root: View) {
         super.initWidget(root)
-        var manager:LinearLayoutManager = GridLayoutManager(activity,3)
-        mCNAdapter = MikanAdapter(R.layout.item_mikan_video, mCNVideoList)
-        mJPAdapter = MikanAdapter(R.layout.item_mikan_video, mJPVideoList)
+        var manager = GridLayoutManager(activity,3)
+        manager.setSpanSizeLookup(object :GridLayoutManager.SpanSizeLookup(){
+            override fun getSpanSize(position: Int): Int {
+                var type = 0
+                if (mMikanAdapter.data.size > 0){
+                    type = mMikanAdapter.data.get(position).type
+                }
+                when(type){
+                    MikanData.TOP_BAR,MikanData.NEWS,MikanData.LOGIN_HEADER
+                    -> return 3
+                    MikanData.BANGUMI_ITEM-> return 1
+                    else-> return 3
+                }
 
-        root.recycerView.layoutManager = manager
-        root.recycerView.adapter = mJPAdapter
-        root.recycerView.isNestedScrollingEnabled = false
-
-        var manager_cn:LinearLayoutManager = GridLayoutManager(activity,3)
-        root.recycerView_cn.layoutManager = manager_cn
-        root.recycerView_cn.adapter = mCNAdapter
-        root.recycerView_cn.isNestedScrollingEnabled = false
-
-        mFallAdapter = MiKanFallAdapter(R.layout.item_mikan_fall, mEditList)
-        var manager_fall = LinearLayoutManager(activity)
-        root.recyclerview_edit.layoutManager = manager_fall
-        root.recyclerview_edit.adapter = mFallAdapter
-
-
+            }
+        })
+        mMikanAdapter = MikanAdapter(mMikanList)
+        root.recyclerview_edit.adapter = mMikanAdapter
+        root.recyclerview_edit.layoutManager = manager
         root.refresh.setOnRefreshListener({
+            mMikanList.clear()
             miKanPresenter.getBanGuMiRecommend()
         })
         root.refresh.setOnLoadMoreListener {
-            it.finishLoadMore()
-            return@setOnLoadMoreListener  //TODO: 暂时不上拉加载更多，因为NestedScrollView和RecyclerView，RecyclerView不会复用
-            var cursor:Long? = mFallAdapter.data.get(mFallAdapter.itemCount -1).cursor
+            var cursor:Long? = mMikanAdapter.data.get(mMikanAdapter.itemCount -1).mikanFall.cursor
             if (cursor != null && cursor != 0L)
-            miKanPresenter.getBanGuMiFall(cursor)
+                miKanPresenter.getBanGuMiFall(cursor)
         }
+        mMikanAdapter.setMultiItemClickListener(object :MikanAdapter.OnMultiItemClickListener{
+            override fun onRecommendClick(data: MiKanRecommendData.Result.Recommend.Info) {
+                val intent = Intent(
+                    context,
+                    BangumiDetailActivity::class.java
+                )
+                intent.putExtra("id",data.seasonId.toString())
+                intent.putExtra("type","bangumi")
+                startActivity(intent)
+            }
 
-        mJPAdapter.setOnItemClickListener { adapter, view, position ->
-            val intent = Intent(
-                context,
-                BangumiDetailActivity::class.java
-            )
-            intent.putExtra("id",mJPVideoList[position].seasonId.toString())
-            intent.putExtra("type","bangumi")
-            startActivity(intent)
-        }
-        mCNAdapter.setOnItemClickListener { adapter, view, position ->
-            val intent = Intent(
-                context,
-                BangumiDetailActivity::class.java
-            )
-            intent.putExtra("id",mCNVideoList[position].seasonId.toString())
-            intent.putExtra("type","bangumi")
-            startActivity(intent)
-        }
-        mFallAdapter.setOnItemClickListener { adapter, view, position ->
-            var intent = Intent(context, WebActivity::class.java)
-            intent.putExtra("uri",mEditList[position].link)
-            intent.putExtra("title",mEditList[position].title)
-            intent.putExtra("image",mEditList[position].cover)
-            startActivity(intent)
-        }
-        root.refresh.setEnableNestedScroll(true)
-        var emptyView = View.inflate(context,R.layout.layout_empty,null)
-        var image = emptyView.findViewById<ImageView>(R.id.image_error)
-        image.setImageDrawable(resources.getDrawable(R.drawable.img_holder_error_style3))
-        mFallAdapter.setEmptyView(emptyView)
-    }
-
-    data class MikanData(var type:Int){
-        var mikanRecommend:MiKanRecommendData.Result.Recommend.Info?= null
-        var mikanFall:MiKanFallData.Result?= null
+            override fun onFootFallClick(data: MiKanFallData.Result) {
+                var intent = Intent(context, WebActivity::class.java)
+                intent.putExtra("uri",data.link)
+                intent.putExtra("title",data.title)
+                intent.putExtra("image",data.cover)
+                startActivity(intent)
+            }
+        })
     }
 
     override fun onFirstVisiblity() {
@@ -125,38 +101,55 @@ class MikanFragment :BaseFragment(), MikanView {
 
     override fun onVisiblityChanged(visiblity: Boolean) {
         super.onVisiblityChanged(visiblity)
-        if (visiblity && mCNAdapter.itemCount - mCNAdapter.headerLayoutCount - mCNAdapter.footerLayoutCount < 1){
+        if (visiblity && mMikanAdapter.itemCount - mMikanAdapter.headerLayoutCount - mMikanAdapter.footerLayoutCount < 1){
             refresh.autoRefresh()
         }
     }
 
     override fun onGetMikanRecommend(data: MiKanRecommendData) {
-        mCNVideoList.clear()
-        mJPVideoList.clear()
+        var loginData = MikanData(MikanData.LOGIN_HEADER)
+        mMikanAdapter.addData(loginData)
+        assembleData(resources.getString(R.string.bangumi_cn),data.result.recommendCn.recommend,data.result.recommendCn.foot)
+        assembleData(resources.getString(R.string.bangumi_jp),data.result.recommendJp.recommend,data.result.recommendJp.foot)
 
-        mCNAdapter.addData(data.result.recommendCn.recommend)
-        mJPAdapter.addData(data.result.recommendJp.recommend)
-        if (data.result.recommendCn.foot.size > 0){
-            mikan_image_cn.setImageURI(Uri.parse(data.result.recommendCn.foot[0].cover))
-            title_cn.text =data.result.recommendCn.foot[0].title
-            content_cn.text = data.result.recommendCn.foot[0].desc
-        }
-
-        if (data.result.recommendJp.foot.size > 0){
-            mikan_image.setImageURI(Uri.parse(data.result.recommendJp.foot[0].cover))
-            title.text =data.result.recommendJp.foot[0].title
-            content.text = data.result.recommendJp.foot[0].desc
-        }
+        var editTopBarData = MikanData(MikanData.TOP_BAR)
+        editTopBarData.titleBar = MikanData.TitleBarData(resources.getString(R.string.bangumi_edit),false)
+        mMikanAdapter.addData(editTopBarData)
         miKanPresenter.getBanGuMiFall(0L)
     }
 
     override fun onGetMikanFall(data: MiKanFallData) {
-        //mEditList.clear()
-        mFallAdapter.addData(data.result)
+        for (item in data.result){
+            var newsData = MikanData(MikanData.NEWS)
+            newsData.mikanFall = item
+            mMikanAdapter.addData(newsData)
+        }
 
         refresh.finishRefresh()
         refresh.finishLoadMore()
+    }
 
+    fun assembleData(type:String,recommend:List<MiKanRecommendData.Result.Recommend.Info>,
+                     foots:List<MiKanRecommendData.Result.Recommend.Foot>){
+        var cnTopBarData = MikanData(MikanData.TOP_BAR)
+        cnTopBarData.titleBar = MikanData.TitleBarData(type,true)
+        mMikanAdapter.addData(cnTopBarData)
+        for (item in recommend){
+            var cnData = MikanData(MikanData.BANGUMI_ITEM)
+            cnData.mikanRecommend = item
+            mMikanAdapter.addData(cnData)
+        }
+        if (foots.size > 0){
+            var cnNewsData = MikanData(MikanData.NEWS)
+            cnNewsData.mikanFall = MiKanFallData.Result(
+                foots[0].cover,
+                0L,foots[0].desc,
+                foots[0].id,0,
+                foots[0].link,
+                foots[0].title,0,
+                foots[0].wid)
+            mMikanAdapter.addData(cnNewsData)
+        }
     }
 
     override fun showDialog() {

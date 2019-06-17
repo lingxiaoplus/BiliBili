@@ -16,7 +16,7 @@ data class MiKanFallData(
         @SerializedName("cursor")
         val cursor: Long?,
         @SerializedName("desc")
-        val desc: String,
+        val desc: String?,
         @SerializedName("id")
         val id: Int,
         @SerializedName("is_new")

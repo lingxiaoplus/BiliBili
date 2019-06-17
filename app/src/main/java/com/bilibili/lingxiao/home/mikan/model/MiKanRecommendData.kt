@@ -32,7 +32,7 @@ data class MiKanRecommendData(
                 @SerializedName("cover")
                 val cover: String,
                 @SerializedName("desc")
-                val desc: String,
+                val desc: String?,
                 @SerializedName("id")
                 val id: Int,
                 @SerializedName("is_auto")

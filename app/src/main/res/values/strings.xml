@@ -49,6 +49,9 @@
 
     <string name="pop_watch_later">添加至稍后再看</string>
 
+    <string name="bangumi_cn">国漫推荐</string>
+    <string name="bangumi_jp">番剧推荐</string>
+    <string name="bangumi_edit">编辑推荐</string>
     <!--bangumi detail-->
     <string name="share_text">分享</string>
     <string name="bangumi_chasing_text">追番</string>
