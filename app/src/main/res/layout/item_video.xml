@@ -7,6 +7,7 @@
         android:layout_height="wrap_content"
         style="@style/cardStyle"
         app:cardCornerRadius="3dp"
+        android:id="@+id/item_video"
 >
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

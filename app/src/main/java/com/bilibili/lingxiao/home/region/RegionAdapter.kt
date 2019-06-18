@@ -23,7 +23,7 @@ import com.facebook.drawee.view.SimpleDraweeView
 import java.util.*
 import kotlin.properties.Delegates
 
-class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewHolde> {
+class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
     var recycledViewPool: RecyclerView.RecycledViewPool by Delegates.notNull()
 
     constructor(data:MutableList<MultiRegionData>, recycledViewPool:RecyclerView.RecycledViewPool) :super(data){
@@ -36,10 +36,12 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
         }
         multiTypeDelegate
             .registerItemType(MultiRegionData.REGION_ITEM,R.layout.item_live_category)
-            .registerItemType(MultiRegionData.REGION_RECOMMEND,R.layout.item_region)
+            .registerItemType(MultiRegionData.REGION_RECOMMEND,R.layout.item_video)
+            .registerItemType(MultiRegionData.REGION_TOP_BAR,R.layout.item_region_top_bar)
+            .registerItemType(MultiRegionData.REGION_BOTTOM_BAR,R.layout.item_region_bottom_bar)
     }
 
-    override fun convert(helper: RegionAdapter.RegionViewHolde, item: MultiRegionData) {
+    override fun convert(helper: BaseViewHolder, item: MultiRegionData) {
         when(helper.itemViewType){
             MultiRegionData.REGION_ITEM ->{
                 helper.setText(R.id.item_live_title,item.regionData?.name)
@@ -50,56 +52,39 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
                     listener?.onGridClick(item.regionData,position)
                 }
             }
-            MultiRegionData.REGION_RECOMMEND ->{
+            MultiRegionData.REGION_TOP_BAR ->{
                 helper.setText(R.id.region_name,item.recommendData?.title)
-                helper.setText(R.id.text_new_number,"${Random().nextInt(2000)}条新动态，点击刷新！")
-                var button_more:Button = helper.getView(R.id.button_more)
-                button_more.setText("更多${item.recommendData?.title}")
-
                 var image_region:ImageView = helper.getView(R.id.image_logo)
                 var logo = UIUtil.getMipMapId(mContext,"ic_category_t${item.recommendData?.param}")
                 if (logo > 0){
                     image_region.setImageResource(logo)
                 }
-
-                if (helper.recommendAdapter == null){
-                    var recycler:RecyclerView = helper.getView(R.id.recyclerview)
-                    recycler.isNestedScrollingEnabled = false
-                    recycler.setRecycledViewPool(recycledViewPool)
-                    recycler.setHasFixedSize(true) //避免每次绘制Item时重新计算Item高度
-                    var manager = GridLayoutManager(mContext, 2)
-                    recycler.layoutManager = manager
-                    var recommendAdapter = RegionRecommendAdapter(R.layout.item_video,helper.recommendList)
-                    recycler.adapter = recommendAdapter
-                    helper.recommendAdapter = recommendAdapter
-                    item.recommendData?.let {
-                        helper.recommendAdapter!!.addData(it.body)
-                    }
-                    helper.addOnClickListener(R.id.button_goto)
-                    helper.addOnClickListener(R.id.button_more)
-                    //helper.addOnClickListener(R.id.ll_refresh)
-                    helper.getView<View>(R.id.ll_refresh).setOnClickListener {
-                        listener?.onRefreshClick(helper,item.recommendData,helper.position)
-                    }
-                    recommendAdapter.setOnItemClickListener { adapter, view, position ->
-                        item.recommendData?.let {
-                            listener?.onVideoClick(it.body[position],position,it.type)
-                        }
-                    }
+                helper.addOnClickListener(R.id.button_goto)
+            }
+            MultiRegionData.REGION_RECOMMEND ->{
+                var image :SimpleDraweeView = helper.getView(R.id.play_image)
+                image.setImageURI(Uri.parse(item.bangumiItemData.cover + GlobalProperties.IMAGE_RULE_240_150))
+                helper.setText(R.id.play_title,item.bangumiItemData.title)
+                helper.setText(R.id.play_number,StringUtil.getBigDecimalNumber(item.bangumiItemData.play))
+                helper.setText(R.id.comment_number,StringUtil.getBigDecimalNumber(item.bangumiItemData.danmaku))
+                helper.getView<ConstraintLayout>(R.id.cons_category).visibility = View.GONE
+                helper.getView<LinearLayout>(R.id.ll_info).visibility = View.GONE
+                helper.getView<View>(R.id.item_video).setOnClickListener {
+                    listener?.onVideoClick(item.bangumiItemData,"bangumi")
+                }
+            }
+            MultiRegionData.REGION_BOTTOM_BAR ->{
+                helper.setText(R.id.text_new_number,"${Random().nextInt(2000)}条新动态，点击刷新！")
+                var button_more:Button = helper.getView(R.id.button_more)
+                button_more.setText("更多${item.recommendData?.title}")
+                helper.addOnClickListener(R.id.button_more)
+                helper.getView<View>(R.id.ll_refresh).setOnClickListener {
+                    listener?.onRefreshClick(helper,item.recommendData,helper.position)
                 }
             }
         }
     }
 
-
-    inner class RegionViewHolde :BaseViewHolder {
-        //adapter复用
-        var recommendAdapter:RegionRecommendAdapter? = null
-        var recommendList:List<RegionRecommendData.Data.Body>
-        constructor(view: View?):super(view){
-            recommendList = arrayListOf()
-        }
-    }
 
 
     inner class RegionRecommendAdapter(layout:Int,data: List<RegionRecommendData.Data.Body>?) :
@@ -121,7 +106,7 @@ class RegionAdapter :BaseQuickAdapter<MultiRegionData, RegionAdapter.RegionViewH
     }
     interface OnMultiItemClickListener{
         fun onGridClick(data: RegionData.Data?, position:Int)
-        fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int,type:String)
-        fun onRefreshClick(data: RegionViewHolde, recommendData: RegionRecommendData.Data?,position:Int)
+        fun onVideoClick(data: RegionRecommendData.Data.Body?,type:String)
+        fun onRefreshClick(data: BaseViewHolder, recommendData: RegionRecommendData.Data?,position:Int)
     }
 }

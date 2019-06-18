@@ -1,6 +1,7 @@
 package com.bilibili.lingxiao.home.region.ui
 
 import android.content.Intent
+import android.hardware.usb.UsbManager
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -15,6 +16,7 @@ import com.bilibili.lingxiao.home.region.model.RegionRecommendData
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseFragment
+import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.fragment_region.*
 import kotlinx.android.synthetic.main.fragment_region.view.*
 import org.greenrobot.eventbus.EventBus
@@ -45,7 +47,8 @@ class RegionFragment :BaseFragment() , RegionView {
                 }
                 when(type){
                     MultiRegionData.REGION_ITEM-> return 1
-                    MultiRegionData.REGION_RECOMMEND-> return 4
+                    MultiRegionData.REGION_TOP_BAR,MultiRegionData.REGION_BOTTOM_BAR-> return 4
+                    MultiRegionData.REGION_RECOMMEND-> return 2
                     else-> return 4
                 }
             }
@@ -65,7 +68,7 @@ class RegionFragment :BaseFragment() , RegionView {
         regionAdapter.setEmptyView(emptyView)
         regionAdapter.setMultiItemClickListener(object :RegionAdapter.OnMultiItemClickListener{
             override fun onRefreshClick(
-                holde: RegionAdapter.RegionViewHolde,
+                holde: BaseViewHolder,
                 data: RegionRecommendData.Data?,
                 position:Int
             ) {
@@ -75,7 +78,7 @@ class RegionFragment :BaseFragment() , RegionView {
                 }
             }
 
-            override fun onVideoClick(data: RegionRecommendData.Data.Body?, position: Int, type:String) {
+            override fun onVideoClick(data: RegionRecommendData.Data.Body?, type:String) {
                 if ("bangumi".equals(type)){
                     //分区是番剧
                     val intent = Intent(
@@ -159,10 +162,19 @@ class RegionFragment :BaseFragment() , RegionView {
 
     override fun onGetRegionRecommend(recommendList: List<RegionRecommendData.Data>) {
         for (recommend in recommendList){
-            var data =
-                MultiRegionData(MultiRegionData.REGION_RECOMMEND)
-            data.recommendData = recommend
-            regionAdapter.addData(data)
+            var topData =
+                MultiRegionData(MultiRegionData.REGION_TOP_BAR)
+            topData.recommendData = recommend
+            regionAdapter.addData(topData)
+            for (bangumi in recommend.body){
+                var data =
+                    MultiRegionData(MultiRegionData.REGION_RECOMMEND)
+                data.bangumiItemData = bangumi
+                regionAdapter.addData(data)
+            }
+            var bottomData = topData.copy(MultiRegionData.REGION_BOTTOM_BAR)
+            bottomData.recommendData = recommend
+            regionAdapter.addData(bottomData)
         }
         refresh.finishRefresh()
         refresh.finishLoadMore()
@@ -170,12 +182,19 @@ class RegionFragment :BaseFragment() , RegionView {
         category_recyclerview.smoothScrollToPosition(0)
     }
 
-    var regionViewHolde: RegionAdapter.RegionViewHolde? = null
-    var regionPosition = 0
+    private var regionPosition = 0
     override fun onRefreshRegion(list: List<RegionRecommendData.Data.Body>) {
-        regionViewHolde?.recommendAdapter?.setNewData(list)
-        //regionAdapter.notifyRecommendDataChanged(list)
-        regionAdapter.notifyItemChanged(regionPosition)
+        //这里获取到的list为4条 regionPosition是bottombar的position，需要更新的是bottombar的上面的四宫格
+        regionPosition = regionPosition - list.size
+        if (regionPosition < 0) return
+        for (item in list){
+            var recommendData =
+                MultiRegionData(MultiRegionData.REGION_RECOMMEND)
+            recommendData.bangumiItemData = item
+            //regionAdapter.setData(regionPosition++,recommendData)
+            regionAdapter.data.set(regionPosition,recommendData)
+            regionAdapter.notifyItemChanged(regionPosition++)
+        }
     }
 
     override fun showDialog() {
