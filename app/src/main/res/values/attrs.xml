@@ -32,4 +32,7 @@
         <attr name="right_text" format="string"/>
         <attr name="show_right_text" format="boolean"/>
     </declare-styleable>
+    <declare-styleable name="LaybelLayout">
+
+    </declare-styleable>
 </resources>

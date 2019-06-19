@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.bilibili.lingxiao.home.dynamic.DynamicFragment
+import com.bilibili.lingxiao.home.find.FindFragment
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
 import com.bilibili.lingxiao.home.region.ui.RegionFragment
 import com.bilibili.lingxiao.home.live.ui.LiveFragment
@@ -51,6 +53,10 @@ class MainActivity : BaseActivity() {
     lateinit var categoryFragment: RegionFragment
     @Inject
     lateinit var mikanFragment: MikanFragment
+    @Inject
+    lateinit var dynamicFragment: DynamicFragment
+    @Inject
+    lateinit var findFragment: FindFragment
 
     var fragmentList:ArrayList<BaseFragment> = arrayListOf()
 
@@ -159,6 +165,8 @@ class MainActivity : BaseActivity() {
         fragmentList.add(recommendFragment)
         fragmentList.add(categoryFragment)
         fragmentList.add(mikanFragment)
+        fragmentList.add(dynamicFragment)
+        fragmentList.add(findFragment)
         main_viewPager.adapter =
             PlayPagerAdapter(supportFragmentManager, tabArray, fragmentList)
         main_tabLayout.setupWithViewPager(main_viewPager)

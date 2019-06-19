@@ -10,12 +10,18 @@
     <string name="input_username">请输入用户名</string>
     <string name="input_password">请输入密码</string>
     <string name="un_login">未登陆</string>
+    <string name="dynamic_login">想看最新的UP主动态？快来登录吧！</string>
+
+    <string name="search_bar_hint">搜索视频、番剧、UP主或av号</string>
+    <string name="search_everyone">大家都在搜</string>
 
     <string-array name="main_tab">
         <item>直播</item>
         <item>推荐</item>
         <item>分区</item>
         <item>追番</item>
+        <item>动态</item>
+        <item>发现</item>
     </string-array>
 
     <!--live-->
@@ -90,12 +96,6 @@
     <string name="my_service">我的客服</string>
     <string name="help">帮助</string>
     <string name="exit_account">退出登录</string>
-
-
-
-
-
-
 
 
 

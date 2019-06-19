@@ -6,6 +6,8 @@ import com.bilibili.lingxiao.home.live.ui.LiveFragment
 import com.bilibili.lingxiao.home.mikan.ui.MikanFragment
 import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.dagger.scope.PerUi
+import com.bilibili.lingxiao.home.dynamic.DynamicFragment
+import com.bilibili.lingxiao.home.find.FindFragment
 import com.bilibili.lingxiao.home.live.ui.play.FansFragment
 import com.bilibili.lingxiao.home.live.ui.play.FleetListFragment
 import com.bilibili.lingxiao.home.live.ui.play.InteractFragment
@@ -39,6 +41,18 @@ class UiModule {
     @PerUi
     fun provideMikanFragment() : MikanFragment {
         return MikanFragment()
+    }
+
+    @Provides
+    @PerUi
+    fun provideDynamicFragment() : DynamicFragment {
+        return DynamicFragment()
+    }
+
+    @Provides
+    @PerUi
+    fun provideFindFragment() : FindFragment {
+        return FindFragment()
     }
 
     @Provides
