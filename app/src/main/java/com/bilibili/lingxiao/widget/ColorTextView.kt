@@ -71,6 +71,7 @@ class ColorTextView @JvmOverloads constructor(context: Context, attrs: Attribute
         for (i in 0 until n) {
             val attr = a.getIndex(i)
             when (attr) {
+
                 R.styleable.ColorTextView_ctvText -> mTitleText = a.getString(attr)
                 R.styleable.ColorTextView_ctvTextColor ->
                     // 默认颜色设置为黑色
@@ -86,8 +87,6 @@ class ColorTextView @JvmOverloads constructor(context: Context, attrs: Attribute
                     mCornerSize = a.getInteger(attr, 0).toFloat()
 
             }
-
-
         }
         a.recycle()
 
@@ -108,9 +107,14 @@ class ColorTextView @JvmOverloads constructor(context: Context, attrs: Attribute
         this.ctvBackgroundColor = ctvBackgroundColor
     }
 
-    fun setTitleText(text: String) {
-        this.mTitleText = text
+    override fun setText(text: CharSequence?, type: BufferType?) {
+        super.setText(text, type)
+        this.mTitleText = text.toString()
     }
+
+    /*fun setTitleText(text: String) {
+        this.mTitleText = text
+    }*/
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -118,8 +122,8 @@ class ColorTextView @JvmOverloads constructor(context: Context, attrs: Attribute
         val widthSize = View.MeasureSpec.getSize(widthMeasureSpec)
         val heightMode = View.MeasureSpec.getMode(heightMeasureSpec)
         val heightSize = View.MeasureSpec.getSize(heightMeasureSpec)
-        val width: Int
-        val height: Int
+        var width: Int
+        var height: Int
         if (widthMode == View.MeasureSpec.EXACTLY) {
             width = widthSize + textWidthMargin * 2
         } else {

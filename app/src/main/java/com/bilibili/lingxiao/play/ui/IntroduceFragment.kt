@@ -145,7 +145,8 @@ class IntroduceFragment :BaseFragment(), RecommendView {
         username.setText(data.name)
         //var tNames  = data.tname.split("·")
         data.tname?.let {
-            type_name.setTitleText(it)
+            //type_name.setTitleText(it)
+            type_name.setText(it)
         }
         fensi.text = "${StringUtil.getBigDecimalNumber(data.reply)}个粉丝"
         data.title?.let {

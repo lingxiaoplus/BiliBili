@@ -33,6 +33,8 @@
         <attr name="show_right_text" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="LaybelLayout">
-
+        <attr name="line_padding" format="float"/>
+        <attr name="text_background" format="reference"/><!-- TextView的背景 -->
+        <attr name="child_margin" format="integer"/><!-- 子View的外边距 -->
     </declare-styleable>
 </resources>
