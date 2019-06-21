@@ -1,6 +1,7 @@
 package com.bilibili.lingxiao.widget
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -17,22 +18,19 @@ import android.widget.TextView
 
 class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     :ViewGroup(context,attrs,defStyleAttr) ,View.OnClickListener{
-    private var mChildView = arrayListOf<View>()
+    private val mChildView :MutableList<View> = ArrayList()
     private val mChildrenMap = HashMap<View, ChildLayoutParams>()
+    private var mLinePadding: Int = 0 //行内上下边距
+    private var textBackground: Int = 0
+
     private val TAG = LaybelLayout::class.java.simpleName
     init {
-        initAttr(attrs)
-        Log.d(TAG,"initAttr>>>>>>>")
-    }
-
-    private fun initAttr(attrs: AttributeSet?) {
         val t = context.obtainStyledAttributes(attrs, R.styleable.LaybelLayout)
         mLinePadding = UIUtil.dip2px(t.getFloat(R.styleable.LaybelLayout_line_padding, 0f)).toInt()
         //childMargin = UIUtil.dip2px(t.getInt(R.styleable.LaybelLayout_child_margin, 0))
         textBackground = t.getResourceId(R.styleable.LaybelLayout_text_background, R.drawable.radius_text_background)
         t.recycle()
     }
-
 
     private var minWidth = 0
     private var minHeight = 0//本控件的最小宽高
@@ -52,10 +50,10 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
                 - paddingLeft - paddingRight
                 //childLayoutParams.width = defSize
                 //measureChild(child,widthMeasureSpec,heightMeasureSpec)
-                val widthSpec = View.MeasureSpec.makeMeasureSpec(defSize, View.MeasureSpec.AT_MOST)
+                val widthSpec = MeasureSpec.makeMeasureSpec(defSize, MeasureSpec.AT_MOST)
 
                 //根据measureChildWithMargins里面获取高度 Spec 的方式，重新获取到高度的Spec
-                val heightSpec = ViewGroup.getChildMeasureSpec(heightMeasureSpec,
+                val heightSpec = getChildMeasureSpec(heightMeasureSpec,
                     paddingTop + paddingBottom + childLayoutParams.topMargin
                     + childLayoutParams.bottomMargin, childLayoutParams.height)
                 child.measure(widthSpec, heightSpec)
@@ -68,16 +66,16 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
         var widthMode = MeasureSpec.getMode(widthMeasureSpec)
         var heightMode = MeasureSpec.getMode(heightMeasureSpec)
         if (widthMode != MeasureSpec.EXACTLY && heightMode != MeasureSpec.EXACTLY){
+            //setMeasuredDimension(minWidth, minHeight)
             super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         }else if (widthMode != MeasureSpec.EXACTLY){
             setMeasuredDimension(minWidth, View.getDefaultSize(suggestedMinimumHeight,heightMeasureSpec))
         }else if (heightMode != MeasureSpec.EXACTLY){
             setMeasuredDimension(View.getDefaultSize(suggestedMinimumWidth,widthMeasureSpec), minHeight)
         }
-        Log.d(TAG,"onMeasure>>>>>>>")
     }
 
-    private var mLinePadding: Int = 0 //行内上下边距
+
     private fun saveChildWidthAndHeight() {
         var lineHeight = 0//单行高度
         var lineHeightSum = 0//前面总高度
@@ -85,8 +83,8 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
         var top = 0
         var right = 0
         var bottom = 0
-        var freeWidth = measuredWidth - paddingLeft - paddingRight//横向剩余空间
-        var isFirst = true//是否是某一行的第一个
+        var freeWidth = measuredWidth - paddingLeft - paddingRight //横向剩余空间
+        var isFirst = true //是否是某一行的第一个
         var tmpWidth = 0
         for ((i,child) in mChildView.withIndex()){
             var layoutParams  = child.layoutParams as MarginLayoutParams
@@ -96,7 +94,7 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
                 isFirst = true
                 lineHeightSum += lineHeight
                 lineHeight = 0
-                freeWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();//设为初始剩余
+                freeWidth = measuredWidth - paddingLeft - paddingRight //设为初始剩余
             }
             if (isFirst) {
                 left = paddingLeft + layoutParams.leftMargin
@@ -132,6 +130,7 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         for ((child,param) in mChildrenMap) {
+            Log.d(TAG,"onLayout>>>>>>>  $param")
             child.layout(param.left, param.top, param.right, param.bottom)
         }
     }
@@ -143,25 +142,21 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     private var mAdapter: Adapter? = null
-    private var textBackground: Int = 0
     private fun addChildView() {
-        Log.d(TAG,"addChildView>>>>>>> $mAdapter")
         mAdapter?.let {
             for (i in 0 until it.count) {
                 val child = TextView(context)
-                val params = generateDefaultLayoutParams() as ViewGroup.MarginLayoutParams
+                val params = generateDefaultLayoutParams() as MarginLayoutParams
                 params.leftMargin = UIUtil.dip2px(5f).toInt()
                 params.rightMargin = UIUtil.dip2px(5f).toInt()
                 child.setBackgroundDrawable(context.resources.getDrawable(textBackground))
                 child.setText(it.getItem(i))
                 it.onDataSet(child, it.getItem(i))
                 addView(child, params)
-                Log.d(TAG,"addView>>>>>>> ${it.getItem(i)}")
             }
         }
 
     }
-
 
     override fun generateDefaultLayoutParams(): LayoutParams {
         return MarginLayoutParams(super.generateDefaultLayoutParams())
@@ -182,7 +177,8 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
     fun setAdapter(adapter:Adapter){
         this.mAdapter = adapter
     }
-    data class ChildLayoutParams(var left:Int,var right:Int,var top:Int,var bottom:Int)
+
+    data class ChildLayoutParams(var left:Int,var top:Int,var right:Int,var bottom:Int)
 
     class Adapter {
         lateinit var datas: ArrayList<String>

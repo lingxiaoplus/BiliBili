@@ -90,7 +90,7 @@ class ColorTextView @JvmOverloads constructor(context: Context, attrs: Attribute
         }
         a.recycle()
 
-        val random = Random()
+        //val random = Random()
         //val ret = random.nextInt(colors.size - 1)
         //ctvBackgroundColor = Color.parseColor(colors[ret])
         mtitlePaint = Paint()

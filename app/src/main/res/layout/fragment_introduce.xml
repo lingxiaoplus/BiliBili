@@ -214,7 +214,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                app:ctvBackground="@color/black_alpha_32"
+                app:ctvBackground="@color/grey_300"
                 app:ctvCornerSize="40"
                 app:ctvMargin="3dp"
                 app:ctvTextColor="@color/black_alpha_144"
