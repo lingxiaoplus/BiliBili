@@ -78,6 +78,20 @@
     </string-array>
 
 
+
+    <!--find-->
+    <string name="find_line_interest">兴趣圈</string>
+    <string name="find_line_topic">话题中心</string>
+    <string name="find_line_activity">活动中心</string>
+    <string name="find_line_blackdoor">小黑屋</string>
+
+    <string name="find_line_top_original">原创排行榜</string>
+    <string name="find_line_top_all">全区排行榜</string>
+
+    <string name="find_line_game_center">游戏中心</string>
+    <string name="find_line_shop">周边商城</string>
+
+
     <!--setting-->
     <string name="account_info">账号资料</string>
     <string name="security_private">安全隐私</string>
@@ -96,8 +110,6 @@
     <string name="my_service">我的客服</string>
     <string name="help">帮助</string>
     <string name="exit_account">退出登录</string>
-
-
 
 
 

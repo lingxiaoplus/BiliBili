@@ -32,6 +32,12 @@
         <attr name="right_text" format="string"/>
         <attr name="show_right_text" format="boolean"/>
     </declare-styleable>
+    <declare-styleable name="FindLineView">
+        <attr name="src" format="reference"/>
+        <attr name="text" format="string" />
+        <attr name="showRightIcon" format="boolean"/>
+    </declare-styleable>
+
     <declare-styleable name="LaybelLayout">
         <attr name="line_padding" format="float"/>
         <attr name="text_background" format="reference"/><!-- TextView的背景 -->

@@ -22,8 +22,11 @@ class FindFragment :BaseFragment(){
 
     override fun initWidget(root: View) {
         super.initWidget(root)
-        root.laybel.setAdapter(LaybelLayout.Adapter("hello","老番茄","大哥","fbvcbc","adda","fdgfdg","adsad"))
-
+        root.laybel.setAdapter(LaybelLayout.Adapter("hello","老番茄","大哥","fbvcbc","adda","fdgfdg","adsad",
+            "hello","老番茄","大哥","fbvcbc","adda","fdgfdg","adsad"))
+        root.show_more.setOnClickListener {
+            root.laybel.startAnimation()
+        }
     }
     override fun onFirstVisiblity() {
         super.onFirstVisiblity()

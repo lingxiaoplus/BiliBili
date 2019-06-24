@@ -1,7 +1,11 @@
 package com.bilibili.lingxiao.widget
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
+import android.nfc.Tag
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -12,8 +16,7 @@ import java.util.*
 import java.util.Arrays.asList
 import kotlin.collections.HashMap
 import android.widget.TextView
-
-
+import com.camera.lingxiao.common.utills.LogUtils
 
 
 class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
@@ -22,6 +25,11 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
     private val mChildrenMap = HashMap<View, ChildLayoutParams>()
     private var mLinePadding: Int = 0 //行内上下边距
     private var textBackground: Int = 0
+    private var showLines = 2 //折叠的时候显示行数
+
+    private var mUpdateListener: ValueAnimator.AnimatorUpdateListener? = null
+    private var mAnimatorListener: AnimatorListenerAdapter? = null
+    private var mCollapsed = true // 默认是被折叠了的
 
     private val TAG = LaybelLayout::class.java.simpleName
     init {
@@ -30,6 +38,7 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
         //childMargin = UIUtil.dip2px(t.getInt(R.styleable.LaybelLayout_child_margin, 0))
         textBackground = t.getResourceId(R.styleable.LaybelLayout_text_background, R.drawable.radius_text_background)
         t.recycle()
+        initListener()
     }
 
     private var minWidth = 0
@@ -126,6 +135,8 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
         }
         lineHeightSum += lineHeight;//加上最后一行的高度
         minHeight += lineHeightSum;
+        startHeight = lineHeight * showLines
+        Log.d(TAG,"测量的的高度 $startHeight,  最大高度 $minHeight")
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
@@ -139,6 +150,51 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         addChildView()
+        this.post {
+            this@LaybelLayout.getLayoutParams().height = startHeight
+            this@LaybelLayout.requestLayout()
+            Log.d(TAG,"开始的高度 $startHeight")
+        }
+    }
+
+
+    fun startAnimation(){
+        var animator:ValueAnimator
+        if (mCollapsed){
+            animator = ValueAnimator
+                .ofFloat(0f, 1f)
+                .setDuration(500L)
+        }else{
+            animator = ValueAnimator
+                .ofFloat(1f, 0f)
+                .setDuration(500L)
+        }
+        animator.addUpdateListener(mUpdateListener)
+        animator.addListener(mAnimatorListener)
+        animator.start()
+    }
+
+    private var startHeight = 0
+    private fun initListener(){
+        mUpdateListener = ValueAnimator.AnimatorUpdateListener { animation ->
+            var interpolatedTime = animation.animatedValue as Float
+            val newHeight = (minHeight - startHeight) * interpolatedTime + startHeight
+            this@LaybelLayout.getLayoutParams().height = newHeight.toInt()
+            this@LaybelLayout.requestLayout()
+        }
+
+        mAnimatorListener = object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+                //动画播放完毕
+                mCollapsed = !mCollapsed
+                /*var tempHeight = minHeight
+                minHeight = startHeight
+                startHeight = tempHeight
+                Log.d(TAG,"结束后的高度startHeight： $startHeight, minHeight: $minHeight")*/
+            }
+
+        }
     }
 
     private var mAdapter: Adapter? = null
