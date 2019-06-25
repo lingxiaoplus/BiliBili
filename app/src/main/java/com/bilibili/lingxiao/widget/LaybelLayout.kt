@@ -16,7 +16,7 @@ import java.util.*
 import java.util.Arrays.asList
 import kotlin.collections.HashMap
 import android.widget.TextView
-import com.camera.lingxiao.common.utills.LogUtils
+import kotlinx.android.synthetic.main.item_comment.view.*
 
 
 class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
@@ -71,6 +71,7 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
                 mChildView.add(child)
         }
         saveChildWidthAndHeight()
+
 
         var widthMode = MeasureSpec.getMode(widthMeasureSpec)
         var heightMode = MeasureSpec.getMode(heightMeasureSpec)
@@ -136,7 +137,6 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
         lineHeightSum += lineHeight;//加上最后一行的高度
         minHeight += lineHeightSum;
         startHeight = lineHeight * showLines
-        Log.d(TAG,"测量的的高度 $startHeight,  最大高度 $minHeight")
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
@@ -147,14 +147,10 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
 
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        addChildView()
-        this.post {
-            this@LaybelLayout.getLayoutParams().height = startHeight
-            this@LaybelLayout.requestLayout()
-            Log.d(TAG,"开始的高度 $startHeight")
-        }
+
     }
 
 
@@ -197,6 +193,11 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
         }
     }
 
+
+    fun isCollapsed() :Boolean{
+        return mCollapsed
+    }
+
     private var mAdapter: Adapter? = null
     private fun addChildView() {
         mAdapter?.let {
@@ -232,8 +233,12 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     fun setAdapter(adapter:Adapter){
         this.mAdapter = adapter
+        addChildView()
+        this.post {
+            this@LaybelLayout.getLayoutParams().height = startHeight
+            this@LaybelLayout.requestLayout()
+        }
     }
-
     data class ChildLayoutParams(var left:Int,var top:Int,var right:Int,var bottom:Int)
 
     class Adapter {

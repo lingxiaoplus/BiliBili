@@ -665,4 +665,24 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         }
         getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET, url, request,mLifecycle, callback)
     }
+
+    fun getHotSearchWords(limit :Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("build",GlobalProperties.BUILD)
+        request.put("limit",limit)
+        request.put("platform",GlobalProperties.PLATFORM)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, BangumiDetailData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.SEARCH_HOT + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取大家都在搜的url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.SEARCH_HOT, request,mLifecycle, callback)
+    }
 }

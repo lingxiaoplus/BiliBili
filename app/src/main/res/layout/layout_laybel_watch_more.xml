@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/show_more"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_4"
+        android:background="@color/black_alpha_16"
+>
+        <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                style="@style/between_line"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+        />
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+        >
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down_gray_round"
+                    android:layout_marginRight="@dimen/dp_4"
+            />
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查看更多"
+            />
+        </LinearLayout>
+
+        <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                style="@style/between_line"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+        />
+</LinearLayout>

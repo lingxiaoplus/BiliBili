@@ -60,9 +60,9 @@
 
     </com.bilibili.lingxiao.widget.LaybelLayout>
     <LinearLayout
-            android:id="@+id/show_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/show_more"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="@dimen/dp_4"
@@ -81,13 +81,15 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
         >
-            <ImageView 
+            <ImageView
+                    android:id="@+id/image_show_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_arrow_down_gray_round"
                     android:layout_marginRight="@dimen/dp_4"
             />
             <TextView
+                    android:id="@+id/text_show_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="查看更多"
