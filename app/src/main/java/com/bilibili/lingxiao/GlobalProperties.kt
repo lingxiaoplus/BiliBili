@@ -43,6 +43,7 @@ object GlobalProperties {
     var LIVE_TAB_LIST_URL = "http://api.live.bilibili.com/room/v1/Area/getList"  //直播分类所有tab
 
     var SEARCH_HOT = "http://app.bilibili.com/x/v2/search/hot?" //大家都在搜
+    var SEARCH_KEYWORD = "http://app.bilibili.com/x/v2/search?"
 
     var MY_SERVICE_HELP = "https://www.bilibili.com/h5/faq"
 

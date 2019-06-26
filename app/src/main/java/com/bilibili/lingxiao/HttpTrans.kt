@@ -1,6 +1,8 @@
 package com.bilibili.lingxiao
 
 import android.util.Log
+import com.bilibili.lingxiao.home.find.model.HotWordsData
+import com.bilibili.lingxiao.home.find.model.SearchResultData
 import com.bilibili.lingxiao.home.live.model.*
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
@@ -673,7 +675,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         request.put("platform",GlobalProperties.PLATFORM)
         callback.setParseHelper(object : ParseHelper {
             override fun parse(element: JsonElement): Any? {
-                var modle = Gson().fromJson(element, BangumiDetailData::class.java)
+                var modle = Gson().fromJson(element, HotWordsData::class.java)
                 val obj = arrayOfNulls<Any>(1)
                 obj[0] = modle
                 return obj
@@ -684,5 +686,34 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             Log.d(TAG,"获取大家都在搜的url---->$url")
         }
         getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.SEARCH_HOT, request,mLifecycle, callback)
+    }
+
+    /**
+     * 根据关键字获取搜索结果
+     * @param word 关键字
+     * @param page 从1开始
+     * @param pageSize 20
+     */
+    fun getSearchResult(word :String, page:Int,pageSize:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("build",GlobalProperties.BUILD)
+        request.put("duration",0)
+        request.put("keyword",word)
+        request.put("platform",GlobalProperties.PLATFORM)
+        request.put("pn",page)
+        request.put("ps",pageSize)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, SearchResultData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.SEARCH_KEYWORD + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取搜索结果url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.SEARCH_KEYWORD, request,mLifecycle, callback)
     }
 }

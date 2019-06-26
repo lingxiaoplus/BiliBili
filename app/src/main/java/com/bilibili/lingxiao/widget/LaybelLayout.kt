@@ -208,6 +208,9 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
                 params.rightMargin = UIUtil.dip2px(5f).toInt()
                 child.setBackgroundDrawable(context.resources.getDrawable(textBackground))
                 child.setText(it.getItem(i))
+                child.setOnClickListener{
+                    laybelClickListener?.onLaybelItemClick(child.text.toString())
+                }
                 it.onDataSet(child, it.getItem(i))
                 addView(child, params)
             }
@@ -229,6 +232,14 @@ class LaybelLayout @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     override fun onClick(v: View?) {
 
+    }
+
+    private var laybelClickListener :LaybelItemClickListener? = null
+    fun setOnLaybelClickListener(listener :LaybelItemClickListener){
+        this.laybelClickListener = listener
+    }
+    interface LaybelItemClickListener{
+        fun onLaybelItemClick(keyWord :String)
     }
 
     fun setAdapter(adapter:Adapter){

@@ -1,4 +1,4 @@
-package com.bilibili.lingxiao.home.find
+package com.bilibili.lingxiao.home.find.model
 
 
 import com.google.gson.annotations.SerializedName

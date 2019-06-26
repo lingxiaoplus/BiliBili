@@ -14,6 +14,7 @@
 
     <string name="search_bar_hint">搜索视频、番剧、UP主或av号</string>
     <string name="search_everyone">大家都在搜</string>
+    <string name="cancel">取消</string>
 
     <string-array name="main_tab">
         <item>直播</item>
@@ -78,7 +79,6 @@
     </string-array>
 
 
-
     <!--find-->
     <string name="find_line_interest">兴趣圈</string>
     <string name="find_line_topic">话题中心</string>
@@ -91,6 +91,10 @@
     <string name="find_line_game_center">游戏中心</string>
     <string name="find_line_shop">周边商城</string>
 
+    <!--search detail-->
+    <string name="search_sort_type">默认排序</string>
+    <string name="search_all_time">全部时长</string>
+    <string name="search_all_region">全部分区</string>
 
     <!--setting-->
     <string name="account_info">账号资料</string>
@@ -110,7 +114,6 @@
     <string name="my_service">我的客服</string>
     <string name="help">帮助</string>
     <string name="exit_account">退出登录</string>
-
 
 
 

@@ -1,20 +1,21 @@
 package com.bilibili.lingxiao.home.find
 
 import com.bilibili.lingxiao.HttpTrans
-import com.bilibili.lingxiao.home.find.model.HotWordsData
+import com.bilibili.lingxiao.home.find.model.SearchResultData
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.observer.HttpRxCallback
 
-class FindPresenter(view: FindView, fragment: FindFragment)
-    :BasePresenter<FindView, FindFragment>(view, fragment) {
+class SearchDetailPresenter(view: FindView, activity: SearchDetailActivity)
+    : BasePresenter<FindView, SearchDetailActivity>(view, activity) {
     private val httpTrans: HttpTrans by lazy {
-        HttpTrans(fragment)
+        HttpTrans(activity)
     }
-    fun getHotWords(limit :Int){
-        httpTrans.getHotSearchWords(limit,object : HttpRxCallback<Any>(){
+
+    fun getSearchResult(word:String,page:Int,pageSize:Int){
+        httpTrans.getSearchResult(word,page,pageSize,object : HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {
                 var lists = res as Array<*>
-                mView?.onGetHotWords(lists[0] as HotWordsData)
+                mView?.onGetSearchResult(lists[0] as SearchResultData)
             }
 
             override fun onError(code: Int, desc: String?) {
