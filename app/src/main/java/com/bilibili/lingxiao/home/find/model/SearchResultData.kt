@@ -41,15 +41,15 @@ data class SearchResultData(
         @SerializedName("attentions")
         val attentions: Int,
         @SerializedName("author")
-        val author: String,
+        val author: String?,
         @SerializedName("av_items")
         val avItems: List<AvItem>,
         @SerializedName("badge")
         val badge: String,
         @SerializedName("cover")
-        val cover: String,
+        val cover: String?,
         @SerializedName("danmaku")
-        val danmaku: Int,
+        val danmaku: Int?,
         @SerializedName("desc")
         val desc: String,
         @SerializedName("duration")
@@ -79,7 +79,7 @@ data class SearchResultData(
         @SerializedName("online")
         val online: Int,
         @SerializedName("play")
-        val play: Int,
+        val play: Int?,
         @SerializedName("position")
         val position: Int,
         @SerializedName("rating")

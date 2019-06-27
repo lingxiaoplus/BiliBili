@@ -7,7 +7,8 @@ object StringUtil {
     /**
      * 将数字转换为带万的
      */
-    fun getBigDecimalNumber(num:Int): String{
+    fun getBigDecimalNumber(num :Int?): String{
+        if (num == null) return "-"
         if (num > 1000 && num < 1000000){
             var float = num / 1000.0
             val b = BigDecimal(float)

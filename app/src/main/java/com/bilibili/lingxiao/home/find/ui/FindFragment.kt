@@ -1,10 +1,12 @@
-package com.bilibili.lingxiao.home.find
+package com.bilibili.lingxiao.home.find.ui
 
 import android.content.Intent
 import android.support.design.widget.Snackbar
 import android.util.Log
 import android.view.View
 import com.bilibili.lingxiao.R
+import com.bilibili.lingxiao.home.find.FindPresenter
+import com.bilibili.lingxiao.home.find.FindView
 import com.bilibili.lingxiao.home.find.model.HotWordsData
 import com.bilibili.lingxiao.home.find.model.SearchResultData
 import com.bilibili.lingxiao.utils.UIUtil
@@ -14,9 +16,10 @@ import com.camera.lingxiao.common.app.BaseFragment
 import kotlinx.android.synthetic.main.fragment_find.*
 import kotlinx.android.synthetic.main.fragment_find.view.*
 
-class FindFragment :BaseFragment(),FindView{
+class FindFragment :BaseFragment(), FindView {
     private val TAG = FindFragment::class.java.simpleName
-    private var presenter: FindPresenter = FindPresenter(this,this)
+    private var presenter: FindPresenter =
+        FindPresenter(this, this)
     override val contentLayoutId: Int
         get() = R.layout.fragment_find
 
@@ -41,7 +44,7 @@ class FindFragment :BaseFragment(),FindView{
         root.laybel.setOnLaybelClickListener(object : LaybelLayout.LaybelItemClickListener{
             override fun onLaybelItemClick(keyWord: String) {
                 Snackbar.make(root.laybel,keyWord,Snackbar.LENGTH_SHORT).show()
-                var intent = Intent(activity,SearchDetailActivity::class.java)
+                var intent = Intent(activity, SearchDetailActivity::class.java)
                 intent.putExtra("keyWord",keyWord)
                 startActivity(intent)
             }

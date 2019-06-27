@@ -92,9 +92,14 @@
     <string name="find_line_shop">周边商城</string>
 
     <!--search detail-->
-    <string name="search_sort_type">默认排序</string>
-    <string name="search_all_time">全部时长</string>
-    <string name="search_all_region">全部分区</string>
+    <string-array name="search_type">
+        <item>默认排序</item>
+        <item>全部时长</item>
+        <item>全部分区</item>
+    </string-array>
+    <!--<string name="search_sort_type">默认排序</string>-->
+    <!--<string name="search_all_time">全部时长</string>-->
+    <!--<string name="search_all_region">全部分区</string>-->
 
     <!--setting-->
     <string name="account_info">账号资料</string>

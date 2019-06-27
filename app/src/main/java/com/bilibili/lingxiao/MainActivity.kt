@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bilibili.lingxiao.home.dynamic.DynamicFragment
-import com.bilibili.lingxiao.home.find.FindFragment
+import com.bilibili.lingxiao.home.find.ui.FindFragment
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
 import com.bilibili.lingxiao.home.region.ui.RegionFragment
 import com.bilibili.lingxiao.home.live.ui.LiveFragment

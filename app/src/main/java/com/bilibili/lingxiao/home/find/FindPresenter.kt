@@ -2,6 +2,7 @@ package com.bilibili.lingxiao.home.find
 
 import com.bilibili.lingxiao.HttpTrans
 import com.bilibili.lingxiao.home.find.model.HotWordsData
+import com.bilibili.lingxiao.home.find.ui.FindFragment
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.observer.HttpRxCallback
 
