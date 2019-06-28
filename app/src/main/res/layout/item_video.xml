@@ -32,6 +32,9 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 app:layout_constraintBottom_toBottomOf="@id/play_image"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 android:layout_margin="3dp"
         >
             <ImageView

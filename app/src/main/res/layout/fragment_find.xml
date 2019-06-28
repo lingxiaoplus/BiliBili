@@ -110,12 +110,14 @@
             />
         </LinearLayout>
         <com.bilibili.lingxiao.widget.FindLineView
+                android:id="@+id/interest_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:src="@drawable/ic_group"
                 app:text="@string/find_line_interest"
         />
         <com.bilibili.lingxiao.widget.FindLineView
+                android:id="@+id/topic_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:src="@drawable/ic_header_topic_center"
@@ -123,6 +125,7 @@
                 android:clickable="true"
         />
         <com.bilibili.lingxiao.widget.FindLineView
+                android:id="@+id/activity_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:src="@drawable/ic_header_activity_center"
@@ -130,6 +133,7 @@
                 android:clickable="true"
         />
         <com.bilibili.lingxiao.widget.FindLineView
+                android:id="@+id/black_door"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:src="@drawable/ic_header_black_list_center"

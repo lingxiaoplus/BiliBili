@@ -45,6 +45,10 @@ object GlobalProperties {
     var SEARCH_HOT = "http://app.bilibili.com/x/v2/search/hot?" //大家都在搜
     var SEARCH_KEYWORD = "http://app.bilibili.com/x/v2/search?"
 
+    var TOPIC_CENTER = "http://api.bilibili.com/topic/getlist?"
+    var ACTIVITY_CENTER = "http://api.bilibili.com/event/getlist?"
+    var BLACK_DOOR = "https://www.bilibili.com/blackroom/ban"
+
     var MY_SERVICE_HELP = "https://www.bilibili.com/h5/faq"
 
 
@@ -129,4 +133,11 @@ object GlobalProperties {
         return params.toString()
     }
 
+    /**
+     * 判断用户是否登录
+     * 根据token判断
+     */
+    fun userLogined() :Boolean{
+        return false
+    }
 }

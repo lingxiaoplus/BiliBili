@@ -4,19 +4,23 @@ import android.content.Intent
 import android.support.design.widget.Snackbar
 import android.util.Log
 import android.view.View
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
-import com.bilibili.lingxiao.home.find.FindPresenter
+import com.bilibili.lingxiao.home.find.presenter.FindPresenter
 import com.bilibili.lingxiao.home.find.FindView
 import com.bilibili.lingxiao.home.find.model.HotWordsData
 import com.bilibili.lingxiao.home.find.model.SearchResultData
+import com.bilibili.lingxiao.user.LoginActivity
+import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
+import com.bilibili.lingxiao.web.WebActivity
 import com.bilibili.lingxiao.widget.LaybelLayout
 
 import com.camera.lingxiao.common.app.BaseFragment
 import kotlinx.android.synthetic.main.fragment_find.*
 import kotlinx.android.synthetic.main.fragment_find.view.*
 
-class FindFragment :BaseFragment(), FindView {
+class FindFragment :BaseFragment(), FindView,View.OnClickListener{
     private val TAG = FindFragment::class.java.simpleName
     private var presenter: FindPresenter =
         FindPresenter(this, this)
@@ -30,7 +34,10 @@ class FindFragment :BaseFragment(), FindView {
 
     override fun initWidget(root: View) {
         super.initWidget(root)
-
+        root.interest_group.setOnClickListener(this)
+        root.topic_center.setOnClickListener(this)
+        root.activity_center.setOnClickListener(this)
+        root.black_door.setOnClickListener(this)
         root.show_more.setOnClickListener {
             if (root.laybel.isCollapsed()){
                 text_show_more.text = "折叠"
@@ -63,6 +70,35 @@ class FindFragment :BaseFragment(), FindView {
         }
         laybel.setAdapter(LaybelLayout.Adapter(words))
     }
+
+
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.interest_group -> {
+                if (!GlobalProperties.userLogined()){
+                    ToastUtil.show(resources.getString(R.string.login_then_next))
+                    startActivity(Intent(activity,LoginActivity::class.java))
+                }
+            }
+            R.id.topic_center -> {
+                val intent = Intent(activity,TopicCenterActivity::class.java)
+                intent.putExtra("type",resources.getString(R.string.find_line_topic))
+                startActivity(intent)
+            }
+            R.id.activity_center -> {
+                val intent = Intent(activity,TopicCenterActivity::class.java)
+                intent.putExtra("type",resources.getString(R.string.find_line_activity))
+                startActivity(intent)
+            }
+            R.id.black_door -> {
+                var intent = Intent(activity, WebActivity::class.java)
+                intent.putExtra("uri",GlobalProperties.BLACK_DOOR)
+                intent.putExtra("title","小黑屋")
+                startActivity(intent)
+            }
+        }
+    }
+
 
     override fun onGetSearchResult(result: SearchResultData) {
 

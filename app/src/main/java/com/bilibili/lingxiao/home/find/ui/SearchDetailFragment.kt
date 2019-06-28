@@ -8,29 +8,51 @@ import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.find.model.SearchResultData
 import com.bilibili.lingxiao.utils.StringUtil
 import com.camera.lingxiao.common.app.BaseFragment
+import com.camera.lingxiao.common.utills.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
+import kotlinx.android.synthetic.main.layout_empty.view.*
 import kotlinx.android.synthetic.main.normal_refresh_view.*
 import kotlinx.android.synthetic.main.normal_refresh_view.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 class SearchDetailFragment :BaseFragment(){
     lateinit var videoDetailAdapter: VideoDetailAdapter
     var mRecommendList = arrayListOf<SearchResultData.Item>()
+    var page = 1
     override val contentLayoutId: Int
         get() = R.layout.normal_refresh_view
 
     override fun initWidget(root: View) {
         super.initWidget(root)
+        initRecyclerView(root)
+    }
+
+    private fun initRecyclerView(root: View) {
         var recommendManager = LinearLayoutManager(context)
         root.recycerView.layoutManager = recommendManager
         videoDetailAdapter =
             VideoDetailAdapter(R.layout.item_videodetail_recommend, mRecommendList)
         root.recycerView.adapter = videoDetailAdapter
-        root.refresh.autoRefresh()
+
+        var empty = View.inflate(context,R.layout.layout_empty,null)
+        empty.image_error.setImageResource(R.drawable.ic_search_holder_default)
+        empty.text_desc.text = getString(R.string.find_searching)
+        videoDetailAdapter.setEmptyView(empty)
+        //root.refresh.autoRefresh()
+        root.refresh.setOnRefreshListener {
+            mRecommendList.clear()
+            var act = activity as SearchDetailActivity
+            act.getSearchResult(1)
+        }
+        root.refresh.setOnLoadMoreListener {
+            var act = activity as SearchDetailActivity
+            act.getSearchResult(++page)
+        }
     }
 
     override fun isRegisterEventBus(): Boolean {
@@ -41,7 +63,7 @@ class SearchDetailFragment :BaseFragment(){
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     fun onGetSearchData(item: List<SearchResultData.Item>){
         EventBus.getDefault().removeStickyEvent(item)
-        mRecommendList.addAll(item)
+        videoDetailAdapter.addData(item)
         refresh.finishRefresh()
         refresh.finishLoadMore()
     }

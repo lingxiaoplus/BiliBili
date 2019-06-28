@@ -3,6 +3,7 @@ package com.bilibili.lingxiao
 import android.util.Log
 import com.bilibili.lingxiao.home.find.model.HotWordsData
 import com.bilibili.lingxiao.home.find.model.SearchResultData
+import com.bilibili.lingxiao.home.find.model.TopicCardData
 import com.bilibili.lingxiao.home.live.model.*
 import com.bilibili.lingxiao.home.mikan.model.MiKanFallData
 import com.bilibili.lingxiao.home.mikan.model.MiKanRecommendData
@@ -715,5 +716,49 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             Log.d(TAG,"获取搜索结果url---->$url")
         }
         getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.SEARCH_KEYWORD, request,mLifecycle, callback)
+    }
+
+    /**
+     * 话题中心
+     */
+    fun getTopicCenter(page:Int,pageSize:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("page",page)
+        request.put("pageSize",pageSize)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, TopicCardData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.TOPIC_CENTER + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取话题中心url---->$url")
+        }
+        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET, GlobalProperties.TOPIC_CENTER, request,mLifecycle, callback)
+    }
+
+    /**
+     * 活动中心
+     */
+    fun getActivityCenter(page:Int,pageSize:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("page",page)
+        request.put("pageSize",pageSize)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                var modle = Gson().fromJson(element, TopicCardData::class.java)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.ACTIVITY_CENTER + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取活动中心url---->$url")
+        }
+        getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET, GlobalProperties.ACTIVITY_CENTER, request,mLifecycle, callback)
     }
 }

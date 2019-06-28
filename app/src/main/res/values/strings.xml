@@ -10,6 +10,7 @@
     <string name="input_username">请输入用户名</string>
     <string name="input_password">请输入密码</string>
     <string name="un_login">未登陆</string>
+    <string name="login_then_next">请登录后再试！( • ̀ω•́ )✧</string>
     <string name="dynamic_login">想看最新的UP主动态？快来登录吧！</string>
 
     <string name="search_bar_hint">搜索视频、番剧、UP主或av号</string>
@@ -119,7 +120,7 @@
     <string name="my_service">我的客服</string>
     <string name="help">帮助</string>
     <string name="exit_account">退出登录</string>
-
+    <string name="find_searching">搜索中</string>
 
 
 </resources>

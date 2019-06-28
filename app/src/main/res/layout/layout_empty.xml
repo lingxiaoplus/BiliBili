@@ -12,9 +12,11 @@
             android:layout_height="wrap_content"
             android:src="@drawable/img_tips_error_not_foud"
     />
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="电波无法到达哟"
-              android:layout_marginTop="10dp"
+    <TextView
+            android:id="@+id/text_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="电波无法到达哟"
+            android:layout_marginTop="10dp"
     />
 </LinearLayout>

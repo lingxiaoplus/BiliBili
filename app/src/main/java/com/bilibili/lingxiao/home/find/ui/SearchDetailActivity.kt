@@ -1,13 +1,13 @@
 package com.bilibili.lingxiao.home.find.ui
 
+import android.support.v7.widget.SearchView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.find.FindView
-import com.bilibili.lingxiao.home.find.SearchDetailPresenter
+import com.bilibili.lingxiao.home.find.presenter.SearchDetailPresenter
 import com.bilibili.lingxiao.home.find.model.HotWordsData
 import com.bilibili.lingxiao.home.find.model.SearchResultData
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
 import com.camera.lingxiao.common.app.BaseActivity
-import com.camera.lingxiao.common.utills.LogUtils
 import com.flyco.tablayout.listener.CustomTabEntity
 import kotlinx.android.synthetic.main.activity_search_detail.*
 import org.greenrobot.eventbus.EventBus
@@ -15,20 +15,24 @@ import org.greenrobot.eventbus.EventBus
 class SearchDetailActivity : BaseActivity() , FindView {
     lateinit var presenter: SearchDetailPresenter
     private val mTabEntities = arrayListOf<CustomTabEntity>()
-
+    private var page = 1
+    private val pageSize = 20
+    private var keyWord = ""
     override val contentLayoutId: Int
         get() = R.layout.activity_search_detail
 
     override fun initWidget() {
         super.initWidget()
-        var keyWord = intent.getStringExtra("keyWord")
+        keyWord = intent.getStringExtra("keyWord")
         presenter = SearchDetailPresenter(this, this)
-        presenter.getSearchResult(keyWord,1,20)
-        edit_text.setText(keyWord)
+        presenter.getSearchResult(keyWord,page,pageSize)
+        initSearchView()
         text_cancel.setOnClickListener {
             finish()
         }
-
+        /*close.setOnClickListener {
+            searchview.setQuery("",false)
+        }*/
         for (name in resources.getStringArray(R.array.search_type)){
             mTabEntities.add(TabEntity(name))
         }
@@ -36,14 +40,48 @@ class SearchDetailActivity : BaseActivity() , FindView {
         viewpager.adapter = PlayPagerAdapter(supportFragmentManager,
             arrayOf("综合"),
             arrayListOf(SearchDetailFragment()))
+
+    }
+
+    private fun initSearchView() {
+        //设置左侧有放大镜(在搜索框中) 右侧有叉叉
+        searchview.setIconified(false)
+        var textView =
+            searchview.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
+        textView.setTextColor(resources.getColor(R.color.black_alpha_160))
+        textView.setHintTextColor(resources.getColor(R.color.black_alpha_112))
+        textView.setText(keyWord)
+        searchview.setOnQueryTextFocusChangeListener { v, hasFocus ->
+
+        }
+        searchview.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(text: String): Boolean {
+                keyWord = text
+                getSearchResult(page)
+                return true
+            }
+
+            override fun onQueryTextChange(text: String): Boolean {
+                return true
+            }
+
+        })
+    }
+
+    /**
+     * 给fragment调用
+     */
+    fun getSearchResult(page :Int){
+        presenter.getSearchResult(keyWord,page,pageSize)
     }
 
     override fun onGetSearchResult(result: SearchResultData) {
-        LogUtils.d("获取到的结果>>$result")
-        for (item in result.nav){
-            var name = item.name
-            if (item.total != 0) name+= "(${item.total})"
-            tablayout.addTab(tablayout.newTab().setText(name))
+        if (tablayout.tabCount < result.nav.size){
+            for (item in result.nav){
+                var name = item.name
+                if (item.total != 0) name+= "(${item.total})"
+                tablayout.addTab(tablayout.newTab().setText(name))
+            }
         }
         EventBus.getDefault().postSticky(result.item)
     }

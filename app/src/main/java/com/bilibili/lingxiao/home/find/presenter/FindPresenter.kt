@@ -1,6 +1,7 @@
-package com.bilibili.lingxiao.home.find
+package com.bilibili.lingxiao.home.find.presenter
 
 import com.bilibili.lingxiao.HttpTrans
+import com.bilibili.lingxiao.home.find.FindView
 import com.bilibili.lingxiao.home.find.model.HotWordsData
 import com.bilibili.lingxiao.home.find.ui.FindFragment
 import com.camera.lingxiao.common.app.BasePresenter

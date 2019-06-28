@@ -109,10 +109,10 @@ class BangumiDetailActivity : BaseActivity(), BangumiView{
         text_refresh_recommend.setOnClickListener {
             data.result.list?.let {
                 if (it.size > 6){
+                    random += 6
                     if (random + 6 > it.size) random = 0
                     recommendList.clear()
                     recommendList.addAll(it.subList(random, random + 6))
-                    random = random + 6
                     recommendAdapter?.notifyDataSetChanged()
                 }
             }
