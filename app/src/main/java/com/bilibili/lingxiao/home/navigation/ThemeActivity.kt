@@ -37,16 +37,17 @@ class ThemeActivity : BaseActivity() {
         var toolbar = bar as Toolbar
         setToolbarBack(toolbar)
         toolbar.title = "主题颜色"
+
         initThemeData()
         var colums = SpUtils.getInt(this,GlobalProperties.HOME_COLUMNS,2)
         changeColum(colums)
         ll_single.setOnClickListener {
             changeColum(1)
-            Snackbar.make(it,"下次进入Bilibili生效",Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(it,getString(R.string.reset_app_change),Snackbar.LENGTH_SHORT).show()
         }
         ll_double.setOnClickListener {
             changeColum(2)
-            Snackbar.make(it,"下次进入Bilibili生效",Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(it,getString(R.string.reset_app_change),Snackbar.LENGTH_SHORT).show()
         }
     }
 

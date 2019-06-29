@@ -98,6 +98,14 @@
         <item>全部时长</item>
         <item>全部分区</item>
     </string-array>
+
+    <!-- top list-->
+    <string-array name="origin_ranking_list">
+        <item>原创</item>
+        <item>全站</item>
+        <item>番剧</item>
+    </string-array>
+    <string name="show_all_ranking_list_video">显示此UP主全部上榜视频</string>
     <!--<string name="search_sort_type">默认排序</string>-->
     <!--<string name="search_all_time">全部时长</string>-->
     <!--<string name="search_all_region">全部分区</string>-->
@@ -116,11 +124,11 @@
     <string name="push_message">推送与消息</string>
     <string name="clean_sdcard">清理存储空间</string>
     <string name="other_setting">其他设置</string>
-
     <string name="my_service">我的客服</string>
     <string name="help">帮助</string>
     <string name="exit_account">退出登录</string>
     <string name="find_searching">搜索中</string>
+    <string name="reset_app_change">下次进入Bilibili生效</string>
 
 
 </resources>

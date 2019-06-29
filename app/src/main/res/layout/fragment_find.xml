@@ -146,6 +146,7 @@
                 android:background="@color/black_alpha_16"
         />
         <com.bilibili.lingxiao.widget.FindLineView
+                android:id="@+id/origin_rank_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:src="@drawable/ic_btn_rank_original"
@@ -154,6 +155,7 @@
                 android:clickable="true"
         />
         <com.bilibili.lingxiao.widget.FindLineView
+                android:id="@+id/all_rank_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:src="@drawable/ic_btn_rank_all"

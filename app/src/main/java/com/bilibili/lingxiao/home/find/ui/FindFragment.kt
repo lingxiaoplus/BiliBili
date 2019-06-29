@@ -38,6 +38,8 @@ class FindFragment :BaseFragment(), FindView,View.OnClickListener{
         root.topic_center.setOnClickListener(this)
         root.activity_center.setOnClickListener(this)
         root.black_door.setOnClickListener(this)
+        root.origin_rank_list.setOnClickListener(this)
+        root.all_rank_list.setOnClickListener(this)
         root.show_more.setOnClickListener {
             if (root.laybel.isCollapsed()){
                 text_show_more.text = "折叠"
@@ -94,6 +96,14 @@ class FindFragment :BaseFragment(), FindView,View.OnClickListener{
                 var intent = Intent(activity, WebActivity::class.java)
                 intent.putExtra("uri",GlobalProperties.BLACK_DOOR)
                 intent.putExtra("title","小黑屋")
+                startActivity(intent)
+            }
+            R.id.origin_rank_list -> {
+                var intent = Intent(activity, RankListActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.all_rank_list -> {
+                var intent = Intent(activity, RankListActivity::class.java)
                 startActivity(intent)
             }
         }

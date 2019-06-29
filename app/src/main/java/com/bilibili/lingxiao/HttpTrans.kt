@@ -2,6 +2,7 @@ package com.bilibili.lingxiao
 
 import android.util.Log
 import com.bilibili.lingxiao.home.find.model.HotWordsData
+import com.bilibili.lingxiao.home.find.model.RankListData
 import com.bilibili.lingxiao.home.find.model.SearchResultData
 import com.bilibili.lingxiao.home.find.model.TopicCardData
 import com.bilibili.lingxiao.home.live.model.*
@@ -760,5 +761,34 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             Log.d(TAG,"获取活动中心url---->$url")
         }
         getRequest().requestFullPathWithoutCheck(HttpRequest.Method.GET, GlobalProperties.ACTIVITY_CENTER, request,mLifecycle, callback)
+    }
+
+
+    /**
+     * 原创排行榜
+     * //原创
+     * order = bangumi 番剧
+     * order = all 全站
+     * order = origin 原创
+     */
+    fun getOriginRankingList(type :String, page:Int,pageSize:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("order",type)
+        request.put("page",page)
+        request.put("pageSize",pageSize)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                val type = object : TypeToken<List<RankListData.Item>>() {}.getType()
+                var modle :List<RankListData.Item> = Gson().fromJson(element, type)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.ORIGIN_RANKING_LIST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取原创排行榜url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.ORIGIN_RANKING_LIST, request,mLifecycle, callback)
     }
 }

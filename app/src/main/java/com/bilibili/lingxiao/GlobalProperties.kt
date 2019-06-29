@@ -48,6 +48,8 @@ object GlobalProperties {
     var TOPIC_CENTER = "http://api.bilibili.com/topic/getlist?"
     var ACTIVITY_CENTER = "http://api.bilibili.com/event/getlist?"
     var BLACK_DOOR = "https://www.bilibili.com/blackroom/ban"
+    var ORIGIN_RANKING_LIST = "http://app.bilibili.com/x/v2/rank?"  //原创排行榜
+
 
     var MY_SERVICE_HELP = "https://www.bilibili.com/h5/faq"
 
