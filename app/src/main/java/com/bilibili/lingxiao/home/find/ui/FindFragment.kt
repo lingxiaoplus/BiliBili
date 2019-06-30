@@ -10,6 +10,7 @@ import com.bilibili.lingxiao.home.find.presenter.FindPresenter
 import com.bilibili.lingxiao.home.find.FindView
 import com.bilibili.lingxiao.home.find.model.HotWordsData
 import com.bilibili.lingxiao.home.find.model.SearchResultData
+import com.bilibili.lingxiao.home.region.model.RegionData
 import com.bilibili.lingxiao.user.LoginActivity
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
@@ -40,6 +41,7 @@ class FindFragment :BaseFragment(), FindView,View.OnClickListener{
         root.black_door.setOnClickListener(this)
         root.origin_rank_list.setOnClickListener(this)
         root.all_rank_list.setOnClickListener(this)
+        root.round_shop.setOnClickListener(this)
         root.show_more.setOnClickListener {
             if (root.laybel.isCollapsed()){
                 text_show_more.text = "折叠"
@@ -74,6 +76,10 @@ class FindFragment :BaseFragment(), FindView,View.OnClickListener{
     }
 
 
+    override fun onGetRegion(list: List<RegionData.Data>) {
+
+    }
+
     override fun onClick(v: View) {
         when(v.id){
             R.id.interest_group -> {
@@ -95,15 +101,24 @@ class FindFragment :BaseFragment(), FindView,View.OnClickListener{
             R.id.black_door -> {
                 var intent = Intent(activity, WebActivity::class.java)
                 intent.putExtra("uri",GlobalProperties.BLACK_DOOR)
-                intent.putExtra("title","小黑屋")
+                intent.putExtra("title",resources.getString(R.string.find_line_blackdoor))
                 startActivity(intent)
             }
             R.id.origin_rank_list -> {
                 var intent = Intent(activity, RankListActivity::class.java)
+                intent.putExtra("type",resources.getString(R.string.find_line_top_original))
                 startActivity(intent)
             }
             R.id.all_rank_list -> {
+                //先查询是否有分区的数据
                 var intent = Intent(activity, RankListActivity::class.java)
+                intent.putExtra("type",resources.getString(R.string.find_line_top_all))
+                startActivity(intent)
+            }
+            R.id.round_shop ->{
+                var intent = Intent(activity, WebActivity::class.java)
+                intent.putExtra("uri",GlobalProperties.ROUND_SHOP)
+                intent.putExtra("title",resources.getString(R.string.find_line_shop))
                 startActivity(intent)
             }
         }

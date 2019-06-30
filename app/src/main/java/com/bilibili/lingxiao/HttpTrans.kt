@@ -791,4 +791,29 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
         }
         getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.ORIGIN_RANKING_LIST, request,mLifecycle, callback)
     }
+
+    /**
+     * 全区排行榜
+     * @param rid  分区获取到的rid
+     */
+    fun getAllRegionRankingList(rid :String, page:Int,pageSize:Int,callback: HttpRxCallback<Any>){
+        request.clear()
+        request.put("rid",rid)
+        request.put("page",page)
+        request.put("pageSize",pageSize)
+        callback.setParseHelper(object : ParseHelper {
+            override fun parse(element: JsonElement): Any? {
+                val type = object : TypeToken<List<RankListData.Item>>() {}.getType()
+                var modle :List<RankListData.Item> = Gson().fromJson(element, type)
+                val obj = arrayOfNulls<Any>(1)
+                obj[0] = modle
+                return obj
+            }
+        })
+        if (debug){
+            var url = GlobalProperties.ALL_REGION_RANKING_LIST + GlobalProperties.getUrlParamsByMap(request)
+            Log.d(TAG,"获取全区排行榜url---->$url")
+        }
+        getRequest().requestFullPath(HttpRequest.Method.GET, GlobalProperties.ALL_REGION_RANKING_LIST, request,mLifecycle, callback)
+    }
 }

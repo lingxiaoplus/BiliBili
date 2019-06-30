@@ -12,6 +12,7 @@ import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.find.RankListView
 import com.bilibili.lingxiao.home.find.model.RankListData
 import com.bilibili.lingxiao.home.find.presenter.RankListPresenter
+import com.bilibili.lingxiao.home.region.model.RegionData
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.camera.lingxiao.common.app.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -62,6 +63,8 @@ class RankListFragment :BaseFragment(),RankListView{
         refresh.finishLoadMore()
     }
 
+
+
     override fun showDialog() {
 
     }
@@ -82,12 +85,6 @@ class RankListFragment :BaseFragment(),RankListView{
             helper.setText(R.id.grade,"综合评分：${item.pts}")
             var imageCover = helper.getView<SimpleDraweeView>(R.id.cover_image)
             imageCover.setImageURI(Uri.parse(item.cover))
-            var showAllVideo = helper.getView<TextView>(R.id.text_show_all)
-            if (item.children != null)
-                showAllVideo.visibility = View.VISIBLE
-            else
-                showAllVideo.visibility = View.GONE
-
             helper.setText(R.id.text_rank,"${helper.position+1}")
             if (helper.position+1 > 3)
                 helper.setTextColor(R.id.text_rank,resources.getColor(R.color.black_alpha_144))
@@ -95,6 +92,13 @@ class RankListFragment :BaseFragment(),RankListView{
                 helper.setTextColor(R.id.text_rank,resources.getColor(R.color.colorPrimary))
 
             var parent = helper.getView<LinearLayout>(R.id.root_show_all)
+            var showAllVideo = helper.getView<TextView>(R.id.text_show_all)
+            if (item.children != null){
+                showAllVideo.visibility = View.VISIBLE
+                if (parent.childCount > 1) parent.removeViews(1,parent.childCount-1)
+            } else{
+                showAllVideo.visibility = View.GONE
+            }
             showAllVideo.setOnClickListener {
                 it.visibility = View.GONE
                 item.children!!.forEach {
@@ -104,19 +108,12 @@ class RankListFragment :BaseFragment(),RankListView{
         }
 
         fun addChildItem(parent:ViewGroup,context:Context, data :RankListData.Item.Children){
-            var titleTextView = TextView(context)
+            val childView = View.inflate(context,R.layout.item_rank_list_child,null)
+            val titleTextView = childView.findViewById<TextView>(R.id.text_title)
             titleTextView.text = data.title
-            titleTextView.setTextColor(context.resources.getColor(R.color.black_alpha_176))
-            titleTextView.textSize = 14f
-
-
-            var messageTextView = TextView(context)
+            val messageTextView = childView.findViewById<TextView>(R.id.text_grade)
             messageTextView.text = "综合评分：${data.pts}"
-            messageTextView.setTextColor(context.resources.getColor(R.color.black_alpha_144))
-            messageTextView.textSize = 12f
-
-            parent.addView(titleTextView)
-            parent.addView(messageTextView)
+            parent.addView(childView)
         }
     }
 }

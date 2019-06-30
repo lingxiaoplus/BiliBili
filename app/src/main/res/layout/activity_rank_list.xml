@@ -21,6 +21,37 @@
                 app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:contentInsetStart="0dp"
         >
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/len_100"
+                    android:layout_gravity="end|right"
+            >
+                <ImageView
+                        android:id="@+id/image_download"
+                        android:layout_width="@dimen/normal_icon_size"
+                        android:layout_height="@dimen/normal_icon_size"
+                        app:srcCompat="@drawable/ic_toolbar_menu_download"
+                        android:background="@drawable/ripple_background"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/dp_4"
+                        android:clickable="true"
+                />
+                <ImageView
+                        android:id="@+id/image_search"
+                        android:layout_width="@dimen/normal_icon_size"
+                        android:layout_height="@dimen/normal_icon_size"
+                        app:srcCompat="@drawable/ic_toolbar_menu_search"
+                        android:background="@drawable/ripple_background"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/dp_4"
+                        android:clickable="true"
+                />
+            </LinearLayout>
         </android.support.v7.widget.Toolbar>
         <com.bilibili.lingxiao.widget.skin.SkinTabLayout
                 android:id="@+id/tabLayout"

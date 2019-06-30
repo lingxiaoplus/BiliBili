@@ -11,104 +11,115 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
     >
-        <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardUseCompatPadding="true"
-                app:cardCornerRadius="@dimen/dp_4"
-                android:layout_margin="@dimen/dp_10"
-        >
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/dp_10"
-            >
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_img_search"
-                        android:tint="@color/black_alpha_112"
-                />
-                <EditText
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/search_bar_hint"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:background="@null"
-                />
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_search_qr"
-                        android:tint="@color/black_alpha_112"
-                />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/search_everyone"
-                android:layout_marginLeft="@dimen/dp_10"
-                style="@style/TextTitle"
-        />
-        <com.bilibili.lingxiao.widget.LaybelLayout
-                android:id="@+id/laybel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:text_background="@drawable/radius_text_background"
-                app:line_padding="10"
-                android:background="@color/black_alpha_16"
-        >
-
-        </com.bilibili.lingxiao.widget.LaybelLayout>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/show_more"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="@dimen/dp_4"
+                android:orientation="vertical"
                 android:background="@color/black_alpha_16"
         >
-            <ImageView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    style="@style/between_line"
-                    android:layout_marginLeft="@dimen/len_20"
-                    android:layout_marginRight="@dimen/dp_10"
-            />
-            <LinearLayout
+
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardUseCompatPadding="true"
+                    app:cardCornerRadius="@dimen/dp_4"
+                    android:layout_margin="@dimen/dp_10"
+            >
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/len_8"
+                >
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_img_search"
+                            android:tint="@color/black_alpha_112"
+                    />
+                    <EditText
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/search_bar_hint"
+                            android:textSize="@dimen/font_14"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:background="@null"
+                    />
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_search_qr"
+                            android:tint="@color/black_alpha_112"
+                    />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/search_everyone"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    style="@style/TextTitle"
+            />
+            <com.bilibili.lingxiao.widget.LaybelLayout
+                    android:id="@+id/laybel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:text_background="@drawable/radius_text_background"
+                    app:line_padding="10"
+            >
+
+            </com.bilibili.lingxiao.widget.LaybelLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/show_more"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
+                    android:padding="@dimen/dp_4"
             >
                 <ImageView
-                        android:id="@+id/image_show_more"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_down_gray_round"
-                        android:layout_marginRight="@dimen/dp_4"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        style="@style/between_line"
+                        android:layout_marginLeft="@dimen/len_20"
+                        android:layout_marginRight="@dimen/dp_10"
                 />
-                <TextView
-                        android:id="@+id/text_show_more"
+                <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="查看更多"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                >
+                    <ImageView
+                            android:id="@+id/image_show_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_arrow_down_gray_round"
+                            android:layout_marginRight="@dimen/dp_4"
+                    />
+                    <TextView
+                            android:id="@+id/text_show_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="查看更多"
+                    />
+                </LinearLayout>
+
+                <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        style="@style/between_line"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/len_20"
                 />
             </LinearLayout>
 
-            <ImageView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    style="@style/between_line"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginRight="@dimen/len_20"
-            />
         </LinearLayout>
+
+
         <com.bilibili.lingxiao.widget.FindLineView
                 android:id="@+id/interest_group"
                 android:layout_width="match_parent"
@@ -177,6 +188,7 @@
                 android:clickable="true"
         />
         <com.bilibili.lingxiao.widget.FindLineView
+                android:id="@+id/round_shop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:src="@drawable/ic_btn_shop"

@@ -7,6 +7,7 @@ import com.bilibili.lingxiao.home.find.presenter.SearchDetailPresenter
 import com.bilibili.lingxiao.home.find.model.HotWordsData
 import com.bilibili.lingxiao.home.find.model.SearchResultData
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
+import com.bilibili.lingxiao.home.region.model.RegionData
 import com.camera.lingxiao.common.app.BaseActivity
 import com.flyco.tablayout.listener.CustomTabEntity
 import kotlinx.android.synthetic.main.activity_search_detail.*
@@ -90,6 +91,9 @@ class SearchDetailActivity : BaseActivity() , FindView {
 
     }
 
+    override fun onGetRegion(list: List<RegionData.Data>) {
+
+    }
     private inner class TabEntity(var title:String): CustomTabEntity{
         override fun getTabUnselectedIcon(): Int {
             return R.drawable.ic_arrow_down_gray_round

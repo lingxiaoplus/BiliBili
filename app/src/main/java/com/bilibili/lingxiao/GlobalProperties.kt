@@ -47,10 +47,12 @@ object GlobalProperties {
 
     var TOPIC_CENTER = "http://api.bilibili.com/topic/getlist?"
     var ACTIVITY_CENTER = "http://api.bilibili.com/event/getlist?"
-    var BLACK_DOOR = "https://www.bilibili.com/blackroom/ban"
+
     var ORIGIN_RANKING_LIST = "http://app.bilibili.com/x/v2/rank?"  //原创排行榜
+    var ALL_REGION_RANKING_LIST = "http://app.bilibili.com/x/v2/rank/region?"  //全区排行榜
 
-
+    var BLACK_DOOR = "https://www.bilibili.com/blackroom/ban" //小黑屋
+    var ROUND_SHOP = "http://bmall.bilibili.com/"  //周边商城
     var MY_SERVICE_HELP = "https://www.bilibili.com/h5/faq"
 
 

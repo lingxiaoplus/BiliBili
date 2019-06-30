@@ -18,7 +18,7 @@ class RankListActivity : BaseActivity() {
     override fun initWidget() {
         super.initWidget()
         setToolbarBack(tool_bar)
-        tool_bar.title = resources.getString(R.string.find_line_top_all)
+        tool_bar.title = intent.getStringExtra("type")
         for (name in tabArray){
             tabLayout.addTab(tabLayout.newTab().setText(name))
         }
