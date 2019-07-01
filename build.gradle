@@ -56,7 +56,7 @@ ext {
     easypermissionsVersion = "2.0.1"
     skinSupportVersion = "3.1.1"
 
-    dbFlowVersion = "4.2.4"
+    dbFlowVersion = "5.0.0-alpha1"
     leak = "1.5.4"
     hotfixVersion = "3.2.3"
     leancloudVersion = "v4.7.3"
@@ -71,4 +71,6 @@ ext {
     danmakuNdk = "0.9.21"
     FlycoTabLayout = "2.1.2@aar"
     bottomNavigationBar = "2.1.0"
+
+
 }

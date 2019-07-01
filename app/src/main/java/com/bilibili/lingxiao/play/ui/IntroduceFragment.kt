@@ -150,7 +150,7 @@ class IntroduceFragment :BaseFragment(), RecommendView {
         }
         fensi.text = "${StringUtil.getBigDecimalNumber(data.reply)}个粉丝"
         data.title?.let {
-            fold_layout.setTitleText(data.title)
+            fold_layout.setTitleText(it)
         }
         damku_num.text = StringUtil.getBigDecimalNumber(data.danmaku)
         av_num.text = "   av${data.param}"

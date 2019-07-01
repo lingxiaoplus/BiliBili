@@ -60,6 +60,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 app:tabTextColor="@color/white"
                 app:tabGravity="fill"
+                app:tabMode="scrollable"
                 android:background="@color/colorPrimary"
                 app:tabIndicatorColor="@color/colorPrimary"
                 app:tabMaxWidth="0dp"

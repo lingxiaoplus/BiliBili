@@ -11,73 +11,73 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object GlobalProperties {
-    val LIVE_HOST = "http://live.bilibili.com/AppIndex/home/?"   //直播api
-    val COMMEND_HOST = "http://app.bilibili.com/x/feed/index?"   //推荐api
-    val DETAIL_HOST = "http://api.bilibili.cn/view?"  //视频详情
-    val COMMEND_VIDEO_HOST = "http://api.bilibili.cn/recommend?"  //视频详情下面的推荐
-    val COMMENT_HOST = "http://api.bilibili.com/x/v2/reply/main?"  //评论
-    val COMMENT_DOUBLE_HOST = "http://api.bilibili.com/x/v2/reply/reply/cursor?" //楼中楼评论
-    val BANGUMI_CN_AND_JP_HOST = "http://bangumi.bilibili.com/appindex/follow_index_page?" //国内外推荐番剧
-    val BANGUMI_FALL_HOST = "http://bangumi.bilibili.com/appindex/follow_index_fall?" //编辑推荐番剧
-    val BANGUMI_DETAIL = "https://bangumi.bilibili.com/api/season_v5?"  //番剧详情
-    var BANGUMI_RECOMMEND = "https://bangumi.bilibili.com/api/season/recommend/rnd/"  //番剧详情下面的推荐
+    const val LIVE_HOST = "http://live.bilibili.com/AppIndex/home/?"   //直播api
+    const val COMMEND_HOST = "http://app.bilibili.com/x/feed/index?"   //推荐api
+    const val DETAIL_HOST = "http://api.bilibili.cn/view?"  //视频详情
+    const val COMMEND_VIDEO_HOST = "http://api.bilibili.cn/recommend?"  //视频详情下面的推荐
+    const val COMMENT_HOST = "http://api.bilibili.com/x/v2/reply/main?"  //评论
+    const val COMMENT_DOUBLE_HOST = "http://api.bilibili.com/x/v2/reply/reply/cursor?" //楼中楼评论
+    const val BANGUMI_CN_AND_JP_HOST = "http://bangumi.bilibili.com/appindex/follow_index_page?" //国内外推荐番剧
+    const val BANGUMI_FALL_HOST = "http://bangumi.bilibili.com/appindex/follow_index_fall?" //编辑推荐番剧
+    const val BANGUMI_DETAIL = "https://bangumi.bilibili.com/api/season_v5?"  //番剧详情
+    const val BANGUMI_RECOMMEND = "https://bangumi.bilibili.com/api/season/recommend/rnd/"  //番剧详情下面的推荐
 
-    val CATEGORY_HOST = "http://app.bilibili.com/x/v2/region?" //分区
-    val CATEGORY_RECOMMEND_HOST = "http://app.bilibili.com/x/v2/show/index?" //分区推荐
-    var REGION_DETAIL_URL = "https://app.bilibili.com/x/v2/region/dynamic?"  //分区详情
-    var REGION_DETAIL_LOADMORE_URL = "https://app.bilibili.com/x/v2/region/dynamic/list?"  //分区加载更多
-    var REGION_LOCALITY_URL = "http://app.bilibili.com/x/v2/show/change/" //分区局部更新
+    const val CATEGORY_HOST = "http://app.bilibili.com/x/v2/region?" //分区
+    const val CATEGORY_RECOMMEND_HOST = "http://app.bilibili.com/x/v2/show/index?" //分区推荐
+    const val REGION_DETAIL_URL = "https://app.bilibili.com/x/v2/region/dynamic?"  //分区详情
+    const val REGION_DETAIL_LOADMORE_URL = "https://app.bilibili.com/x/v2/region/dynamic/list?"  //分区加载更多
+    const val REGION_LOCALITY_URL = "http://app.bilibili.com/x/v2/show/change/" //分区局部更新
 
-    var USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Mobile Safari/537.36"
+    const val USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Mobile Safari/537.36"
 
     //var LIVE_UP_INFO = "https://api.live.bilibili.com/room/v1/Room/get_info" //获取up主的信息
-    var LIVE_UP_INFO = "http://api.live.bilibili.com/xlive/app-room/v1/index/getInfoByRoom?"
-    var LIVE_USER_INFO = "http://api.live.bilibili.com/live_user/v1/card/card_user?" //获取直播间用户的信息
-    var LIVE_DANMAKU_URL = "wss://broadcastlv.chat.bilibili.com:2245/sub"  //直播弹幕 websocket
-    var LIVE_UP_GOLD_LIST = "http://api.live.bilibili.com/rankdb/v1/RoomRank/tabRanks?"  //金瓜子榜  礼物榜
-    var LIVE_FANS_LIST = "http://api.live.bilibili.com/rankdb/v2/RoomRank/mobileMedalRank?"  //粉丝榜
-    var LIVE_FLEET_LIST = "http://api.live.bilibili.com/live_user/v1/Guard/topList?"  //大航海
-    var LIVE_UP_VIDEO_LIST = "http://api.live.bilibili.com/bili-api/x/internal/v2/archive/up/passed?" //直播up主的视频投稿
-    var LIVE_UP_CHAT_HISTORY = "http://api.live.bilibili.com/xlive/app-room/v1/dM/gethistory?" //直播评论
-    var LIVE_ALL_URL = "http://api.live.bilibili.com/room/v3/Area/getRoomList"  //获取全部直播列表
-    var LIVE_TAB_LIST_URL = "http://api.live.bilibili.com/room/v1/Area/getList"  //直播分类所有tab
+    const val LIVE_UP_INFO = "http://api.live.bilibili.com/xlive/app-room/v1/index/getInfoByRoom?"
+    const val LIVE_USER_INFO = "http://api.live.bilibili.com/live_user/v1/card/card_user?" //获取直播间用户的信息
+    const val LIVE_DANMAKU_URL = "wss://broadcastlv.chat.bilibili.com:2245/sub"  //直播弹幕 websocket
+    const val LIVE_UP_GOLD_LIST = "http://api.live.bilibili.com/rankdb/v1/RoomRank/tabRanks?"  //金瓜子榜  礼物榜
+    const val LIVE_FANS_LIST = "http://api.live.bilibili.com/rankdb/v2/RoomRank/mobileMedalRank?"  //粉丝榜
+    const val LIVE_FLEET_LIST = "http://api.live.bilibili.com/live_user/v1/Guard/topList?"  //大航海
+    const val LIVE_UP_VIDEO_LIST = "http://api.live.bilibili.com/bili-api/x/internal/v2/archive/up/passed?" //直播up主的视频投稿
+    const val LIVE_UP_CHAT_HISTORY = "http://api.live.bilibili.com/xlive/app-room/v1/dM/gethistory?" //直播评论
+    const val LIVE_ALL_URL = "http://api.live.bilibili.com/room/v3/Area/getRoomList"  //获取全部直播列表
+    const val LIVE_TAB_LIST_URL = "http://api.live.bilibili.com/room/v1/Area/getList"  //直播分类所有tab
 
-    var SEARCH_HOT = "http://app.bilibili.com/x/v2/search/hot?" //大家都在搜
-    var SEARCH_KEYWORD = "http://app.bilibili.com/x/v2/search?"
+    const val SEARCH_HOT = "http://app.bilibili.com/x/v2/search/hot?" //大家都在搜
+    const val SEARCH_KEYWORD = "http://app.bilibili.com/x/v2/search?"
 
-    var TOPIC_CENTER = "http://api.bilibili.com/topic/getlist?"
-    var ACTIVITY_CENTER = "http://api.bilibili.com/event/getlist?"
+    const val TOPIC_CENTER = "http://api.bilibili.com/topic/getlist?"
+    const val ACTIVITY_CENTER = "http://api.bilibili.com/event/getlist?"
 
-    var ORIGIN_RANKING_LIST = "http://app.bilibili.com/x/v2/rank?"  //原创排行榜
-    var ALL_REGION_RANKING_LIST = "http://app.bilibili.com/x/v2/rank/region?"  //全区排行榜
+    const val ORIGIN_RANKING_LIST = "http://app.bilibili.com/x/v2/rank?"  //原创排行榜
+    const val ALL_REGION_RANKING_LIST = "http://app.bilibili.com/x/v2/rank/region?"  //全区排行榜
 
-    var BLACK_DOOR = "https://www.bilibili.com/blackroom/ban" //小黑屋
-    var ROUND_SHOP = "http://bmall.bilibili.com/"  //周边商城
-    var MY_SERVICE_HELP = "https://www.bilibili.com/h5/faq"
+    const val BLACK_DOOR = "https://www.bilibili.com/blackroom/ban" //小黑屋
+    const val ROUND_SHOP = "http://bmall.bilibili.com/"  //周边商城
+    const val MY_SERVICE_HELP = "https://www.bilibili.com/h5/faq"
 
 
 
-    val IMAGE_RULE_480_300 = "@480w_300h_1e_1c.webp"  //图片尺寸
-    val IMAGE_RULE_240_150 = "@240w_150h_1e_1c.webp"
-    val IMAGE_RULE_160_100 = "@160w_100h_1e_1c.webp"
-    val IMAGE_RULE_90_90 = "@90w_90h_1e_1c.webp"
-    var IMAGE_RULE_60_60 = "@60w_60h_1e_1c.webp"
+    const val IMAGE_RULE_480_300 = "@480w_300h_1e_1c.webp"  //图片尺寸
+    const val IMAGE_RULE_240_150 = "@240w_150h_1e_1c.webp"
+    const val IMAGE_RULE_160_100 = "@160w_100h_1e_1c.webp"
+    const val IMAGE_RULE_90_90 = "@90w_90h_1e_1c.webp"
+    const val IMAGE_RULE_60_60 = "@60w_60h_1e_1c.webp"
 
-    var IMAGE_RULE_200_266 = "@200w_266h_1e_1c.webp"  //4:3
+    const val IMAGE_RULE_200_266 = "@200w_266h_1e_1c.webp"  //4:3
     private val SECRET_KEY = "ea85624dfcf12d7cc7b2b3a94fac1f2c"
-    val PARAM_SIGN = "sign"
-    val APP_KEY = "c1b107428d337928"
-    val BUILD = "5400000"
-    val MOBI_APP = "android"
-    val PLATFORM = "android"
-    val DEVICE = "android"
-    val NETWORK_WIFI = "wifi"
+    const val PARAM_SIGN = "sign"
+    const val APP_KEY = "c1b107428d337928"
+    const val BUILD = "5400000"
+    const val MOBI_APP = "android"
+    const val PLATFORM = "android"
+    const val DEVICE = "android"
+    const val NETWORK_WIFI = "wifi"
     val SCALE = UIUtil.getDensityString()
-    val SRC = "bili"
-    val VERSION = "5.19.0.519000"
+    const val SRC = "bili"
+    const val VERSION = "5.19.0.519000"
 
     val HOME_COLUMNS = "home_columns"  //首页列数
-    var TAG = GlobalProperties::class.java.simpleName
+    val TAG = GlobalProperties::class.java.simpleName
 
 
     /**

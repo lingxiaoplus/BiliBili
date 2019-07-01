@@ -16,6 +16,7 @@ import android.support.v4.app.NotificationCompat
 
 import com.camera.lingxiao.common.Common
 import com.camera.lingxiao.common.utills.LogUtils
+import com.dbflow5.config.FlowManager
 import com.lingxiao.skinlibrary.SkinLib
 import com.tencent.smtt.sdk.QbSdk
 
@@ -73,13 +74,12 @@ class InitIalizeService : IntentService("InitIalizeService") {
         SkinLib.init(mContext as Application)
         QbSdk.initX5Environment(this, null)
         Common.initCrash(this, true)
+        FlowManager.init(this)
     }
 
     companion object {
         // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
         private val ACTION_FOO = "com.lingxiaosuse.picture.tudimension.service.action.FOO"
-
-
         private lateinit var mContext: Context
         fun initialize(context: Context) {
             val intent = Intent(context, InitIalizeService::class.java)

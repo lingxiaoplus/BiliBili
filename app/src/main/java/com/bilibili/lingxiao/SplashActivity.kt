@@ -5,6 +5,7 @@ import android.view.animation.Animation
 import com.camera.lingxiao.common.app.BaseActivity
 import android.view.animation.ScaleAnimation
 import android.view.animation.AnimationSet
+import com.bilibili.lingxiao.home.MainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
 

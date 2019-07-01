@@ -31,7 +31,7 @@ class RankListPresenter(view: RankListView, fragment: RankListFragment) :
         })
     }
 
-    fun getALlRegionRankingList(rid :String, page:Int,pageSize:Int){
+    fun getALlRegionRankingList(rid :Int, page:Int,pageSize:Int){
         httpTrans.getAllRegionRankingList(rid, page, pageSize,object : HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {
                 var lists = res as Array<*>

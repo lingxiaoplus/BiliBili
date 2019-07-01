@@ -9,16 +9,20 @@ import com.camera.lingxiao.common.app.BaseActivity
 import kotlinx.android.synthetic.main.activity_rank_list.*
 
 class RankListActivity : BaseActivity() {
-    val tabArray by lazy {
-        resources.getStringArray(R.array.origin_ranking_list)
-    }
+    lateinit var tabArray :Array<String>
     override val contentLayoutId: Int
         get() = R.layout.activity_rank_list
 
     override fun initWidget() {
         super.initWidget()
         setToolbarBack(tool_bar)
-        tool_bar.title = intent.getStringExtra("type")
+        val type = intent.getStringExtra("type")
+        tool_bar.title = type
+        if (type.equals(resources.getString(R.string.find_line_top_original))){
+            tabArray = resources.getStringArray(R.array.origin_ranking_list)
+        }else{
+            tabArray = resources.getStringArray(R.array.origin_ranking_list)
+        }
         for (name in tabArray){
             tabLayout.addTab(tabLayout.newTab().setText(name))
         }
@@ -43,6 +47,7 @@ class RankListActivity : BaseActivity() {
                 type = "bangumi"
             }
             bundle.putString("type",type)
+            bundle.putInt("rid",0)
             var fragment = RankListFragment()
             fragment.arguments = bundle
             return fragment

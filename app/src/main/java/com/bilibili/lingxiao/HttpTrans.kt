@@ -796,7 +796,7 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
      * 全区排行榜
      * @param rid  分区获取到的rid
      */
-    fun getAllRegionRankingList(rid :String, page:Int,pageSize:Int,callback: HttpRxCallback<Any>){
+    fun getAllRegionRankingList(rid :Int, page:Int,pageSize:Int,callback: HttpRxCallback<Any>){
         request.clear()
         request.put("rid",rid)
         request.put("page",page)

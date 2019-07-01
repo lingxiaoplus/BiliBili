@@ -1,6 +1,6 @@
 package com.bilibili.lingxiao.dagger
 
-import com.bilibili.lingxiao.MainActivity
+import com.bilibili.lingxiao.home.MainActivity
 import com.bilibili.lingxiao.home.region.ui.RegionFragment
 import com.bilibili.lingxiao.home.live.ui.LiveFragment
 import com.bilibili.lingxiao.home.mikan.ui.MikanFragment

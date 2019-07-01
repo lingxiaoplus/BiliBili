@@ -1,4 +1,4 @@
-package com.bilibili.lingxiao
+package com.bilibili.lingxiao.home
 
 
 import android.Manifest
@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.dynamic.DynamicFragment
 import com.bilibili.lingxiao.home.find.ui.FindFragment
 import com.bilibili.lingxiao.home.live.adapter.PlayPagerAdapter
@@ -119,7 +120,8 @@ class MainActivity : BaseActivity() {
 
     private fun initNavigationView() {
         var drawerToggle = object : ActionBarDrawerToggle(this,main_drawer_layout,
-            main_toolbar,R.string.open,R.string.close){
+            main_toolbar, R.string.open, R.string.close
+        ){
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
                 drawerOpened = true

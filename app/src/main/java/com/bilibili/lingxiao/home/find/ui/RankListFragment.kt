@@ -28,13 +28,15 @@ class RankListFragment :BaseFragment(),RankListView{
     private lateinit var mRankListAdapter :RankListAdapter
     private var page = 1
     private val pageSize = 20
-    private var pageType = ""
+    private var pageType :String? = null
+    private var rid :Int = 0
     override val contentLayoutId: Int
         get() = R.layout.normal_refresh_view
 
     override fun initArgs(bundle: Bundle?) {
         super.initArgs(bundle)
-        pageType = bundle!!.getString("type")
+        pageType = bundle?.getString("type")
+        rid = bundle!!.getInt("rid")
     }
 
     override fun initWidget(root: View) {
@@ -45,11 +47,17 @@ class RankListFragment :BaseFragment(),RankListView{
         root.recycerView.adapter = mRankListAdapter
         root.refresh.setOnRefreshListener {
             mRankList.clear()
-            mPresenter.getOriginRankingList(pageType,page,pageSize)
+            if (pageType.isNullOrEmpty()){
+                mPresenter.getALlRegionRankingList(rid,page,pageSize)
+            }else
+                mPresenter.getOriginRankingList(pageType!!,page,pageSize)
         }
         root.refresh.setOnLoadMoreListener{
             page++
-            mPresenter.getOriginRankingList(pageType,page,pageSize)
+            if (pageType.isNullOrEmpty()){
+                mPresenter.getALlRegionRankingList(rid,page,pageSize)
+            }else
+                mPresenter.getOriginRankingList(pageType!!,page,pageSize)
         }
     }
 

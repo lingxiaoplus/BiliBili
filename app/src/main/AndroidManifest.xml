@@ -41,7 +41,7 @@
                     android:resource="@xml/provider_paths"/>
         </provider>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".home.MainActivity">
         </activity>
         <activity
                 android:name=".SplashActivity"
