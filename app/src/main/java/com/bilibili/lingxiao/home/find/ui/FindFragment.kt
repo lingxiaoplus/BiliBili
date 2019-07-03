@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
+import com.bilibili.lingxiao.database.RegionTable
 import com.bilibili.lingxiao.home.find.presenter.FindPresenter
 import com.bilibili.lingxiao.home.find.FindView
 import com.bilibili.lingxiao.home.find.model.HotWordsData
@@ -18,8 +19,10 @@ import com.bilibili.lingxiao.web.WebActivity
 import com.bilibili.lingxiao.widget.LaybelLayout
 
 import com.camera.lingxiao.common.app.BaseFragment
+import com.raizlabs.android.dbflow.sql.language.SQLite
 import kotlinx.android.synthetic.main.fragment_find.*
 import kotlinx.android.synthetic.main.fragment_find.view.*
+import org.greenrobot.eventbus.EventBus
 
 class FindFragment :BaseFragment(), FindView,View.OnClickListener{
     private val TAG = FindFragment::class.java.simpleName
@@ -75,11 +78,6 @@ class FindFragment :BaseFragment(), FindView,View.OnClickListener{
         laybel.setAdapter(LaybelLayout.Adapter(words))
     }
 
-
-    override fun onGetRegion(list: List<RegionData.Data>) {
-
-    }
-
     override fun onClick(v: View) {
         when(v.id){
             R.id.interest_group -> {
@@ -111,9 +109,14 @@ class FindFragment :BaseFragment(), FindView,View.OnClickListener{
             }
             R.id.all_rank_list -> {
                 //先查询是否有分区的数据
-                var intent = Intent(activity, RankListActivity::class.java)
-                intent.putExtra("type",resources.getString(R.string.find_line_top_all))
-                startActivity(intent)
+                /*var tables = SQLite.select().from(RegionTable::class.java).queryList()
+                if (tables == null || tables.isEmpty()){
+                    presenter.getRegion()
+                    showProgressDialog("请求数据中...",context!!);
+                    return
+                }*/
+                presenter.getRegion()
+                showProgressDialog("请求数据中...",context!!);
             }
             R.id.round_shop ->{
                 var intent = Intent(activity, WebActivity::class.java)
@@ -124,7 +127,13 @@ class FindFragment :BaseFragment(), FindView,View.OnClickListener{
         }
     }
 
-
+    override fun onGetRegion(list: List<RegionData.Data>) {
+        cancleProgressDialog()
+        EventBus.getDefault().postSticky(list)
+        var intent = Intent(activity, RankListActivity::class.java)
+        intent.putExtra("type",resources.getString(R.string.find_line_top_all))
+        startActivity(intent)
+    }
     override fun onGetSearchResult(result: SearchResultData) {
 
     }

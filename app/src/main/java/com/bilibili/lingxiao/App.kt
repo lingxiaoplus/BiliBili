@@ -9,6 +9,7 @@ import com.camera.lingxiao.common.Common
 import com.camera.lingxiao.common.exception.crash.CrashActivity
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.lingxiao.skinlibrary.SkinLib
+import com.raizlabs.android.dbflow.config.FlowManager
 import com.tencent.smtt.sdk.QbSdk
 
 class App : Application() {

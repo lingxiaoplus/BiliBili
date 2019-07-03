@@ -18,6 +18,7 @@ import com.camera.lingxiao.common.app.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
+import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import kotlinx.android.synthetic.main.normal_refresh_view.*
 import kotlinx.android.synthetic.main.normal_refresh_view.view.*
 import kotlinx.android.synthetic.main.normal_refresh_view.view.refresh
@@ -30,6 +31,8 @@ class RankListFragment :BaseFragment(),RankListView{
     private val pageSize = 20
     private var pageType :String? = null
     private var rid :Int = 0
+
+    private lateinit var refresh:SmartRefreshLayout
     override val contentLayoutId: Int
         get() = R.layout.normal_refresh_view
 
@@ -52,6 +55,7 @@ class RankListFragment :BaseFragment(),RankListView{
             }else
                 mPresenter.getOriginRankingList(pageType!!,page,pageSize)
         }
+        refresh = root.refresh
         root.refresh.setOnLoadMoreListener{
             page++
             if (pageType.isNullOrEmpty()){

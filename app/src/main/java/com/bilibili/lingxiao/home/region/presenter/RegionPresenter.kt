@@ -1,6 +1,7 @@
 package com.bilibili.lingxiao.home.region.presenter
 
 import com.bilibili.lingxiao.HttpTrans
+import com.bilibili.lingxiao.database.RegionTable
 import com.bilibili.lingxiao.home.region.model.RegionData
 import com.bilibili.lingxiao.home.region.model.RegionRecommendData
 import com.bilibili.lingxiao.home.region.ui.RegionFragment
@@ -17,7 +18,8 @@ class RegionPresenter(view: RegionView, fragment: RegionFragment) :
         httpTrans.getRegion(object :HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {
                 var lists = res as Array<*>
-                mView?.onGetRegion(lists[0] as List<RegionData.Data>)
+                var list = lists[0] as List<RegionData.Data>
+                mView?.onGetRegion(list)
             }
 
             override fun onError(code: Int, desc: String?) {

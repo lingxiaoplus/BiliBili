@@ -4,45 +4,52 @@ import com.google.gson.annotations.SerializedName
 
 data class RegionData(
     @SerializedName("data")
-    val `data`: List<Data>
-) {
+    var `data`: List<Data>
+){
+    /*@OneToMany(oneToManyMethods = [OneToManyMethod.ALL], variableName = "data")
+    fun getList(): List<Data> {
+        if (data == null || data.isEmpty()) {
+            data = (select from(Data::class.java)).list
+        }
+        return data
+    }*/
     data class Data(
         @SerializedName("children")
-        val children: List<Children>,
+        var children: List<Children>,
         @SerializedName("goto")
-        val goto: String,
+        var goto: String,
         @SerializedName("is_bangumi")
-        val isBangumi: Int,
+        var isBangumi: Int,
         @SerializedName("logo")
-        val logo: String,
+        var logo: String,
         @SerializedName("name")
-        val name: String,
+        var name: String,
         @SerializedName("param")
-        val `param`: String,
+        var `param`: String,
         @SerializedName("reid")
         val reid: Int,
         @SerializedName("tid")
-        val tid: Int,
+        var tid: Int,
         @SerializedName("type")
-        val type: Int,
+        var type: Int,
         @SerializedName("uri")
-        val uri: String
+        var uri: String
     ) {
         data class Children(
             @SerializedName("goto")
-            val goto: String,
+            var goto: String,
             @SerializedName("logo")
-            val logo: String,
+            var logo: String,
             @SerializedName("name")
-            val name: String,
+            var name: String,
             @SerializedName("param")
-            val `param`: String,
+            var `param`: String,
             @SerializedName("reid")
-            val reid: Int,
+            var reid: Int,
             @SerializedName("tid")
-            val tid: Int,
+            var tid: Int,
             @SerializedName("type")
-            val type: Int
+            var type: Int
         )
     }
 }

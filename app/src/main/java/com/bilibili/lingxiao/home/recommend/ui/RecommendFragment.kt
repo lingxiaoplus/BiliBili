@@ -26,17 +26,15 @@ import org.greenrobot.eventbus.EventBus
 import kotlin.properties.Delegates
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.graphics.drawable.BitmapDrawable
 import android.widget.TextView
 import android.widget.LinearLayout
-import android.widget.PopupWindow
 import com.bilibili.lingxiao.web.WebActivity
 import com.youth.banner.listener.OnBannerListener
 import android.animation.Animator
-import android.support.v7.widget.LinearLayoutManager
 import com.bilibili.lingxiao.GlobalProperties
 import com.camera.lingxiao.common.utills.PopwindowUtil
 import com.camera.lingxiao.common.utills.SpUtils
+import kotlin.collections.ArrayList
 
 
 class RecommendFragment :BaseFragment(), RecommendView {

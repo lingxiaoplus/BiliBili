@@ -7,18 +7,19 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
 import android.content.Context
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
+import com.bilibili.lingxiao.database.NetCacheDatabase
 
 import com.camera.lingxiao.common.Common
-import com.camera.lingxiao.common.utills.LogUtils
-import com.dbflow5.config.FlowManager
 import com.lingxiao.skinlibrary.SkinLib
+import com.raizlabs.android.dbflow.config.FlowManager
 import com.tencent.smtt.sdk.QbSdk
+import com.raizlabs.android.dbflow.config.FlowConfig
+
+
 
 /**
  * An [IntentService] subclass for handling asynchronous task requests in
@@ -74,7 +75,7 @@ class InitIalizeService : IntentService("InitIalizeService") {
         SkinLib.init(mContext as Application)
         QbSdk.initX5Environment(this, null)
         Common.initCrash(this, true)
-        FlowManager.init(this)
+        FlowManager.init(FlowConfig.Builder(this).build())
     }
 
     companion object {

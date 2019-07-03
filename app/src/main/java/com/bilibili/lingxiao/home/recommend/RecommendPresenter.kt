@@ -5,8 +5,6 @@ import com.bilibili.lingxiao.home.recommend.ui.RecommendFragment
 import com.bilibili.lingxiao.home.recommend.view.RecommendView
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.observer.HttpRxCallback
-import java.lang.ClassCastException
-import java.lang.NullPointerException
 
 class RecommendPresenter :BasePresenter<RecommendView, RecommendFragment>{
     var liveTrans : RecommendTrans
@@ -15,11 +13,11 @@ class RecommendPresenter :BasePresenter<RecommendView, RecommendFragment>{
     }
 
     fun getRecommendList(operationState :Int){
-
         liveTrans.getRecommendList(operationState,object :HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {
                 val lists = res as Array<*>
-                mView?.onGetRecommendData(lists[0] as List<RecommendData>)
+                var list = lists[0] as List<RecommendData>
+                mView?.onGetRecommendData(list)
             }
 
             override fun onError(code: Int, desc: String?) {

@@ -1,6 +1,7 @@
 package com.bilibili.lingxiao.home.find.presenter
 
 import com.bilibili.lingxiao.HttpTrans
+import com.bilibili.lingxiao.database.RegionTable
 import com.bilibili.lingxiao.home.find.FindView
 import com.bilibili.lingxiao.home.find.model.HotWordsData
 import com.bilibili.lingxiao.home.find.ui.FindFragment
@@ -31,10 +32,24 @@ class FindPresenter(view: FindView, fragment: FindFragment)
     }
 
     fun getRegion(){
+
         httpTrans.getRegion(object :HttpRxCallback<Any>(){
             override fun onSuccess(res: Any?) {
                 var lists = res as Array<*>
-                mView?.onGetRegion(lists[0] as List<RegionData.Data>)
+                var list = lists[0] as List<RegionData.Data>
+                /*var timeStamp = System.currentTimeMillis()
+                list.forEach {
+                    val region = RegionTable()
+                    region.logo = it.logo
+                    region.name = it.name
+                    region.reid = it.reid
+                    region.tid = it.tid
+                    region.type = it.type
+                    region.uri = it.uri
+                    region.updateAt = timeStamp
+                    region.save()
+                }*/
+                mView?.onGetRegion(list)
             }
 
             override fun onError(code: Int, desc: String?) {

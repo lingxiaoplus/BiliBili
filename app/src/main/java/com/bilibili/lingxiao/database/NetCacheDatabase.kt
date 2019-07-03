@@ -1,10 +1,10 @@
 package com.bilibili.lingxiao.database
 
-import com.dbflow5.annotation.Database
-import com.dbflow5.config.DBFlowDatabase
+import com.raizlabs.android.dbflow.annotation.Database
+
 
 @Database(name = NetCacheDatabase.NAME,version = NetCacheDatabase.VERSION)
-abstract class NetCacheDatabase :DBFlowDatabase(){
+class NetCacheDatabase {
     companion object{
         const val NAME = "NetCache"
         const val VERSION = 1

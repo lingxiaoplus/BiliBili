@@ -99,10 +99,15 @@ dependencies {
     //骨架屏
     implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
     // Use if Kotlin user.
-    kapt "com.github.agrosner.dbflow:processor:$rootProject.ext.dbFlowVersion"
+    //kapt "com.github.agrosner.dbflow:processor:$rootProject.ext.dbFlowVersion"
     // core set of libraries
-    implementation "com.github.agrosner.dbflow:core:$rootProject.ext.dbFlowVersion"
-    implementation "com.github.agrosner.dbflow:lib:$rootProject.ext.dbFlowVersion"
+    //implementation "com.github.agrosner.dbflow:core:$rootProject.ext.dbFlowVersion"
+    //implementation "com.github.agrosner.dbflow:lib:$rootProject.ext.dbFlowVersion"
+
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:$rootProject.ext.dbFlowVersion"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.ext.dbFlowVersion"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:$rootProject.ext.dbFlowVersion"
+
     //implementation "com.ashokvarma.android:bottom-navigation-bar:$rootProject.ext.bottomNavigationBar"
     //implementation files('libs/Java-WebSocket-1.3.8.jar')
     //implementation 'com.github.paulyung541:LaybelLayout:v1.2.0'

@@ -29,7 +29,7 @@ data class RecommendData(
     var title: String?,
     val tname: String?,
     val uri: String?
-){
+) {
     data class BannerItem(
         val ad_cb: String,
         var click_url: String,
@@ -49,7 +49,7 @@ data class RecommendData(
         val src_id: Int,
         var title: String,
         var uri: String
-    ) {
+    ){
         data class Extra(
             val card: Card,
             val click_urls: List<String>,
