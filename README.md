@@ -2,6 +2,14 @@
 
 使用ijkplayer，实现一个仿B站的Android客户端。使用组件化的思想对项目进行拆分，目前分出两个组件，一个是网络请求组件，一个是视频播放组件。
 
+扫码体验：
+
+![](https://blog-1252348761.cos.ap-chengdu.myqcloud.com/http/bilibili/QRCode_258.png)
+
+
+
+
+
 ### 组件化实现方案
 
 组件化使用的方案出自张华洋的文章：[Android组件化方案](https://blog.csdn.net/guiying712/article/details/55213884)

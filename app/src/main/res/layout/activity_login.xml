@@ -206,6 +206,7 @@
                 android:background="@drawable/register_button_background"
         />
         <Button
+                android:id="@+id/login"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
                 android:text="@string/login_title"

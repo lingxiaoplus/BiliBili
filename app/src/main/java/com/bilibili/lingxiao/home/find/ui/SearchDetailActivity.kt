@@ -46,7 +46,8 @@ class SearchDetailActivity : BaseActivity() , FindView {
 
     private fun initSearchView() {
         //设置左侧有放大镜(在搜索框中) 右侧有叉叉
-        searchview.setIconified(false)
+        //searchview.setIconified(false)
+        searchview.onActionViewExpanded();
         var textView =
             searchview.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
         textView.setTextColor(resources.getColor(R.color.black_alpha_160))

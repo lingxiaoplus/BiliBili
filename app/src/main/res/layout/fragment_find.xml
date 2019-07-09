@@ -26,6 +26,7 @@
                     android:layout_margin="@dimen/dp_10"
             >
                 <LinearLayout
+                        android:id="@+id/search"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -38,16 +39,16 @@
                             app:srcCompat="@drawable/ic_img_search"
                             android:tint="@color/black_alpha_112"
                     />
-                    <EditText
+                    <TextView
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:hint="@string/search_bar_hint"
                             android:textSize="@dimen/font_14"
                             android:layout_marginLeft="@dimen/dp_10"
-                            android:background="@null"
                     />
                     <ImageView
+                            android:id="@+id/search_qr"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat="@drawable/ic_search_qr"

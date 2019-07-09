@@ -3,7 +3,10 @@ package com.bilibili.lingxiao.home.find.ui
 import android.content.Intent
 import android.support.design.widget.Snackbar
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.database.RegionTable
@@ -19,6 +22,7 @@ import com.bilibili.lingxiao.web.WebActivity
 import com.bilibili.lingxiao.widget.LaybelLayout
 
 import com.camera.lingxiao.common.app.BaseFragment
+import com.camera.lingxiao.common.utills.PopwindowUtil
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import kotlinx.android.synthetic.main.fragment_find.*
 import kotlinx.android.synthetic.main.fragment_find.view.*
@@ -63,6 +67,22 @@ class FindFragment :BaseFragment(), FindView,View.OnClickListener{
                 startActivity(intent)
             }
         })
+        root.search.setOnClickListener {
+            val popwindowUtil = PopwindowUtil.PopupWindowBuilder(context!!)
+                .setView(R.layout.fragment_dialog_search)
+                .size(ViewGroup.LayoutParams.MATCH_PARENT.toFloat(), ViewGroup.LayoutParams.WRAP_CONTENT.toFloat())
+                .setFocusable(true)
+                .setTouchable(true)
+                .setOutsideTouchable(true)
+                .create()
+            popwindowUtil.showAtLocation(it,0,-it.getHeight(), Gravity.TOP,0.5f)
+            popwindowUtil.getView<ImageView>(R.id.image_exit)!!.setOnClickListener {
+                popwindowUtil.dissmiss()
+            }
+        }
+        root.search_qr.setOnClickListener {
+            Snackbar.make(it,"通过扫码查找",Snackbar.LENGTH_SHORT).show()
+        }
     }
     override fun onFirstVisiblity() {
         super.onFirstVisiblity()

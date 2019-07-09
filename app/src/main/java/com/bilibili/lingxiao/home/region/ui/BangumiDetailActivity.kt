@@ -11,6 +11,7 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_bangumi_detail.*
 import android.graphics.drawable.AnimationDrawable
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -23,6 +24,7 @@ import com.bilibili.lingxiao.home.region.presenter.BangumiDetailPresenter
 import com.bilibili.lingxiao.home.region.view.BangumiView
 import com.bilibili.lingxiao.utils.StringUtil
 import com.bilibili.lingxiao.utils.ToastUtil
+import com.camera.lingxiao.common.utills.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.content_bangumi_detail.*
@@ -45,6 +47,8 @@ class BangumiDetailActivity : BaseActivity(), BangumiView{
         var id = intent.getStringExtra("id")
         var type = intent.getStringExtra("type")
         presenter.getBangumiDetail(id,type)
+
+
     }
 
 
@@ -73,6 +77,10 @@ class BangumiDetailActivity : BaseActivity(), BangumiView{
             recycler_select_set.adapter = tvAdapter
             recycler_select_set.isNestedScrollingEnabled = false
             recycler_select_set.isVerticalScrollBarEnabled = false
+            tvAdapter.setOnItemClickListener { adapter, view, position ->
+                LogUtils.d("点击了番剧的播放: ${adapter.data[position]}")
+                //Snackbar.make(view,"通过扫码查找", Snackbar.LENGTH_SHORT).show()
+            }
         }
         image_cover.setImageURI(Uri.parse(data.result.cover + GlobalProperties.IMAGE_RULE_200_266))
         toolbar.title = data.result.bangumiTitle

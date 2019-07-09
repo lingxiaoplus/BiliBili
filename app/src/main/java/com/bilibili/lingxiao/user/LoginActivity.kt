@@ -1,11 +1,18 @@
 package com.bilibili.lingxiao.user
 
+import android.support.design.widget.Snackbar
 import android.view.View
 import com.bilibili.lingxiao.R
+import com.bilibili.lingxiao.utils.ToastUtil
 import com.camera.lingxiao.common.app.BaseActivity
+import com.camera.lingxiao.common.utills.LogUtils
+import com.hiczp.bilibili.api.app.model.MyInfo
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : BaseActivity() {
+class LoginActivity : BaseActivity() ,LoginView{
+    private val mPresenter by lazy {
+        LoginPresenter(this,this)
+    }
     override val contentLayoutId: Int
         get() = R.layout.activity_login
 
@@ -28,6 +35,45 @@ class LoginActivity : BaseActivity() {
                 }
             }
         })
+
+        login.setOnClickListener {
+            val username = login_et_username.text.toString()
+            val password = login_et_password.text.toString()
+            if (username.isEmpty()){
+                Snackbar.make(it,resources.getString(R.string.input_username),Snackbar.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (password.isEmpty()){
+                Snackbar.make(it,resources.getString(R.string.input_password),Snackbar.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            showProgressDialog("登录中...")
+            mPresenter.login(username,password)
+        }
     }
 
+    override fun showDialog() {
+
+    }
+
+    override fun onLogin(success: Boolean, error: String?, user: MyInfo?) {
+        if (success){
+            ToastUtil.show("登录成功 ${user?.data?.name}")
+            LogUtils.d("登录结果：$user")
+        }else{
+            ToastUtil.show("登录失败 ${error}")
+        }
+    }
+
+    override fun onLogout() {
+
+    }
+
+    override fun diamissDialog() {
+        cancleProgressDialog()
+    }
+
+    override fun showToast(text: String?) {
+        ToastUtil.show(text)
+    }
 }

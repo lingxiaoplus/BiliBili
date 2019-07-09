@@ -59,9 +59,17 @@
                             android:textColorHint="@color/black_alpha_112"
                             android:textSize="@dimen/font_14"
                     />-->
+                    <ImageView
+                            android:id="@+id/close"
+                            style="@style/image_small"
+                            android:src="@drawable/ic_toolbar_menu_search"
+                            android:tint="@color/black_alpha_112"
+                            android:layout_margin="@dimen/dp_4"
+                    />
                     <android.support.v7.widget.SearchView
                             android:id="@+id/searchview"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             app:queryHint="@string/search_everyone"
                             style="@style/SearchView"

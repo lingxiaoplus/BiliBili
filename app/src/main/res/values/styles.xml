@@ -135,6 +135,6 @@
     <style name="SearchView" parent="Widget.AppCompat.SearchView">
         <item name="android:tint">@color/black_alpha_112</item>
         <item name="closeIcon">@drawable/ic_search_close</item>
-        <item name="searchIcon">@drawable/ic_search_api_material_dark</item>
+        <!--<item name="searchIcon">@drawable/ic_search_api_material_dark</item>-->
     </style>
 </resources>
