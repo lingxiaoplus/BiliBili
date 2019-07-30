@@ -100,7 +100,11 @@ class LiveFragment :BaseFragment() , LiveView {
                 R.id.live_recommend_more -> startActivity(Intent(context,LiveAllActivity::class.java))
             }
         }
-        floatingBtnToogle(root.live_recy, root.fab_live)
+        //floatingBtnToogle(root.live_recy, root.fab_live)
+        root.fab_live.setOnClickListener {
+          val intent = Intent(activity,StreamHomeActivity::class.java)
+            startActivity(intent)
+        }
         initTopAndBottomView()
     }
 

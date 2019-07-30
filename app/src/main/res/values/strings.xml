@@ -129,6 +129,8 @@
     <string name="exit_account">退出登录</string>
     <string name="find_searching">搜索中</string>
     <string name="reset_app_change">下次进入Bilibili生效</string>
+    <string name="not_idcard_approve">未身份认证</string>
+    <string name="set_up_bordcast">设置主播公告</string>
 
 
 </resources>

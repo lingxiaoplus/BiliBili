@@ -18,6 +18,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/MainTheme">
+        <activity android:name=".home.live.ui.StreamHomeActivity">
+        </activity>
         <activity android:name=".home.find.ui.RankListActivity">
         </activity>
         <activity android:name=".home.find.ui.TopicCenterActivity">
@@ -45,8 +47,7 @@
         </activity>
         <activity
                 android:name=".SplashActivity"
-                android:theme="@style/FullScreen"
-        >
+                android:theme="@style/FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
