@@ -2,12 +2,16 @@ package com.bilibili.lingxiao.user
 
 import android.support.design.widget.Snackbar
 import android.view.View
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.utills.LogUtils
+import com.camera.lingxiao.common.utills.SpUtils
+import com.google.gson.Gson
 import com.hiczp.bilibili.api.app.model.MyInfo
 import kotlinx.android.synthetic.main.activity_login.*
+import org.greenrobot.eventbus.EventBus
 
 class LoginActivity : BaseActivity() ,LoginView{
     private val mPresenter by lazy {
@@ -60,6 +64,9 @@ class LoginActivity : BaseActivity() ,LoginView{
         if (success){
             ToastUtil.show("登录成功 ${user?.data?.name}")
             LogUtils.d("登录结果：$user")
+            SpUtils.putString(applicationContext, GlobalProperties.USER_INFO, Gson().toJson(user))
+            EventBus.getDefault().post(user)
+            finish()
         }else{
             ToastUtil.show("登录失败 ${error}")
         }

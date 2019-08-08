@@ -76,7 +76,10 @@ object GlobalProperties {
     const val SRC = "bili"
     const val VERSION = "5.19.0.519000"
 
-    val HOME_COLUMNS = "home_columns"  //首页列数
+    const val HOME_COLUMNS = "home_columns"  //首页列数
+    const val LOGIN_RESPONSE = "login_response" //登录成功之后保存，用于恢复登录的状态
+    //TODO: 暂时将用户信息存在xml里
+    const val USER_INFO = "user_info"
     val TAG = GlobalProperties::class.java.simpleName
 
 

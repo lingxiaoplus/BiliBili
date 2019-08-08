@@ -2,6 +2,7 @@ package com.bilibili.lingxiao.home
 
 
 import android.Manifest
+import android.net.Uri
 import android.support.design.internal.NavigationMenuView
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Gravity
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.dynamic.DynamicFragment
 import com.bilibili.lingxiao.home.find.ui.FindFragment
@@ -34,7 +36,8 @@ import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 import com.camera.lingxiao.common.app.ActivityController
-
+import com.facebook.drawee.view.SimpleDraweeView
+import com.hiczp.bilibili.api.app.model.MyInfo
 
 
 class MainActivity : BaseActivity() {
@@ -83,6 +86,13 @@ class MainActivity : BaseActivity() {
             .apply()
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    fun onLogined(user: MyInfo){
+        image_header.setImageURI(Uri.parse(user.data.face))
+        username.setText(user.data.name)
+
+    }
+
     override fun initWidget() {
         super.initWidget()
         //权限检测
@@ -118,6 +128,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    private lateinit var navigationView:View
     private fun initNavigationView() {
         var drawerToggle = object : ActionBarDrawerToggle(this,main_drawer_layout,
             main_toolbar, R.string.open, R.string.close
@@ -157,6 +168,23 @@ class MainActivity : BaseActivity() {
         //隐藏NavigationView右侧滚动条
         var navigationMenuView = main_navigation.getChildAt(0) as NavigationMenuView
         navigationMenuView.isVerticalScrollBarEnabled = false
+
+        
+
+    }
+
+    private fun changeLoginedNavigation(user:MyInfo){
+        val name = navigationView.findViewById<TextView>(R.id.text_name)
+        val dynamicNum = navigationView.findViewById<TextView>(R.id.dynamic_num)
+        val followedNum = navigationView.findViewById<TextView>(R.id.followed_num)
+        val followingNum = navigationView.findViewById<TextView>(R.id.following_num)
+        var header_view = navigationView.findViewById<SimpleDraweeView>(R.id.nav_header)
+        user.data.let {
+            header_view.setImageURI(Uri.parse(it.face))
+            name.text = it.name
+        }
+
+
     }
 
     private fun initTabLayout() {
