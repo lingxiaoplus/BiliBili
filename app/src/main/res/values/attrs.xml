@@ -43,4 +43,8 @@
         <attr name="text_background" format="reference"/><!-- TextView的背景 -->
         <attr name="child_margin" format="integer"/><!-- 子View的外边距 -->
     </declare-styleable>
+
+    <declare-styleable name="ArcView">
+        <attr name="arcbackground" format="color"/>
+    </declare-styleable>
 </resources>
