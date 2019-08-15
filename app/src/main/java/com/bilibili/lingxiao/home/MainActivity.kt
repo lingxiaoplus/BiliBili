@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.dynamic.DynamicFragment
 import com.bilibili.lingxiao.home.find.ui.FindFragment
@@ -36,16 +37,20 @@ import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 import com.camera.lingxiao.common.app.ActivityController
+import com.camera.lingxiao.common.utills.SpUtils
+import com.facebook.drawee.drawable.ScalingUtils
 import com.facebook.drawee.view.SimpleDraweeView
+import com.facebook.imagepipeline.common.ImageDecodeOptionsBuilder
+import com.google.gson.Gson
 import com.hiczp.bilibili.api.app.model.MyInfo
 
 
 class MainActivity : BaseActivity() {
 
-    val tabArray by lazy {
+    private val tabArray by lazy {
      resources.getStringArray(R.array.main_tab)
     }
-    var drawerOpened = false
+    private var drawerOpened = false
     private val mPermessions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.READ_EXTERNAL_STORAGE)
 
@@ -62,7 +67,7 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var findFragment: FindFragment
 
-    var fragmentList:ArrayList<BaseFragment> = arrayListOf()
+    private var fragmentList:ArrayList<BaseFragment> = arrayListOf()
 
     override val contentLayoutId: Int
         get() = R.layout.activity_main
@@ -86,11 +91,9 @@ class MainActivity : BaseActivity() {
             .apply()
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLogined(user: MyInfo){
-        image_header.setImageURI(Uri.parse(user.data.face))
-        username.setText(user.data.name)
-
+        changeLoginedState(user)
     }
 
     override fun initWidget() {
@@ -99,7 +102,7 @@ class MainActivity : BaseActivity() {
         if (!EasyPermissions.hasPermissions(this, *mPermessions)){
             //没有权限就申请
             EasyPermissions.requestPermissions(this, "申请权限",
-                100, *mPermessions);
+                100, *mPermessions)
         }
         setSupportActionBar(main_toolbar)
         //设置返回键可用
@@ -121,16 +124,21 @@ class MainActivity : BaseActivity() {
                 .setTouchable(true)
                 .setOutsideTouchable(true)
                 .create()
-            popwindowUtil.showAtLocation(it,0,-it.getHeight(),Gravity.TOP,0.5f)
+            popwindowUtil.showAtLocation(it,0,-it.height,Gravity.TOP,0.5f)
             popwindowUtil.getView<ImageView>(R.id.image_exit)!!.setOnClickListener {
                 popwindowUtil.dissmiss()
             }
+        }
+        val info = SpUtils.getString(this, GlobalProperties.USER_INFO, "")
+        if (info.isNotEmpty()){
+            val userInfo = Gson().fromJson(info,MyInfo::class.java)
+            changeLoginedState(userInfo)
         }
     }
 
     private lateinit var navigationView:View
     private fun initNavigationView() {
-        var drawerToggle = object : ActionBarDrawerToggle(this,main_drawer_layout,
+        val drawerToggle = object : ActionBarDrawerToggle(this,main_drawer_layout,
             main_toolbar, R.string.open, R.string.close
         ){
             override fun onDrawerOpened(drawerView: View) {
@@ -152,11 +160,11 @@ class MainActivity : BaseActivity() {
                 main_drawer_layout.openDrawer(Gravity.START)
             }
         }
-        var navigationView = main_navigation.inflateHeaderView(R.layout.nav_header)
-        var header_view = navigationView.findViewById<View>(R.id.nav_header)
-        header_view.setOnClickListener({
+        navigationView = main_navigation.inflateHeaderView(R.layout.nav_header)
+        val headerView = navigationView.findViewById<SimpleDraweeView>(R.id.nav_header)
+        headerView.setOnClickListener{
             StartActivity(LoginActivity::class.java,false)
-        })
+        }
         findViewById<LinearLayout>(R.id.ll_nav_setting)
             .setOnClickListener {
                 StartActivity(SettingActivity::class.java,false)
@@ -166,25 +174,29 @@ class MainActivity : BaseActivity() {
                 StartActivity(ThemeActivity::class.java,false)
             }
         //隐藏NavigationView右侧滚动条
-        var navigationMenuView = main_navigation.getChildAt(0) as NavigationMenuView
+        val navigationMenuView = main_navigation.getChildAt(0) as NavigationMenuView
         navigationMenuView.isVerticalScrollBarEnabled = false
-
-        
-
     }
 
-    private fun changeLoginedNavigation(user:MyInfo){
+    private fun changeLoginedState(user:MyInfo){
         val name = navigationView.findViewById<TextView>(R.id.text_name)
         val dynamicNum = navigationView.findViewById<TextView>(R.id.dynamic_num)
         val followedNum = navigationView.findViewById<TextView>(R.id.followed_num)
         val followingNum = navigationView.findViewById<TextView>(R.id.following_num)
-        var header_view = navigationView.findViewById<SimpleDraweeView>(R.id.nav_header)
+        val headerView = navigationView.findViewById<SimpleDraweeView>(R.id.nav_header)
+
+        headerView.hierarchy.actualImageScaleType = ScalingUtils.ScaleType.CENTER_CROP
+        val imageDecode = ImageDecodeOptionsBuilder().setForceStaticImage(true).build()
+
         user.data.let {
-            header_view.setImageURI(Uri.parse(it.face))
+            headerView.setImageURI(Uri.parse(it.face))
             name.text = it.name
+            dynamicNum.text = "0"
+            followedNum.text = "0"
+            followingNum.text = "0"
         }
-
-
+        image_header.setImageURI(Uri.parse(user.data.face))
+        username.text = user.data.name
     }
 
     private fun initTabLayout() {
@@ -202,7 +214,7 @@ class MainActivity : BaseActivity() {
         main_tabLayout.setupWithViewPager(main_viewPager)
         main_viewPager.currentItem = 1
         //设置viewpager缓存页面个数
-        main_viewPager.setOffscreenPageLimit(4)
+        main_viewPager.offscreenPageLimit = 4
     }
 
     private var preTime: Long = 0

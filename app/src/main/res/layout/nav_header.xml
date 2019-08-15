@@ -27,7 +27,6 @@
                     android:layout_height="45dp"
                     fresco:progressBarImageScaleType="centerInside"
                     fresco:progressBarImage="@drawable/ic_img_user_head_default"
-                    fresco:overlayImage="@drawable/ic_img_user_head_default"
                     fresco:roundAsCircle="true"
                     fresco:roundingBorderWidth="1dp"
                     android:layout_margin="8dp"

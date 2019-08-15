@@ -1,5 +1,6 @@
 package com.bilibili.lingxiao.user
 
+import android.os.Handler
 import com.bilibili.lingxiao.GlobalProperties
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.utills.SpUtils
@@ -13,6 +14,7 @@ import kotlinx.coroutines.runBlocking
 class LoginPresenter(view: LoginView, activity: LoginActivity) :
     BasePresenter<LoginView, LoginActivity>(view, activity) {
     lateinit var commonResponse: CommonResponse
+
     fun login(userName:String,password:String){
         runBlocking{
                 val bilibiliClient = BilibiliClient().apply {
