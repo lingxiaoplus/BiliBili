@@ -4,7 +4,7 @@
 
 扫码体验：
 
-![](https://blog-1252348761.cos.ap-chengdu.myqcloud.com/http/bilibili/QRCode_258.png)
+![](https://blog-1252348761.cos.ap-chengdu.myqcloud.com/bilibili/1577761537.png)
 
 
 
