@@ -3,8 +3,8 @@ package com.bilibili.lingxiao.home
 
 import android.Manifest
 import android.net.Uri
-import android.support.design.internal.NavigationMenuView
-import android.support.v7.app.ActionBarDrawerToggle
+
+import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +41,7 @@ import com.camera.lingxiao.common.utills.SpUtils
 import com.facebook.drawee.drawable.ScalingUtils
 import com.facebook.drawee.view.SimpleDraweeView
 import com.facebook.imagepipeline.common.ImageDecodeOptionsBuilder
+import com.google.android.material.internal.NavigationMenuView
 import com.google.gson.Gson
 import com.hiczp.bilibili.api.app.model.MyInfo
 

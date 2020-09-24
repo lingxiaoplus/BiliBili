@@ -2,8 +2,8 @@ package com.bilibili.lingxiao.home.mikan.ui
 
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -45,8 +45,9 @@ class MikanFragment :BaseFragment(), MikanView {
 
     override fun initWidget(root: View) {
         super.initWidget(root)
-        var manager = GridLayoutManager(activity,3)
-        manager.setSpanSizeLookup(object :GridLayoutManager.SpanSizeLookup(){
+        var manager = androidx.recyclerview.widget.GridLayoutManager(activity, 3)
+        manager.setSpanSizeLookup(object :
+            androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup(){
             override fun getSpanSize(position: Int): Int {
                 var type = 0
                 if (mMikanAdapter.data.size > 0){

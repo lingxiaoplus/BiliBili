@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".user.LoginActivity">
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -27,7 +27,7 @@
                 android:layout_marginLeft="200dp"
                 android:layout_marginRight="10dp"
         />
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -73,7 +73,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
     >
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/login_iv_username"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:padding="6dp"
         >
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/login_img_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
     >
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/login_iv_password"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -159,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:padding="6dp"
         >
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/login_img_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

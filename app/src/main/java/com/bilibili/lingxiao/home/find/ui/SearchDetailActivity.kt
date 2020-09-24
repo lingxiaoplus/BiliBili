@@ -1,6 +1,6 @@
 package com.bilibili.lingxiao.home.find.ui
 
-import android.support.v7.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.find.FindView
 import com.bilibili.lingxiao.home.find.presenter.SearchDetailPresenter

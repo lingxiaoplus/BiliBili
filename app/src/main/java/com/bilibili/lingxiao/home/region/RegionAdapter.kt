@@ -1,9 +1,9 @@
 package com.bilibili.lingxiao.home.region
 
 import android.net.Uri
-import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -24,9 +24,9 @@ import java.util.*
 import kotlin.properties.Delegates
 
 class RegionAdapter :BaseQuickAdapter<MultiRegionData, BaseViewHolder> {
-    var recycledViewPool: RecyclerView.RecycledViewPool by Delegates.notNull()
+    var recycledViewPool: androidx.recyclerview.widget.RecyclerView.RecycledViewPool by Delegates.notNull()
 
-    constructor(data:MutableList<MultiRegionData>, recycledViewPool:RecyclerView.RecycledViewPool) :super(data){
+    constructor(data:MutableList<MultiRegionData>, recycledViewPool: androidx.recyclerview.widget.RecyclerView.RecycledViewPool) :super(data){
         this.recycledViewPool = recycledViewPool
         multiTypeDelegate = object : MultiTypeDelegate<MultiRegionData>() {
             override fun getItemType(entity: MultiRegionData): Int {

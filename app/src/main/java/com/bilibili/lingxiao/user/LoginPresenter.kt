@@ -1,7 +1,8 @@
 package com.bilibili.lingxiao.user
 
-import android.os.Handler
 import com.bilibili.lingxiao.GlobalProperties
+import com.bilibili.lingxiao.database.UserInfoTable
+import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BasePresenter
 import com.camera.lingxiao.common.utills.SpUtils
 import com.google.gson.Gson
@@ -31,7 +32,21 @@ class LoginPresenter(view: LoginView, activity: LoginActivity) :
                         }
                         val myInfo = appAPI.myInfo().await()
                         mView?.onLogin(true,null,myInfo)
-                    }catch (ex:BilibiliApiException){
+                        val info = UIUtil.getDataBase().userDao().findById(myInfo.data.mid)
+                        if (info != null){
+                            with(myInfo.data){
+                                UIUtil.getDataBase().userDao().update(
+                                    UserInfoTable(mid,birthday,coins,face,level,name,sex,sign,silence,telStatus,
+                                        official,vip))
+                            }
+                        }else{
+                            with(myInfo.data){
+                                UIUtil.getDataBase().userDao().insertUser(
+                                    UserInfoTable(mid,birthday,coins,face,level,name,sex,sign,silence,telStatus,
+                                        official,vip))
+                            }
+                        }
+                    }catch (ex :BilibiliApiException){
                         ex.printStackTrace()
                         mView?.onLogin(false, ex.message)
                     }finally {

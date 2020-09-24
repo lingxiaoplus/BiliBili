@@ -2,8 +2,8 @@ package com.bilibili.lingxiao.home.region.ui
 
 import android.content.Intent
 import android.hardware.usb.UsbManager
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import com.bilibili.lingxiao.R
@@ -37,8 +37,9 @@ class RegionFragment :BaseFragment() , RegionView {
 
     override fun initWidget(root: View) {
         super.initWidget(root)
-        var manager = GridLayoutManager(activity,4)
-        manager.setSpanSizeLookup(object :GridLayoutManager.SpanSizeLookup(){
+        var manager = androidx.recyclerview.widget.GridLayoutManager(activity, 4)
+        manager.setSpanSizeLookup(object :
+            androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup(){
             override fun getSpanSize(position: Int): Int {
                 //先设置adapter 再设置manager才会调用
                 var type = 0
@@ -53,7 +54,7 @@ class RegionFragment :BaseFragment() , RegionView {
                 }
             }
         })
-        val recycledViewPool = RecyclerView.RecycledViewPool()
+        val recycledViewPool = androidx.recyclerview.widget.RecyclerView.RecycledViewPool()
         regionAdapter = RegionAdapter(regionList, recycledViewPool)
         root.category_recyclerview.adapter = regionAdapter
         root.category_recyclerview.layoutManager = manager

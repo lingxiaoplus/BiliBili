@@ -96,7 +96,7 @@ class LivePlayActivity : BaseActivity() , LivePlayView {
             .apply();
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         live_play.onConfigurationChang(newConfig)
     }

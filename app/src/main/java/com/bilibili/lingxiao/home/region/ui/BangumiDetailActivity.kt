@@ -11,9 +11,9 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.github.zackratos.ultimatebar.UltimateBar
 import kotlinx.android.synthetic.main.activity_bangumi_detail.*
 import android.graphics.drawable.AnimationDrawable
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -69,10 +69,13 @@ class BangumiDetailActivity : BaseActivity(), BangumiView{
             )
             //Collections.reverse(it)
             var tvAdapter = BangumiTvAdapter(R.layout.item_bangumi_tv, it)
-            recycler_select_set.layoutManager = LinearLayoutManager(
-                this@BangumiDetailActivity
-                , LinearLayoutManager.HORIZONTAL, true
-            )  //最后一个参数 ，逆序排列
+            recycler_select_set.layoutManager =
+                androidx.recyclerview.widget.LinearLayoutManager(
+                    this@BangumiDetailActivity
+                    ,
+                    androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL,
+                    true
+                )  //最后一个参数 ，逆序排列
             recycler_select_set.smoothScrollToPosition(0)
             recycler_select_set.adapter = tvAdapter
             recycler_select_set.isNestedScrollingEnabled = false
@@ -101,8 +104,10 @@ class BangumiDetailActivity : BaseActivity(), BangumiView{
             return
         }
         recommendAdapter = BangumiRecommendAdapter(R.layout.item_mikan_video, recommendList)
-        recycler_recommend.layoutManager = GridLayoutManager(
-            this@BangumiDetailActivity,3)
+        recycler_recommend.layoutManager =
+            androidx.recyclerview.widget.GridLayoutManager(
+                this@BangumiDetailActivity, 3
+            )
         recycler_recommend.adapter = recommendAdapter
         recycler_recommend.setHasFixedSize(true)
         recycler_recommend.isNestedScrollingEnabled = false

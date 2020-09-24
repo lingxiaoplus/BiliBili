@@ -1,8 +1,8 @@
 package com.bilibili.lingxiao.widget.behavior
 
 import android.content.Context
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CoordinatorLayout
+import com.google.android.material.appbar.AppBarLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import android.util.AttributeSet
 import android.view.View
 import com.bilibili.lingxiao.ijkplayer.widget.SimplePlayerView
@@ -17,7 +17,7 @@ class PlayerBehavior : AppBarLayout.ScrollingViewBehavior {
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 
-    override fun layoutDependsOn(parent: CoordinatorLayout, child: View, dependency: View): Boolean {
+    override fun layoutDependsOn(parent: androidx.coordinatorlayout.widget.CoordinatorLayout, child: View, dependency: View): Boolean {
         return dependency is SimplePlayerView
     }
 
@@ -29,7 +29,7 @@ class PlayerBehavior : AppBarLayout.ScrollingViewBehavior {
      * @param dependency  player
      * @return
      */
-    override fun onDependentViewChanged(parent: CoordinatorLayout, child: View, dependency: View): Boolean {
+    override fun onDependentViewChanged(parent: androidx.coordinatorlayout.widget.CoordinatorLayout, child: View, dependency: View): Boolean {
         if (deltaY == 0f) {
             deltaY = dependency.y - child.height
         }
@@ -41,7 +41,7 @@ class PlayerBehavior : AppBarLayout.ScrollingViewBehavior {
     }
 
     override fun onStartNestedScroll(
-        coordinatorLayout: CoordinatorLayout,
+        coordinatorLayout: androidx.coordinatorlayout.widget.CoordinatorLayout,
         child: View,
         directTargetChild: View,
         target: View,
@@ -53,7 +53,7 @@ class PlayerBehavior : AppBarLayout.ScrollingViewBehavior {
     }
 
     override fun onNestedPreScroll(
-        coordinatorLayout: CoordinatorLayout,
+        coordinatorLayout: androidx.coordinatorlayout.widget.CoordinatorLayout,
         child: View,
         target: View,
         dx: Int,

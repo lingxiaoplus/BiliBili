@@ -1,9 +1,9 @@
 package com.bilibili.lingxiao.widget.behavior
 
 import android.content.Context
-import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.view.ViewCompat
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.core.view.ViewCompat
 import android.util.AttributeSet
 import android.view.View
 
@@ -16,7 +16,7 @@ class ScrollAwareFabBehaviorDefault(context: Context, attr: AttributeSet) : Floa
     private var visible = true //是否可见
     //列表（RecyclerView）刚开始滑动时候会回调该方法，需要在方法内设置滑动关联轴。这里只需要垂直方向上的滑动即可。
     override fun onStartNestedScroll(
-        coordinatorLayout: CoordinatorLayout,
+        coordinatorLayout: androidx.coordinatorlayout.widget.CoordinatorLayout,
         child: FloatingActionButton, directTargetChild: View,
         target: View, nestedScrollAxes: Int
     ): Boolean {
@@ -28,7 +28,7 @@ class ScrollAwareFabBehaviorDefault(context: Context, attr: AttributeSet) : Floa
 
     //onNestedScroll：滑动的时候不断的回调该方法，通过dyConsumed来判断是上滑还是下滑。
     override fun onNestedScroll(
-        coordinatorLayout: CoordinatorLayout,
+        coordinatorLayout: androidx.coordinatorlayout.widget.CoordinatorLayout,
         child: FloatingActionButton, target: View,
         dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int
     ) {

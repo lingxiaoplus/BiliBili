@@ -5,7 +5,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:background="@color/colorPrimary"
@@ -122,7 +122,7 @@
                 fresco:layout_constraintBottom_toBottomOf="parent"
                 android:alpha="0.2"
         />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"

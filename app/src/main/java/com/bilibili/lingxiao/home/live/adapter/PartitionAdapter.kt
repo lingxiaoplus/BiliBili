@@ -1,7 +1,7 @@
 package com.bilibili.lingxiao.home.live.adapter
 
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.model.LiveData
 import com.camera.lingxiao.common.utills.LogUtils
@@ -23,8 +23,8 @@ class PartitionAdapter(layout:Int,data: MutableList<LiveData.PartitionsBean>)
         }
         var categoryAdapter =
             PartitionVideoAdapter(R.layout.item_live_video, list)
-        var manager = GridLayoutManager(mContext,2)
-        val recyclerView:RecyclerView = helper.getView(R.id.live_partition_recy)
+        var manager = androidx.recyclerview.widget.GridLayoutManager(mContext, 2)
+        val recyclerView: androidx.recyclerview.widget.RecyclerView = helper.getView(R.id.live_partition_recy)
         recyclerView.adapter = categoryAdapter
         recyclerView.layoutManager = manager
         recyclerView.isNestedScrollingEnabled = false

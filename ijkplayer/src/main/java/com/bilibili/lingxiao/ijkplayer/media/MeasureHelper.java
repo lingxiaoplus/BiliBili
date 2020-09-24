@@ -18,7 +18,7 @@
 package com.bilibili.lingxiao.ijkplayer.media;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 import com.bilibili.lingxiao.ijkplayer.R;
 

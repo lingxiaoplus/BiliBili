@@ -1,7 +1,7 @@
 package com.bilibili.lingxiao.home.live.ui.play
 
 import android.net.Uri
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -41,7 +41,8 @@ class InteractFragment :BaseFragment(),LivePlayView{
     override fun initWidget(root: View) {
         super.initWidget(root)
         chatAdapter = ChatAdapter(R.layout.item_live_chat,chatList)
-        root.recycerView.layoutManager = LinearLayoutManager(context)
+        root.recycerView.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(context)
         root.recycerView.adapter = chatAdapter
         root.refresh.setOnLoadMoreListener {
             presenter.getChatHistory(room_id)

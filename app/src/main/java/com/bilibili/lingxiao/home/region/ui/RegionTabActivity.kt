@@ -1,9 +1,9 @@
 package com.bilibili.lingxiao.home.region.ui
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import android.view.View
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.region.model.RegionData
@@ -56,13 +56,13 @@ class RegionTabActivity : BaseActivity() {
         EventBus.getDefault().removeStickyEvent(data)
     }
 
-    inner class PagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+    inner class PagerAdapter(fm: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentStatePagerAdapter(fm) {
 
         override fun getCount(): Int {
             return tabList.size
         }
 
-        override fun getItem(position: Int): Fragment {
+        override fun getItem(position: Int): androidx.fragment.app.Fragment {
             val fragment = RegionDetailFragment()
             val bundle = Bundle()
             bundle.putInt("tid",tabList[position].tid)  //其他的分类暂时就不展示了

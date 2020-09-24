@@ -9,7 +9,7 @@
     <include
             layout="@layout/title_bar"
     />
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
     >
@@ -121,7 +121,7 @@
                     android:background="@drawable/ripple_background"
             />
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
 

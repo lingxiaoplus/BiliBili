@@ -11,8 +11,8 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.support.annotation.RequiresApi
-import android.support.v4.app.Fragment
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import android.util.Log
 import android.util.SparseArray
 import android.view.Gravity
@@ -384,7 +384,7 @@ class PopwindowUtil private constructor(private val mContext: Context) {
             while (context is ContextWrapper) {
                 if (context is Activity) {
                     return context
-                }else if (context is Fragment){
+                }else if (context is androidx.fragment.app.Fragment){
                     return context.activity
                 }
                 context = context.baseContext

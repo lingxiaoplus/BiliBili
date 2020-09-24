@@ -18,7 +18,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
     />
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -29,7 +29,7 @@
                 android:id="@+id/video_play_full"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:padding="8dp"
+                android:contentDescription="TODO" android:padding="8dp"
                 android:src="@drawable/ic_img_play"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -97,7 +97,7 @@
                 android:id="@+id/danmaku_switch_full"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/bili_player_danmaku_is_open"
+                android:contentDescription="TODO" android:src="@drawable/bili_player_danmaku_is_open"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintLeft_toRightOf="@id/app_video_process_panl"
                 app:layout_constraintTop_toTopOf="parent"
@@ -107,7 +107,7 @@
                 android:id="@+id/danmaku_setting"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/ic_player_danmaku_setting"
+                android:contentDescription="TODO" android:src="@drawable/ic_player_danmaku_setting"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintLeft_toRightOf="@id/danmaku_switch_full"
                 app:layout_constraintTop_toTopOf="parent"
@@ -125,7 +125,7 @@
                 app:layout_constraintRight_toRightOf="parent"
 
                />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>

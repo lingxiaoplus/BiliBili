@@ -10,7 +10,7 @@
             android:id="@+id/live_play"
             android:layout_width="match_parent"
             android:layout_height="200dp"/>
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
             android:id="@+id/live_tablayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
@@ -23,11 +23,11 @@
             app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
     >
-    </android.support.design.widget.TabLayout>
-    <android.support.v4.view.ViewPager
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager.widget.ViewPager
             android:id="@+id/live_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 </LinearLayout>

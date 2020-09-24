@@ -1,9 +1,9 @@
 package com.bilibili.lingxiao.home.find.ui
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.database.RegionTable
 import com.bilibili.lingxiao.home.region.model.RegionData
@@ -65,12 +65,12 @@ class RankListActivity : BaseActivity() {
         }.toTypedArray()
         initTabView()
     }
-    inner class PagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
+    inner class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         override fun getCount(): Int {
             return tabArray.size
         }
 
-        override fun getItem(position: Int): Fragment {
+        override fun getItem(position: Int): androidx.fragment.app.Fragment {
             var bundle = Bundle()
             if (tables.isEmpty()){
                 var type = "origin"

@@ -1,10 +1,10 @@
 package com.bilibili.lingxiao.home.live.ui.play
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import android.view.View
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.model.LiveUpData
@@ -40,7 +40,8 @@ class FansFragment :BaseFragment(){
     override fun initWidget(root: View) {
         super.initWidget(root)
 
-        root.viewpager.addOnPageChangeListener(object :ViewPager.OnPageChangeListener{
+        root.viewpager.addOnPageChangeListener(object :
+            androidx.viewpager.widget.ViewPager.OnPageChangeListener{
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
             }
@@ -71,13 +72,13 @@ class FansFragment :BaseFragment(){
         uid = liveUpData.roomInfo.uid
     }
 
-    inner class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    inner class PagerAdapter(fm: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fm) {
 
         override fun getCount(): Int {
             return tabArray.size
         }
 
-        override fun getItem(position: Int): Fragment {
+        override fun getItem(position: Int): androidx.fragment.app.Fragment {
             val fragment = FansDetailFragment()
             val bundle = Bundle()
             bundle.putInt("position", position)

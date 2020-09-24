@@ -1,7 +1,7 @@
 package com.bilibili.lingxiao.play.ui
 
-import android.support.design.widget.TabLayout
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -45,7 +45,8 @@ class CommentFragment :BaseFragment(), RecommendView {
 
     override fun initWidget(root: View) {
         super.initWidget(root)
-        var recommendManager = LinearLayoutManager(context)
+        var recommendManager =
+            androidx.recyclerview.widget.LinearLayoutManager(context)
         root.comment_recy.layoutManager = recommendManager
         mAdapter = CommentAdapter(mCommentList)
         root.comment_recy.adapter = mAdapter
@@ -134,7 +135,7 @@ class CommentFragment :BaseFragment(), RecommendView {
             var e = empty.copy(viewType = CommentData.Reply.SEGMENT)
             mAdapter.hotSegmentPosition = it.size -1
             mAdapter.addData(e)
-            var tabView:TabLayout = (activity as PlayActivity).findViewById(R.id.skin_tabLayout)
+            var tabView: TabLayout = (activity as PlayActivity).findViewById(R.id.skin_tabLayout)
             var tabLayout = tabView.getTabAt(1)
             tabLayout?.text = "评论 ${commentData.cursor.allCount}"
 

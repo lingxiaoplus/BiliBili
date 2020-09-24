@@ -3,8 +3,8 @@ package com.bilibili.lingxiao.home.region.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.GridLayoutManager
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import android.view.View
 import android.widget.FrameLayout
 import com.bilibili.lingxiao.GlobalProperties
@@ -47,8 +47,9 @@ class RegionDetailFragment :BaseFragment(),RegionDetailView{
         super.initWidget(root)
         videoAdapter =
             VideoAdapter(R.layout.item_video, regionList)
-        var manager = GridLayoutManager(context,2)
-        manager.setSpanSizeLookup(object :GridLayoutManager.SpanSizeLookup(){
+        var manager = androidx.recyclerview.widget.GridLayoutManager(context, 2)
+        manager.setSpanSizeLookup(object :
+            androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup(){
             override fun getSpanSize(position: Int): Int {
                 if (videoAdapter.headerLayoutCount > 0){
                     if(position == 0){

@@ -1,7 +1,7 @@
 package com.bilibili.lingxiao.home.find.ui
 
 import android.content.Intent
-import android.support.design.widget.Snackbar
+import com.google.android.material.snackbar.Snackbar
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -61,7 +61,8 @@ class FindFragment :BaseFragment(), FindView,View.OnClickListener{
         }
         root.laybel.setOnLaybelClickListener(object : LaybelLayout.LaybelItemClickListener{
             override fun onLaybelItemClick(keyWord: String) {
-                Snackbar.make(root.laybel,keyWord,Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(root.laybel,keyWord,
+                    Snackbar.LENGTH_SHORT).show()
                 var intent = Intent(activity, SearchDetailActivity::class.java)
                 intent.putExtra("keyWord",keyWord)
                 startActivity(intent)
@@ -81,7 +82,8 @@ class FindFragment :BaseFragment(), FindView,View.OnClickListener{
             }
         }
         root.search_qr.setOnClickListener {
-            Snackbar.make(it,"通过扫码查找",Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(it,"通过扫码查找",
+                Snackbar.LENGTH_SHORT).show()
         }
     }
     override fun onFirstVisiblity() {

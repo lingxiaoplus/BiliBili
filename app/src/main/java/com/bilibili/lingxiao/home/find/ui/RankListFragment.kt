@@ -3,7 +3,7 @@ package com.bilibili.lingxiao.home.find.ui
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -46,7 +46,8 @@ class RankListFragment :BaseFragment(),RankListView{
         super.initWidget(root)
         mPresenter = RankListPresenter(this,this)
         mRankListAdapter = RankListAdapter(R.layout.item_rank_list, mRankList)
-        root.recycerView.layoutManager = LinearLayoutManager(context)
+        root.recycerView.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(context)
         root.recycerView.adapter = mRankListAdapter
         root.refresh.setOnRefreshListener {
             mRankList.clear()

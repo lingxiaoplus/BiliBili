@@ -1,7 +1,7 @@
 package com.bilibili.lingxiao.home.live.ui.play
 
 import android.net.Uri
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -40,7 +40,8 @@ class FleetListFragment :BaseFragment(), LivePlayView {
 
     override fun initWidget(root: View) {
         super.initWidget(root)
-        root.recycerView.layoutManager = LinearLayoutManager(context)
+        root.recycerView.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(context)
         mFleetAdapter = FleetAdapter(R.layout.item_fleet_list, fleetList)
         root.recycerView.adapter = mFleetAdapter
         mFleetAdapter.addHeaderView(headerView)

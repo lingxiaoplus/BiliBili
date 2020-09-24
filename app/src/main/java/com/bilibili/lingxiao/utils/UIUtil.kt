@@ -3,8 +3,11 @@ package com.bilibili.lingxiao.utils
 import android.content.Context
 import android.util.DisplayMetrics
 import android.view.WindowManager
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.bilibili.lingxiao.dagger.DaggerUiComponent
 import com.bilibili.lingxiao.dagger.UiComponent
+import com.bilibili.lingxiao.database.db.AppDatabase
 
 object UIUtil {
     var mContext :Context? = null
@@ -100,5 +103,16 @@ object UIUtil {
     //获取尺寸
     fun getDimen(id: Int): Int {
         return getContext().resources.getDimensionPixelSize(id)
+    }
+
+    var db:AppDatabase?=null
+    fun getDataBase(): AppDatabase{
+        if (db == null){
+            db = Room.databaseBuilder(
+                getContext(),
+                AppDatabase::class.java, "database-bilibili"
+            ).allowMainThreadQueries().build()
+        }
+        return db!!
     }
 }

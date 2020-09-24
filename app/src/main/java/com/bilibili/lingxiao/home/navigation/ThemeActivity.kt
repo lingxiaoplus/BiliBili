@@ -1,8 +1,8 @@
 package com.bilibili.lingxiao.home.navigation
 
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.Toolbar
+import com.google.android.material.snackbar.Snackbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.widget.Toolbar
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -43,11 +43,13 @@ class ThemeActivity : BaseActivity() {
         changeColum(colums)
         ll_single.setOnClickListener {
             changeColum(1)
-            Snackbar.make(it,getString(R.string.reset_app_change),Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(it,getString(R.string.reset_app_change),
+                Snackbar.LENGTH_SHORT).show()
         }
         ll_double.setOnClickListener {
             changeColum(2)
-            Snackbar.make(it,getString(R.string.reset_app_change),Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(it,getString(R.string.reset_app_change),
+                Snackbar.LENGTH_SHORT).show()
         }
     }
 
@@ -68,7 +70,8 @@ class ThemeActivity : BaseActivity() {
         themeList[checkedColor].choose = true
         var adapter = ThemeAdapter(R.layout.item_theme,themeList)
         recycerView.adapter = adapter
-        recycerView.layoutManager = LinearLayoutManager(this)
+        recycerView.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(this)
         adapter.setOnItemClickListener { adapter, view, position ->
             RippleAnimation.create(view).setDuration(1000).start()
             for ((index,item) in themeList.withIndex()){

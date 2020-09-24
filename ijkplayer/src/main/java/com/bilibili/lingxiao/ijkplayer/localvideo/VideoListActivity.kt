@@ -7,9 +7,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.provider.MediaStore
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import com.bilibili.lingxiao.ijkplayer.PlayActivity
@@ -47,7 +47,7 @@ class VideoListActivity : AppCompatActivity() {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setTitle("本地视频列表")
         }
-        val manager = LinearLayoutManager(this)
+        val manager = androidx.recyclerview.widget.LinearLayoutManager(this)
         recycerView.layoutManager = manager
         mAdapter = VideoAdapter(R.layout.video_item, listImage)
         recycerView.adapter = mAdapter

@@ -1,15 +1,18 @@
 package com.bilibili.lingxiao.user
 
-import android.support.design.widget.Snackbar
+import com.google.android.material.snackbar.Snackbar
 import android.view.View
 import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
+import com.bilibili.lingxiao.database.UserInfoTable
 import com.bilibili.lingxiao.utils.ToastUtil
+import com.bilibili.lingxiao.utils.UIUtil
 import com.camera.lingxiao.common.app.BaseActivity
 import com.camera.lingxiao.common.utills.LogUtils
 import com.camera.lingxiao.common.utills.SpUtils
 import com.google.gson.Gson
 import com.hiczp.bilibili.api.app.model.MyInfo
+import com.hiczp.bilibili.api.live.model.UserInfoInRoom
 import kotlinx.android.synthetic.main.activity_login.*
 import org.greenrobot.eventbus.EventBus
 
@@ -44,11 +47,13 @@ class LoginActivity : BaseActivity() ,LoginView{
             val username = login_et_username.text.toString()
             val password = login_et_password.text.toString()
             if (username.isEmpty()){
-                Snackbar.make(it,resources.getString(R.string.input_username),Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(it,resources.getString(R.string.input_username),
+                    Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             if (password.isEmpty()){
-                Snackbar.make(it,resources.getString(R.string.input_password),Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(it,resources.getString(R.string.input_password),
+                    Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             showProgressDialog("登录中...")
@@ -64,6 +69,7 @@ class LoginActivity : BaseActivity() ,LoginView{
         if (success){
             ToastUtil.show("登录成功 ${user?.data?.name}")
             LogUtils.d("登录结果：$user")
+
             SpUtils.putString(applicationContext, GlobalProperties.USER_INFO, Gson().toJson(user))
             EventBus.getDefault().post(user)
             finish()

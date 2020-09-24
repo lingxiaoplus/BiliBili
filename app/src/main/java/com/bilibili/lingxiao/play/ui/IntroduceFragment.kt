@@ -4,8 +4,8 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -49,13 +49,14 @@ class IntroduceFragment :BaseFragment(), RecommendView {
     }
     override fun initWidget(root: View) {
         super.initWidget(root)
-        var manager = GridLayoutManager(context,5)
+        var manager = androidx.recyclerview.widget.GridLayoutManager(context, 5)
         root.endpage_recycler.layoutManager = manager
         endPageAdapter = EndPageAdapter(R.layout.item_endpage, mEndPageList)
         root.endpage_recycler.adapter = endPageAdapter
         root.endpage_recycler.isNestedScrollingEnabled = false
         //下面的推荐视频
-        var recommendManager = LinearLayoutManager(context)
+        var recommendManager =
+            androidx.recyclerview.widget.LinearLayoutManager(context)
         root.recommend_recycler.layoutManager = recommendManager
         videoDetailAdapter =
             VideoDetailAdapter(R.layout.item_videodetail_recommend, mRecommendList)

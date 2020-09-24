@@ -12,6 +12,7 @@ import java.util.*
 
 object GlobalProperties {
     const val LIVE_HOST = "http://live.bilibili.com/AppIndex/home/?"   //直播api
+    const val LIVE_HOST_NEW = "https://api.live.bilibili.com/xlive/app-interface/v2/index/feed?"   //直播api
     const val COMMEND_HOST = "http://app.bilibili.com/x/feed/index?"   //推荐api
     const val DETAIL_HOST = "http://api.bilibili.cn/view?"  //视频详情
     const val COMMEND_VIDEO_HOST = "http://api.bilibili.cn/recommend?"  //视频详情下面的推荐

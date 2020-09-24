@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.telephony.TelephonyManager
 import com.bilibili.lingxiao.ijkplayer.NetworkUtil.NetworkType
-import android.support.v4.content.ContextCompat.getSystemService
+import androidx.core.content.ContextCompat.getSystemService
 
 
 

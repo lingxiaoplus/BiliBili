@@ -4,7 +4,7 @@ package com.bilibili.lingxiao.home.live.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import android.view.View
 import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
@@ -49,7 +49,7 @@ class LiveAllFragment :BaseFragment(),LiveAllView{
         super.initWidget(root)
         videoAdapter =
             VideoAdapter(R.layout.item_live_video, liveList)
-        var manager = GridLayoutManager(context,2)
+        var manager = androidx.recyclerview.widget.GridLayoutManager(context, 2)
         root.recycerView.adapter = videoAdapter
         root.recycerView.layoutManager = manager
         root.refresh.setOnRefreshListener {

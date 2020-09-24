@@ -1,7 +1,7 @@
 package com.bilibili.lingxiao.home.find.ui
 
 import android.net.Uri
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
@@ -33,7 +33,8 @@ class SearchDetailFragment :BaseFragment(){
     }
 
     private fun initRecyclerView(root: View) {
-        var recommendManager = LinearLayoutManager(context)
+        var recommendManager =
+            androidx.recyclerview.widget.LinearLayoutManager(context)
         root.recycerView.layoutManager = recommendManager
         videoDetailAdapter =
             VideoDetailAdapter(R.layout.item_videodetail_recommend, mRecommendList)

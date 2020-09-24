@@ -36,7 +36,7 @@
                 android:id="@+id/iv_trumb"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
+                android:contentDescription="TODO" android:scaleType="fitXY"
                 android:visibility="visible"/>
     </LinearLayout>
 
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/simple_player_circle_outline_white_36dp"/>
+                android:contentDescription="TODO" android:src="@drawable/simple_player_circle_outline_white_36dp"/>
     </LinearLayout>
     <!-- 网络提示-->
     <LinearLayout
@@ -227,7 +227,7 @@
         <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_img_volice"
+                android:contentDescription="TODO" android:src="@drawable/ic_img_volice"
                 android:layout_margin="10dp"/>
 
         <ProgressBar
@@ -257,7 +257,7 @@
         <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:padding="5dp"
+                android:contentDescription="TODO" android:padding="5dp"
                 android:src="@drawable/ic_img_light"
                 android:layout_margin="10dp"/>
 
@@ -304,7 +304,7 @@
                 android:id="@+id/play_icon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_img_pause"
+                android:contentDescription="TODO" android:src="@drawable/ic_img_pause"
                 android:layout_gravity="center"
                 android:visibility="invisible"
                 tools:visibility="visible"

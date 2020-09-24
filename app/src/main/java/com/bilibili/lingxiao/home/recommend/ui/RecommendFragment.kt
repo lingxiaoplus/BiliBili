@@ -3,7 +3,7 @@ package com.bilibili.lingxiao.home.recommend.ui
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import android.view.View
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.BannerImageLoader
@@ -59,9 +59,11 @@ class RecommendFragment :BaseFragment(), RecommendView {
         banner = view.findViewById(R.id.live_banner)
         mAdapter.addHeaderView(view)
         var colum = SpUtils.getInt(activity, GlobalProperties.HOME_COLUMNS,2)
-        var manager = GridLayoutManager(context,colum)
+        var manager =
+            androidx.recyclerview.widget.GridLayoutManager(context, colum)
         if (colum == 2){
-            manager.setSpanSizeLookup(object :GridLayoutManager.SpanSizeLookup(){
+            manager.setSpanSizeLookup(object :
+                androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup(){
                 override fun getSpanSize(position: Int): Int {
                     if(position == 0){
                         return 2
@@ -182,8 +184,10 @@ class RecommendFragment :BaseFragment(), RecommendView {
 
     private fun initBanner(bannerData: List<RecommendData.BannerItem>) {
         var images = ArrayList<String>()
-        for (image in bannerData){
-            images?.add(image.image)
+        bannerData?.let {
+            for (image in it){
+                images?.add(image.image)
+            }
         }
         banner.setImageLoader(BannerImageLoader())
         //设置图片集合

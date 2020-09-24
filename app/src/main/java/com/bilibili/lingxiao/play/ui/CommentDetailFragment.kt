@@ -4,8 +4,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
@@ -30,7 +30,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class CommentDetailFragment : DialogFragment(){
+class CommentDetailFragment : androidx.fragment.app.DialogFragment(){
     var height = 100
     private val levelImages = arrayOf(
         R.drawable.mall_mine_vip_level_0,
@@ -49,10 +49,10 @@ class CommentDetailFragment : DialogFragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.fragmentDialog)
+        setStyle(androidx.fragment.app.DialogFragment.STYLE_NO_TITLE, R.style.fragmentDialog)
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        dialog.window.setWindowAnimations(R.style.contextMenuAnim)
+        dialog!!.window.setWindowAnimations(R.style.contextMenuAnim)
         //UIUtil.getUiComponent().inject(this)
         val root = inflater.inflate(R.layout.fragment_comment_detail, container, false)
         return root
@@ -60,7 +60,8 @@ class CommentDetailFragment : DialogFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var recommendManager = LinearLayoutManager(context)
+        var recommendManager =
+            androidx.recyclerview.widget.LinearLayoutManager(context)
         recycerView.layoutManager = recommendManager
         mAdapter = CommentAdapter(mCommentList)
         headerRootView = View.inflate(context,R.layout.layout_header_comment_detail,null)
@@ -77,7 +78,7 @@ class CommentDetailFragment : DialogFragment(){
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
-        var win = getDialog().getWindow();
+        var win = getDialog()!!.getWindow();
         // 一定要设置Background，如果不设置，window属性设置无效
         win.setBackgroundDrawable( ColorDrawable(Color.WHITE))
         var  dm = DisplayMetrics()

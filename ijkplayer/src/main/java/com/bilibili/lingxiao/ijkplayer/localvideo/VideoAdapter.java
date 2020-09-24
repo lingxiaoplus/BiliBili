@@ -2,7 +2,7 @@ package com.bilibili.lingxiao.ijkplayer.localvideo;
 
 
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import com.bilibili.lingxiao.ijkplayer.R;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

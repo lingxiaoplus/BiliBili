@@ -4,9 +4,9 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -217,7 +217,7 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
         return false
     }
 
-    protected fun setSwipeColor(swipeLayout: SwipeRefreshLayout) {
+    protected fun setSwipeColor(swipeLayout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout) {
         swipeLayout.setColorSchemeResources(
             R.color.colorPrimary,
             android.R.color.holo_blue_light,
@@ -232,13 +232,13 @@ abstract class BaseFragment : RxFragment(), EasyPermissions.PermissionCallbacks 
      * @param recyclerView
      * @param fab
      */
-    protected fun floatingBtnToogle(recyclerView: RecyclerView, fab: FloatingActionButton) {
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+    protected fun floatingBtnToogle(recyclerView: androidx.recyclerview.widget.RecyclerView, fab: FloatingActionButton) {
+        recyclerView.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: androidx.recyclerview.widget.RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
             }
 
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0) {
                     fab.hide()

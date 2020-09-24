@@ -3,8 +3,8 @@ package com.bilibili.lingxiao.home.live.ui.play
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import android.widget.ImageView
 import com.bilibili.lingxiao.R
@@ -55,7 +55,7 @@ class FansDetailFragment :BaseFragment(), FansDetailView {
                 ), ObjectAnimator.ofFloat(view, "scaleX", 0f, 1.05f, 1f)
             )
         })
-        var manager = LinearLayoutManager(context)
+        var manager = androidx.recyclerview.widget.LinearLayoutManager(context)
 
         root.recycerView.layoutManager = manager
         root.recycerView.adapter = fansAdapter

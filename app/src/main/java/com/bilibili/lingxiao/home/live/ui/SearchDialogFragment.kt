@@ -4,9 +4,9 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentManager
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -21,14 +21,14 @@ import kotlinx.android.synthetic.main.fragment_dialog_search.*
 import kotlinx.android.synthetic.main.fragment_fans_detail.*
 import org.greenrobot.eventbus.EventBus
 
-class SearchDialogFragment :DialogFragment(){
+class SearchDialogFragment : androidx.fragment.app.DialogFragment(){
     var height = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.fragmentDialog)
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        dialog.window.setWindowAnimations(R.style.contextMenuAnim)
+        dialog!!.window.setWindowAnimations(R.style.contextMenuAnim)
         val root = inflater.inflate(R.layout.fragment_dialog_search, container, false)
         return root
     }
@@ -43,7 +43,7 @@ class SearchDialogFragment :DialogFragment(){
     override fun onStart() {
         super.onStart()
         //EventBus.getDefault().register(this)
-        var win = getDialog().getWindow()
+        var win = getDialog()!!.getWindow()
         // 一定要设置Background，如果不设置，window属性设置无效
         win.setBackgroundDrawable( ColorDrawable(Color.TRANSPARENT))
         var  dm = DisplayMetrics()

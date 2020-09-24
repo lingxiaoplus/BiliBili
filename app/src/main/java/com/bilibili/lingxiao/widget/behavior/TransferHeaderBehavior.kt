@@ -1,13 +1,13 @@
 package com.bilibili.lingxiao.widget.behavior
 
 import android.content.Context
-import android.support.design.widget.CoordinatorLayout
-import android.support.v4.widget.NestedScrollView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.widget.NestedScrollView
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import android.support.v4.view.ViewCompat.setY
-import android.support.v4.view.ViewCompat.setX
+import androidx.core.view.ViewCompat.setY
+import androidx.core.view.ViewCompat.setX
 import android.opengl.ETC1.getWidth
 import android.R.attr.dependency
 import android.opengl.ETC1.getHeight
@@ -15,7 +15,7 @@ import android.opengl.ETC1.getHeight
 
 
 class TransferHeaderBehavior(context: Context?, attrs: AttributeSet?) :
-    CoordinatorLayout.Behavior<LinearLayout>(context, attrs) {
+    androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<LinearLayout>(context, attrs) {
     /**
      * 处于中心时候原始X轴
      */
@@ -25,11 +25,11 @@ class TransferHeaderBehavior(context: Context?, attrs: AttributeSet?) :
      */
     private var mOriginalHeaderY = 0
 
-    override fun layoutDependsOn(parent: CoordinatorLayout, child: LinearLayout, dependency: View): Boolean {
+    override fun layoutDependsOn(parent: androidx.coordinatorlayout.widget.CoordinatorLayout, child: LinearLayout, dependency: View): Boolean {
         return dependency is NestedScrollView
     }
 
-    override fun onDependentViewChanged(parent: CoordinatorLayout, child: LinearLayout, dependency: View): Boolean {
+    override fun onDependentViewChanged(parent: androidx.coordinatorlayout.widget.CoordinatorLayout, child: LinearLayout, dependency: View): Boolean {
         // 计算X轴坐标
         if (mOriginalHeaderX == 0) {
             this.mOriginalHeaderX = dependency.width  - child.width

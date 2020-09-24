@@ -2,9 +2,9 @@ package com.bilibili.lingxiao.home.find.ui
 
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.find.TopicView
 import com.bilibili.lingxiao.home.find.model.TopicCardData
@@ -35,7 +35,8 @@ class TopicCenterActivity : BaseActivity(),TopicView{
         title_bar.title = pageType
         mPresenter = TopicCenterPresenter(this,this)
         mTopicAdapter = TopicAdapter(R.layout.item_topic_card, mTopicList)
-        recycerView.layoutManager = LinearLayoutManager(this)
+        recycerView.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(this)
         recycerView.adapter = mTopicAdapter
         refresh.autoRefresh()
         refresh.setOnRefreshListener {

@@ -2,9 +2,9 @@ package com.bilibili.lingxiao.play.ui
 
 import android.content.res.Configuration
 import android.graphics.drawable.BitmapDrawable
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
@@ -136,7 +136,7 @@ class PlayActivity : BaseActivity() {
         return index
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         play_view.onConfigurationChang(newConfig)
     }
@@ -170,9 +170,14 @@ class PlayActivity : BaseActivity() {
             .setOutsideTouchable(true)
             .create()
         popwindowUtil.showAtLocation(play_view,0,0, Gravity.RIGHT)
-        var recycerView = popwindowUtil.getView<RecyclerView>(R.id.recyclerview)
-        recycerView?.layoutManager = GridLayoutManager(this,
-            videoInfo.support_description.size,GridLayoutManager.HORIZONTAL,false)
+        var recycerView = popwindowUtil.getView<androidx.recyclerview.widget.RecyclerView>(R.id.recyclerview)
+        recycerView?.layoutManager =
+            androidx.recyclerview.widget.GridLayoutManager(
+                this,
+                videoInfo.support_description.size,
+                androidx.recyclerview.widget.GridLayoutManager.HORIZONTAL,
+                false
+            )
         recycerView?.adapter = PlayQuilityAdapter(R.layout.item_play_support_quility,videoInfo.support_description,index)
     }
 

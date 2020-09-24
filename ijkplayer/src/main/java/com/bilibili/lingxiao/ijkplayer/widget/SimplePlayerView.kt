@@ -24,7 +24,7 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.*
@@ -806,7 +806,7 @@ class SimplePlayerView @JvmOverloads constructor(context: Context, attrs: Attrib
             while (context is ContextWrapper) {
                 if (context is Activity) {
                     return context
-                }else if (context is Fragment){
+                }else if (context is androidx.fragment.app.Fragment){
                     return context.activity
                 }
                 context = context.baseContext

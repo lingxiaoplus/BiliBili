@@ -2,7 +2,7 @@ package com.bilibili.lingxiao.widget
 
 import android.content.Context
 import android.graphics.*
-import android.support.constraint.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
 import com.bilibili.lingxiao.R

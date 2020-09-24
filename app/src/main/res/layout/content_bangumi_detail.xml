@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
+<androidx.core.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -45,7 +45,7 @@
                     android:elevation="@dimen/dp_4"
             />
         </LinearLayout>
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cons_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,8 +75,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:padding="6dp"
             />
-        </android.support.constraint.ConstraintLayout>
-        <android.support.constraint.ConstraintLayout
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/cons_history"
@@ -106,14 +106,14 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/ripple_background"
             />
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_select_set"
                     app:layout_constraintTop_toBottomOf="@id/text_count"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
             <include
                     android:id="@+id/content_bangumi_contract"
                     layout="@layout/content_bangumi_contract"
@@ -234,7 +234,7 @@
                     app:layout_constraintTop_toBottomOf="@id/recycler_recommend"
                     android:layout_marginTop="@dimen/dp_10"
             />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

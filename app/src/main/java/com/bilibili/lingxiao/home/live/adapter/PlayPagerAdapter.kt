@@ -1,18 +1,18 @@
 package com.bilibili.lingxiao.home.live.adapter
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentPagerAdapter
 
-class PlayPagerAdapter(fm: FragmentManager?,data:Array<String>,fragments:List<Fragment>) : FragmentPagerAdapter(fm) {
+class PlayPagerAdapter(fm: FragmentManager, data:Array<String>, fragments:List<Fragment>) : FragmentPagerAdapter(fm) {
     private var tabArray:Array<String> = data
-    private var fms:List<Fragment> = fragments
+    private var fms:List<androidx.fragment.app.Fragment> = fragments
     override fun getCount(): Int {
         return tabArray.size
     }
 
-    override fun getItem(position: Int): Fragment {
+    override fun getItem(position: Int): androidx.fragment.app.Fragment {
         return fms.get(position)
     }
 

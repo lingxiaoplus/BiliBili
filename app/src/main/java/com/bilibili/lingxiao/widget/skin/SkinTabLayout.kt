@@ -2,9 +2,9 @@ package com.bilibili.lingxiao.widget.skin
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewCompat
-import android.support.v7.content.res.AppCompatResources
+import com.google.android.material.tabs.TabLayout
+import androidx.core.view.ViewCompat
+import androidx.appcompat.content.res.AppCompatResources
 import android.util.AttributeSet
 
 import com.bilibili.lingxiao.R

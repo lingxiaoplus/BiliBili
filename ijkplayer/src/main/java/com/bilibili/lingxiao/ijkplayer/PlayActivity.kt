@@ -2,7 +2,7 @@ package com.bilibili.lingxiao.ijkplayer
 
 import android.content.res.Configuration
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import com.bilibili.lingxiao.ijkplayer.media.IRenderView
@@ -26,7 +26,7 @@ class PlayActivity : AppCompatActivity() {
 
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         //横竖屏切换
         var isPortrait = simple_view.onConfigurationChang(newConfig)

@@ -50,10 +50,10 @@ class HttpTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
             }
         })
         if (debug){
-            var url = GlobalProperties.LIVE_HOST + GlobalProperties.getUrlParamsByMap(request)
+            var url = GlobalProperties.LIVE_HOST_NEW + GlobalProperties.getUrlParamsByMap(request)
             Log.d(TAG,"拼接的url---->$url, 屏幕像素---->${GlobalProperties.SCALE}" )
         }
-        getRequest().requestFullPath(HttpRequest.Method.GET,GlobalProperties.LIVE_HOST, request, mLifecycle,callback)
+        getRequest().requestFullPath(HttpRequest.Method.GET,GlobalProperties.LIVE_HOST_NEW, request, mLifecycle,callback)
     }
 
 

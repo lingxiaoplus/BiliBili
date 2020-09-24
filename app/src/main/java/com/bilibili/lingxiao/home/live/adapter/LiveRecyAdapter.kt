@@ -1,8 +1,8 @@
 package com.bilibili.lingxiao.home.live.adapter
 
 import android.net.Uri
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
@@ -20,8 +20,8 @@ import com.youth.banner.Transformer
 import kotlin.properties.Delegates
 
 class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, LiveRecyAdapter.LiveViewHolde> {
-    var recycledViewPool:RecyclerView.RecycledViewPool by Delegates.notNull()
-    constructor(data:MutableList<MultiItemLiveData>, recycledViewPool:RecyclerView.RecycledViewPool) :super(data){
+    var recycledViewPool: androidx.recyclerview.widget.RecyclerView.RecycledViewPool by Delegates.notNull()
+    constructor(data:MutableList<MultiItemLiveData>, recycledViewPool: androidx.recyclerview.widget.RecyclerView.RecycledViewPool) :super(data){
         this.recycledViewPool = recycledViewPool
        /* addItemType(MultiItemLiveData.BANNER,R.layout.layout_banner)
         addItemType(MultiItemLiveData.CATEGORY,R.layout.item_live_category)
@@ -78,16 +78,17 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, LiveRecyAdapter.Live
             PartitionVideoAdapter(R.layout.item_live_video, list)
         categoryAdapter.openLoadAnimation(SCALEIN)
         helper.partitionAdapter = categoryAdapter
-        var manager = GridLayoutManager(mContext,2)
-        val recyclerView:RecyclerView = helper.getView(R.id.live_partition_recy)
+        var manager = androidx.recyclerview.widget.GridLayoutManager(mContext, 2)
+        val recyclerView: androidx.recyclerview.widget.RecyclerView = helper.getView(R.id.live_partition_recy)
         recyclerView.adapter = categoryAdapter
         recyclerView.layoutManager = manager
         recyclerView.isNestedScrollingEnabled = false
         recyclerView.setRecycledViewPool(recycledViewPool)
 
-        recyclerView.addOnScrollListener(object :RecyclerView.OnScrollListener(){
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+        recyclerView.addOnScrollListener(object :
+            androidx.recyclerview.widget.RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: androidx.recyclerview.widget.RecyclerView, newState: Int) {
+                if (newState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE){
                     categoryAdapter.isScroller = false
                     categoryAdapter.notifyDataSetChanged()
                 }else{
@@ -107,9 +108,16 @@ class LiveRecyAdapter : BaseQuickAdapter<MultiItemLiveData, LiveRecyAdapter.Live
 
     private fun initRecommend(helper: LiveViewHolde, lives: MutableList<LiveData.RecommendDataBean.LivesBean>) {
         if (helper.liveRecommendAdapter != null) return
-        val recyclerView:RecyclerView = helper.getView(R.id.recycerView)
+        val recyclerView: androidx.recyclerview.widget.RecyclerView = helper.getView(R.id.recycerView)
         recyclerView.setHasFixedSize(true)      //设置固定大小
-        recyclerView.setLayoutManager(GridLayoutManager(mContext, 2,GridLayoutManager.VERTICAL,false))
+        recyclerView.setLayoutManager(
+            androidx.recyclerview.widget.GridLayoutManager(
+                mContext,
+                2,
+                androidx.recyclerview.widget.GridLayoutManager.VERTICAL,
+                false
+            )
+        )
         var liveRecommendAdapter =
             LiveRecommendAdapter(R.layout.item_live_video, lives)
         liveRecommendAdapter.openLoadAnimation(SCALEIN)

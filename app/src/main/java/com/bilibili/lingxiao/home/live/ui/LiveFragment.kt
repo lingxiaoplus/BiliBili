@@ -1,7 +1,7 @@
 package com.bilibili.lingxiao.home.live.ui
 
 import android.content.Intent
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import android.view.View
 import com.bilibili.lingxiao.R
@@ -11,7 +11,7 @@ import com.camera.lingxiao.common.app.BaseFragment
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import kotlinx.android.synthetic.main.fragment_live.view.*
 import kotlin.properties.Delegates
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView

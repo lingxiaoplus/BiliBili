@@ -1,7 +1,7 @@
 package com.bilibili.lingxiao.widget
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.MotionEvent
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
@@ -14,7 +14,7 @@ class ScrollerloadRecyclerView  @JvmOverloads constructor(context: Context, attr
     }
 
     inner class ImageAutoLoadListener :OnScrollListener(){
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+        override fun onScrollStateChanged(recyclerView: androidx.recyclerview.widget.RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             when(newState){
                 SCROLL_STATE_IDLE -> Fresco.getImagePipeline().resume()  //空闲状态 加载图片
@@ -25,7 +25,7 @@ class ScrollerloadRecyclerView  @JvmOverloads constructor(context: Context, attr
             }
         }
 
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
         }
     }

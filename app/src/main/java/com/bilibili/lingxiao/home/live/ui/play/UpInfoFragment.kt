@@ -2,8 +2,8 @@ package com.bilibili.lingxiao.home.live.ui.play
 
 import android.net.Uri
 import android.os.Build
-import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.GridLayoutManager
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import android.text.Html
 import android.util.Log
 import android.view.View
@@ -46,8 +46,8 @@ class UpInfoFragment :BaseFragment() , LivePlayView {
 
     override fun initWidget(root: View) {
         super.initWidget(root)
-        var manager = GridLayoutManager(context,2)
-        manager.setSpanSizeLookup(object : GridLayoutManager.SpanSizeLookup(){
+        var manager = androidx.recyclerview.widget.GridLayoutManager(context, 2)
+        manager.setSpanSizeLookup(object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup(){
             override fun getSpanSize(position: Int): Int {
                 if(position == 0 && mAdapter.itemCount == 1){
                     return 2
