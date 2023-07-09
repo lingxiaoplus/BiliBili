@@ -12,7 +12,7 @@ import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
 import com.trello.rxlifecycle2.LifecycleProvider
 
-class RecommendTrans(mLifecycle: LifecycleProvider<*>) :BaseTransation(mLifecycle){
+class RecommendTrans(mLifecycle: LifecycleProvider<*>) : BaseTransation(mLifecycle) {
     private val STYLE = 2
     private var loginEvent: Int = 0
     private var openEvent: String = ""
@@ -26,7 +26,7 @@ class RecommendTrans(mLifecycle: LifecycleProvider<*>) :BaseTransation(mLifecycl
     private val LOGIN_EVENT_INITIAL = 1
     private val OPEN_EVENT_NULL = ""
     private val OPEN_EVENT_COLD = "cold"
-    fun getRecommendList(operationState:Int,callback : HttpRxCallback<Any>){
+    fun getRecommendList(operationState: Int, callback: HttpRxCallback<Any>) {
         when (operationState) {
             STATE_INITIAL -> {
                 loginEvent = LOGIN_EVENT_INITIAL
@@ -50,14 +50,14 @@ class RecommendTrans(mLifecycle: LifecycleProvider<*>) :BaseTransation(mLifecycl
         request.clear()
         request.put("appkey", GlobalProperties.APP_KEY)
         request.put("build", GlobalProperties.BUILD)
-        request.put("idx",idx)
-        request.put("login_event",loginEvent)
+        request.put("idx", idx)
+        request.put("login_event", loginEvent)
         request.put("mobi_app", GlobalProperties.MOBI_APP)
         request.put("network", GlobalProperties.NETWORK_WIFI)
         request.put("open_event", openEvent)
         request.put("platform", GlobalProperties.PLATFORM)
-        request.put("pull",pull)
-        request.put("style",STYLE)
+        request.put("pull", pull)
+        request.put("style", STYLE)
         request.put("ts", GlobalProperties.getSystemTime())
 
 
@@ -66,7 +66,7 @@ class RecommendTrans(mLifecycle: LifecycleProvider<*>) :BaseTransation(mLifecycl
 
                 val type = object : TypeToken<List<RecommendData>>() {}.getType()
                 var gson = Gson()
-                var modle = gson.fromJson<List<RecommendData>>(element,type)
+                var modle = gson.fromJson<List<RecommendData>>(element, type)
                 //var modle = Gson().fromJson(element, type)
                 val obj = arrayOfNulls<Any>(1)
                 obj[0] = modle
@@ -75,6 +75,12 @@ class RecommendTrans(mLifecycle: LifecycleProvider<*>) :BaseTransation(mLifecycl
         })
         var url = GlobalProperties.COMMEND_HOST + GlobalProperties.getUrlParamsByMap(request)
         LogUtils.d("拼接的url---->" + url)
-        getRequest().requestFullPath(HttpRequest.Method.GET,GlobalProperties.COMMEND_HOST,request, mLifecycle,callback)
+        getRequest().requestFullPath(
+            HttpRequest.Method.GET,
+            GlobalProperties.COMMEND_HOST,
+            request,
+            mLifecycle,
+            callback
+        )
     }
 }

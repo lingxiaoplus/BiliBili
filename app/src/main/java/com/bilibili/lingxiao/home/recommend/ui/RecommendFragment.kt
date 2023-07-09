@@ -1,48 +1,46 @@
 package com.bilibili.lingxiao.home.recommend.ui
 
+import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.net.Uri
-import androidx.recyclerview.widget.GridLayoutManager
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
+import com.bilibili.lingxiao.GlobalProperties
 import com.bilibili.lingxiao.R
 import com.bilibili.lingxiao.home.live.BannerImageLoader
-import com.bilibili.lingxiao.home.recommend.model.RecommendData
 import com.bilibili.lingxiao.home.recommend.RecommendPresenter
+import com.bilibili.lingxiao.home.recommend.model.RecommendData
 import com.bilibili.lingxiao.home.recommend.view.RecommendView
 import com.bilibili.lingxiao.play.model.CommentData
 import com.bilibili.lingxiao.play.model.VideoDetailData
 import com.bilibili.lingxiao.play.model.VideoRecoData
 import com.bilibili.lingxiao.utils.ToastUtil
 import com.bilibili.lingxiao.utils.UIUtil
+import com.bilibili.lingxiao.web.WebActivity
 import com.camera.lingxiao.common.app.BaseFragment
+import com.camera.lingxiao.common.utills.PopwindowUtil
+import com.camera.lingxiao.common.utills.SpUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
+import com.youth.banner.listener.OnBannerListener
 import kotlinx.android.synthetic.main.fragment_recommend.*
 import kotlinx.android.synthetic.main.fragment_recommend.view.*
 import org.greenrobot.eventbus.EventBus
 import kotlin.properties.Delegates
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.widget.TextView
-import android.widget.LinearLayout
-import com.bilibili.lingxiao.web.WebActivity
-import com.youth.banner.listener.OnBannerListener
-import android.animation.Animator
-import com.bilibili.lingxiao.GlobalProperties
-import com.camera.lingxiao.common.utills.PopwindowUtil
-import com.camera.lingxiao.common.utills.SpUtils
-import kotlin.collections.ArrayList
 
 
-class RecommendFragment :BaseFragment(), RecommendView {
+class RecommendFragment : BaseFragment(), RecommendView {
 
     private var recommendPresenter = RecommendPresenter(this, this)
     private var mRecommendList: List<RecommendData> = arrayListOf()
-    private var mAdapter:RecommendRecyAdapter by Delegates.notNull()
-    private var banner:Banner by Delegates.notNull()
+    private var mAdapter: RecommendRecyAdapter by Delegates.notNull()
+    private var banner: Banner by Delegates.notNull()
     private var operationState = 1  //1表示首次请求数据，有轮播图返回，2代表下拉刷新  3代表上拉加载更多
     override val contentLayoutId: Int
         get() = R.layout.fragment_recommend
@@ -54,20 +52,20 @@ class RecommendFragment :BaseFragment(), RecommendView {
 
     override fun initWidget(root: View) {
         super.initWidget(root)
-        mAdapter = RecommendRecyAdapter(R.layout.item_video,mRecommendList)
-        var view = View.inflate(context,R.layout.layout_banner,null)
+        mAdapter = RecommendRecyAdapter(R.layout.item_video, mRecommendList)
+        var view = View.inflate(context, R.layout.layout_banner, null)
         banner = view.findViewById(R.id.live_banner)
         mAdapter.addHeaderView(view)
-        var colum = SpUtils.getInt(activity, GlobalProperties.HOME_COLUMNS,2)
+        var colum = SpUtils.getInt(activity, GlobalProperties.HOME_COLUMNS, 2)
         var manager =
             androidx.recyclerview.widget.GridLayoutManager(context, colum)
-        if (colum == 2){
+        if (colum == 2) {
             manager.setSpanSizeLookup(object :
-                androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup(){
+                androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
-                    if(position == 0){
+                    if (position == 0) {
                         return 2
-                    }else{
+                    } else {
                         return 1
                     }
                 }
@@ -99,7 +97,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
             )
         })
         mAdapter.isFirstOnly(false)
-        mAdapter.setOnItemClickListener(object :BaseQuickAdapter.OnItemClickListener{
+        mAdapter.setOnItemClickListener(object : BaseQuickAdapter.OnItemClickListener {
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
                 //val intent = Intent(context,PlayActivity::class.java)
                 mRecommendList.get(position).let {
@@ -108,22 +106,22 @@ class RecommendFragment :BaseFragment(), RecommendView {
                         Intent.ACTION_VIEW,
                         Uri.parse(it.uri)
                     )
-                    intent.putExtra("play_url",it.uri)
+                    intent.putExtra("play_url", it.uri)
                     startActivity(intent)
                 }
 
             }
         })
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
-            when(view.id){
-                R.id.image_more-> showPopupWindow(mRecommendList.get(position))
+            when (view.id) {
+                R.id.image_more -> showPopupWindow(mRecommendList.get(position))
             }
         }
         mAdapter.setOnItemLongClickListener { adapter, view, position ->
             showPopupWindow(mRecommendList.get(position))
             true
         }
-        mAdapter.setEmptyView(View.inflate(context,R.layout.layout_empty,null))
+        mAdapter.setEmptyView(View.inflate(context, R.layout.layout_empty, null))
     }
 
     override fun onFirstVisiblity() {
@@ -133,24 +131,24 @@ class RecommendFragment :BaseFragment(), RecommendView {
 
     override fun onVisiblityChanged(visiblity: Boolean) {
         super.onVisiblityChanged(visiblity)
-        if (visiblity && mAdapter.itemCount - mAdapter.headerLayoutCount - mAdapter.footerLayoutCount < 1){
+        if (visiblity && mAdapter.itemCount - mAdapter.headerLayoutCount - mAdapter.footerLayoutCount < 1) {
             refresh.autoRefresh()
         }
     }
 
     override fun onGetRecommendData(recommendData: List<RecommendData>) {
-        if (operationState == 1){
+        if (operationState == 1) {
             var banner = recommendData.get(0)
-            for (data in recommendData.subList(1,recommendData.size)){
+            for (data in recommendData.subList(1, recommendData.size)) {
                 mAdapter.addData(data)
             }
             initBanner(banner.banner_item)
             operationState = 2
-        }else if (operationState == 2){
+        } else if (operationState == 2) {
             mAdapter.setNewData(recommendData)
-        }else{
-            for (data in recommendData){
-                if (data.title != null){
+        } else {
+            for (data in recommendData) {
+                if (data.title != null) {
                     mAdapter.addData(data)
                 }
             }
@@ -159,15 +157,19 @@ class RecommendFragment :BaseFragment(), RecommendView {
         refresh.finishLoadMore()
         //recycerView.hideShimmerAdapter()
     }
+
     override fun onGetVideoDetail(videoDetailData: VideoDetailData) {
 
     }
+
     override fun onGetVideoRecommend(videoRecoData: VideoRecoData) {
 
     }
+
     override fun onGetVideoComment(commentData: CommentData) {
 
     }
+
     override fun showDialog() {
 
     }
@@ -184,9 +186,22 @@ class RecommendFragment :BaseFragment(), RecommendView {
 
     private fun initBanner(bannerData: List<RecommendData.BannerItem>) {
         var images = ArrayList<String>()
+        /*
         bannerData?.let {
-            for (image in it){
-                images?.add(image.image)
+            for (image in it) {
+                // 第一种写法
+                image.image?.let {imageUrl ->
+                    images.add(imageUrl)
+                }
+                // 第二种写法
+//                images?.add(image.image)
+            }
+        }
+        */
+        // 第三种写法
+        if (bannerData != null) {
+            for (image in bannerData) {
+                images.add(image.image)
             }
         }
         banner.setImageLoader(BannerImageLoader())
@@ -205,19 +220,19 @@ class RecommendFragment :BaseFragment(), RecommendView {
         //banner设置方法全部调用完毕时最后调用
         banner.start()
 
-        banner.setOnBannerListener(object :OnBannerListener{
+        banner.setOnBannerListener(object : OnBannerListener {
             override fun OnBannerClick(position: Int) {
-                var intent = Intent(context,WebActivity::class.java)
-                intent.putExtra("uri",bannerData[position].uri)
-                intent.putExtra("title",bannerData[position].title)
-                intent.putExtra("image",bannerData[position].image)
+                var intent = Intent(context, WebActivity::class.java)
+                intent.putExtra("uri", bannerData[position].uri)
+                intent.putExtra("title", bannerData[position].title)
+                intent.putExtra("image", bannerData[position].image)
                 startActivity(intent)
             }
 
         })
     }
 
-    private fun showPopupWindow(data : RecommendData) {
+    private fun showPopupWindow(data: RecommendData) {
         val popwindowUtil = PopwindowUtil.PopupWindowBuilder(activity!!)
             .setView(R.layout.pop_detail_menu)
             .size(LinearLayout.LayoutParams.MATCH_PARENT.toFloat(), LinearLayout.LayoutParams.WRAP_CONTENT.toFloat())
@@ -228,7 +243,7 @@ class RecommendFragment :BaseFragment(), RecommendView {
             .create()
         val rootview = LayoutInflater.from(activity)
             .inflate(R.layout.fragment_recommend, null)
-        popwindowUtil.showAtLocation(rootview,0,0,Gravity.BOTTOM,0.6f)
+        popwindowUtil.showAtLocation(rootview, 0, 0, Gravity.BOTTOM, 0.6f)
         popwindowUtil.getView<TextView>(R.id.pop_up_name)!!.text = data.dislike_reasons[0].reason_name
         popwindowUtil.getView<TextView>(R.id.pop_cancel)!!.setOnClickListener({
             popwindowUtil.dissmiss()

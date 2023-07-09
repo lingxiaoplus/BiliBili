@@ -1,0 +1,27 @@
+{
+  "buildFiles": [
+    "/Users/zhuangqi/AndroidStudioProjects/BiliBili/app/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/zhuangqi/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/zhuangqi/AndroidStudioProjects/BiliBili/app/.cxx/RelWithDebInfo/2t4f545m/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/zhuangqi/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/zhuangqi/AndroidStudioProjects/BiliBili/app/.cxx/RelWithDebInfo/2t4f545m/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "native-lib::@6890427a1f51a3e7e1df": {
+      "artifactName": "native-lib",
+      "abi": "x86",
+      "output": "/Users/zhuangqi/AndroidStudioProjects/BiliBili/app/build/intermediates/cxx/RelWithDebInfo/2t4f545m/obj/x86/libnative-lib.so",
+      "runtimeFiles": []
+    }
+  }
+}

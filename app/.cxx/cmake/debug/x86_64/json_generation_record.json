@@ -1,0 +1,54 @@
+[
+  {
+    "level": "INFO",
+    "message": "Start JSON generation. Platform version: 21 min SDK version: x86_64"
+  },
+  {
+    "level": "INFO",
+    "message": "rebuilding JSON /Users/wudi41/android/BiliBili/app/.cxx/cmake/debug/x86_64/android_gradle_build.json due to:"
+  },
+  {
+    "level": "INFO",
+    "message": "- expected json /Users/wudi41/android/BiliBili/app/.cxx/cmake/debug/x86_64/android_gradle_build.json file is not present, will remove stale json folder"
+  },
+  {
+    "level": "INFO",
+    "message": "- missing previous command file /Users/wudi41/android/BiliBili/app/.cxx/cmake/debug/x86_64/build_command.txt, will remove stale json folder"
+  },
+  {
+    "level": "INFO",
+    "message": "- command changed from previous, will remove stale json folder"
+  },
+  {
+    "level": "INFO",
+    "message": "removing stale contents from \u0027/Users/wudi41/android/BiliBili/app/.cxx/cmake/debug/x86_64\u0027"
+  },
+  {
+    "level": "INFO",
+    "message": "created folder \u0027/Users/wudi41/android/BiliBili/app/.cxx/cmake/debug/x86_64\u0027"
+  },
+  {
+    "level": "INFO",
+    "message": "executing cmake Executable : /Users/wudi41/Library/Android/sdk/cmake/3.6.4111459/bin/cmake\narguments : \n-H/Users/wudi41/android/BiliBili/app\n-B/Users/wudi41/android/BiliBili/app/.cxx/cmake/debug/x86_64\n-DANDROID_ABI\u003dx86_64\n-DANDROID_PLATFORM\u003dandroid-21\n-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d/Users/wudi41/android/BiliBili/app/build/intermediates/cmake/debug/obj/x86_64\n-DCMAKE_BUILD_TYPE\u003dDebug\n-DANDROID_NDK\u003d/Users/wudi41/Library/Android/sdk/ndk/android-ndk-r16b\n-DCMAKE_CXX_FLAGS\u003d\n-DCMAKE_TOOLCHAIN_FILE\u003d/Users/wudi41/Library/Android/sdk/ndk/android-ndk-r16b/build/cmake/android.toolchain.cmake\n-DCMAKE_MAKE_PROGRAM\u003d/Users/wudi41/Library/Android/sdk/cmake/3.6.4111459/bin/ninja\n-GAndroid Gradle - Ninja\njvmArgs : \n\n"
+  },
+  {
+    "level": "INFO",
+    "message": "Executable : /Users/wudi41/Library/Android/sdk/cmake/3.6.4111459/bin/cmake\narguments : \n-H/Users/wudi41/android/BiliBili/app\n-B/Users/wudi41/android/BiliBili/app/.cxx/cmake/debug/x86_64\n-DANDROID_ABI\u003dx86_64\n-DANDROID_PLATFORM\u003dandroid-21\n-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d/Users/wudi41/android/BiliBili/app/build/intermediates/cmake/debug/obj/x86_64\n-DCMAKE_BUILD_TYPE\u003dDebug\n-DANDROID_NDK\u003d/Users/wudi41/Library/Android/sdk/ndk/android-ndk-r16b\n-DCMAKE_CXX_FLAGS\u003d\n-DCMAKE_TOOLCHAIN_FILE\u003d/Users/wudi41/Library/Android/sdk/ndk/android-ndk-r16b/build/cmake/android.toolchain.cmake\n-DCMAKE_MAKE_PROGRAM\u003d/Users/wudi41/Library/Android/sdk/cmake/3.6.4111459/bin/ninja\n-GAndroid Gradle - Ninja\njvmArgs : \n\n"
+  },
+  {
+    "level": "INFO",
+    "message": "done executing cmake"
+  },
+  {
+    "level": "INFO",
+    "message": "write build output /Users/wudi41/android/BiliBili/app/.cxx/cmake/debug/x86_64/build_output.txt"
+  },
+  {
+    "level": "INFO",
+    "message": "write command file /Users/wudi41/android/BiliBili/app/.cxx/cmake/debug/x86_64/build_command.txt"
+  },
+  {
+    "level": "INFO",
+    "message": "JSON generation completed without problems"
+  }
+]
