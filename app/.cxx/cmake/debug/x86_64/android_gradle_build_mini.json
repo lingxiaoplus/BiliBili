@@ -1,0 +1,16 @@
+{
+  "buildFiles": [
+    "/Users/wudi41/android/BiliBili/app/CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "/Users/wudi41/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /Users/wudi41/android/BiliBili/app/.cxx/cmake/debug/x86_64 --target clean"
+  ],
+  "libraries": {
+    "native-lib-Debug-x86_64": {
+      "artifactName": "native-lib",
+      "buildCommand": "/Users/wudi41/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /Users/wudi41/android/BiliBili/app/.cxx/cmake/debug/x86_64 --target native-lib",
+      "abi": "x86_64",
+      "output": "/Users/wudi41/android/BiliBili/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so"
+    }
+  }
+}

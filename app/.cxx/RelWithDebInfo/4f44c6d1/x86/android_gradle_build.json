@@ -1,0 +1,38 @@
+{
+  "buildFiles": [
+    "/Users/zhuangqi/AndroidStudioProjects/BiliBili/app/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/zhuangqi/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/zhuangqi/AndroidStudioProjects/BiliBili/app/.cxx/RelWithDebInfo/4f44c6d1/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/zhuangqi/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/zhuangqi/AndroidStudioProjects/BiliBili/app/.cxx/RelWithDebInfo/4f44c6d1/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "native-lib::@6890427a1f51a3e7e1df": {
+      "toolchain": "toolchain",
+      "abi": "x86",
+      "artifactName": "native-lib",
+      "output": "/Users/zhuangqi/AndroidStudioProjects/BiliBili/app/build/intermediates/cxx/RelWithDebInfo/4f44c6d1/obj/x86/libnative-lib.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Users/zhuangqi/Library/Android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/Users/zhuangqi/Library/Android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

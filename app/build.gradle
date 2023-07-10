@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
@@ -24,6 +22,7 @@ android {
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi-v7a', 'x86', 'x86_64'
+            ndkVersion = "23.1.7779620"
         }
     }
     compileOptions {
@@ -47,6 +46,8 @@ android {
         exclude 'META-INF/atomicfu.kotlin_module'
         exclude 'META-INF/kotlinx-coroutines-io.kotlin_module'
     }
+    buildToolsVersion '30.0.3'
+    ndkVersion '25.2.9519653'
 }
 
 dependencies {
@@ -110,6 +111,8 @@ dependencies {
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:$rootProject.ext.dbFlowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.ext.dbFlowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow:$rootProject.ext.dbFlowVersion"
+
+
     implementation group: 'com.hiczp', name: 'bilibili-api', version: '0.1.0'
 
     implementation "androidx.room:room-runtime:$rootProject.room_version"

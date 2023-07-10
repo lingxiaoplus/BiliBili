@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/zhuangqi/AndroidStudioProjects/BiliBili/app/.cxx/Debug/6x2g3bp1/x86",
+  "command": "/Users/zhuangqi/Library/Android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=i686-none-linux-android21 --sysroot=/Users/zhuangqi/Library/Android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dnative_lib_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC -o CMakeFiles/native-lib.dir/src/main/cpp/native-lib.cpp.o -c /Users/zhuangqi/AndroidStudioProjects/BiliBili/app/src/main/cpp/native-lib.cpp",
+  "file": "/Users/zhuangqi/AndroidStudioProjects/BiliBili/app/src/main/cpp/native-lib.cpp"
+}
+]
